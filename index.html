@@ -1,259 +1,204 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AURA SYSTEMS | Leading AI Automation</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
+        :root { --accent: #3b82f6; }
         body { font-family: 'Inter', sans-serif; background-color: #020202; color: white; margin: 0; overflow-x: hidden; }
-        .perspective-1000 { perspective: 1000px; }
-        .slider { -webkit-appearance: none; width: 100%; height: 4px; background: #1f2937; border-radius: 5px; outline: none; }
-        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #3b82f6; border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px #3b82f6; }
         
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fadeIn { animation: fadeInUp 1s ease-out forwards; }
-        
-        /* Glassmorphism Classes */
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2.5rem; }
         .gradient-text { background: linear-gradient(135deg, #fff 0%, #6366f1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* ROI Slider Styling */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: #1f2937; border-radius: 3px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #3b82f6; cursor: pointer; margin-top: -7px; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+
+        .perspective { perspective: 1000px; }
+        .inner-card { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
     </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="antialiased">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
 
-        // ============= UI COMPONENTS (SHADCN SIMULATION) =============
-        const Card = ({ children, className = "" }) => (
-            <div className={`glass-card rounded-[2.5rem] overflow-hidden ${className}`}>{children}</div>
-        );
+    <nav class="fixed w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <div class="text-2xl font-black tracking-tighter uppercase italic">Aura <span class="text-blue-500">Systems</span></div>
+        <a href="#contact" class="bg-blue-600 px-6 py-2 rounded-xl text-[10px] font-bold tracking-widest hover:bg-blue-500 transition shadow-lg shadow-blue-500/20">KONTAKT</a>
+    </nav>
 
-        const Button = ({ children, onClick, className = "", variant = "primary", type="button", disabled=false }) => {
-            const styles = variant === "primary" 
-                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20" 
-                : "border border-white/10 hover:bg-white/5 text-white";
-            return (
-                <button type={type} disabled={disabled} onClick={onClick} className={`px-8 py-4 rounded-2xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2 ${styles} ${className}`}>
-                    {children}
-                </button>
-            );
-        };
+    <section class="relative pt-64 pb-32 px-6 text-center max-w-6xl mx-auto z-10">
+        <h1 class="text-6xl md:text-[8rem] font-black tracking-tighter leading-[0.85] mb-12 opacity-0" id="heroTitle">
+            THE <span class="gradient-text">AI CORE</span> <br> OF BUSINESS.
+        </h1>
+        <p class="text-xl md:text-2xl text-zinc-500 mb-16 max-w-3xl mx-auto font-light opacity-0" id="heroSubtitle">
+            Wir bauen keine Webseiten. Wir bauen autonome Infrastrukturen. Skalieren Sie Ihre Agentur auf Autopilot.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-6 opacity-0" id="heroButtons">
+            <a href="#contact" class="bg-blue-600 px-12 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-blue-500/30 hover:scale-105 transition">Audit anfordern ⚡</a>
+            <a href="#roi" class="bg-white/5 border border-white/10 px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition">ROI berechnen</a>
+        </div>
+    </section>
 
-        const Icon = ({ name, className = "w-6 h-6" }) => {
-            const LucideIcon = lucide[name];
-            return LucideIcon ? <LucideIcon className={className} /> : null;
-        };
+    <section class="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-3 gap-8 z-10 relative">
+        <div class="perspective">
+            <div class="inner-card glass p-10 h-full flex flex-col items-start gap-6 border-white/5 hover:border-blue-500/50">
+                <div class="p-4 bg-blue-600 rounded-2xl"><i data-lucide="zap" class="text-white w-8 h-8"></i></div>
+                <h4 class="text-2xl font-black uppercase tracking-tight">AI Automation</h4>
+                <p class="text-zinc-500 leading-relaxed">End-to-End Workflows mit n8n & OpenAI. Sparen Sie 40+ Stunden pro Woche.</p>
+            </div>
+        </div>
+        <div class="perspective">
+            <div class="inner-card glass p-10 h-full flex flex-col items-start gap-6 border-white/5 hover:border-blue-500/50">
+                <div class="p-4 bg-blue-600 rounded-2xl"><i data-lucide="target" class="text-white w-8 h-8"></i></div>
+                <h4 class="text-2xl font-black uppercase tracking-tight">Sales Intelligence</h4>
+                <p class="text-zinc-500 leading-relaxed">KI-Agenten, die LinkedIn & E-Mail Leads finden, qualifizieren und buchen.</p>
+            </div>
+        </div>
+        <div class="perspective">
+            <div class="inner-card glass p-10 h-full flex flex-col items-start gap-6 border-white/5 hover:border-blue-500/50">
+                <div class="p-4 bg-blue-600 rounded-2xl"><i data-lucide="gauge" class="text-white w-8 h-8"></i></div>
+                <h4 class="text-2xl font-black uppercase tracking-tight">Web Performance</h4>
+                <p class="text-zinc-500 leading-relaxed">High-End Webarchitektur & CRO für maximale Conversion-Rates.</p>
+            </div>
+        </div>
+    </section>
 
-        // ============= PARTICLE SYSTEM =============
-        const ParticleField = () => {
-            const canvasRef = useRef(null);
-            useEffect(() => {
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext('2d');
-                let particles = [];
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
-                        this.speedX = Math.random() * 0.4 - 0.2;
-                        this.speedY = Math.random() * 0.4 - 0.2;
-                        this.size = Math.random() * 1.5;
-                    }
-                    update() {
-                        this.x += this.speedX; this.y += this.speedY;
-                        if (this.x > canvas.width) this.x = 0; if (this.y > canvas.height) this.y = 0;
-                    }
-                    draw() {
-                        ctx.fillStyle = "rgba(99, 102, 241, 0.4)";
-                        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-                    }
-                }
-
-                for (let i = 0; i < 100; i++) particles.push(new Particle());
-                const animate = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    particles.forEach(p => { p.update(); p.draw(); });
-                    requestAnimationFrame(animate);
-                };
-                animate();
-            }, []);
-            return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none z-0" />;
-        };
-
-        // ============= ROI CALCULATOR =============
-        const ROICalculator = () => {
-            const [employees, setEmployees] = useState(10);
-            const [hours, setHours] = useState(5);
-            const [rate, setRate] = useState(50);
-            
-            const yearlySavings = employees * hours * rate * 52;
-
-            return (
-                <Card className="p-8 md:p-12 border-blue-500/20 max-w-4xl mx-auto shadow-2xl shadow-blue-500/5">
-                    <h3 className="text-3xl font-black mb-8 flex items-center gap-3 italic">
-                        <Icon name="DollarSign" className="text-green-500" /> ROI KALKULATOR
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-8">
-                            <div>
-                                <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block mb-4">Team Größe: {employees}</label>
-                                <input type="range" min="1" max="100" value={employees} onChange={e => setEmployees(e.target.value)} className="slider" />
-                            </div>
-                            <div>
-                                <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block mb-4">Verlorene Std/Woche: {hours}h</label>
-                                <input type="range" min="1" max="40" value={hours} onChange={e => setHours(e.target.value)} className="slider" />
-                            </div>
-                        </div>
-                        <div className="bg-white/5 p-10 rounded-[2rem] border border-white/5 text-center">
-                            <div className="text-sm font-bold text-zinc-500 uppercase mb-2">Jährliches Potenzial</div>
-                            <div className="text-5xl md:text-7xl font-black text-blue-500 tracking-tighter">
-                                {yearlySavings.toLocaleString()}€
-                            </div>
-                        </div>
+    <section id="roi" class="py-32 px-6 z-10 relative">
+        <div class="glass p-8 md:p-12 border-blue-500/20 max-w-4xl mx-auto shadow-2xl">
+            <h3 class="text-3xl font-black mb-8 flex items-center gap-3 italic"><i data-lucide="dollar-sign" class="text-green-500"></i> ROI KALKULATOR</h3>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div>
+                        <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest block mb-4">Team Größe: <span id="empVal">10</span></label>
+                        <input type="range" id="empRange" min="1" max="100" value="10" class="slider w-full">
                     </div>
-                </Card>
-            );
-        };
-
-        // ============= 3D SERVICE CARD =============
-        const ServiceCard = ({ title, desc, icon, delay }) => {
-            const [rotate, setRotate] = useState({ x: 0, y: 0 });
-            const handleMouse = (e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                setRotate({ x: (e.clientY - rect.top - rect.height/2) / 10, y: (rect.width/2 - (e.clientX - rect.left)) / 10 });
-            };
-            return (
-                <div 
-                    onMouseMove={handleMouse} 
-                    onMouseLeave={() => setRotate({x:0, y:0})}
-                    style={{ transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`, transition: '0.1s' }}
-                    className="perspective-1000"
-                >
-                    <Card className="p-10 h-full flex flex-col items-start gap-6 border-white/5 hover:border-blue-500/50 transition-colors">
-                        <div className="p-4 bg-blue-600 rounded-2xl"><Icon name={icon} className="text-white w-8 h-8" /></div>
-                        <h4 className="text-2xl font-black uppercase tracking-tight">{title}</h4>
-                        <p className="text-zinc-500 leading-relaxed">{desc}</p>
-                    </Card>
+                    <div>
+                        <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest block mb-4">Verlorene Std/Woche: <span id="hourVal">5</span>h</label>
+                        <input type="range" id="hourRange" min="1" max="40" value="5" class="slider w-full">
+                    </div>
                 </div>
-            );
-        };
-
-        // ============= MAIN APP =============
-        const App = () => {
-            const [isSubmitting, setIsSubmitting] = useState(false);
-            const [submitted, setSubmitted] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setIsSubmitting(true);
-                const formData = new FormData(e.target);
-                try {
-                    await fetch("https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec", {
-                        method: "POST",
-                        body: formData,
-                        mode: "no-cors"
-                    });
-                    setSubmitted(true);
-                } catch (e) { console.error(e); }
-                setIsSubmitting(false);
-            };
-
-            return (
-                <div className="relative">
-                    <ParticleField />
-                    
-                    {/* Header */}
-                    <nav className="fixed top-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
-                        <div className="text-2xl font-black tracking-tighter uppercase italic">Aura <span className="text-blue-500">Systems</span></div>
-                        <Button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} variant="secondary" className="text-[10px] px-6 py-2">KONTAKT</Button>
-                    </nav>
-
-                    {/* Hero */}
-                    <section className="pt-64 pb-32 px-6 text-center max-w-6xl mx-auto animate-fadeIn">
-                        <h1 className="text-6xl md:text-[9rem] font-black tracking-tighter leading-[0.85] mb-12">
-                            THE <span className="gradient-text">AI CORE</span> <br /> OF BUSINESS.
-                        </h1>
-                        <p className="text-xl md:text-2xl text-zinc-500 mb-16 max-w-3xl mx-auto font-light">
-                            Wir bauen keine Webseiten. Wir bauen autonome Infrastrukturen. Skalieren Sie Ihre Agentur auf Autopilot.
-                        </p>
-                        <div className="flex flex-col md:flex-row justify-center gap-6">
-                            <Button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})}>Audit anfordern ⚡</Button>
-                            <Button onClick={() => document.getElementById('roi').scrollIntoView({behavior:'smooth'})} variant="secondary">ROI berechnen</Button>
-                        </div>
-                    </section>
-
-                    {/* Services */}
-                    <section id="services" className="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-                        <ServiceCard title="AI Automation" desc="End-to-End Workflows mit n8n & OpenAI. Sparen Sie 40+ Stunden pro Woche." icon="Zap" />
-                        <ServiceCard title="Sales Intelligence" desc="KI-Agenten, die LinkedIn & E-Mail Leads finden, qualifizieren und buchen." icon="Target" />
-                        <ServiceCard title="Web Performance" desc="High-End Webarchitektur & CRO für maximale Conversion-Rates." icon="Gauge" />
-                    </section>
-
-                    {/* ROI */}
-                    <section id="roi" className="py-32 px-6">
-                        <ROICalculator />
-                    </section>
-
-                    {/* Success Stories */}
-                    <section className="py-32 px-6 max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-8">
-                            <Card className="p-12 border-white/5">
-                                <div className="text-blue-500 font-bold mb-4">CASE STUDY #01</div>
-                                <h3 className="text-4xl font-black mb-6">92% EFFIZIENZSTEIGERUNG</h3>
-                                <p className="text-zinc-500 text-lg">E-Commerce Brand skalierte von 50k auf 500k MRR ohne neue Mitarbeiter einzustellen – dank AURA Automation.</p>
-                            </Card>
-                            <Card className="p-12 border-white/5">
-                                <div className="text-purple-500 font-bold mb-4">CASE STUDY #02</div>
-                                <h3 className="text-4xl font-black mb-6">420.000€ GESPART</h3>
-                                <p className="text-zinc-500 text-lg">Durch Predictive Maintenance und automatisierte Logistik-Workflows im Mittelstand.</p>
-                            </Card>
-                        </div>
-                    </section>
-
-                    {/* Contact Form */}
-                    <section id="contact" className="py-40 px-6 max-w-4xl mx-auto">
-                        <Card className="p-12 md:p-24 text-center">
-                            <h2 className="text-5xl font-black mb-8 uppercase tracking-tighter">Initialisierung 🧬</h2>
-                            {submitted ? (
-                                <div className="text-2xl text-green-400 font-bold animate-fadeIn">✓ Mission empfangen. Wir melden uns.</div>
-                            ) : (
-                                <form onSubmit={handleSubmit} className="space-y-6 text-left">
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <input name="name" placeholder="Name" required className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition" />
-                                        <input name="email" type="email" placeholder="E-Mail" required className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition" />
-                                    </div>
-                                    <textarea name="message" placeholder="Beschreiben Sie Ihr Projekt..." rows="4" required className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition"></textarea>
-                                    <Button type="submit" disabled={isSubmitting} className="w-full py-8 text-xl uppercase tracking-widest">
-                                        {isSubmitting ? "Processing..." : "Launch Audit"}
-                                    </Button>
-                                </form>
-                            )}
-                        </Card>
-                    </section>
-
-                    <footer className="py-20 text-center text-zinc-700 text-[10px] font-bold tracking-[0.5em] uppercase">
-                        &copy; 2026 AURA SYSTEMS &middot; Digital Intelligence
-                    </footer>
+                <div class="bg-white/5 p-10 rounded-[2rem] border border-white/5 text-center">
+                    <div class="text-sm font-bold text-zinc-500 uppercase mb-2">Jährliches Potenzial</div>
+                    <div class="text-5xl md:text-7xl font-black text-blue-500 tracking-tighter"><span id="totalSavings">104.000</span>€</div>
                 </div>
-            );
-        };
+            </div>
+        </div>
+    </section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+    <section id="contact" class="py-40 px-6 max-w-4xl mx-auto z-10 relative">
+        <div class="glass p-12 md:p-24 text-center">
+            <h2 class="text-5xl font-black mb-8 uppercase tracking-tighter">Initialisierung 🧬</h2>
+            <form action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec" method="POST" id="leadForm" class="space-y-6 text-left">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input name="name" placeholder="Name" required class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition">
+                    <input name="email" type="email" placeholder="E-Mail" required class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition">
+                </div>
+                <textarea name="message" placeholder="Beschreiben Sie Ihr Projekt..." rows="4" required class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-blue-500 transition"></textarea>
+                <button type="submit" class="w-full bg-blue-600 py-8 rounded-2xl font-black text-xl uppercase tracking-widest hover:bg-blue-500 shadow-xl">Launch Audit</button>
+            </form>
+            <div id="successMsg" class="hidden text-2xl text-green-400 font-bold">✓ Mission empfangen. Wir melden uns.</div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center text-zinc-700 text-[10px] font-bold tracking-[0.5em] uppercase">
+        &copy; 2026 AURA SYSTEMS &middot; Digital Intelligence
+    </footer>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // 1. Partikel System (Vanilla JS)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.size = Math.random() * 1.5;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = "rgba(59, 130, 246, 0.4)";
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 2. ROI Rechner
+        const empRange = document.getElementById('empRange');
+        const hourRange = document.getElementById('hourRange');
+        const totalSavings = document.getElementById('totalSavings');
+        function updateROI() {
+            document.getElementById('empVal').innerText = empRange.value;
+            document.getElementById('hourVal').innerText = hourRange.value;
+            const savings = empRange.value * hourRange.value * 40 * 52; // 40€/h Basis
+            totalSavings.innerText = savings.toLocaleString();
+        }
+        empRange.addEventListener('input', updateROI);
+        hourRange.addEventListener('input', updateROI);
+
+        // 3. 3D Hover Effekt
+        document.querySelectorAll('.perspective').forEach(card => {
+            const inner = card.querySelector('.inner-card');
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width/2) / 10;
+                const y = (rect.height/2 - (e.clientY - rect.top)) / 10;
+                inner.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                inner.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        });
+
+        // 4. GSAP Intro
+        gsap.to("#heroTitle", { opacity: 1, y: -20, duration: 1, delay: 0.2 });
+        gsap.to("#heroSubtitle", { opacity: 1, y: -20, duration: 1, delay: 0.4 });
+        gsap.to("#heroButtons", { opacity: 1, y: -20, duration: 1, delay: 0.6 });
+
+        // 5. Form Handling
+        const form = document.getElementById('leadForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
+            form.classList.add('hidden');
+            document.getElementById('successMsg').classList.remove('hidden');
+        });
     </script>
 </body>
 </html>
