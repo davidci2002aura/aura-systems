@@ -21,7 +21,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #010101;
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             color: white;
             margin: 0;
             overflow-x: hidden;
@@ -159,12 +162,12 @@
         class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest">
         <div class="flex gap-6">
             <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                System: Operational</span>
-            <span class="hidden md:inline">Active Agents: <span class="text-indigo-400">14</span></span>
-            <span class="hidden md:inline">Latency: <span class="text-indigo-400">24ms</span></span>
+                System: Operativ</span>
+            <span class="hidden md:inline">Aktive Agenten: <span class="text-indigo-400">14</span></span>
+            <span class="hidden md:inline">Latenz: <span class="text-indigo-400">24ms</span></span>
         </div>
         <div>
-            Data Processed: <span class="text-white">1.2TB</span>
+            Daten Verarbeitet: <span class="text-white">1.2TB</span>
         </div>
     </div>
 
@@ -179,28 +182,29 @@
         <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
             <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
             <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
-            <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Launch Project</a>
+            <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
         </div>
     </nav>
 
     <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
-            Engineering Agency</span>
-        <h1 class="text-6xl md:text-[8.5rem] font-black tracking-tighter leading-[0.85] mb-12">
-            DOMINATE THROUGH <br /><span class="gradient-text italic">AUTONOMOUS EFFICIENCY.</span>
+            Engineering Agentur</span>
+        <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
+            WE BUILD THE <br /><span class="gradient-text italic">INFRASTRUCTURE.</span>
         </h1>
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-            We utilize <span class="text-white font-medium">Market Leadership</span> strategies to scale your
-            operations. We don't sell time; we engineer supremacy. <br>
-            <span class="italic text-zinc-500">The infrastructure of the future is autonomous. Are you ready to
-                lead?</span>
+            Wir skalieren Ihre Operationen durch <span
+                class="text-white font-medium">Marktführerschafts-Strategien</span>.
+            Wir verkaufen keine Zeit, wir konstruieren Überlegenheit. <br>
+            <span class="italic text-zinc-500">Die Infrastruktur der Zukunft ist autonom. Sind Sie bereit zu
+                führen?</span>
         </p>
     </section>
 
     <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
         <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
             <div class="text-center mb-20">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastructure
+                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
                     Insight</h2>
                 <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
             </div>
@@ -239,7 +243,7 @@
                             </svg>
                         </div>
                         <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core</h4>
-                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Process Intelligence</p>
+                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
                     </div>
                 </div>
 
@@ -259,7 +263,7 @@
                         </svg>
                     </div>
                     <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Real-Time Infrastructure</p>
+                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
                 </div>
             </div>
         </div>
@@ -267,7 +271,7 @@
 
     <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
         <div class="text-center mb-20">
-            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Engineering Architecture</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
             <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
                     class="gradient-text">Datensatz.</span></h3>
         </div>
@@ -283,7 +287,8 @@
                 </div>
                 <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
                     <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für maximale
-                    Geschwindigkeit optimiert.</p>
+                    Geschwindigkeit optimiert.
+                </p>
                 <div class="flex flex-wrap gap-2">
                     <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
                     <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
@@ -335,13 +340,13 @@
     <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
         <div class="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">The
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">Der
                     <span class="text-indigo-500">Business</span> <br>Impact.
                 </h2>
                 <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                    Unternehmerische Entscheidungen brauchen Fundamente. Wir analysieren drei Kern-Verlustbereiche:
-                    <strong>Suchzeiten</strong>, <strong>Fehler-Redundanz</strong> und <strong>manuelle
-                        Kommunikation</strong>.
+                    Unternehmerische Entscheidungen brauchen Fundamente. Wir analysieren und eliminieren Ineffizienz:
+                    <strong>30% der Arbeitszeit</strong> gehen durch manuelle Prozesse verloren.
+                    AURA reduziert diesen Verlust um <strong>85%</strong>.
                 </p>
 
                 <div class="space-y-12 glass p-10 rounded-[3rem] border-white/5">
@@ -388,7 +393,7 @@
                     </div>
                     <div class="text-right flex flex-col items-end">
                         <i data-lucide="trending-up" class="w-12 h-12 text-green-400 mb-2"></i>
-                        <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Scaleable
+                        <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Skalierbarer
                             Profit</span>
                     </div>
                 </div>
@@ -397,7 +402,7 @@
     </section>
 
     <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Ready for
+        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
             <br><span class="text-indigo-500">Level 2.</span>
         </h2>
 
@@ -412,9 +417,9 @@
 
                 <!-- Step 1: Volume -->
                 <div class="step active" id="step1">
-                    <h3 class="text-2xl font-bold mb-8">System Scale Audit</h3>
-                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">How large is your
-                        operation?</label>
+                    <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
+                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
+                        Operation?</label>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
                         <button type="button"
                             class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
@@ -442,39 +447,39 @@
 
                 <!-- Step 2: Stack -->
                 <div class="step" id="step2">
-                    <h3 class="text-2xl font-bold mb-8">Technical Environment</h3>
+                    <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primary CRM /
-                                Database?</label>
+                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
+                                Datenbank?</label>
                             <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
                                 class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
                         </div>
                         <button type="button"
                             class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                            onclick="nextStep(3)">Continue to Analysis &rarr;</button>
+                            onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
                     </div>
                 </div>
 
                 <!-- Step 3: Contact -->
                 <div class="step" id="step3">
-                    <h3 class="text-2xl font-bold mb-8">Finalize Audit</h3>
+                    <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <input name="name" placeholder="Name" required
                             class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        <input name="email" type="email" placeholder="Business E-Mail" required
+                        <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
                             class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
                     </div>
-                    <textarea name="message" placeholder="Specific Goals..." rows="3"
+                    <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
                         class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
 
                     <button type="submit"
                         class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
-                        Initialize
+                        Initialisieren
                     </button>
                     <button type="button"
                         class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                        onclick="nextStep(1)">Restart Audit</button>
+                        onclick="nextStep(1)">Audit Neustarten</button>
                 </div>
 
             </form>
