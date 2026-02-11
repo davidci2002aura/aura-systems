@@ -1,195 +1,274 @@
 <!DOCTYPE html>
 <html lang="de" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA SYSTEMS | Leading AI Automation Agency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { --accent: #6366f1; }
-        body { font-family: 'Inter', sans-serif; background-color: #030303; color: #fff; overflow-x: hidden; }
-        
-        /* Premium Background Noise */
-        .bg-noise::before {
-            content: ""; position: fixed; inset: 0; width: 100%; height: 100%;
-            background: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.05; pointer-events: none; z-index: 50;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AURA SYSTEMS | Enterprise AI Automation</title>
 
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 30%, #6366f1 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
-        .bento-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2.5rem;
-            position: relative; overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-        /* Interactive Mouse Glow */
-        .bento-card::after {
-            content: ""; position: absolute; inset: 0;
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(99, 102, 241, 0.1), transparent 40%);
-            z-index: 1; pointer-events: none;
-        }
+<style>
+:root {
+--accent: #6366f1;
+--bg-dark: #040404;
+--card-bg: #0a0a0a;
+}
 
-        .glass-input {
-            background: rgba(255, 255, 255, 0.03) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            transition: 0.3s; color: white;
-        }
-        .glass-input:focus { border-color: var(--accent) !important; box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
+body {
+font-family: 'Inter', sans-serif;
+background: var(--bg-dark);
+color: white;
+overflow-x: hidden;
+}
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030303; }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-    </style>
+canvas#bgCanvas {
+position: fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.gradient-text {
+background: linear-gradient(to right, #fff, #a5b4fc);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.bento-card {
+background: rgba(10,10,10,0.8);
+border: 1px solid #1f1f1f;
+border-radius: 1.5rem;
+padding: 2rem;
+backdrop-filter: blur(12px);
+transition: 0.4s ease;
+}
+
+.bento-card:hover {
+transform: translateY(-6px) scale(1.01);
+border-color: var(--accent);
+box-shadow: 0 20px 60px rgba(99,102,241,0.2);
+}
+
+.glass-input {
+background: #101010;
+border: 1px solid #222;
+color:white;
+}
+
+.glass-input:focus {
+border-color: var(--accent);
+outline:none;
+}
+
+.magnetic {
+transition: transform .2s ease;
+}
+
+.pricing-card {
+background: #0c0c0c;
+border:1px solid #1f1f1f;
+border-radius: 1.5rem;
+padding:2rem;
+transition: .4s;
+}
+
+.pricing-card:hover {
+transform: translateY(-8px);
+border-color: var(--accent);
+}
+
+</style>
 </head>
-<body class="antialiased bg-noise">
 
-    <nav class="fixed w-full z-[100] top-0 px-6 py-4 bg-black/20 backdrop-blur-2xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center font-black shadow-lg shadow-indigo-500/20">A</div>
-                <span class="text-xl font-black tracking-tighter uppercase">AURA SYSTEMS</span>
-            </div>
-            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.3em] uppercase text-zinc-500">
-                <a href="#services" class="hover:text-white transition">Portfolio</a>
-                <a href="#roi" class="hover:text-white transition">Effizienz</a>
-                <a href="#contact" class="hover:text-white transition">Kontakt</a>
-            </div>
-            <a href="#contact" class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition">Audit ⚡</a>
-        </div>
-    </nav>
+<body>
 
-    <section class="pt-56 pb-32 px-6 text-center">
-        <div class="max-w-5xl mx-auto gs-reveal">
-            <h1 class="text-7xl md:text-[9rem] font-black tracking-tighter leading-[0.85] mb-12">
-                BUILDING <br><span class="gradient-text">THE FUTURE.</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-zinc-500 mb-16 max-w-3xl mx-auto font-light leading-relaxed">
-                Wir sind Ihr Partner für autonome KI-Infrastruktur. Wir eliminieren Ineffizienz und maximieren Ihr digitales Wachstum.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center gap-6">
-                <a href="#contact" class="bg-indigo-600 px-12 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-indigo-600/30 hover:scale-105 transition">Jetzt skalieren</a>
-                <a href="#services" class="bg-white/5 border border-white/10 px-12 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition">Services entdecken</a>
-            </div>
-        </div>
-    </section>
+<canvas id="bgCanvas"></canvas>
 
-    <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center bento-card p-12 md:p-24 gs-reveal">
-            <div>
-                <h2 class="text-4xl md:text-5xl font-black mb-8 uppercase tracking-tighter">Ihre Agentur auf <br><span class="text-indigo-500">Autopilot.</span></h2>
-                <p class="text-zinc-400 text-lg leading-relaxed mb-8">
-                    Sehen Sie zu, wie komplexe Aufgaben von unseren KI-Systemen in Millisekunden gelöst werden. Keine Pausen, keine Fehler, nur reines Wachstum.
-                </p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 text-zinc-300 font-bold"><i data-lucide="zap" class="text-indigo-500"></i> Full Stack Automation</div>
-                    <div class="flex items-center gap-4 text-zinc-300 font-bold"><i data-lucide="zap" class="text-indigo-500"></i> AI Sales Intelligence</div>
-                    <div class="flex items-center gap-4 text-zinc-300 font-bold"><i data-lucide="zap" class="text-indigo-500"></i> High-Speed Web Infrastructure</div>
-                </div>
-            </div>
-            <div class="relative flex justify-center">
-                <lottie-player src="https://lottie.host/5d6983c0-2078-4002-980c-831074171448/0X2g8s2J2B.json" background="transparent" speed="1" style="width: 100%; height: 400px;" loop autoplay></lottie-player>
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav class="fixed w-full z-50 px-6 py-4 bg-black/40 backdrop-blur-md border-b border-[#1f1f1f]">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
+<div class="flex items-center gap-3 font-black uppercase">
+<div class="w-8 h-8 bg-indigo-600 flex items-center justify-center rounded-lg">A</div>
+AURA SYSTEMS
+</div>
+<a href="#contact" class="magnetic bg-indigo-600 px-5 py-2 rounded-lg text-xs uppercase font-bold">Audit</a>
+</div>
+</nav>
 
-    <section id="roi" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto text-center gs-reveal">
-            <h3 class="text-sm font-black tracking-[0.4em] text-indigo-500 uppercase mb-8 text-center">Efficiency Calculator</h3>
-            <div class="bento-card p-12 md:p-20">
-                <p class="text-2xl font-light mb-10 italic text-zinc-400">Wie viele Stunden pro Woche verschwendet Ihr Team mit manuellen Aufgaben?</p>
-                <input type="range" min="5" max="160" value="40" class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500 mb-12" id="roiRange">
-                <div class="text-6xl md:text-8xl font-black tracking-tighter">
-                    <span id="roiAmount" class="gradient-text">4.800</span>€
-                </div>
-                <p class="mt-6 text-zinc-500 font-bold uppercase tracking-widest text-xs">Potenzielle Ersparnis / Monat</p>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="pt-48 pb-40 px-6 text-center">
+<div class="max-w-5xl mx-auto">
 
-    <section id="services" class="py-32 px-6 max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div class="md:col-span-8 bento-card p-12 md:p-16 gs-reveal">
-                <i data-lucide="bot" class="text-indigo-500 w-16 h-16 mb-10"></i>
-                <h3 class="text-4xl font-black mb-6 uppercase">AI Sales Agents</h3>
-                <p class="text-zinc-400 text-xl leading-relaxed">Wir bauen autonome Sales-Bots, die Leads auf LinkedIn und per E-Mail identifizieren, kontaktieren und Termine direkt in Ihrem Kalender buchen.</p>
-            </div>
-            <div class="md:col-span-4 bento-card p-12 gs-reveal" style="transition-delay: 0.1s;">
-                <i data-lucide="gauge" class="text-emerald-500 w-16 h-16 mb-10"></i>
-                <h3 class="text-3xl font-black mb-6">CRO & Speed</h3>
-                <p class="text-zinc-500 text-lg">Webseiten-Optimierung für maximale Conversion. Wir machen Besucher zu Kunden.</p>
-            </div>
-            <div class="md:col-span-4 bento-card p-12 gs-reveal" style="transition-delay: 0.2s;">
-                <i data-lucide="cpu" class="text-purple-500 w-16 h-16 mb-10"></i>
-                <h3 class="text-3xl font-black mb-6">n8n Logic</h3>
-                <p class="text-zinc-500 text-lg">Komplexe Backend-Workflows, die Ihre gesamte Business-Logik automatisieren.</p>
-            </div>
-            <div class="md:col-span-8 bento-card p-12 md:p-16 gs-reveal" style="transition-delay: 0.3s;">
-                <i data-lucide="bar-chart-3" class="text-amber-500 w-16 h-16 mb-10"></i>
-                <h3 class="text-4xl font-black mb-6">Data Architecture</h3>
-                <p class="text-zinc-400 text-xl">Entscheiden Sie basierend auf Fakten. Wir bauen Echtzeit-Dashboards für all Ihre Unternehmensdaten.</p>
-            </div>
-        </div>
-    </section>
+<h1 class="text-6xl md:text-8xl font-black leading-tight mb-6">
+Autonome <span class="gradient-text">AI Infrastruktur</span>
+</h1>
 
-    <section id="contact" class="py-48 px-6 relative">
-        <div class="max-w-4xl mx-auto bento-card p-12 md:p-24 text-center gs-reveal">
-            <h2 class="text-6xl md:text-8xl font-black mb-10 tracking-tighter uppercase">Let's <span class="text-indigo-500">Automate.</span></h2>
-            <form action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <input type="text" name="name" placeholder="Name" required class="glass-input p-6 rounded-2xl outline-none">
-                <input type="email" name="email" placeholder="E-Mail" required class="glass-input p-6 rounded-2xl outline-none">
-                <textarea name="message" placeholder="Beschreiben Sie Ihre aktuelle Herausforderung..." rows="4" required class="md:col-span-2 glass-input p-6 rounded-2xl outline-none"></textarea>
-                <button type="submit" class="md:col-span-2 bg-indigo-600 text-white py-8 rounded-2xl font-black text-2xl hover:bg-white hover:text-black transition shadow-2xl shadow-indigo-600/30 uppercase tracking-tighter">Initialisierung starten 🚀</button>
-            </form>
-        </div>
-    </section>
+<p class="text-zinc-400 text-xl max-w-xl mx-auto mb-12">
+Wir bauen intelligente Systeme, die Unternehmen automatisieren, skalieren und transformieren.
+</p>
 
-    <footer class="py-20 text-center text-zinc-700 text-[10px] font-bold tracking-[0.5em] uppercase">
-        &copy; 2026 AURA SYSTEMS &middot; Digital Sovereignty
-    </footer>
+<div class="flex justify-center gap-6">
+<a href="#contact" class="magnetic bg-white text-black px-8 py-4 rounded-xl font-bold">Audit starten</a>
+<a href="#demo" class="magnetic border border-[#333] px-8 py-4 rounded-xl">Live Demo</a>
+</div>
 
-    <script>
-        lucide.createIcons();
-        gsap.registerPlugin(ScrollTrigger);
+</div>
+</section>
 
-        // GSAP Animations
-        gsap.utils.toArray(".gs-reveal").forEach(elem => {
-            gsap.from(elem, {
-                scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" },
-                y: 60, opacity: 0, duration: 1.2, ease: "power4.out"
-            });
-        });
+<!-- FAKE LIVE AI DEMO -->
+<section id="demo" class="py-32 px-6">
+<div class="max-w-4xl mx-auto bento-card">
+<h2 class="text-2xl font-black mb-6">Live AI Workflow Simulation</h2>
 
-        // Mouse Glow Effect Logic
-        document.querySelectorAll(".bento-card").forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-                card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-            };
-        });
+<div class="space-y-4 text-sm text-zinc-400" id="demoFeed">
+</div>
 
-        // ROI Calculator Logic
-        const range = document.getElementById('roiRange');
-        const display = document.getElementById('roiAmount');
-        range.oninput = function() {
-            display.innerHTML = (this.value * 30 * 4).toLocaleString(); // 30€/h * 4 Wochen
-        }
-    </script>
+</div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section class="py-32 px-6">
+<div class="max-w-4xl mx-auto bento-card">
+<h3 class="text-center font-black text-3xl mb-12">ROI Kalkulator</h3>
+
+<div class="space-y-6">
+<input type="range" min="1" max="50" value="5" id="emp" />
+<input type="range" min="1" max="20" value="8" id="hours" />
+<input type="range" min="20" max="120" value="45" id="rate" />
+
+<div class="text-center text-5xl font-black">
+<span id="roi">0</span>€
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section class="py-32 px-6">
+<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+
+<div class="pricing-card">
+<h3 class="font-black text-xl mb-4">Starter</h3>
+<p class="text-zinc-400 mb-6">AI Analyse & Automationen</p>
+<div class="text-3xl font-black mb-6">99€/Monat</div>
+</div>
+
+<div class="pricing-card border-indigo-500">
+<h3 class="font-black text-xl mb-4">Professional</h3>
+<p class="text-zinc-400 mb-6">Advanced Automation + AI Agenten</p>
+<div class="text-3xl font-black mb-6">299€/Monat</div>
+</div>
+
+<div class="pricing-card">
+<h3 class="font-black text-xl mb-4">Enterprise</h3>
+<p class="text-zinc-400 mb-6">Full Infrastructure + Custom KI</p>
+<div class="text-3xl font-black mb-6">799€/Monat</div>
+</div>
+
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-32 px-6">
+<div class="max-w-3xl mx-auto bento-card">
+<h2 class="text-3xl font-black mb-8 text-center">Audit Anfrage</h2>
+
+<form action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec" method="POST" class="space-y-6">
+<input name="name" required placeholder="Name" class="glass-input w-full p-4 rounded-xl" />
+<input name="email" required placeholder="Email" class="glass-input w-full p-4 rounded-xl" />
+<textarea name="message" required placeholder="Ziele / Herausforderung" class="glass-input w-full p-4 rounded-xl"></textarea>
+<button class="bg-indigo-600 w-full py-5 rounded-xl font-black">Audit starten</button>
+</form>
+</div>
+</section>
+
+<script>
+
+// Background Neural Animation
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<60;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*0.5,
+vy:(Math.random()-0.5)*0.5
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x+=p.vx;
+p.y+=p.vy;
+
+ctx.fillStyle='#6366f1';
+ctx.fillRect(p.x,p.y,2,2);
+
+particles.forEach(p2=>{
+let dist=Math.hypot(p.x-p2.x,p.y-p2.y);
+if(dist<120){
+ctx.strokeStyle='rgba(99,102,241,0.1)';
+ctx.beginPath();
+ctx.moveTo(p.x,p.y);
+ctx.lineTo(p2.x,p2.y);
+ctx.stroke();
+}
+});
+});
+
+requestAnimationFrame(animate);
+}
+animate();
+
+// ROI
+const emp=document.getElementById('emp');
+const hours=document.getElementById('hours');
+const rate=document.getElementById('rate');
+const roi=document.getElementById('roi');
+
+function calc(){
+let val=emp.value*hours.value*rate.value*52;
+gsap.to(roi,{textContent:val,duration:1,snap:{textContent:1}});
+}
+
+[emp,hours,rate].forEach(i=>i.addEventListener('input',calc));
+calc();
+
+// Fake Demo Feed
+const messages=[
+"Analyse eingehender Anrufdaten…",
+"Workflow erstellt…",
+"POS System synchronisiert…",
+"Reservierungen optimiert…",
+"AI Agent antwortet Kundenanfragen…",
+"Performance Report generiert…"
+];
+
+let feed=document.getElementById('demoFeed');
+let index=0;
+
+setInterval(()=>{
+let el=document.createElement('div');
+el.textContent="> "+messages[index];
+feed.prepend(el);
+index=(index+1)%messages.length;
+},2000);
+
+</script>
+
 </body>
 </html>
