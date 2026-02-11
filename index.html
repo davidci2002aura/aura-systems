@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Souveräne AI Dienstleistungen</title>
+    <meta name="description" content="Wir transformieren Unternehmen mit autonomen KI-Agenten, Backend-Optimierung und souveränen Workflows.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              aura: {
+                bg: '#030712',
+                accent: '#6366f1',
+                text: '#f9fafb',
+                muted: '#9ca3af',
+              }
+            },
+            backgroundImage: {
+              'noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")",
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #030712;
+        color: #f9fafb;
+      }
+      /* Custom utility for the specific glow requested */
+      .text-glow {
+        text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+      }
+      .input-glow:focus {
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body class="antialiased bg-aura-bg text-aura-text bg-noise">
+    <div id="root"></div>
+</body>
+</html>
