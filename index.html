@@ -9,6 +9,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Technical SEO: Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "AURA SYSTEMS",
+      "description": "Autonomous AI Engineering & Value Systems.",
+      "url": "https://aura-systems.ai",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ravensburg",
+        "addressCountry": "DE"
+      }
+    }
+    </script>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
@@ -106,19 +124,60 @@
             box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
         }
 
+        /* Noise Texture (Layer 2) */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        }
+
+        /* Aura Glows (Layer 1) */
         #cursor-glow {
             position: fixed;
             top: 0;
             left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(244, 63, 94, 0.05) 40%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
             transform: translate(-50%, -50%);
-            will-change: transform;
-            /* GPU Acceleration */
+            will-change: transform, opacity;
+            filter: blur(80px);
+            /* Soften the gradient edges */
+            animation: breathe 10s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* Content Layering (Layer 3) */
+        section {
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Safe Zone Clamp */
+        .safe-padding {
+            padding-top: clamp(80px, 10vh, 120px);
         }
 
         /* Range Slider Styling */
@@ -143,6 +202,13 @@
             background: var(--accent);
             margin-top: -7px;
             box-shadow: 0 0 10px var(--accent);
+            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        input[type=range]:active::-webkit-slider-thumb {
+            transform: scale(1.5);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
         }
 
         /* Multi-Step Form */
@@ -169,9 +235,9 @@
 </head>
 
 <body class="antialiased">
-    <div id="cursor-glow"></div>
-
-    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
+    <!-- WebGL Liquid Aura -->
+    <div id="webgl-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+    <div class="noise-overlay"></div> <!-- Layer 2 -->
 
     <!-- Live System Status -->
     <div
@@ -450,9 +516,21 @@
                     <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
                 </div>
                 <div
-                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even</div>
-                    <div class="text-3xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
+                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden">
+                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even Point
+                    </div>
+                    <div class="text-3xl font-black text-white relative z-10" id="res_breakeven">1.2 Mo.</div>
+
+                    <!-- Visual Timeline Bar -->
+                    <div class="w-full h-1.5 bg-white/10 rounded-full mt-4 overflow-hidden relative">
+                        <div id="breakeven-bar"
+                            class="absolute top-0 left-0 h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all duration-500"
+                            style="width: 10%"></div>
+                    </div>
+                    <div class="flex justify-between text-[8px] text-zinc-600 mt-1 font-mono uppercase">
+                        <span>Start</span>
+                        <span>12 Mo.</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -552,15 +630,7 @@
     <script>
         lucide.createIcons();
 
-        // Cursor Glow - Optimized with GSAP quickTo
-        const glow = document.getElementById('cursor-glow');
-        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
-        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
-
-        window.addEventListener('mousemove', (e) => {
-            xTo(e.clientX - 250);
-            yTo(e.clientY - 250);
-        });
+        // Cursor Glow handled by WebGL Shader Uniforms now.
 
         // ROI Matrix Logic (Hospitality SEO Model)
         const m_guests = document.getElementById('m_guests');
@@ -741,71 +811,204 @@
             animObserver.observe(el);
         });
 
-        // Neural Network Background Canvas
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+        // --- Cleaned up old particles code ---
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        // --- AURA CORE 2.0: WebGL Liquid Shader ---
+        const container = document.getElementById('webgl-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
+        const geometry = new THREE.PlaneGeometry(2, 2);
+
+        // Perlin/Simplex Noise Fragment Shader
+        const fragmentShader = `
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+            uniform float u_intensity;
+
+            // Simplex 3D Noise function (simplified)
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+            float snoise(vec3 v) {
+                const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+                const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+                // First corner
+                vec3 i  = floor(v + dot(v, C.yyy) );
+                vec3 x0 = v - i + dot(i, C.xxx) ;
+
+                // Other corners
+                vec3 g = step(x0.yzx, x0.xyz);
+                vec3 l = 1.0 - g;
+                vec3 i1 = min( g.xyz, l.zxy );
+                vec3 i2 = max( g.xyz, l.zxy );
+
+                vec3 x1 = x0 - i1 + C.xxx;
+                vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+                vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+                // Permutations
+                i = mod289(i);
+                vec4 p = permute( permute( permute(
+                            i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                        + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+                        + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+                // Gradients: 7x7 points over a square, mapped onto an octahedron.
+                // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+                float n_ = 0.142857142857; // 1.0/7.0
+                vec3  ns = n_ * D.wyz - D.xzx;
+
+                vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+                vec4 x_ = floor(j * ns.z);
+                vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+                vec4 x = x_ *ns.x + ns.yyyy;
+                vec4 y = y_ *ns.x + ns.yyyy;
+                vec4 h = 1.0 - abs(x) - abs(y);
+
+                vec4 b0 = vec4( x.xy, y.xy );
+                vec4 b1 = vec4( x.zw, y.zw );
+
+                vec4 s0 = floor(b0)*2.0 + 1.0;
+                vec4 s1 = floor(b1)*2.0 + 1.0;
+                vec4 sh = -step(h, vec4(0.0));
+
+                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+                vec3 p0 = vec3(a0.xy,h.x);
+                vec3 p1 = vec3(a0.zw,h.y);
+                vec3 p2 = vec3(a1.xy,h.z);
+                vec3 p3 = vec3(a1.zw,h.w);
+
+                //Normalise gradients
+                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+                p0 *= norm.x;
+                p1 *= norm.y;
+                p2 *= norm.z;
+                p3 *= norm.w;
+
+                // Mix final noise value
+                vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                m = m * m;
+                return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
+                                            dot(p2,x2), dot(p3,x3) ) );
             }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+            void main() {
+                vec2 st = gl_FragCoord.xy / u_resolution.xy;
+                st.x *= u_resolution.x / u_resolution.y;
+
+                vec3 color = vec3(0.0);
+                
+                // Mouse interaction
+                vec2 mouseNorm = u_mouse / u_resolution;
+                float dist = distance(st, mouseNorm);
+                
+                // Liquid Noise movement
+                float noise = snoise(vec3(st * 3.0, u_time * 0.1));
+                
+                // Base Gradient Colors (Indigo/Dark)
+                vec3 color1 = vec3(0.05, 0.05, 0.1); // Dark Back
+                vec3 color2 = vec3(0.39, 0.4, 0.95);  // Indigo
+                vec3 color3 = vec3(0.9, 0.3, 0.5);    // Rose (Hot)
+                
+                // Mixing based on noise and intensity
+                float mixVal = smoothstep(0.3, 0.7, noise + u_intensity * 0.5);
+                
+                // Dynamic Temperature
+                vec3 mixedColor = mix(color1, color2, mixVal);
+                mixedColor = mix(mixedColor, color3, u_intensity * mixVal * dist); // Heat up near mouse + intensity
+
+                // Soft glow blob
+                float glow = 1.0 - distance(st, vec2(0.5) + vec2(sin(u_time*0.5)*0.2, cos(u_time*0.3)*0.2));
+                mixedColor += glow * 0.2 * vec3(0.4, 0.5, 1.0);
+
+                gl_FragColor = vec4(mixedColor, 1.0);
             }
-            draw() {
-                ctx.fillStyle = 'rgba(99, 102, 241, 0.2)'; // Indigo low opacity
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+        `;
 
-        // Init Particles
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-
-                // Draw Connections
-                for (let j = index + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 150) {
-                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 - dist / 1500})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
+        const material = new THREE.ShaderMaterial({
+            vertexShader: `
+                void main() {
+                    gl_Position = vec4( position, 1.0 );
                 }
-            });
-            requestAnimationFrame(animateCanvas);
+            `,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                u_time: { value: 0.0 },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                u_mouse: { value: new THREE.Vector2(0, 0) },
+                u_intensity: { value: 0.0 } // 0.0 = Cool, 1.0 = Hot
+            }
+        });
+
+        const plane = new THREE.Mesh(geometry, material);
+        scene.add(plane);
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+        function animate() {
+            material.uniforms.u_time.value = clock.getElapsedTime();
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
         }
-        animateCanvas();
+        animate();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+        });
+
+        // Mouse Move (Interactive Aura)
+        window.addEventListener('mousemove', (e) => {
+            if (typeof material !== 'undefined') {
+                material.uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
+            }
+        });
+
+        // --- GSAP Spring Physics & Stagger ---
+        // Elastic Hover Effect for Buttons & Cards
+        const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
+
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(el, {
+                    scale: 1.05,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.4)"
+                });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Stagger Nav Links on Load
+        gsap.from("#main-nav a", {
+            y: -20,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power3.out",
+            delay: 0.5
+        });
+
+        // --- END WebGL Core ---
 
         // Live Terminal Simulation
         const terminalStrings = [
