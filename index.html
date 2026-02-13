@@ -261,129 +261,106 @@
             scroll-margin-top: 120px;
         }
 
-        /* Ghost Menu Trigger */
-        .ghost-trigger {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 5000;
-            cursor: pointer;
-            mix-blend-mode: difference;
-            /* Ensure visibility */
-            width: 40px;
-            height: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 6px;
-        }
-
-        .ghost-line {
-            height: 2px;
-            background: #fff;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .ghost-line:first-child {
-            width: 30px;
-        }
-
-        .ghost-line:last-child {
-            width: 20px;
-        }
-
-        .ghost-trigger:hover .ghost-line {
-            width: 40px;
-            background: var(--accent);
-        }
-
-        /* Active State (X) */
-        .ghost-trigger.active .ghost-line:first-child {
-            transform: rotate(45deg) translate(2px, 3px);
-            width: 30px;
-        }
-
-        .ghost-trigger.active .ghost-line:last-child {
-            transform: rotate(-45deg) translate(2px, -3px);
-            width: 30px;
-        }
-
-        /* Full Screen Overlay */
-        .ghost-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 5, 5, 0.96);
-            backdrop-filter: blur(50px);
-            z-index: 4999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .ghost-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .ghost-link {
-            font-size: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.05em;
-            color: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin: 1rem 0;
-            cursor: pointer;
-            text-decoration: none;
-            position: relative;
-        }
-
-        .ghost-link:hover {
-            color: #fff;
-            transform: scale(1.1);
-            letter-spacing: 0;
-        }
-
-        .ghost-link::before {
-            content: attr(data-text);
-            position: absolute;
+        /* Anti-Collision Header */
+        nav#main-nav {
+            height: 80px;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 0%;
-            height: 100%;
-            color: var(--accent);
-            overflow: hidden;
-            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .ghost-link:hover::before {
-            width: 100%;
-        }
-
-        /* Layout Resets for Breathing Room */
-        .hero-breathing {
-            min-height: 80vh;
+            z-index: 1000;
+            /* Ensure it sits on top */
+            padding-top: env(safe-area-inset-top);
+            /* Reset padding logic */
+            padding-bottom: 0;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
 
+        /* Main Container Safety */
         main {
+            padding-top: 60px;
             width: 100%;
-            max-width: none;
-            overflow-x: hidden;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
 
-        /* Mobile Adapts */
-        @media (max-width: 768px) {
-            .ghost-link {
-                font-size: 2.5rem;
+        /* 12-Column Grid System */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .col-span-8 {
+            grid-column: span 8;
+        }
+
+        .col-span-4 {
+            grid-column: span 4;
+        }
+
+        /* Directory Tile */
+        .directory-tile {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            padding: 2rem;
+            height: 100%;
+            position: sticky;
+            top: 100px;
+            /* Offset from header */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .directory-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .directory-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .directory-link.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Mobile Stack */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .col-span-8,
+            .col-span-4 {
+                width: 100%;
+            }
+
+            .directory-tile {
+                position: relative;
+                top: 0;
             }
         }
     </style>
@@ -420,366 +397,234 @@
 
             <!-- Header is now purely Brand & Status - Navigation is in Stealth Mode -->
 
-            <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
-                <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI
-                    &
-                    Engineering Agentur</span>
-                <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-                    WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
-                </h1>
-                <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-                    Wir bauen keine Webseiten. Wir konstruieren autonome <span
-                        class="text-white font-medium">Wertschöpfungs-Systeme</span>.
-                    Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
-                    <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
-                </p>
-            </section>
+            <main>
+                <section class="py-24 px-6 text-center z-10 relative">
+                    <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack
+                        AI
+                        &
+                        Engineering Agentur</span>
+                    <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
+                        WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
+                    </h1>
+                    <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
+                        Wir bauen keine Webseiten. Wir konstruieren autonome <span
+                            class="text-white font-medium">Wertschöpfungs-Systeme</span>.
+                        Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
+                        <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
+                    </p>
+                </section>
 
-            <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
-                <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
-                    <div class="text-center mb-20">
-                        <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">
-                            Infrastruktur
-                            Insight</h2>
-                        <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <!-- Frontend Node -->
-                        <div
-                            class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                            <div
-                                class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                                <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
-                            <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
-                        </div>
-
-                        <div class="connector hidden md:block">
-                            <div class="pulse"></div>
-                        </div>
-
-                        <!-- AI Core Node -->
-                        <div
-                            class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
-                            <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse">
-                            </div>
-                            <div class="relative z-10">
-                                <div
-                                    class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                                    <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                    </svg>
-                                </div>
-                                <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI
-                                    Core
-                                </h4>
-                                <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz
+                <div class="bento-grid px-6 pb-24">
+                    <!-- ROI Section (Span 8) -->
+                    <div class="col-span-8">
+                        <section id="roi" class="glass p-8 md:p-12 rounded-[2rem] border-white/5 relative z-10">
+                            <div class="mb-12">
+                                <h2
+                                    class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-none mb-6">
+                                    <span class="text-indigo-500">Revenue</span> Multiplier.
+                                </h2>
+                                <p class="text-zinc-500 text-lg font-light leading-relaxed">
+                                    Sichtbarkeit ist Mathematik. Berechnen Sie Ihren <strong
+                                        class="text-white">Umsatz-Verlust</strong>.
                                 </p>
                             </div>
-                        </div>
 
-                        <div class="connector hidden md:block">
-                            <div class="pulse" style="animation-delay: 1s"></div>
-                        </div>
-
-                        <!-- Backend Node -->
-                        <div
-                            class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                            <div
-                                class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                                <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                                </svg>
-                            </div>
-                            <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                            <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-20">
-                    <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische
-                        Architektur
-                    </h2>
-                    <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
-                            class="gradient-text">Datensatz.</span></h3>
-                </div>
-
-                <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-                    <div
-                        class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                        <div class="flex items-center gap-4 mb-8">
-                            <div
-                                class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                                <i data-lucide="layout-template" class="text-indigo-500"></i>
-                            </div>
-                            <h4 class="text-lg font-black uppercase">Frontend</h4>
-                        </div>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces
-                            mit
-                            <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für
-                            maximale
-                            Geschwindigkeit optimiert.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
-                        </div>
-                    </div>
-
-                    <div
-                        class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
-                        <div class="flex items-center gap-4 mb-8">
-                            <div
-                                class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                                <i data-lucide="brain-circuit" class="text-white"></i>
-                            </div>
-                            <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
-                        </div>
-                        <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong>
-                            Workflows
-                            kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
-                            Geschäftsprozesse.</p>
-
-                        <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
-                            id="live-terminal">
-                            <div class="opacity-50">>> Initializing AURA_CORE...</div>
-                            <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
-                            <div class="text-white">>> Status: Autonomy active.</div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                        <div class="flex items-center gap-4 mb-8">
-                            <div
-                                class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                                <i data-lucide="database" class="text-indigo-500"></i>
-                            </div>
-                            <h4 class="text-lg font-black uppercase">Backend</h4>
-                        </div>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit
-                            <strong>Supabase</strong>
-                            und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen
-                            mitwächst.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
-                            <span
-                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
-                <div class="grid lg:grid-cols-2 gap-20 items-center">
-                    <div>
-                        <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
-                            <span class="text-indigo-500">Revenue</span> <br>Multiplier.
-                        </h2>
-                        <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                            Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
-                            Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
-                            Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende
-                            Rankings.
-                        </p>
-
-                        <div
-                            class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
-                            <!-- Input Section -->
-                            <div class="space-y-6">
-                                <div>
-                                    <div
-                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                        <span>Monatliche Gäste (Website)</span>
-                                        <span class="text-indigo-400" id="v_guests">1.000</span>
+                            <!-- ROI Calculator Internal Grid -->
+                            <div class="grid lg:grid-cols-2 gap-12">
+                                <!-- Inputs -->
+                                <div class="space-y-8 flex flex-col justify-center">
+                                    <div>
+                                        <div
+                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                            <span>Monatliche Gäste</span>
+                                            <span class="text-indigo-400" id="v_guests">1.000</span>
+                                        </div>
+                                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
+                                            class="w-full">
                                     </div>
-                                    <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
-                                        class="w-full">
-                                </div>
-                                <div>
-                                    <div
-                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                        <span>Ø Umsatz pro Gast</span>
-                                        <span class="text-indigo-400" id="v_check">25 €</span>
+                                    <div>
+                                        <div
+                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                            <span>Ø Umsatz pro Gast</span>
+                                            <span class="text-indigo-400" id="v_check">25 €</span>
+                                        </div>
+                                        <input type="range" id="m_check" min="5" max="150" step="1" value="25"
+                                            class="w-full">
                                     </div>
-                                    <input type="range" id="m_check" min="5" max="150" step="1" value="25"
-                                        class="w-full">
-                                </div>
-                                <div>
-                                    <div
-                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                        <span>SEO Sichtbarkeit Boost</span>
-                                        <span class="text-green-400" id="v_boost">+20%</span>
+                                    <div>
+                                        <div
+                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                            <span>SEO Boost</span>
+                                            <span class="text-green-400" id="v_boost">+20%</span>
+                                        </div>
+                                        <input type="range" id="m_boost" min="5" max="100" step="5" value="20"
+                                            class="w-full">
                                     </div>
-                                    <input type="range" id="m_boost" min="5" max="100" step="5" value="20"
-                                        class="w-full">
-                                    <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach
-                                        Technical Fixes.</p>
+                                </div>
+
+                                <!-- Results -->
+                                <div class="space-y-6">
+                                    <div class="bg-white/5 rounded-2xl p-6 text-center border border-white/5">
+                                        <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-widest">
+                                            Jährlicher Profit</div>
+                                        <div class="text-4xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300"
+                                            id="res_gain">0 €</div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-white/5 rounded-2xl p-4 text-center border border-white/5">
+                                            <div
+                                                class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">
+                                                ROI</div>
+                                            <div class="text-xl font-black text-green-400" id="res_roi_percent">0%</div>
+                                        </div>
+                                        <div class="bg-white/5 rounded-2xl p-4 text-center border border-white/5">
+                                            <div
+                                                class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">
+                                                Break-Even</div>
+                                            <div class="text-xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                                        class="w-full py-4 bg-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
+                                        <span>Profit Realisieren</span>
+                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                    </button>
                                 </div>
                             </div>
-
-                            <!-- Divider -->
-                            <div class="border-t border-rose-200/5 my-4"></div>
-
-                            <!-- Result Section (Bottom Hierarchy) -->
-                            <div class="text-center">
-                                <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">
-                                    Jährlicher
-                                    Umsatz-Gewinn</div>
-                                <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
-                                    id="res_gain">0 €</div>
-
-                                <button
-                                    onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                                    class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
-                                    <span>Diesen Profit Realisieren</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </button>
-                            </div>
-                        </div>
+                        </section>
                     </div>
 
-                    <!-- Bento Stats Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                        <div
-                            class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                            <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)
+                    <!-- Directory Tile (Span 4) -->
+                    <div class="col-span-4">
+                        <aside class="directory-tile">
+                            <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Verzeichnis
                             </div>
-                            <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
-                        </div>
-                        <div
-                            class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden">
-                            <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even
-                                Point
-                            </div>
-                            <div class="text-3xl font-black text-white relative z-10" id="res_breakeven">1.2 Mo.</div>
+                            <a href="#engineering-deep-dive" class="directory-link">
+                                <span>Deep Dive</span>
+                                <i data-lucide="cpu" class="w-4 h-4 text-zinc-400"></i>
+                            </a>
+                            <a href="#architecture" class="directory-link">
+                                <span>Architecture</span>
+                                <i data-lucide="layout-template" class="w-4 h-4 text-zinc-400"></i>
+                            </a>
+                            <a href="#roi" class="directory-link active">
+                                <span>Calculator</span>
+                                <i data-lucide="calculator" class="w-4 h-4 text-white"></i>
+                            </a>
+                            <a href="#contact" class="directory-link">
+                                <span>Kontakt</span>
+                                <i data-lucide="send" class="w-4 h-4 text-zinc-400"></i>
+                            </a>
 
-                            <!-- Visual Timeline Bar -->
-                            <div class="w-full h-1.5 bg-white/10 rounded-full mt-4 overflow-hidden relative">
-                                <div id="breakeven-bar"
-                                    class="absolute top-0 left-0 h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all duration-500"
-                                    style="width: 10%"></div>
+                            <div class="mt-auto pt-8 border-t border-white/5">
+                                <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">Live
+                                    Status</div>
+                                <div class="flex justify-between text-[10px] text-zinc-400 mb-2 font-mono">
+                                    <span>Core:</span> <span class="text-green-400">Online</span>
+                                </div>
+                                <div class="flex justify-between text-[10px] text-zinc-400 font-mono">
+                                    <span>Uptime:</span> <span class="text-white">99.9%</span>
+                                </div>
                             </div>
-                            <div class="flex justify-between text-[8px] text-zinc-600 mt-1 font-mono uppercase">
-                                <span>Start</span>
-                                <span>12 Mo.</span>
+                        </aside>
+                    </div>
+
+                    <!-- Architecture Section (Span 12) -->
+                    <div class="col-span-12 mt-24">
+                        <section id="architecture" class="relative z-10">
+                            <div class="glass p-12 rounded-[2rem] border-white/5">
+                                <div class="text-center mb-12">
+                                    <h3 class="text-3xl font-black italic">AURA Architecture</h3>
+                                </div>
+                                <!-- Simplified Arch for Bento -->
+                                <div class="grid md:grid-cols-3 gap-6 text-center">
+                                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                                        <div class="font-bold uppercase mb-2 text-sm">Frontend</div>
+                                        <div class="text-[10px] text-zinc-500 font-mono">Next.js + React</div>
+                                    </div>
+                                    <div class="p-6 bg-indigo-600/10 rounded-2xl border border-indigo-500/30">
+                                        <div class="font-bold uppercase mb-2 text-sm text-indigo-400">AI Core</div>
+                                        <div class="text-[10px] text-indigo-300 font-mono">n8n + OpenAI</div>
+                                    </div>
+                                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
+                                        <div class="font-bold uppercase mb-2 text-sm">Backend</div>
+                                        <div class="text-[10px] text-zinc-500 font-mono">Supabase</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </section>
+                    </div>
+
+                    <!-- Contact Section (Span 12) -->
+                    <div class="col-span-12 mt-24">
+                        <section id="contact" class="max-w-4xl mx-auto relative z-10 text-center">
+                            <h2
+                                class="text-5xl md:text-7xl font-black mb-12 tracking-tighter uppercase italic leading-none">
+                                Ready for <span class="text-indigo-500">Scale?</span>
+                            </h2>
+                            <div
+                                class="glass p-12 rounded-[3rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
+                                <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500"
+                                    id="progressBar" style="width: 33%"></div>
+
+                                <form
+                                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
+                                    method="POST" id="leadForm" class="text-left relative min-h-[300px]">
+                                    <!-- Steps Preserved -->
+                                    <div class="step active" id="step1">
+                                        <h3 class="text-2xl font-bold mb-8">System Scale Audit</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                                            <button type="button"
+                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
+                                                onclick="nextStep(2)">
+                                                <div class="text-2xl mb-2">🏢</div>
+                                                <div class="font-bold">Startup</div>
+                                            </button>
+                                            <button type="button"
+                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
+                                                onclick="nextStep(2)">
+                                                <div class="text-2xl mb-2">🏭</div>
+                                                <div class="font-bold">Scale-Up</div>
+                                            </button>
+                                            <button type="button"
+                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
+                                                onclick="nextStep(2)">
+                                                <div class="text-2xl mb-2">🏙️</div>
+                                                <div class="font-bold">Enterprise</div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="step" id="step2">
+                                        <h3 class="text-2xl font-bold mb-8">Tech Stack</h3>
+                                        <input name="crm" placeholder="Current CRM / Database?"
+                                            class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white mb-6">
+                                        <button type="button"
+                                            class="w-full bg-white/10 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
+                                            onclick="nextStep(3)">Next &rarr;</button>
+                                    </div>
+
+                                    <div class="step" id="step3">
+                                        <h3 class="text-2xl font-bold mb-8">Finalize</h3>
+                                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                            <input name="name" placeholder="Name" required
+                                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                                            <input name="email" type="email" placeholder="Email" required
+                                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                                        </div>
+                                        <button type="submit"
+                                            class="w-full bg-indigo-600 py-6 rounded-xl font-black text-xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20">Initialize</button>
+                                    </div>
+                                </form>
+                                <div id="successMsg"
+                                    class="hidden text-2xl font-black text-green-400 italic text-center mt-12">✓ System
+                                    Audit Requested.</div>
+                            </div>
+                        </section>
                     </div>
                 </div>
-            </section>
-
-            <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-                <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit
-                    für
-                    <br><span class="text-indigo-500">Level 2.</span>
-                </h2>
-
-                <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-                    <!-- Progress Bar -->
-                    <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
-                        style="width: 33%"></div>
-
-                    <form
-                        action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                        method="POST" id="leadForm" class="text-left relative min-h-[300px]">
-
-                        <!-- Step 1: Volume -->
-                        <div class="step active" id="step1">
-                            <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
-                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
-                                Operation?</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                                <button type="button"
-                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                    onclick="nextStep(2)">
-                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
-                                    <div class="font-bold">1-10</div>
-                                    <div class="text-[10px] text-zinc-500">Startup</div>
-                                </button>
-                                <button type="button"
-                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                    onclick="nextStep(2)">
-                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
-                                    <div class="font-bold">11-50</div>
-                                    <div class="text-[10px] text-zinc-500">Scale-Up</div>
-                                </button>
-                                <button type="button"
-                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                    onclick="nextStep(2)">
-                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
-                                    <div class="font-bold">50+</div>
-                                    <div class="text-[10px] text-zinc-500">Enterprise</div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Step 2: Stack -->
-                        <div class="step" id="step2">
-                            <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres
-                                        CRM /
-                                        Datenbank?</label>
-                                    <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
-                                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                                </div>
-                                <button type="button"
-                                    class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                                    onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
-                            </div>
-                        </div>
-
-                        <!-- Step 3: Contact -->
-                        <div class="step" id="step3">
-                            <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
-                            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                                <input name="name" placeholder="Name" required
-                                    class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                                <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
-                                    class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                            </div>
-                            <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
-
-                            <button type="submit"
-                                class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
-                                Initialisieren
-                            </button>
-                            <button type="button"
-                                class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                                onclick="nextStep(1)">Audit Neustarten</button>
-                        </div>
-
-                    </form>
-                    <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit
-                        angefordert.
-                    </div>
-                </div>
-            </section>
+            </main>
 
             <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
                 AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
