@@ -261,133 +261,130 @@
             scroll-margin-top: 120px;
         }
 
-        /* Stealth Sidebar (Desktop) */
-        .stealth-sidebar {
+        /* Ghost Menu Trigger */
+        .ghost-trigger {
             position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 40px;
-            /* Slim Profile */
-            background: rgba(5, 5, 5, 0.0);
-            /* Transparent initially */
-            z-index: 5000;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-            border-left: 1px solid rgba(255, 255, 255, 0);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stealth-sidebar:hover,
-        .stealth-sidebar.active {
-            width: 320px;
-            background: rgba(5, 5, 5, 0.85);
-            /* Deep Dark */
-            backdrop-filter: blur(40px);
-            /* Heavy Blur */
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .stealth-trigger {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 40px;
-            height: 100px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .stealth-sidebar:hover .stealth-trigger {
-            opacity: 0;
-        }
-
-        .stealth-line {
-            width: 1px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .sidebar-content {
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.3s ease;
-            width: 320px;
-            padding: 3rem 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stealth-sidebar:hover .sidebar-content,
-        .stealth-sidebar.active .sidebar-content {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.1s;
-        }
-
-        /* FAB (Mobile) */
-        .fab-btn {
-            position: fixed;
-            bottom: 2rem;
+            top: 2rem;
             right: 2rem;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: rgba(15, 15, 15, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             z-index: 5000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            mix-blend-mode: difference;
+            /* Ensure visibility */
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 6px;
         }
 
-        .fab-btn:active {
-            transform: scale(0.9);
+        .ghost-line {
+            height: 2px;
+            background: #fff;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .fab-icon {
-            color: white;
-            width: 24px;
-            height: 24px;
+        .ghost-line:first-child {
+            width: 30px;
         }
 
-        @media (max-width: 1024px) {
-            .stealth-sidebar {
-                display: none;
-            }
+        .ghost-line:last-child {
+            width: 20px;
         }
 
-        @media (min-width: 1024px) {
-            .fab-btn {
-                display: none;
-            }
-
-            #mobile-toggle {
-                display: none;
-            }
-
-            /* Hide old hamburger on desktop if present */
+        .ghost-trigger:hover .ghost-line {
+            width: 40px;
+            background: var(--accent);
         }
 
-        /* Full Width Content Reset */
-        .w-full-content {
+        /* Active State (X) */
+        .ghost-trigger.active .ghost-line:first-child {
+            transform: rotate(45deg) translate(2px, 3px);
+            width: 30px;
+        }
+
+        .ghost-trigger.active .ghost-line:last-child {
+            transform: rotate(-45deg) translate(2px, -3px);
+            width: 30px;
+        }
+
+        /* Full Screen Overlay */
+        .ghost-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.96);
+            backdrop-filter: blur(50px);
+            z-index: 4999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ghost-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ghost-link {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            color: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 1rem 0;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .ghost-link:hover {
+            color: #fff;
+            transform: scale(1.1);
+            letter-spacing: 0;
+        }
+
+        .ghost-link::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            color: var(--accent);
+            overflow: hidden;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ghost-link:hover::before {
             width: 100%;
-            max-width: 1400px;
-            /* Allow breathing room */
-            margin-inline: auto;
+        }
+
+        /* Layout Resets for Breathing Room */
+        .hero-breathing {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100%;
+            max-width: none;
+            overflow-x: hidden;
+        }
+
+        /* Mobile Adapts */
+        @media (max-width: 768px) {
+            .ghost-link {
+                font-size: 2.5rem;
+            }
         }
     </style>
     </head>
@@ -421,623 +418,616 @@
                 AURA SYSTEMS
             </div>
 
-            <!-- Header is now purely Brand & Status - Navigation is in Stealth Sidebar / FAB -->
+            <!-- Header is now purely Brand & Status - Navigation is in Stealth Mode -->
 
-            <!-- Mobile Bottom Sheet (Triggered by FAB now) -->
+            <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
+                <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI
+                    &
+                    Engineering Agentur</span>
+                <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
+                    WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
+                </h1>
+                <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
+                    Wir bauen keine Webseiten. Wir konstruieren autonome <span
+                        class="text-white font-medium">Wertschöpfungs-Systeme</span>.
+                    Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
+                    <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
+                </p>
+            </section>
 
-            <!-- Mobile Bottom Sheet -->
-            <div id="mobile-menu"
-                class="fixed inset-x-0 bottom-0 bg-[#0c0c0c] z-40 rounded-t-[2rem] border-t border-white/10 p-8 pb-12 transform translate-y-full shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
-                <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-8"></div> <!-- Handle -->
-                <div class="flex flex-col gap-6 text-center">
-                    <a href="#architecture"
-                        class="text-2xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link py-4 border-b border-white/5">Full-Stack</a>
-                    <a href="#roi"
-                        class="text-2xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link py-4 border-b border-white/5">ROI
-                        Audit</a>
-                    <a href="#contact"
-                        class="text-2xl font-black uppercase tracking-tighter text-indigo-500 mobile-link py-4">Starten</a>
-                </div>
-                <div
-                    class="text-center mt-8 text-zinc-600 text-[10px] font-mono uppercase tracking-widest pb-[env(safe-area-inset-bottom)]">
-                    System Status: Online
-                </div>
-            </div>
-        </nav>
+            <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
+                <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
+                    <div class="text-center mb-20">
+                        <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">
+                            Infrastruktur
+                            Insight</h2>
+                        <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+                    </div>
 
-        <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
-            <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
-                Engineering Agentur</span>
-            <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-                WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
-            </h1>
-            <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-                Wir bauen keine Webseiten. Wir konstruieren autonome <span
-                    class="text-white font-medium">Wertschöpfungs-Systeme</span>.
-                Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
-                <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
-            </p>
-        </section>
-
-        <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
-            <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
-                <div class="text-center mb-20">
-                    <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
-                        Insight</h2>
-                    <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
-                </div>
-
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <!-- Frontend Node -->
-                    <div
-                        class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <!-- Frontend Node -->
                         <div
-                            class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                            <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
-                        <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
-                    </div>
-
-                    <div class="connector hidden md:block">
-                        <div class="pulse"></div>
-                    </div>
-
-                    <!-- AI Core Node -->
-                    <div
-                        class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
-                        <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse">
-                        </div>
-                        <div class="relative z-10">
+                            class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
                             <div
-                                class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                                <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]" fill="none"
+                                class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
+                                <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core
-                            </h4>
-                            <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
+                            <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
+                            <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
                         </div>
-                    </div>
 
-                    <div class="connector hidden md:block">
-                        <div class="pulse" style="animation-delay: 1s"></div>
-                    </div>
+                        <div class="connector hidden md:block">
+                            <div class="pulse"></div>
+                        </div>
 
-                    <!-- Backend Node -->
-                    <div
-                        class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
+                        <!-- AI Core Node -->
                         <div
-                            class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                            <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                            </svg>
+                            class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
+                            <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse">
+                            </div>
+                            <div class="relative z-10">
+                                <div
+                                    class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
+                                    <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                </div>
+                                <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI
+                                    Core
+                                </h4>
+                                <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz
+                                </p>
+                            </div>
                         </div>
-                        <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                        <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
+
+                        <div class="connector hidden md:block">
+                            <div class="pulse" style="animation-delay: 1s"></div>
+                        </div>
+
+                        <!-- Backend Node -->
+                        <div
+                            class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
+                            <div
+                                class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
+                                <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                                </svg>
+                            </div>
+                            <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
+                            <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
-            <div class="text-center mb-20">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur
-                </h2>
-                <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
-                        class="gradient-text">Datensatz.</span></h3>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-                <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div
-                            class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                            <i data-lucide="layout-template" class="text-indigo-500"></i>
-                        </div>
-                        <h4 class="text-lg font-black uppercase">Frontend</h4>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
-                        <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für
-                        maximale
-                        Geschwindigkeit optimiert.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
-                        <span
-                            class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
-                    </div>
-                </div>
-
-                <div
-                    class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div
-                            class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                            <i data-lucide="brain-circuit" class="text-white"></i>
-                        </div>
-                        <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
-                    </div>
-                    <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong>
-                        Workflows
-                        kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
-                        Geschäftsprozesse.</p>
-
-                    <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
-                        id="live-terminal">
-                        <div class="opacity-50">>> Initializing AURA_CORE...</div>
-                        <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
-                        <div class="text-white">>> Status: Autonomy active.</div>
-                    </div>
-                </div>
-
-                <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div
-                            class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                            <i data-lucide="database" class="text-indigo-500"></i>
-                        </div>
-                        <h4 class="text-lg font-black uppercase">Backend</h4>
-                    </div>
-                    <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit
-                        <strong>Supabase</strong>
-                        und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen
-                        mitwächst.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div>
-                    <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
-                        <span class="text-indigo-500">Revenue</span> <br>Multiplier.
+            <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-20">
+                    <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische
+                        Architektur
                     </h2>
-                    <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                        Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
-                        Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
-                        Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
-                    </p>
+                    <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
+                            class="gradient-text">Datensatz.</span></h3>
+                </div>
 
-                    <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
-                        <!-- Input Section -->
-                        <div class="space-y-6">
-                            <div>
-                                <div
-                                    class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                    <span>Monatliche Gäste (Website)</span>
-                                    <span class="text-indigo-400" id="v_guests">1.000</span>
-                                </div>
-                                <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
-                                    class="w-full">
+                <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+                    <div
+                        class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
+                                <i data-lucide="layout-template" class="text-indigo-500"></i>
                             </div>
-                            <div>
-                                <div
-                                    class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                    <span>Ø Umsatz pro Gast</span>
-                                    <span class="text-indigo-400" id="v_check">25 €</span>
-                                </div>
-                                <input type="range" id="m_check" min="5" max="150" step="1" value="25" class="w-full">
-                            </div>
-                            <div>
-                                <div
-                                    class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                    <span>SEO Sichtbarkeit Boost</span>
-                                    <span class="text-green-400" id="v_boost">+20%</span>
-                                </div>
-                                <input type="range" id="m_boost" min="5" max="100" step="5" value="20" class="w-full">
-                                <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach
-                                    Technical Fixes.</p>
-                            </div>
+                            <h4 class="text-lg font-black uppercase">Frontend</h4>
                         </div>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces
+                            mit
+                            <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für
+                            maximale
+                            Geschwindigkeit optimiert.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
+                        </div>
+                    </div>
 
-                        <!-- Divider -->
-                        <div class="border-t border-rose-200/5 my-4"></div>
+                    <div
+                        class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
+                                <i data-lucide="brain-circuit" class="text-white"></i>
+                            </div>
+                            <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
+                        </div>
+                        <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong>
+                            Workflows
+                            kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
+                            Geschäftsprozesse.</p>
 
-                        <!-- Result Section (Bottom Hierarchy) -->
-                        <div class="text-center">
-                            <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Jährlicher
-                                Umsatz-Gewinn</div>
-                            <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
-                                id="res_gain">0 €</div>
+                        <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
+                            id="live-terminal">
+                            <div class="opacity-50">>> Initializing AURA_CORE...</div>
+                            <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
+                            <div class="text-white">>> Status: Autonomy active.</div>
+                        </div>
+                    </div>
 
-                            <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                                class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
-                                <span>Diesen Profit Realisieren</span>
-                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                            </button>
+                    <div
+                        class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
+                                <i data-lucide="database" class="text-indigo-500"></i>
+                            </div>
+                            <h4 class="text-lg font-black uppercase">Backend</h4>
+                        </div>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit
+                            <strong>Supabase</strong>
+                            und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen
+                            mitwächst.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Bento Stats Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                    <div
-                        class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)
+            <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div>
+                        <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
+                            <span class="text-indigo-500">Revenue</span> <br>Multiplier.
+                        </h2>
+                        <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
+                            Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
+                            Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
+                            Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende
+                            Rankings.
+                        </p>
+
+                        <div
+                            class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
+                            <!-- Input Section -->
+                            <div class="space-y-6">
+                                <div>
+                                    <div
+                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                        <span>Monatliche Gäste (Website)</span>
+                                        <span class="text-indigo-400" id="v_guests">1.000</span>
+                                    </div>
+                                    <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
+                                        class="w-full">
+                                </div>
+                                <div>
+                                    <div
+                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                        <span>Ø Umsatz pro Gast</span>
+                                        <span class="text-indigo-400" id="v_check">25 €</span>
+                                    </div>
+                                    <input type="range" id="m_check" min="5" max="150" step="1" value="25"
+                                        class="w-full">
+                                </div>
+                                <div>
+                                    <div
+                                        class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                        <span>SEO Sichtbarkeit Boost</span>
+                                        <span class="text-green-400" id="v_boost">+20%</span>
+                                    </div>
+                                    <input type="range" id="m_boost" min="5" max="100" step="5" value="20"
+                                        class="w-full">
+                                    <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach
+                                        Technical Fixes.</p>
+                                </div>
+                            </div>
+
+                            <!-- Divider -->
+                            <div class="border-t border-rose-200/5 my-4"></div>
+
+                            <!-- Result Section (Bottom Hierarchy) -->
+                            <div class="text-center">
+                                <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">
+                                    Jährlicher
+                                    Umsatz-Gewinn</div>
+                                <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
+                                    id="res_gain">0 €</div>
+
+                                <button
+                                    onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                                    class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
+                                    <span>Diesen Profit Realisieren</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
                     </div>
-                    <div
-                        class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden">
-                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even Point
-                        </div>
-                        <div class="text-3xl font-black text-white relative z-10" id="res_breakeven">1.2 Mo.</div>
 
-                        <!-- Visual Timeline Bar -->
-                        <div class="w-full h-1.5 bg-white/10 rounded-full mt-4 overflow-hidden relative">
-                            <div id="breakeven-bar"
-                                class="absolute top-0 left-0 h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all duration-500"
-                                style="width: 10%"></div>
+                    <!-- Bento Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+                        <div
+                            class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
+                            <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)
+                            </div>
+                            <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
                         </div>
-                        <div class="flex justify-between text-[8px] text-zinc-600 mt-1 font-mono uppercase">
-                            <span>Start</span>
-                            <span>12 Mo.</span>
+                        <div
+                            class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden">
+                            <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even
+                                Point
+                            </div>
+                            <div class="text-3xl font-black text-white relative z-10" id="res_breakeven">1.2 Mo.</div>
+
+                            <!-- Visual Timeline Bar -->
+                            <div class="w-full h-1.5 bg-white/10 rounded-full mt-4 overflow-hidden relative">
+                                <div id="breakeven-bar"
+                                    class="absolute top-0 left-0 h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all duration-500"
+                                    style="width: 10%"></div>
+                            </div>
+                            <div class="flex justify-between text-[8px] text-zinc-600 mt-1 font-mono uppercase">
+                                <span>Start</span>
+                                <span>12 Mo.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-            <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
-                <br><span class="text-indigo-500">Level 2.</span>
-            </h2>
+            <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
+                <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit
+                    für
+                    <br><span class="text-indigo-500">Level 2.</span>
+                </h2>
 
-            <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-                <!-- Progress Bar -->
-                <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
-                    style="width: 33%"></div>
+                <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
+                    <!-- Progress Bar -->
+                    <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
+                        style="width: 33%"></div>
 
-                <form
-                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                    method="POST" id="leadForm" class="text-left relative min-h-[300px]">
+                    <form
+                        action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
+                        method="POST" id="leadForm" class="text-left relative min-h-[300px]">
 
-                    <!-- Step 1: Volume -->
-                    <div class="step active" id="step1">
-                        <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
-                        <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
-                            Operation?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                            <button type="button"
-                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                onclick="nextStep(2)">
-                                <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
-                                <div class="font-bold">1-10</div>
-                                <div class="text-[10px] text-zinc-500">Startup</div>
-                            </button>
-                            <button type="button"
-                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                onclick="nextStep(2)">
-                                <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
-                                <div class="font-bold">11-50</div>
-                                <div class="text-[10px] text-zinc-500">Scale-Up</div>
-                            </button>
-                            <button type="button"
-                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                                onclick="nextStep(2)">
-                                <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
-                                <div class="font-bold">50+</div>
-                                <div class="text-[10px] text-zinc-500">Enterprise</div>
-                            </button>
+                        <!-- Step 1: Volume -->
+                        <div class="step active" id="step1">
+                            <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
+                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
+                                Operation?</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+                                <button type="button"
+                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                                    onclick="nextStep(2)">
+                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
+                                    <div class="font-bold">1-10</div>
+                                    <div class="text-[10px] text-zinc-500">Startup</div>
+                                </button>
+                                <button type="button"
+                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                                    onclick="nextStep(2)">
+                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
+                                    <div class="font-bold">11-50</div>
+                                    <div class="text-[10px] text-zinc-500">Scale-Up</div>
+                                </button>
+                                <button type="button"
+                                    class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                                    onclick="nextStep(2)">
+                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
+                                    <div class="font-bold">50+</div>
+                                    <div class="text-[10px] text-zinc-500">Enterprise</div>
+                                </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Step 2: Stack -->
-                    <div class="step" id="step2">
-                        <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
-                                    Datenbank?</label>
-                                <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
+                        <!-- Step 2: Stack -->
+                        <div class="step" id="step2">
+                            <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres
+                                        CRM /
+                                        Datenbank?</label>
+                                    <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
+                                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                                </div>
+                                <button type="button"
+                                    class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
+                                    onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Contact -->
+                        <div class="step" id="step3">
+                            <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
+                            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                <input name="name" placeholder="Name" required
+                                    class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                                <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
                                     class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
                             </div>
+                            <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
+                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
+
+                            <button type="submit"
+                                class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
+                                Initialisieren
+                            </button>
                             <button type="button"
-                                class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                                onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
+                                class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
+                                onclick="nextStep(1)">Audit Neustarten</button>
                         </div>
-                    </div>
 
-                    <!-- Step 3: Contact -->
-                    <div class="step" id="step3">
-                        <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <input name="name" placeholder="Name" required
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                            <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        </div>
-                        <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
-
-                        <button type="submit"
-                            class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
-                            Initialisieren
-                        </button>
-                        <button type="button"
-                            class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                            onclick="nextStep(1)">Audit Neustarten</button>
-                    </div>
-
-                </form>
-                <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit
-                    angefordert.
-                </div>
-            </div>
-        </section>
-
-        <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
-            AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
-        </footer>
-
-        <!-- FAB (Mobile) -->
-        <button class="fab-btn" id="fab-trigger">
-            <i data-lucide="menu" class="fab-icon"></i>
-        </button>
-
-        <!-- Stealth Sidebar (Desktop) -->
-        <aside class="stealth-sidebar">
-            <!-- Collapsed Indicator -->
-            <div class="stealth-trigger">
-                <div class="stealth-line"></div>
-                <div class="stealth-line"></div>
-                <div class="stealth-line"></div>
-            </div>
-
-            <!-- Expanded Content -->
-            <div class="sidebar-content">
-                <div class="mb-12">
-                    <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-6">Navigation</div>
-                    <nav class="flex flex-col gap-6">
-                        <a href="#architecture"
-                            class="text-2xl font-black uppercase text-white hover:text-indigo-500 transition tracking-tighter">Architecture</a>
-                        <a href="#roi"
-                            class="text-2xl font-black uppercase text-white hover:text-indigo-500 transition tracking-tighter">ROI
-                            Calculator</a>
-                        <a href="#contact"
-                            class="text-2xl font-black uppercase text-indigo-500 hover:text-white transition tracking-tighter">Start
-                            Project</a>
-                    </nav>
-                </div>
-
-                <div class="mt-auto">
-                    <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">Live Metrics</div>
-                    <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                        <div class="flex justify-between text-[10px] text-zinc-400 mb-2">
-                            <span>Latenz</span>
-                            <span class="text-green-400">24ms</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-zinc-400">
-                            <span>Status</span>
-                            <span class="text-white">Optimal</span>
-                        </div>
+                    </form>
+                    <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit
+                        angefordert.
                     </div>
                 </div>
+            </section>
+
+            <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
+                AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+            </footer>
+
+            <!-- Ghost Menu Trigger (Visible on all devices) -->
+            <div class="ghost-trigger" id="ghost-trigger">
+                <div class="ghost-line"></div>
+                <div class="ghost-line"></div>
             </div>
-        </aside>
 
-        <script>
-            lucide.createIcons();
+            <!-- Ghost Full Screen Overlay -->
+            <div class="ghost-overlay" id="ghost-overlay">
+                <a href="#architecture" class="ghost-link" data-text="Architecture"
+                    onclick="toggleGhost()">Architecture</a>
+                <a href="#roi" class="ghost-link" data-text="ROI Audit" onclick="toggleGhost()">ROI Audit</a>
+                <a href="#contact" class="ghost-link" data-text="Start Project" onclick="toggleGhost()">Start
+                    Project</a>
 
-            // Cursor Glow handled by WebGL Shader Uniforms now.
+                <div class="mt-12 text-center opacity-50">
+                    <div class="text-[10px] font-mono mb-2">AURA SYSTEMS</div>
+                    <div class="text-[10px] uppercase tracking-widest text-indigo-500">System Online</div>
+                </div>
+            </div>
 
-            // ROI Matrix Logic (Hospitality SEO Model)
-            const m_guests = document.getElementById('m_guests');
-            const m_check = document.getElementById('m_check');
-            const m_boost = document.getElementById('m_boost');
-
-            const v_guests = document.getElementById('v_guests');
-            const v_check = document.getElementById('v_check');
-            const v_boost = document.getElementById('v_boost');
-
-            const res_gain = document.getElementById('res_gain');
-            const res_roi_percent = document.getElementById('res_roi_percent');
-            const res_breakeven = document.getElementById('res_breakeven');
-
-            // Number format helper
-            const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
-            const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
-
-            // GSAP Counter Animation Helper
-            let currentGainValue = 0;
-
-            function calculate() {
-                const guests = parseInt(m_guests.value) || 0;
-                const check = parseInt(m_check.value) || 0;
-                const boost = parseInt(m_boost.value) || 0;
-
-                v_guests.innerText = formatNumber(guests);
-                v_check.innerText = formatCurrency(check);
-                v_boost.innerText = '+' + boost + '%';
-
-                // Formula: Annual Gain = (Monthly Guests * Avg Check * (Boost / 100)) * 12
-                const monthlyRevenue = guests * check;
-                const monthlyGain = monthlyRevenue * (boost / 100);
-                const annualGain = monthlyGain * 12;
-
-                // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
-                const projectCost = 5000;
-                const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
-                const breakEvenMonths = projectCost / monthlyGain;
-
-                // Animate Result Number (Instant Feedback for Touch)
-                // Removed GSAP duration for 1:1 feel, or keep it extremely short (0.1s)
-                res_gain.innerText = formatCurrency(annualGain);
-
-                res_roi_percent.innerText = Math.round(roiPercent) + '%';
-                res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
-
-                // Re-Lucide
+            <script>
                 lucide.createIcons();
-            }
 
-            m_guests.addEventListener('input', calculate);
-            m_check.addEventListener('input', calculate);
-            m_boost.addEventListener('input', calculate);
-            calculate();
+                // Ghost Menu Logic
+                const ghostTrigger = document.getElementById('ghost-trigger');
+                const ghostOverlay = document.getElementById('ghost-overlay');
+                let isGhostOpen = false;
 
-            // Multi-Step Logic
-            function nextStep(step) {
-                document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-                document.getElementById('step' + step).classList.add('active');
-
-                // Update Progress
-                const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
-                document.getElementById('progressBar').style.width = progress;
-            }
-
-            // Magnetic Buttons - Optimized
-            const magnets = document.querySelectorAll('.magnetic-btn');
-            magnets.forEach((btn) => {
-                const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
-                const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
-
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    xTo(x * 0.5);
-                    yTo(y * 0.5);
-                });
-
-                btn.addEventListener('mouseleave', () => {
-                    xTo(0);
-                    yTo(0);
-                });
-            });
-
-            // Form Submission
-            const form = document.getElementById('leadForm');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const formData = new FormData(form);
-                fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
-
-                // Hide all steps, show success
-                document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-                document.getElementById('progressBar').style.width = '100%';
-                setTimeout(() => {
-                    form.classList.add('hidden');
-                    document.getElementById('successMsg').classList.remove('hidden');
-                    // Expletti confetti/particles here if we wanted
-                }, 500);
-            });
-
-            // Mobile Menu Logic (FAB)
-            const fabTrigger = document.getElementById('fab-trigger');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
-            let isMenuOpen = false;
-
-            function toggleMenu() {
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    mobileMenu.style.transform = "translateY(0%)";
-                    // Icon change could go here
-                } else {
-                    mobileMenu.style.transform = "translateY(100%)";
-                }
-            }
-
-            if (fabTrigger) fabTrigger.addEventListener('click', toggleMenu);
-
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    isMenuOpen = false;
-                    mobileMenu.style.transform = "translateY(100%)";
-                });
-            });
-            gsap.fromTo(mobileLinks,
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
-            );
-                } else {
-                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-
-                // Reset Toggle
-                mobileToggle.children[0].style.transform = 'none';
-                mobileToggle.children[1].style.opacity = '1';
-                mobileToggle.children[2].style.transform = 'none';
-            }
-            });
-
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => mobileToggle.click());
-            });
-
-            // Scroll Reveal Animation (Intersection Observer)
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-
-                        // Specific animations based on element type
-                        if (entry.target.classList.contains('matrix-card')) {
-                            gsap.fromTo(entry.target,
-                                { y: 50, opacity: 0 },
-                                { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-                            );
-                        }
-                        observer.unobserve(entry.target);
+                function toggleGhost() {
+                    isGhostOpen = !isGhostOpen;
+                    if (isGhostOpen) {
+                        ghostOverlay.classList.add('active');
+                        ghostTrigger.classList.add('active');
+                    } else {
+                        ghostOverlay.classList.remove('active');
+                        ghostTrigger.classList.remove('active');
                     }
+                }
+
+                ghostTrigger.addEventListener('click', toggleGhost);
+
+                // Cursor Glow (retained)
+
+                // ROI Matrix Logic (Hospitality SEO Model)
+                const m_guests = document.getElementById('m_guests');
+                const m_check = document.getElementById('m_check');
+                const m_boost = document.getElementById('m_boost');
+
+                const v_guests = document.getElementById('v_guests');
+                const v_check = document.getElementById('v_check');
+                const v_boost = document.getElementById('v_boost');
+
+                const res_gain = document.getElementById('res_gain');
+                const res_roi_percent = document.getElementById('res_roi_percent');
+                const res_breakeven = document.getElementById('res_breakeven');
+
+                // Number format helper
+                const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+                const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
+
+                // GSAP Counter Animation Helper
+                let currentGainValue = 0;
+
+                function calculate() {
+                    const guests = parseInt(m_guests.value) || 0;
+                    const check = parseInt(m_check.value) || 0;
+                    const boost = parseInt(m_boost.value) || 0;
+
+                    v_guests.innerText = formatNumber(guests);
+                    v_check.innerText = formatCurrency(check);
+                    v_boost.innerText = '+' + boost + '%';
+
+                    // Formula: Annual Gain = (Monthly Guests * Avg Check * (Boost / 100)) * 12
+                    const monthlyRevenue = guests * check;
+                    const monthlyGain = monthlyRevenue * (boost / 100);
+                    const annualGain = monthlyGain * 12;
+
+                    // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
+                    const projectCost = 5000;
+                    const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
+                    const breakEvenMonths = projectCost / monthlyGain;
+
+                    // Animate Result Number (Instant Feedback for Touch)
+                    // Removed GSAP duration for 1:1 feel, or keep it extremely short (0.1s)
+                    res_gain.innerText = formatCurrency(annualGain);
+
+                    res_roi_percent.innerText = Math.round(roiPercent) + '%';
+                    res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
+
+                    // Re-Lucide
+                    lucide.createIcons();
+                }
+
+                m_guests.addEventListener('input', calculate);
+                m_check.addEventListener('input', calculate);
+                m_boost.addEventListener('input', calculate);
+                calculate();
+
+                // Multi-Step Logic
+                function nextStep(step) {
+                    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+                    document.getElementById('step' + step).classList.add('active');
+
+                    // Update Progress
+                    const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
+                    document.getElementById('progressBar').style.width = progress;
+                }
+
+                // Magnetic Buttons - Optimized
+                const magnets = document.querySelectorAll('.magnetic-btn');
+                magnets.forEach((btn) => {
+                    const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
+                    const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
+
+                    btn.addEventListener('mousemove', (e) => {
+                        const rect = btn.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        xTo(x * 0.5);
+                        yTo(y * 0.5);
+                    });
+
+                    btn.addEventListener('mouseleave', () => {
+                        xTo(0);
+                        yTo(0);
+                    });
                 });
-            }, observerOptions);
 
-            // Observe elements
-            document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
-                // Initial state done via class in CSS potentially, or just ensuring they animate here
-                // For now, let's just trigger GSAP on intersection
-                gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
+                // Form Submission
+                const form = document.getElementById('leadForm');
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
 
-                observer.observe(el);
-                // Re-attach observer for GSAP override
-                const animObserver = new IntersectionObserver((entries) => {
+                    // Hide all steps, show success
+                    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+                    document.getElementById('progressBar').style.width = '100%';
+                    setTimeout(() => {
+                        form.classList.add('hidden');
+                        document.getElementById('successMsg').classList.remove('hidden');
+                        // Expletti confetti/particles here if we wanted
+                    }, 500);
+                });
+
+                // Mobile Menu Logic (FAB)
+                const fabTrigger = document.getElementById('fab-trigger');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileLinks = document.querySelectorAll('.mobile-link');
+                let isMenuOpen = false;
+
+                function toggleMenu() {
+                    isMenuOpen = !isMenuOpen;
+                    if (isMenuOpen) {
+                        mobileMenu.style.transform = "translateY(0%)";
+                        // Icon change could go here
+                    } else {
+                        mobileMenu.style.transform = "translateY(100%)";
+                    }
+                }
+
+                if (fabTrigger) fabTrigger.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        isMenuOpen = false;
+                        mobileMenu.style.transform = "translateY(100%)";
+                    });
+                });
+                gsap.fromTo(mobileLinks,
+                    { y: 50, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
+                );
+                } else {
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+
+                    // Reset Toggle
+                    mobileToggle.children[0].style.transform = 'none';
+                    mobileToggle.children[1].style.opacity = '1';
+                    mobileToggle.children[2].style.transform = 'none';
+                }
+            });
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => mobileToggle.click());
+                });
+
+                // Scroll Reveal Animation (Intersection Observer)
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: "0px 0px -50px 0px"
+                };
+
+                const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-                            animObserver.unobserve(entry.target);
+                            entry.target.classList.add('active');
+
+                            // Specific animations based on element type
+                            if (entry.target.classList.contains('matrix-card')) {
+                                gsap.fromTo(entry.target,
+                                    { y: 50, opacity: 0 },
+                                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+                                );
+                            }
+                            observer.unobserve(entry.target);
                         }
                     });
                 }, observerOptions);
-                animObserver.observe(el);
-            });
 
-            // --- Cleaned up old particles code ---
+                // Observe elements
+                document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
+                    // Initial state done via class in CSS potentially, or just ensuring they animate here
+                    // For now, let's just trigger GSAP on intersection
+                    gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
 
-            // --- AURA CORE 2.0: WebGL Liquid Shader ---
-            const container = document.getElementById('webgl-container');
-            const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            container.appendChild(renderer.domElement);
+                    observer.observe(el);
+                    // Re-attach observer for GSAP override
+                    const animObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+                                animObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+                    animObserver.observe(el);
+                });
 
-            const geometry = new THREE.PlaneGeometry(2, 2);
+                // --- Cleaned up old particles code ---
 
-            // Perlin/Simplex Noise Fragment Shader
-            const fragmentShader = `
+                // --- AURA CORE 2.0: WebGL Liquid Shader ---
+                const container = document.getElementById('webgl-container');
+                const scene = new THREE.Scene();
+                const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+                const renderer = new THREE.WebGLRenderer({ alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                const geometry = new THREE.PlaneGeometry(2, 2);
+
+                // Perlin/Simplex Noise Fragment Shader
+                const fragmentShader = `
             uniform float u_time;
             uniform vec2 u_resolution;
             uniform vec2 u_mouse;
@@ -1150,131 +1140,131 @@
             }
         `;
 
-            const material = new THREE.ShaderMaterial({
-                vertexShader: `
+                const material = new THREE.ShaderMaterial({
+                    vertexShader: `
                 void main() {
                     gl_Position = vec4( position, 1.0 );
                 }
             `,
-                fragmentShader: fragmentShader,
-                uniforms: {
-                    u_time: { value: 0.0 },
-                    u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                    u_mouse: { value: new THREE.Vector2(0, 0) },
-                    u_intensity: { value: 0.0 } // 0.0 = Cool, 1.0 = Hot
+                    fragmentShader: fragmentShader,
+                    uniforms: {
+                        u_time: { value: 0.0 },
+                        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                        u_mouse: { value: new THREE.Vector2(0, 0) },
+                        u_intensity: { value: 0.0 } // 0.0 = Cool, 1.0 = Hot
+                    }
+                });
+
+                const plane = new THREE.Mesh(geometry, material);
+                scene.add(plane);
+
+                // Animation Loop
+                const clock = new THREE.Clock();
+                function animate() {
+                    material.uniforms.u_time.value = clock.getElapsedTime();
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(animate);
                 }
-            });
+                animate();
 
-            const plane = new THREE.Mesh(geometry, material);
-            scene.add(plane);
+                // Resize
+                window.addEventListener('resize', () => {
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+                });
 
-            // Animation Loop
-            const clock = new THREE.Clock();
-            function animate() {
-                material.uniforms.u_time.value = clock.getElapsedTime();
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-            }
-            animate();
+                // Mouse Move (Interactive Aura)
+                window.addEventListener('mousemove', (e) => {
+                    if (typeof material !== 'undefined') {
+                        material.uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
+                    }
+                });
 
-            // Resize
-            window.addEventListener('resize', () => {
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-            });
+                // --- GSAP Spring Physics & Stagger ---
+                // Elastic Hover Effect for Buttons & Cards
+                const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
 
-            // Mouse Move (Interactive Aura)
-            window.addEventListener('mousemove', (e) => {
-                if (typeof material !== 'undefined') {
-                    material.uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
-                }
-            });
-
-            // --- GSAP Spring Physics & Stagger ---
-            // Elastic Hover Effect for Buttons & Cards
-            const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
-
-            interactives.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(el, {
-                        scale: 1.05,
-                        duration: 0.8,
-                        ease: "elastic.out(1, 0.4)"
+                interactives.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        gsap.to(el, {
+                            scale: 1.05,
+                            duration: 0.8,
+                            ease: "elastic.out(1, 0.4)"
+                        });
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        gsap.to(el, {
+                            scale: 1,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
                     });
                 });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(el, {
-                        scale: 1,
-                        duration: 0.5,
-                        ease: "power2.out"
-                    });
+
+                // Stagger Nav Links on Load
+                gsap.from("#main-nav a", {
+                    y: -20,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    delay: 0.5
                 });
-            });
 
-            // Stagger Nav Links on Load
-            gsap.from("#main-nav a", {
-                y: -20,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: "power3.out",
-                delay: 0.5
-            });
+                // --- END WebGL Core ---
 
-            // --- END WebGL Core ---
+                // Live Terminal Simulation
+                const terminalStrings = [
+                    ">> Analyzing lead structures...",
+                    ">> Optimizing API response time...",
+                    ">> Compiling backend schemas...",
+                    ">> Deploying autonomous agent...",
+                    ">> Syncing Supabase database...",
+                    ">> Encryption layer active.",
+                    ">> Data stream stabilized."
+                ];
 
-            // Live Terminal Simulation
-            const terminalStrings = [
-                ">> Analyzing lead structures...",
-                ">> Optimizing API response time...",
-                ">> Compiling backend schemas...",
-                ">> Deploying autonomous agent...",
-                ">> Syncing Supabase database...",
-                ">> Encryption layer active.",
-                ">> Data stream stabilized."
-            ];
+                const terminalDiv = document.getElementById('live-terminal');
+                let stringIndex = 0;
 
-            const terminalDiv = document.getElementById('live-terminal');
-            let stringIndex = 0;
+                function updateTerminal() {
+                    if (!terminalDiv) return;
+                    const line = document.createElement('div');
+                    line.className = 'mt-1 opacity-80 flex';
 
-            function updateTerminal() {
-                if (!terminalDiv) return;
-                const line = document.createElement('div');
-                line.className = 'mt-1 opacity-80 flex';
+                    const timestamp = document.createElement('span');
+                    timestamp.className = 'text-zinc-500 mr-2';
+                    timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
 
-                const timestamp = document.createElement('span');
-                timestamp.className = 'text-zinc-500 mr-2';
-                timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
+                    const content = document.createElement('span');
+                    content.className = 'text-indigo-400';
 
-                const content = document.createElement('span');
-                content.className = 'text-indigo-400';
+                    line.appendChild(timestamp);
+                    line.appendChild(content);
+                    terminalDiv.appendChild(line);
 
-                line.appendChild(timestamp);
-                line.appendChild(content);
-                terminalDiv.appendChild(line);
+                    // Typing effect
+                    const text = terminalStrings[stringIndex];
+                    let i = 0;
+                    const typeInterval = setInterval(() => {
+                        content.innerText += text.charAt(i);
+                        i++;
+                        if (i >= text.length) clearInterval(typeInterval);
+                    }, 20); // Typing speed
 
-                // Typing effect
-                const text = terminalStrings[stringIndex];
-                let i = 0;
-                const typeInterval = setInterval(() => {
-                    content.innerText += text.charAt(i);
-                    i++;
-                    if (i >= text.length) clearInterval(typeInterval);
-                }, 20); // Typing speed
+                    if (terminalDiv.childNodes.length > 6) {
+                        terminalDiv.removeChild(terminalDiv.firstChild);
+                    }
 
-                if (terminalDiv.childNodes.length > 6) {
-                    terminalDiv.removeChild(terminalDiv.firstChild);
+                    stringIndex = (stringIndex + 1) % terminalStrings.length;
+
+                    // Random interval for next line
+                    setTimeout(updateTerminal, Math.random() * 3000 + 2000);
                 }
 
-                stringIndex = (stringIndex + 1) % terminalStrings.length;
-
-                // Random interval for next line
-                setTimeout(updateTerminal, Math.random() * 3000 + 2000);
-            }
-
-            // Start terminal
-            updateTerminal();
-        </script>
+                // Start terminal
+                updateTerminal();
+            </script>
     </body>
 
 </html>
