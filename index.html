@@ -9,24 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Technical SEO: Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "AURA SYSTEMS",
-      "description": "Autonomous AI Engineering & Value Systems.",
-      "url": "https://aura-systems.ai",
-      "priceRange": "$$$",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Ravensburg",
-        "addressCountry": "DE"
-      }
-    }
-    </script>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
@@ -35,209 +17,122 @@
     <style>
         :root {
             --accent: #6366f1;
-            --bg-deep: #050505;
-            --tile-bg: rgba(18, 18, 18, 1);
-            --tile-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* 1. Global Reset */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        html,
         body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden;
-            background-color: var(--bg-deep);
-            color: white;
             font-family: 'Inter', sans-serif;
-        }
-
-        /* Aura Background (Fixed & Passive) */
-        #webgl-container,
-        .noise-overlay,
-        #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .noise-overlay {
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-            z-index: 0;
-            /* Above WebGL, below content */
-        }
-
-        /* 2. Header (Fixed & Anti-Collision) */
-        nav#main-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            z-index: 1000;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-        }
-
-        /* 3. Main Container (The Layout Engine) */
-        main {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-            padding-top: 100px;
-            /* Force Content below Header */
-        }
-
-        /* Desktop Grid (Default > 1024px) */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            padding: 20px 20px 40px 20px;
-            /* Internal spacing */
-            width: 100%;
-        }
-
-        .col-span-8 {
-            grid-column: span 8;
-        }
-
-        .col-span-4 {
-            grid-column: span 4;
-        }
-
-        .col-span-6 {
-            grid-column: span 6;
-        }
-
-        .col-span-12 {
-            grid-column: span 12;
-        }
-
-        /* 4. Tile Styling (Deep Dark) */
-        .glass,
-        .matrix-card,
-        .directory-tile {
-            background: var(--tile-bg);
-            border: 1px solid var(--tile-border);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .glass:hover,
-        .matrix-card:hover,
-        .directory-tile:hover {
-            border-color: rgba(99, 102, 241, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Directory Specifics */
-        .directory-tile {
-            position: sticky;
-            top: 100px;
-            /* Offset from header */
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .directory-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            transition: all 0.2s ease;
-        }
-
-        .directory-link:hover,
-        .directory-link.active {
-            background: rgba(99, 102, 241, 0.2);
-            border-color: var(--accent);
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             color: white;
-            padding-left: 1.5rem;
-        }
-
-        /* 5. Mobile Stack (< 1024px) */
-        @media (max-width: 1024px) {
-            .bento-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 0 15px 40px 15px;
-                /* Side padding */
-            }
-
-            .col-span-8,
-            .col-span-4,
-            .col-span-6,
-            .col-span-12 {
-                width: 100%;
-                grid-column: auto;
-            }
-
-            .directory-tile {
-                position: relative;
-                top: 0;
-                order: 2;
-                /* Directory below ROI on mobile */
-            }
-
-            nav#main-nav {
-                padding: 0 1.5rem;
-            }
-
-            h1 {
-                font-size: 3rem !important;
-            }
-        }
-
-        /* Utilities */
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin: 0;
+            overflow-x: hidden;
+            /* Viewport Safety */
         }
 
         .mono {
             font-family: 'Fira Code', monospace;
         }
 
-        /* Range Slider Reset */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            will-change: transform, opacity;
+            /* GPU Acceleration */
+        }
+
+        @media (max-width: 768px) {
+            .glass {
+                backdrop-filter: blur(10px);
+                /* Adaptive Blur for Mobile */
+            }
+        }
+
+        /* Architecture Animation: Flowing Data Pulses */
+        .connector {
+            position: relative;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .pulse {
+            position: absolute;
+            width: 60px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: flow 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+            /* GPU Acceleration */
+        }
+
+        @keyframes flow {
+            0% {
+                left: -60px;
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+                filter: brightness(1.5);
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0.5;
+            }
+        }
+
+        /* ROI Card Interaction */
+        .matrix-card {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .matrix-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(99, 102, 241, 0.03);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
+        }
+
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            /* GPU Acceleration */
+        }
+
+        /* Range Slider Styling */
         input[type=range] {
             -webkit-appearance: none;
-            width: 100%;
+            appearance: none;
             background: transparent;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         input[type=range]::-webkit-slider-thumb {
@@ -246,23 +141,37 @@
             width: 16px;
             border-radius: 50%;
             background: var(--accent);
-            margin-top: -6px;
-            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 0 10px var(--accent);
         }
 
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+        /* Multi-Step Form */
+        .step {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .step.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            font-family: 'Fira Code', monospace;
+            font-size: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 
 <body class="antialiased">
-    <!-- WebGL Liquid Aura -->
-    <div id="webgl-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
-    <div class="noise-overlay"></div> <!-- Layer 2 -->
+    <div id="cursor-glow"></div>
+
+    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
 
     <!-- Live System Status -->
     <div
@@ -278,825 +187,685 @@
         </div>
     </div>
 
-    <style>
-        /* ... previous styles ... */
-
-        /* Section Scroll Margin for Zero Collision */
-        section[id] {
-            scroll-margin-top: 120px;
-        }
-
-        /* Anti-Collision Header */
-        nav#main-nav {
-            height: 80px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            /* Ensure it sits on top */
-            padding-top: env(safe-area-inset-top);
-            /* Reset padding logic */
-            padding-bottom: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        /* Main Container Safety */
-        main {
-            padding-top: 60px;
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* 12-Column Grid System */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-        }
-
-        .col-span-8 {
-            grid-column: span 8;
-        }
-
-        .col-span-4 {
-            grid-column: span 4;
-        }
-
-        /* Directory Tile */
-        .directory-tile {
-            background: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2rem;
-            padding: 2rem;
-            height: 100%;
-            position: sticky;
-            top: 100px;
-            /* Offset from header */
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .directory-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 1rem;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-        }
-
-        .directory-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-
-        .directory-link.active {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
-        /* Mobile Stack */
-        @media (max-width: 1024px) {
-            .bento-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .col-span-8,
-            .col-span-4 {
-                width: 100%;
-            }
-
-            .directory-tile {
-                position: relative;
-                top: 0;
-            }
-        }
-    </style>
-    </head>
-
-    <body class="antialiased">
-        <!-- WebGL Liquid Aura -->
-        <div id="webgl-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
-        <div class="noise-overlay"></div> <!-- Layer 2 -->
-
-        <!-- Live System Status -->
-        <div
-            class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest hidden md:flex">
-            <div class="flex gap-6">
-                <span class="flex items-center gap-2"><span
-                        class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                    System: Operativ</span>
-                <span class="hidden md:inline">Aktive Agenten: <span class="text-indigo-400">14</span></span>
-                <span class="hidden md:inline">Latenz: <span class="text-indigo-400">24ms</span></span>
-            </div>
-            <div>
-                Daten Verarbeitet: <span class="text-white">1.2TB</span>
-            </div>
+    <nav class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40 transition-all duration-300"
+        id="main-nav">
+        <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 relative z-50">
+            <div
+                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
+                A</div>
+            AURA SYSTEMS
         </div>
 
-        <nav id="main-nav">
-            <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 relative z-50">
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
+            <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
+            <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
+            <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-toggle"
+            class="md:hidden z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
+            <span class="w-8 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+            <span class="w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+        </button>
+
+        <!-- Mobile Overlay -->
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
+            <div class="flex flex-col gap-8 text-center">
+                <a href="#architecture"
+                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">Full-Stack</a>
+                <a href="#roi"
+                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">ROI
+                    Audit</a>
+                <a href="#contact"
+                    class="text-4xl font-black uppercase tracking-tighter text-indigo-500 mobile-link">Starten</a>
+            </div>
+            <div class="absolute bottom-20 text-zinc-600 text-xs font-mono uppercase tracking-widest">
+                System Status: Online
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
+        <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
+            Engineering Agentur</span>
+        <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
+            WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
+        </h1>
+        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
+            Wir bauen keine Webseiten. Wir konstruieren autonome <span
+                class="text-white font-medium">Wertschöpfungs-Systeme</span>.
+            Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
+            <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
+        </p>
+    </section>
+
+    <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
+        <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
+            <div class="text-center mb-20">
+                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
+                    Insight</h2>
+                <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Frontend Node -->
                 <div
-                    class="w-8 h-8 bg-[var(--rose-gold)] rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-rose-500/20">
-                    A</div>
-                AURA SYSTEMS
+                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
+                    <div
+                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
+                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
+                    <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
+                </div>
+
+                <div class="connector hidden md:block">
+                    <div class="pulse"></div>
+                </div>
+
+                <!-- AI Core Node -->
+                <div
+                    class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse"></div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
+                            <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core</h4>
+                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
+                    </div>
+                </div>
+
+                <div class="connector hidden md:block">
+                    <div class="pulse" style="animation-delay: 1s"></div>
+                </div>
+
+                <!-- Backend Node -->
+                <div
+                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
+                    <div
+                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
+                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
+                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-20">
+            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
+            <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
+                    class="gradient-text">Datensatz.</span></h3>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+                <div class="flex items-center gap-4 mb-8">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
+                        <i data-lucide="layout-template" class="text-indigo-500"></i>
+                    </div>
+                    <h4 class="text-lg font-black uppercase">Frontend</h4>
+                </div>
+                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
+                    <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für maximale
+                    Geschwindigkeit optimiert.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
+                </div>
             </div>
 
-            <!-- Header is now purely Brand & Status -->
-
-            <main>
-                <section class="py-24 px-6 text-center z-10 relative">
-                    <span
-                        class="text-[var(--rose-gold)] font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack
-                        AI & Engineering Agentur</span>
-                    <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-                        WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
-                    </h1>
-                    <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-                        Wir bauen keine Webseiten. Wir konstruieren autonome <span
-                            class="text-white font-medium">Wertschöpfungs-Systeme</span>.
-                        Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
-                        <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
-                    </p>
-                </section>
-
-                <div class="bento-grid w-full">
-                    <!-- ROI Section (Span 8) -->
-                    <div class="col-span-8">
-                        <section id="roi" class="glass p-8 md:p-12 rounded-[2rem] border-white/5 relative z-10">
-                            <div class="mb-12">
-                                <h2
-                                    class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic leading-none mb-6">
-                                    <span class="text-indigo-500">Revenue</span> Multiplier.
-                                </h2>
-                                <p class="text-zinc-500 text-lg font-light leading-relaxed">
-                                    Sichtbarkeit ist Mathematik. Berechnen Sie Ihren <strong
-                                        class="text-white">Umsatz-Verlust</strong>.
-                                </p>
-                            </div>
-
-                            <!-- ROI Calculator Internal Grid -->
-                            <div class="grid lg:grid-cols-2 gap-12">
-                                <!-- Inputs -->
-                                <div class="space-y-8 flex flex-col justify-center">
-                                    <div>
-                                        <div
-                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                            <span>Monatliche Gäste</span>
-                                            <span class="text-indigo-400" id="v_guests">1.000</span>
-                                        </div>
-                                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
-                                            class="w-full">
-                                    </div>
-                                    <div>
-                                        <div
-                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                            <span>Ø Umsatz pro Gast</span>
-                                            <span class="text-indigo-400" id="v_check">25 €</span>
-                                        </div>
-                                        <input type="range" id="m_check" min="5" max="150" step="1" value="25"
-                                            class="w-full">
-                                    </div>
-                                    <div>
-                                        <div
-                                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                            <span>SEO Boost</span>
-                                            <span class="text-green-400" id="v_boost">+20%</span>
-                                        </div>
-                                        <input type="range" id="m_boost" min="5" max="100" step="5" value="20"
-                                            class="w-full">
-                                    </div>
-                                </div>
-
-                                <!-- Results -->
-                                <div class="space-y-6">
-                                    <div class="bg-white/5 rounded-2xl p-6 text-center border border-white/5">
-                                        <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-widest">
-                                            Jährlicher Profit</div>
-                                        <div class="text-4xl font-black tracking-tighter text-[#af8787]" id="res_gain">0
-                                            €</div>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="bg-white/5 rounded-2xl p-4 text-center border border-white/5">
-                                            <div
-                                                class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">
-                                                ROI</div>
-                                            <div class="text-xl font-black text-green-400" id="res_roi_percent">0%</div>
-                                        </div>
-                                        <div class="bg-white/5 rounded-2xl p-4 text-center border border-white/5">
-                                            <div
-                                                class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">
-                                                Break-Even</div>
-                                            <div class="text-xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
-                                        </div>
-                                    </div>
-                                    <button
-                                        onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                                        class="w-full py-4 bg-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
-                                        <span>Profit Realisieren</span>
-                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
+            <div
+                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
+                <div class="flex items-center gap-4 mb-8">
+                    <div
+                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
+                        <i data-lucide="brain-circuit" class="text-white"></i>
                     </div>
+                    <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
+                </div>
+                <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong> Workflows
+                    kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
+                    Geschäftsprozesse.</p>
 
-                    <!-- Directory Tile (Span 4) -->
-                    <div class="col-span-4">
-                        <aside class="directory-tile">
-                            <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Verzeichnis
-                            </div>
-                            <a href="#engineering-deep-dive" class="directory-link">
-                                <span>Deep Dive</span>
-                                <i data-lucide="cpu" class="w-4 h-4 text-zinc-400"></i>
-                            </a>
-                            <a href="#architecture" class="directory-link">
-                                <span>Architecture</span>
-                                <i data-lucide="layout-template" class="w-4 h-4 text-zinc-400"></i>
-                            </a>
-                            <a href="#roi" class="directory-link active">
-                                <span>Calculator</span>
-                                <i data-lucide="calculator" class="w-4 h-4 text-white"></i>
-                            </a>
-                            <a href="#contact" class="directory-link">
-                                <span>Kontakt</span>
-                                <i data-lucide="send" class="w-4 h-4 text-zinc-400"></i>
-                            </a>
+                <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
+                    id="live-terminal">
+                    <div class="opacity-50">>> Initializing AURA_CORE...</div>
+                    <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
+                    <div class="text-white">>> Status: Autonomy active.</div>
+                </div>
+            </div>
 
-                            <div class="mt-auto pt-8 border-t border-white/5">
-                                <div class="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">Live
-                                    Status</div>
-                                <div class="flex justify-between text-[10px] text-zinc-400 mb-2 font-mono">
-                                    <span>Core:</span> <span class="text-green-400">Online</span>
-                                </div>
-                                <div class="flex justify-between text-[10px] text-zinc-400 font-mono">
-                                    <span>Uptime:</span> <span class="text-white">99.9%</span>
-                                </div>
-                            </div>
-                        </aside>
+            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+                <div class="flex items-center gap-4 mb-8">
+                    <div
+                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
+                        <i data-lucide="database" class="text-indigo-500"></i>
                     </div>
+                    <h4 class="text-lg font-black uppercase">Backend</h4>
+                </div>
+                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit <strong>Supabase</strong>
+                    und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen mitwächst.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <!-- Architecture Section (Span 12) -->
-                    <div class="col-span-12 mt-24">
-                        <section id="architecture" class="relative z-10">
-                            <div class="glass p-12 rounded-[2rem] border-white/5">
-                                <div class="text-center mb-12">
-                                    <h3 class="text-3xl font-black italic">AURA Architecture</h3>
-                                </div>
-                                <!-- Simplified Arch for Bento -->
-                                <div class="grid md:grid-cols-3 gap-6 text-center">
-                                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                                        <div class="font-bold uppercase mb-2 text-sm">Frontend</div>
-                                        <div class="text-[10px] text-zinc-500 font-mono">Next.js + React</div>
-                                    </div>
-                                    <div class="p-6 bg-indigo-600/10 rounded-2xl border border-indigo-500/30">
-                                        <div class="font-bold uppercase mb-2 text-sm text-indigo-400">AI Core</div>
-                                        <div class="text-[10px] text-indigo-300 font-mono">n8n + OpenAI</div>
-                                    </div>
-                                    <div class="p-6 bg-white/5 rounded-2xl border border-white/5">
-                                        <div class="font-bold uppercase mb-2 text-sm">Backend</div>
-                                        <div class="text-[10px] text-zinc-500 font-mono">Supabase</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+    <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
+                    <span class="text-indigo-500">Revenue</span> <br>Multiplier.
+                </h2>
+                <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
+                    Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
+                    Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
+                    Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
+                </p>
 
-                    <!-- Contact Section (Span 12) -->
-                    <div class="col-span-12 mt-24">
-                        <section id="contact" class="max-w-4xl mx-auto relative z-10 text-center">
-                            <h2
-                                class="text-5xl md:text-7xl font-black mb-12 tracking-tighter uppercase italic leading-none">
-                                Ready for <span class="text-indigo-500">Scale?</span>
-                            </h2>
+                <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
+                    <!-- Input Section -->
+                    <div class="space-y-6">
+                        <div>
                             <div
-                                class="glass p-12 rounded-[3rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-                                <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500"
-                                    id="progressBar" style="width: 33%"></div>
-
-                                <form
-                                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                                    method="POST" id="leadForm" class="text-left relative min-h-[300px]">
-                                    <!-- Steps Preserved -->
-                                    <div class="step active" id="step1">
-                                        <h3 class="text-2xl font-bold mb-8">System Scale Audit</h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                            <button type="button"
-                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
-                                                onclick="nextStep(2)">
-                                                <div class="text-2xl mb-2">🏢</div>
-                                                <div class="font-bold">Startup</div>
-                                            </button>
-                                            <button type="button"
-                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
-                                                onclick="nextStep(2)">
-                                                <div class="text-2xl mb-2">🏭</div>
-                                                <div class="font-bold">Scale-Up</div>
-                                            </button>
-                                            <button type="button"
-                                                class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 transition text-center group"
-                                                onclick="nextStep(2)">
-                                                <div class="text-2xl mb-2">🏙️</div>
-                                                <div class="font-bold">Enterprise</div>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="step" id="step2">
-                                        <h3 class="text-2xl font-bold mb-8">Tech Stack</h3>
-                                        <input name="crm" placeholder="Current CRM / Database?"
-                                            class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white mb-6">
-                                        <button type="button"
-                                            class="w-full bg-white/10 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                                            onclick="nextStep(3)">Next &rarr;</button>
-                                    </div>
-
-                                    <div class="step" id="step3">
-                                        <h3 class="text-2xl font-bold mb-8">Finalize</h3>
-                                        <div class="grid md:grid-cols-2 gap-4 mb-4">
-                                            <input name="name" placeholder="Name" required
-                                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                                            <input name="email" type="email" placeholder="Email" required
-                                                class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                                        </div>
-                                        <button type="submit"
-                                            class="w-full bg-indigo-600 py-6 rounded-xl font-black text-xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20">Initialize</button>
-                                    </div>
-                                </form>
-                                <div id="successMsg"
-                                    class="hidden text-2xl font-black text-green-400 italic text-center mt-12">✓ System
-                                    Audit Requested.</div>
+                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                <span>Monatliche Gäste (Website)</span>
+                                <span class="text-indigo-400" id="v_guests">1.000</span>
                             </div>
-                        </section>
+                            <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
+                                class="w-full">
+                        </div>
+                        <div>
+                            <div
+                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                <span>Ø Umsatz pro Gast</span>
+                                <span class="text-indigo-400" id="v_check">25 €</span>
+                            </div>
+                            <input type="range" id="m_check" min="5" max="150" step="1" value="25" class="w-full">
+                        </div>
+                        <div>
+                            <div
+                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                                <span>SEO Sichtbarkeit Boost</span>
+                                <span class="text-green-400" id="v_boost">+20%</span>
+                            </div>
+                            <input type="range" id="m_boost" min="5" max="100" step="5" value="20" class="w-full">
+                            <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach
+                                Technical Fixes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-rose-200/5 my-4"></div>
+
+                    <!-- Result Section (Bottom Hierarchy) -->
+                    <div class="text-center">
+                        <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Jährlicher
+                            Umsatz-Gewinn</div>
+                        <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
+                            id="res_gain">0 €</div>
+
+                        <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                            class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
+                            <span>Diesen Profit Realisieren</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
                     </div>
                 </div>
-            </main>
-
-            <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
-                AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
-            </footer>
-
-            <!-- Ghost Menu Trigger (Visible on all devices) -->
-            <div class="ghost-trigger" id="ghost-trigger">
-                <div class="ghost-line"></div>
-                <div class="ghost-line"></div>
             </div>
 
-            <!-- Ghost Full Screen Overlay -->
-            <div class="ghost-overlay" id="ghost-overlay">
-                <a href="#architecture" class="ghost-link" data-text="Architecture"
-                    onclick="toggleGhost()">Architecture</a>
-                <a href="#roi" class="ghost-link" data-text="ROI Audit" onclick="toggleGhost()">ROI Audit</a>
-                <a href="#contact" class="ghost-link" data-text="Start Project" onclick="toggleGhost()">Start
-                    Project</a>
-
-                <div class="mt-12 text-center opacity-50">
-                    <div class="text-[10px] font-mono mb-2">AURA SYSTEMS</div>
-                    <div class="text-[10px] uppercase tracking-widest text-indigo-500">System Online</div>
+            <!-- Bento Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+                <div
+                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
+                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)</div>
+                    <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
+                </div>
+                <div
+                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
+                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even</div>
+                    <div class="text-3xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <script>
-                lucide.createIcons();
+    <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
+        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
+            <br><span class="text-indigo-500">Level 2.</span>
+        </h2>
 
-                // Ghost Menu Logic
-                const ghostTrigger = document.getElementById('ghost-trigger');
-                const ghostOverlay = document.getElementById('ghost-overlay');
-                let isGhostOpen = false;
+        <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
+            <!-- Progress Bar -->
+            <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
+                style="width: 33%"></div>
 
-                function toggleGhost() {
-                    isGhostOpen = !isGhostOpen;
-                    if (isGhostOpen) {
-                        ghostOverlay.classList.add('active');
-                        ghostTrigger.classList.add('active');
-                    } else {
-                        ghostOverlay.classList.remove('active');
-                        ghostTrigger.classList.remove('active');
+            <form
+                action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
+                method="POST" id="leadForm" class="text-left relative min-h-[300px]">
+
+                <!-- Step 1: Volume -->
+                <div class="step active" id="step1">
+                    <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
+                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
+                        Operation?</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+                        <button type="button"
+                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                            onclick="nextStep(2)">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
+                            <div class="font-bold">1-10</div>
+                            <div class="text-[10px] text-zinc-500">Startup</div>
+                        </button>
+                        <button type="button"
+                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                            onclick="nextStep(2)">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
+                            <div class="font-bold">11-50</div>
+                            <div class="text-[10px] text-zinc-500">Scale-Up</div>
+                        </button>
+                        <button type="button"
+                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
+                            onclick="nextStep(2)">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
+                            <div class="font-bold">50+</div>
+                            <div class="text-[10px] text-zinc-500">Enterprise</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Stack -->
+                <div class="step" id="step2">
+                    <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
+                                Datenbank?</label>
+                            <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
+                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                        </div>
+                        <button type="button"
+                            class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
+                            onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact -->
+                <div class="step" id="step3">
+                    <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <input name="name" placeholder="Name" required
+                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                        <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
+                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                    </div>
+                    <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
+                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
+
+                    <button type="submit"
+                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
+                        Initialisieren
+                    </button>
+                    <button type="button"
+                        class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
+                        onclick="nextStep(1)">Audit Neustarten</button>
+                </div>
+
+            </form>
+            <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit angefordert.
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
+        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Cursor Glow - Optimized with GSAP quickTo
+        const glow = document.getElementById('cursor-glow');
+        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
+        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
+
+        window.addEventListener('mousemove', (e) => {
+            xTo(e.clientX - 250);
+            yTo(e.clientY - 250);
+        });
+
+        // ROI Matrix Logic (Hospitality SEO Model)
+        const m_guests = document.getElementById('m_guests');
+        const m_check = document.getElementById('m_check');
+        const m_boost = document.getElementById('m_boost');
+
+        const v_guests = document.getElementById('v_guests');
+        const v_check = document.getElementById('v_check');
+        const v_boost = document.getElementById('v_boost');
+
+        const res_gain = document.getElementById('res_gain');
+        const res_roi_percent = document.getElementById('res_roi_percent');
+        const res_breakeven = document.getElementById('res_breakeven');
+
+        // Number format helper
+        const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+        const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
+
+        // GSAP Counter Animation Helper
+        let currentGainValue = 0;
+
+        function calculate() {
+            const guests = parseInt(m_guests.value) || 0;
+            const check = parseInt(m_check.value) || 0;
+            const boost = parseInt(m_boost.value) || 0;
+
+            v_guests.innerText = formatNumber(guests);
+            v_check.innerText = formatCurrency(check);
+            v_boost.innerText = '+' + boost + '%';
+
+            // Formula: Annual Gain = (Monthly Guests * Avg Check * (Boost / 100)) * 12
+            const monthlyRevenue = guests * check;
+            const monthlyGain = monthlyRevenue * (boost / 100);
+            const annualGain = monthlyGain * 12;
+
+            // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
+            const projectCost = 5000;
+            const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
+            const breakEvenMonths = projectCost / monthlyGain;
+
+            // Animate Result Number
+            gsap.to({ val: currentGainValue }, {
+                val: annualGain,
+                duration: 1,
+                ease: "power2.out",
+                onUpdate: function () {
+                    res_gain.innerText = formatCurrency(this.targets()[0].val);
+                },
+                onComplete: () => currentGainValue = annualGain
+            });
+
+            res_roi_percent.innerText = Math.round(roiPercent) + '%';
+            res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
+
+            // Re-Lucide
+            lucide.createIcons();
+        }
+
+        m_guests.addEventListener('input', calculate);
+        m_check.addEventListener('input', calculate);
+        m_boost.addEventListener('input', calculate);
+        calculate();
+
+        // Multi-Step Logic
+        function nextStep(step) {
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+
+            // Update Progress
+            const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
+            document.getElementById('progressBar').style.width = progress;
+        }
+
+        // Magnetic Buttons - Optimized
+        const magnets = document.querySelectorAll('.magnetic-btn');
+        magnets.forEach((btn) => {
+            const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
+            const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
+
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                xTo(x * 0.5);
+                yTo(y * 0.5);
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                xTo(0);
+                yTo(0);
+            });
+        });
+
+        // Form Submission
+        const form = document.getElementById('leadForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
+
+            // Hide all steps, show success
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('progressBar').style.width = '100%';
+            setTimeout(() => {
+                form.classList.add('hidden');
+                document.getElementById('successMsg').classList.remove('hidden');
+                // Expletti confetti/particles here if we wanted
+            }, 500);
+        });
+
+        // Mobile Menu Logic
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        mobileToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+
+                // Animate Toggle Button to 'X'
+                mobileToggle.children[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                mobileToggle.children[1].style.opacity = '0';
+                mobileToggle.children[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+
+                // Stagger Links
+                gsap.fromTo(mobileLinks,
+                    { y: 50, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
+                );
+            } else {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+
+                // Reset Toggle
+                mobileToggle.children[0].style.transform = 'none';
+                mobileToggle.children[1].style.opacity = '1';
+                mobileToggle.children[2].style.transform = 'none';
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileToggle.click());
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+
+                    // Specific animations based on element type
+                    if (entry.target.classList.contains('matrix-card')) {
+                        gsap.fromTo(entry.target,
+                            { y: 50, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+                        );
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
+            // Initial state done via class in CSS potentially, or just ensuring they animate here
+            // For now, let's just trigger GSAP on intersection
+            gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
+
+            observer.observe(el);
+            // Re-attach observer for GSAP override
+            const animObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+                        animObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            animObserver.observe(el);
+        });
+
+        // Neural Network Background Canvas
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.2)'; // Indigo low opacity
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Init Particles
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                // Draw Connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 - dist / 1500})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
                     }
                 }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
 
-                ghostTrigger.addEventListener('click', toggleGhost);
+        // Live Terminal Simulation
+        const terminalStrings = [
+            ">> Analyzing lead structures...",
+            ">> Optimizing API response time...",
+            ">> Compiling backend schemas...",
+            ">> Deploying autonomous agent...",
+            ">> Syncing Supabase database...",
+            ">> Encryption layer active.",
+            ">> Data stream stabilized."
+        ];
 
-                // Cursor Glow (retained)
+        const terminalDiv = document.getElementById('live-terminal');
+        let stringIndex = 0;
 
-                // ROI Matrix Logic (Hospitality SEO Model)
-                const m_guests = document.getElementById('m_guests');
-                const m_check = document.getElementById('m_check');
-                const m_boost = document.getElementById('m_boost');
+        function updateTerminal() {
+            if (!terminalDiv) return;
+            const line = document.createElement('div');
+            line.className = 'mt-1 opacity-80 flex';
 
-                const v_guests = document.getElementById('v_guests');
-                const v_check = document.getElementById('v_check');
-                const v_boost = document.getElementById('v_boost');
+            const timestamp = document.createElement('span');
+            timestamp.className = 'text-zinc-500 mr-2';
+            timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
 
-                const res_gain = document.getElementById('res_gain');
-                const res_roi_percent = document.getElementById('res_roi_percent');
-                const res_breakeven = document.getElementById('res_breakeven');
+            const content = document.createElement('span');
+            content.className = 'text-indigo-400';
 
-                // Number format helper
-                const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
-                const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
+            line.appendChild(timestamp);
+            line.appendChild(content);
+            terminalDiv.appendChild(line);
 
-                // GSAP Counter Animation Helper
-                let currentGainValue = 0;
+            // Typing effect
+            const text = terminalStrings[stringIndex];
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                content.innerText += text.charAt(i);
+                i++;
+                if (i >= text.length) clearInterval(typeInterval);
+            }, 20); // Typing speed
 
-                function calculate() {
-                    const guests = parseInt(m_guests.value) || 0;
-                    const check = parseInt(m_check.value) || 0;
-                    const boost = parseInt(m_boost.value) || 0;
-
-                    v_guests.innerText = formatNumber(guests);
-                    v_check.innerText = formatCurrency(check);
-                    v_boost.innerText = '+' + boost + '%';
-
-                    // Formula: Zusatzumsatz = (Gäste * SEO-Boost) * Ø Umsatz * 12
-                    const additionalGuests = guests * (boost / 100);
-                    const monthlyGain = additionalGuests * check;
-                    const annualGain = monthlyGain * 12;
-
-                    // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
-                    const projectCost = 5000;
-                    const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
-                    const breakEvenMonths = projectCost / monthlyGain;
-
-                    // Animate Result Number (Instant Feedback for Touch)
-                    // Removed GSAP duration for 1:1 feel, or keep it extremely short (0.1s)
-                    res_gain.innerText = formatCurrency(annualGain);
-
-                    res_roi_percent.innerText = Math.round(roiPercent) + '%';
-                    res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
-
-                    // Re-Lucide
-                    lucide.createIcons();
-                }
-
-                m_guests.addEventListener('input', calculate);
-                m_check.addEventListener('input', calculate);
-                m_boost.addEventListener('input', calculate);
-                calculate();
-
-                // Multi-Step Logic
-                function nextStep(step) {
-                    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-                    document.getElementById('step' + step).classList.add('active');
-
-                    // Update Progress
-                    const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
-                    document.getElementById('progressBar').style.width = progress;
-                }
-
-                // Magnetic Buttons - Optimized
-                const magnets = document.querySelectorAll('.magnetic-btn');
-                magnets.forEach((btn) => {
-                    const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
-                    const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
-
-                    btn.addEventListener('mousemove', (e) => {
-                        const rect = btn.getBoundingClientRect();
-                        const x = e.clientX - rect.left - rect.width / 2;
-                        const y = e.clientY - rect.top - rect.height / 2;
-                        xTo(x * 0.5);
-                        yTo(y * 0.5);
-                    });
-
-                    btn.addEventListener('mouseleave', () => {
-                        xTo(0);
-                        yTo(0);
-                    });
-                });
-
-                // Form Submission
-                const form = document.getElementById('leadForm');
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
-
-                    // Hide all steps, show success
-                    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-                    document.getElementById('progressBar').style.width = '100%';
-                    setTimeout(() => {
-                        form.classList.add('hidden');
-                        document.getElementById('successMsg').classList.remove('hidden');
-                        // Expletti confetti/particles here if we wanted
-                    }, 500);
-                });
-
-                // Mobile Menu Logic (FAB)
-                const fabTrigger = document.getElementById('fab-trigger');
-                const mobileMenu = document.getElementById('mobile-menu');
-                const mobileLinks = document.querySelectorAll('.mobile-link');
-                let isMenuOpen = false;
-
-                function toggleMenu() {
-                    isMenuOpen = !isMenuOpen;
-                    if (isMenuOpen) {
-                        mobileMenu.style.transform = "translateY(0%)";
-                        // Icon change could go here
-                    } else {
-                        mobileMenu.style.transform = "translateY(100%)";
-                    }
-                }
-
-                if (fabTrigger) fabTrigger.addEventListener('click', toggleMenu);
-
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        isMenuOpen = false;
-                        mobileMenu.style.transform = "translateY(100%)";
-                    });
-                });
-                // --- GSAP Spring Physics & Stagger ---
-                // Elastic Hover Effect for Buttons & Cards
-                const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
-
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        gsap.to(el, {
-                            scale: 1.02, // Subtle scale
-                            duration: 0.5,
-                            ease: "power2.out"
-                        });
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        gsap.to(el, {
-                            scale: 1,
-                            duration: 0.5,
-                            ease: "power2.out"
-                        });
-                    });
-                });
-
-                // Stagger Nav Links on Load
-                gsap.from(".directory-link", {
-                    y: 20,
-                    opacity: 0,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: "power3.out",
-                    delay: 0.2
-                });
-
-                // Scroll Reveal Animation (Intersection Observer)
-                const observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: "0px 0px -50px 0px"
-                };
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                            gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-
-                // Observe elements
-                document.querySelectorAll('section, .glass, .matrix-card, .directory-tile').forEach(el => {
-                    gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
-                    observer.observe(el);
-                });
-
-
-                // --- Cleaned up old particles code ---
-
-                // --- AURA CORE 2.0: WebGL Liquid Shader ---
-                const container = document.getElementById('webgl-container');
-                const scene = new THREE.Scene();
-                const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-                const renderer = new THREE.WebGLRenderer({ alpha: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                container.appendChild(renderer.domElement);
-
-                const geometry = new THREE.PlaneGeometry(2, 2);
-
-                // Perlin/Simplex Noise Fragment Shader
-                const fragmentShader = `
-            uniform float u_time;
-            uniform vec2 u_resolution;
-            uniform vec2 u_mouse;
-            uniform float u_intensity;
-
-            // Simplex 3D Noise function (simplified)
-            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-            vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-            vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
-            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
-
-            float snoise(vec3 v) {
-                const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-                const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-
-                // First corner
-                vec3 i  = floor(v + dot(v, C.yyy) );
-                vec3 x0 = v - i + dot(i, C.xxx) ;
-
-                // Other corners
-                vec3 g = step(x0.yzx, x0.xyz);
-                vec3 l = 1.0 - g;
-                vec3 i1 = min( g.xyz, l.zxy );
-                vec3 i2 = max( g.xyz, l.zxy );
-
-                vec3 x1 = x0 - i1 + C.xxx;
-                vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
-                vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
-
-                // Permutations
-                i = mod289(i);
-                vec4 p = permute( permute( permute(
-                            i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-                        + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
-                        + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
-
-                // Gradients: 7x7 points over a square, mapped onto an octahedron.
-                // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
-                float n_ = 0.142857142857; // 1.0/7.0
-                vec3  ns = n_ * D.wyz - D.xzx;
-
-                vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
-
-                vec4 x_ = floor(j * ns.z);
-                vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
-
-                vec4 x = x_ *ns.x + ns.yyyy;
-                vec4 y = y_ *ns.x + ns.yyyy;
-                vec4 h = 1.0 - abs(x) - abs(y);
-
-                vec4 b0 = vec4( x.xy, y.xy );
-                vec4 b1 = vec4( x.zw, y.zw );
-
-                vec4 s0 = floor(b0)*2.0 + 1.0;
-                vec4 s1 = floor(b1)*2.0 + 1.0;
-                vec4 sh = -step(h, vec4(0.0));
-
-                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
-
-                vec3 p0 = vec3(a0.xy,h.x);
-                vec3 p1 = vec3(a0.zw,h.y);
-                vec3 p2 = vec3(a1.xy,h.z);
-                vec3 p3 = vec3(a1.zw,h.w);
-
-                //Normalise gradients
-                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-                p0 *= norm.x;
-                p1 *= norm.y;
-                p2 *= norm.z;
-                p3 *= norm.w;
-
-                // Mix final noise value
-                vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-                m = m * m;
-                return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
-                                            dot(p2,x2), dot(p3,x3) ) );
+            if (terminalDiv.childNodes.length > 6) {
+                terminalDiv.removeChild(terminalDiv.firstChild);
             }
 
-            void main() {
-                vec2 st = gl_FragCoord.xy / u_resolution.xy;
-                st.x *= u_resolution.x / u_resolution.y;
+            stringIndex = (stringIndex + 1) % terminalStrings.length;
 
-                vec3 color = vec3(0.0);
-                
-                // Mouse interaction
-                vec2 mouseNorm = u_mouse / u_resolution;
-                float dist = distance(st, mouseNorm);
-                
-                // Liquid Noise movement
-                float noise = snoise(vec3(st * 3.0, u_time * 0.1));
-                
-                // Base Gradient Colors (Indigo/Dark)
-                vec3 color1 = vec3(0.05, 0.05, 0.1); // Dark Back
-                vec3 color2 = vec3(0.39, 0.4, 0.95);  // Indigo
-                vec3 color3 = vec3(0.9, 0.3, 0.5);    // Rose (Hot)
-                
-                // Mixing based on noise and intensity
-                float mixVal = smoothstep(0.3, 0.7, noise + u_intensity * 0.5);
-                
-                // Dynamic Temperature
-                vec3 mixedColor = mix(color1, color2, mixVal);
-                mixedColor = mix(mixedColor, color3, u_intensity * mixVal * dist); // Heat up near mouse + intensity
+            // Random interval for next line
+            setTimeout(updateTerminal, Math.random() * 3000 + 2000);
+        }
 
-                // Soft glow blob
-                float glow = 1.0 - distance(st, vec2(0.5) + vec2(sin(u_time*0.5)*0.2, cos(u_time*0.3)*0.2));
-                mixedColor += glow * 0.2 * vec3(0.4, 0.5, 1.0);
-
-                gl_FragColor = vec4(mixedColor, 1.0);
-            }
-        `;
-
-                const material = new THREE.ShaderMaterial({
-                    vertexShader: `
-                void main() {
-                    gl_Position = vec4( position, 1.0 );
-                }
-            `,
-                    fragmentShader: fragmentShader,
-                    uniforms: {
-                        u_time: { value: 0.0 },
-                        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                        u_mouse: { value: new THREE.Vector2(0, 0) },
-                        u_intensity: { value: 0.0 } // 0.0 = Cool, 1.0 = Hot
-                    }
-                });
-
-                const plane = new THREE.Mesh(geometry, material);
-                scene.add(plane);
-
-                // Animation Loop
-                const clock = new THREE.Clock();
-                function animate() {
-                    material.uniforms.u_time.value = clock.getElapsedTime();
-                    renderer.render(scene, camera);
-                    requestAnimationFrame(animate);
-                }
-                animate();
-
-                // Resize
-                window.addEventListener('resize', () => {
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                    material.uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-                });
-
-                // Mouse Move (Interactive Aura)
-                window.addEventListener('mousemove', (e) => {
-                    if (typeof material !== 'undefined') {
-                        material.uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
-                    }
-                });
-
-                // --- END WebGL Core ---
-
-                // Live Terminal Simulation
-                const terminalStrings = [
-                    ">> Analyzing lead structures...",
-                    ">> Optimizing API response time...",
-                    ">> Compiling backend schemas...",
-                    ">> Deploying autonomous agent...",
-                    ">> Syncing Supabase database...",
-                    ">> Encryption layer active.",
-                    ">> Data stream stabilized."
-                ];
-
-                const terminalDiv = document.getElementById('live-terminal');
-                let stringIndex = 0;
-
-                function updateTerminal() {
-                    if (!terminalDiv) return;
-                    const line = document.createElement('div');
-                    line.className = 'mt-1 opacity-80 flex';
-
-                    const timestamp = document.createElement('span');
-                    timestamp.className = 'text-zinc-500 mr-2';
-                    timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
-
-                    const content = document.createElement('span');
-                    content.className = 'text-indigo-400';
-
-                    line.appendChild(timestamp);
-                    line.appendChild(content);
-                    terminalDiv.appendChild(line);
-
-                    // Typing effect
-                    const text = terminalStrings[stringIndex];
-                    let i = 0;
-                    const typeInterval = setInterval(() => {
-                        content.innerText += text.charAt(i);
-                        i++;
-                        if (i >= text.length) clearInterval(typeInterval);
-                    }, 20); // Typing speed
-
-                    if (terminalDiv.childNodes.length > 6) {
-                        terminalDiv.removeChild(terminalDiv.firstChild);
-                    }
-
-                    stringIndex = (stringIndex + 1) % terminalStrings.length;
-
-                    // Random interval for next line
-                    setTimeout(updateTerminal, Math.random() * 3000 + 2000);
-                }
-
-                // Start terminal
-                updateTerminal();
-            </script>
-            </main>
-    </body>
+        // Start terminal
+        updateTerminal();
+    </script>
+</body>
 
 </html>
