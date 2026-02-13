@@ -15,9 +15,13 @@
 
     <style>
         :root {
-            --bg-color: #030303;
-            /* OLED Black */
+            --bg-color: #050505;
+            /* Deep Dark */
             --accent: #6366f1;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -30,6 +34,28 @@
             margin: 0;
             width: 100vw;
             overflow-x: hidden;
+        }
+
+        /* Mobile Anti-Collision */
+        @media (max-width: 1024px) {
+            .desktop-menu {
+                display: none !important;
+            }
+
+            .mobile-toggle-btn {
+                display: flex !important;
+            }
+
+            #main-nav .logo-text {
+                font-size: 1.25rem;
+                /* Smaller logo on mobile */
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-toggle-btn {
+                display: none !important;
+            }
         }
 
         /* Safe Area Support */
@@ -156,7 +182,7 @@
         </div>
 
         <!-- Desktop Menu -->
-        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
+        <div class="desktop-menu hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
             <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
             <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
             <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
@@ -164,7 +190,7 @@
 
         <!-- Mobile Menu Toggle -->
         <button id="mobile-toggle"
-            class="md:hidden z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
+            class="mobile-toggle-btn md:hidden z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
             <span class="w-8 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
             <span class="w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
             <span class="w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
@@ -351,20 +377,31 @@
                 </p>
 
                 <!-- Bento Stats Grid -->
-                <!-- UPDATED for Phase 5: Break-Even + Growth Curve -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                    <div
-                        class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Amortisation
+                    <div class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden"
+                        id="roi-card">
+                        <div class="absolute inset-0 bg-amber-500/10 opacity-0 transition-opacity duration-1000"
+                            id="gold-glow"></div>
+                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2 relative z-10">
+                            Amortisation
                         </div>
-                        <div class="text-3xl font-black text-green-400" id="res_breakeven">0 Mo.</div>
+                        <div class="text-3xl font-black text-green-400 relative z-10" id="res_breakeven">0 Mo.</div>
                     </div>
                     <!-- Mini visualizer for Curve -->
                     <div
                         class="matrix-card glass p-4 rounded-[2rem] border-white/5 flex items-center justify-center overflow-hidden relative">
                         <canvas id="roi-curve" width="150" height="80" class="opacity-50"></canvas>
                         <div class="absolute bottom-4 text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                            Growth Curve</div>
+                            Break-Even Curve</div>
+                    </div>
+                </div>
+
+                <!-- Ticker for Cost of Inaction -->
+                <div class="mt-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                    <p class="text-[10px] text-red-400 font-bold uppercase tracking-widest mb-1">Cost of Inaction</p>
+                    <div class="text-sm text-red-300 font-mono">
+                        Ihr täglicher Verlust durch SEO-Fehler: <span class="text-white font-bold"
+                            id="daily-loss-ticker">0,00 €</span>
                     </div>
                 </div>
 
@@ -376,7 +413,7 @@
                     <div>
                         <div
                             class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Monatliche Gäste (Website)</span>
+                            <span>Monatliche Gäste (Verlorener Traffic)</span>
                             <span class="text-indigo-400" id="v_guests">1.000</span>
                         </div>
                         <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000" class="w-full">
@@ -384,21 +421,27 @@
                     <div>
                         <div
                             class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>SEO Sichtbarkeit Boost</span>
-                            <span class="text-green-400" id="v_boost">+20%</span>
+                            <span>Ø-Umsatz pro Gast (Warenkorb)</span>
+                            <span class="text-green-400" id="v_check">50 €</span>
                         </div>
-                        <input type="range" id="m_boost" min="5" max="100" step="5" value="20" class="w-full">
-                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung.</p>
+                        <input type="range" id="m_check" min="10" max="500" step="5" value="50" class="w-full">
                     </div>
                     <div>
                         <div
                             class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Ø Customer Lifetime Value (LTV)</span>
-                            <span class="text-indigo-400" id="v_ltv">120 €</span>
+                            <span>Conversion Rate (Realistisch)</span>
+                            <span class="text-indigo-400" id="v_conv">2%</span>
                         </div>
-                        <input type="range" id="m_ltv" min="10" max="500" step="10" value="120" class="w-full">
-                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Durchschnittlicher Wert eines Gastes über
-                            Zeit.</p>
+                        <input type="range" id="m_conv" min="0.1" max="10" step="0.1" value="2" class="w-full">
+                    </div>
+                    <div>
+                        <div
+                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                            <span>Projektkosten (Investment)</span>
+                            <span class="text-rose-400" id="v_cost">5.000 €</span>
+                        </div>
+                        <input type="range" id="m_cost" min="1000" max="50000" step="500" value="5000" class="w-full">
+                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Einmaliges Investment in Aura Systems.</p>
                     </div>
                 </div>
 
@@ -407,11 +450,11 @@
 
                 <!-- Result Section (Bottom Hierarchy) -->
                 <div class="text-center">
-                    <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Projected ROI Ratio
+                    <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Netto-ROI (1 Jahr)
                     </div>
                     <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
                         id="res_roi_percent">0%</div>
-                    <p class="text-[10px] text-zinc-500 mt-2 font-mono" id="res_gain">Annual Gain: 0€</p>
+                    <p class="text-[10px] text-zinc-500 mt-2 font-mono" id="res_gain">Zusatzumsatz: 0€</p>
 
                     <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
                         class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
@@ -582,18 +625,22 @@
         }
         animateCanvas();
 
-        // ROI Pro-Logic (LTV & Break-Even) - Phase 5
+        // ROI V2 (Cost of Inaction & High-Impact Logic)
         const m_guests = document.getElementById('m_guests');
-        const m_boost = document.getElementById('m_boost');
-        const m_ltv = document.getElementById('m_ltv');
+        const m_check = document.getElementById('m_check');
+        const m_conv = document.getElementById('m_conv');
+        const m_cost = document.getElementById('m_cost');
 
         const v_guests = document.getElementById('v_guests');
-        const v_boost = document.getElementById('v_boost');
-        const v_ltv = document.getElementById('v_ltv');
+        const v_check = document.getElementById('v_check');
+        const v_conv = document.getElementById('v_conv');
+        const v_cost = document.getElementById('v_cost');
 
         const res_roi_percent = document.getElementById('res_roi_percent');
         const res_breakeven = document.getElementById('res_breakeven');
         const res_gain_text = document.getElementById('res_gain');
+        const daily_loss_ticker = document.getElementById('daily-loss-ticker');
+        const gold_glow = document.getElementById('gold-glow');
 
         const curveCanvas = document.getElementById('roi-curve');
         const curveCtx = curveCanvas ? curveCanvas.getContext('2d') : null;
@@ -612,55 +659,72 @@
             curveCtx.moveTo(0, 80);
 
             // Draw exponential curve based on ROI
-            const steepness = Math.min(roi / 1000, 1) * 80;
+            // Higher ROI = Steeper Curve
+            const steepness = Math.min(Math.max(roi, 0) / 500, 1) * 80; // ROI 500% = Max Curve
             curveCtx.quadraticCurveTo(75, 80 - steepness, 150, 10);
             curveCtx.stroke();
         }
 
         function calculate() {
             const guests = parseInt(m_guests.value) || 0;
-            const boost = parseInt(m_boost.value) || 0;
-            const ltv = parseInt(m_ltv.value) || 0;
+            const check = parseInt(m_check.value) || 0;
+            const conv = parseFloat(m_conv.value) || 0;
+            const cost = parseInt(m_cost.value) || 0;
 
             v_guests.innerText = formatNumber(guests);
-            v_boost.innerText = '+' + boost + '%';
-            v_ltv.innerText = formatCurrency(ltv);
+            v_check.innerText = formatCurrency(check);
+            v_conv.innerText = conv + '%';
+            v_cost.innerText = formatCurrency(cost);
 
-            // Pro Formula
-            // ROI = ((Gain_Guests * LTV) - Invest) / Invest * 100
-            const invest = 5000;
-            const gainGuestsYearly = (guests * (boost / 100)) * 12; // Guests gained per year
-            const gainValueYearly = gainGuestsYearly * ltv; // Yearly Gain in Value (Total Value Created)
+            // Formula V2
+            // 1. Calculate Annual Revenue Gain
+            // Guests * Conv Rate = Conversion Events
+            // Conv Events * Check = Revenue
+            // * 12 Months
+            const monthlyRevenue = (guests * (conv / 100)) * check;
+            const annualGain = monthlyRevenue * 12;
 
-            const roiPercent = ((gainValueYearly - invest) / invest) * 100;
-            const breakEvenMonths = invest / (gainValueYearly / 12);
+            // 2. Net ROI
+            const netROI = ((annualGain - cost) / cost) * 100;
 
-            // Animate ROI Counter (Percent)
+            // 3. Amortization (Months)
+            // Cost / Monthly Gain
+            const amortization = monthlyRevenue > 0 ? cost / monthlyRevenue : 99;
+
+            // 4. Cost of Inaction (Daily Loss)
+            const dailyLoss = annualGain / 365;
+
+            // Animations & Updates
             gsap.to({ val: currentRoiValue }, {
-                val: roiPercent,
+                val: netROI,
                 duration: 1.2,
                 ease: "power2.out",
                 onUpdate: function () {
                     if (res_roi_percent) res_roi_percent.innerText = Math.round(this.targets()[0].val) + '%';
                 },
-                onComplete: () => currentRoiValue = roiPercent
+                onComplete: () => currentRoiValue = netROI
             });
 
-            if (res_gain_text) res_gain_text.innerText = "Annual Gain: " + formatCurrency(gainValueYearly);
-            if (res_breakeven) res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
+            if (res_gain_text) res_gain_text.innerText = "Zusatzumsatz: " + formatCurrency(annualGain);
+            if (res_breakeven) res_breakeven.innerText = amortization > 90 ? '> 5 J.' : (amortization < 1 ? '< 1 Mo.' : amortization.toFixed(1) + ' Mo.');
+            if (daily_loss_ticker) daily_loss_ticker.innerText = formatCurrency(dailyLoss);
 
             // Visuals
-            drawCurve(roiPercent);
+            drawCurve(netROI);
 
-            // Aura Feedback State
-            if (roiPercent > 1000) {
-                document.documentElement.style.setProperty('--accent', '#fbbf24'); // Gold for success
+            // Ticker & Glow State
+            if (netROI > 0) {
+                gold_glow.classList.remove('opacity-0');
+                gold_glow.classList.add('animate-pulse');
+                document.documentElement.style.setProperty('--accent', '#fbbf24'); // Gold
             } else {
-                document.documentElement.style.setProperty('--accent', '#6366f1'); // Default Indigo
+                gold_glow.classList.add('opacity-0');
+                gold_glow.classList.remove('animate-pulse');
+                document.documentElement.style.setProperty('--accent', '#6366f1'); // Indigo
             }
         }
 
-        [m_guests, m_boost, m_ltv].forEach(el => {
+        [m_guests, m_check, m_conv, m_cost].forEach(el => {
             el.addEventListener('input', calculate);
             // Spring Physics
             el.addEventListener('pointerup', () => {
