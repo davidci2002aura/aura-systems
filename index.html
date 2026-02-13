@@ -3,100 +3,59 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA SYSTEMS | Full-Stack AI Engineering</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AURA SYSTEMS | Autonomous Value Architecture</title>
+    <meta name="description"
+        content="Wir ersetzen ineffiziente Webseiten durch autonome Wertschöpfungs-Systeme. AI-Driven Engineering & High-Performance Funnels.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Fira+Code&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
+            --bg-color: #030303;
+            /* OLED Black */
             --accent: #6366f1;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-color: var(--bg-color);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 50px 50px;
             color: white;
             margin: 0;
+            width: 100vw;
             overflow-x: hidden;
-            /* Viewport Safety */
         }
 
-        .mono {
-            font-family: 'Fira Code', monospace;
+        /* Safe Area Support */
+        nav {
+            padding-top: max(1.5rem, env(safe-area-inset-top));
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .status-bar {
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
         }
 
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            will-change: transform, opacity;
-            /* GPU Acceleration */
         }
 
-        @media (max-width: 768px) {
-            .glass {
-                backdrop-filter: blur(10px);
-                /* Adaptive Blur for Mobile */
-            }
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Architecture Animation: Flowing Data Pulses */
-        .connector {
-            position: relative;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.05);
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .pulse {
-            position: absolute;
-            width: 60px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: flow 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
-            will-change: transform;
-            /* GPU Acceleration */
-        }
-
-        @keyframes flow {
-            0% {
-                left: -60px;
-                opacity: 0.5;
-            }
-
-            50% {
-                opacity: 1;
-                filter: brightness(1.5);
-            }
-
-            100% {
-                left: 100%;
-                opacity: 0.5;
-            }
-        }
-
-        /* ROI Card Interaction */
         .matrix-card {
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .matrix-card:hover {
@@ -391,70 +350,77 @@
                     Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
                 </p>
 
-                <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
-                    <!-- Input Section -->
-                    <div class="space-y-6">
-                        <div>
-                            <div
-                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                <span>Monatliche Gäste (Website)</span>
-                                <span class="text-indigo-400" id="v_guests">1.000</span>
-                            </div>
-                            <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000"
-                                class="w-full">
+                <!-- Bento Stats Grid -->
+                <!-- UPDATED for Phase 5: Break-Even + Growth Curve -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+                    <div
+                        class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
+                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Amortisation
                         </div>
-                        <div>
-                            <div
-                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                <span>Ø Umsatz pro Gast</span>
-                                <span class="text-indigo-400" id="v_check">25 €</span>
-                            </div>
-                            <input type="range" id="m_check" min="5" max="150" step="1" value="25" class="w-full">
-                        </div>
-                        <div>
-                            <div
-                                class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                                <span>SEO Sichtbarkeit Boost</span>
-                                <span class="text-green-400" id="v_boost">+20%</span>
-                            </div>
-                            <input type="range" id="m_boost" min="5" max="100" step="5" value="20" class="w-full">
-                            <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach
-                                Technical Fixes.</p>
-                        </div>
+                        <div class="text-3xl font-black text-green-400" id="res_breakeven">0 Mo.</div>
                     </div>
-
-                    <!-- Divider -->
-                    <div class="border-t border-rose-200/5 my-4"></div>
-
-                    <!-- Result Section (Bottom Hierarchy) -->
-                    <div class="text-center">
-                        <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Jährlicher
-                            Umsatz-Gewinn</div>
-                        <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
-                            id="res_gain">0 €</div>
-
-                        <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                            class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
-                            <span>Diesen Profit Realisieren</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </button>
+                    <!-- Mini visualizer for Curve -->
+                    <div
+                        class="matrix-card glass p-4 rounded-[2rem] border-white/5 flex items-center justify-center overflow-hidden relative">
+                        <canvas id="roi-curve" width="150" height="80" class="opacity-50"></canvas>
+                        <div class="absolute bottom-4 text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
+                            Growth Curve</div>
                     </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
+                <!-- Input Section -->
+                <div class="space-y-6">
+                    <div>
+                        <div
+                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                            <span>Monatliche Gäste (Website)</span>
+                            <span class="text-indigo-400" id="v_guests">1.000</span>
+                        </div>
+                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000" class="w-full">
+                    </div>
+                    <div>
+                        <div
+                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                            <span>SEO Sichtbarkeit Boost</span>
+                            <span class="text-green-400" id="v_boost">+20%</span>
+                        </div>
+                        <input type="range" id="m_boost" min="5" max="100" step="5" value="20" class="w-full">
+                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung.</p>
+                    </div>
+                    <div>
+                        <div
+                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
+                            <span>Ø Customer Lifetime Value (LTV)</span>
+                            <span class="text-indigo-400" id="v_ltv">120 €</span>
+                        </div>
+                        <input type="range" id="m_ltv" min="10" max="500" step="10" value="120" class="w-full">
+                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Durchschnittlicher Wert eines Gastes über
+                            Zeit.</p>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="border-t border-rose-200/5 my-4"></div>
+
+                <!-- Result Section (Bottom Hierarchy) -->
+                <div class="text-center">
+                    <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Projected ROI Ratio
+                    </div>
+                    <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
+                        id="res_roi_percent">0%</div>
+                    <p class="text-[10px] text-zinc-500 mt-2 font-mono" id="res_gain">Annual Gain: 0€</p>
+
+                    <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                        class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
+                        <span>Diesen Profit Realisieren</span>
+                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Bento Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                <div
-                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)</div>
-                    <div class="text-3xl font-black text-green-400" id="res_roi_percent">0%</div>
-                </div>
-                <div
-                    class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center">
-                    <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even</div>
-                    <div class="text-3xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -562,66 +528,145 @@
             yTo(e.clientY - 250);
         });
 
-        // ROI Matrix Logic (Hospitality SEO Model)
+        // Fluid Aura Support (Canvas 2D) - Phase 5
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let blobs = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Blob {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 200 + 150;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.color = `hsla(${Math.random() * 40 + 220}, 70%, 60%, 0.15)`; // Indigo/Blue hues
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < -this.size || this.x > width + this.size) this.vx *= -1;
+                if (this.y < -this.size || this.y > height + this.size) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Init Blobs
+        for (let i = 0; i < 6; i++) blobs.push(new Blob());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.globalCompositeOperation = 'screen'; // Blend mode for "Fluid" look
+
+            blobs.forEach(blob => {
+                blob.update();
+                blob.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // ROI Pro-Logic (LTV & Break-Even) - Phase 5
         const m_guests = document.getElementById('m_guests');
-        const m_check = document.getElementById('m_check');
         const m_boost = document.getElementById('m_boost');
+        const m_ltv = document.getElementById('m_ltv');
 
         const v_guests = document.getElementById('v_guests');
-        const v_check = document.getElementById('v_check');
         const v_boost = document.getElementById('v_boost');
+        const v_ltv = document.getElementById('v_ltv');
 
-        const res_gain = document.getElementById('res_gain');
         const res_roi_percent = document.getElementById('res_roi_percent');
         const res_breakeven = document.getElementById('res_breakeven');
+        const res_gain_text = document.getElementById('res_gain');
 
-        // Number format helper
+        const curveCanvas = document.getElementById('roi-curve');
+        const curveCtx = curveCanvas ? curveCanvas.getContext('2d') : null;
+
         const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
         const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
 
-        // GSAP Counter Animation Helper
-        let currentGainValue = 0;
+        let currentRoiValue = 0;
+
+        function drawCurve(roi) {
+            if (!curveCtx) return;
+            curveCtx.clearRect(0, 0, 150, 80);
+            curveCtx.strokeStyle = '#4ade80';
+            curveCtx.lineWidth = 2;
+            curveCtx.beginPath();
+            curveCtx.moveTo(0, 80);
+
+            // Draw exponential curve based on ROI
+            const steepness = Math.min(roi / 1000, 1) * 80;
+            curveCtx.quadraticCurveTo(75, 80 - steepness, 150, 10);
+            curveCtx.stroke();
+        }
 
         function calculate() {
             const guests = parseInt(m_guests.value) || 0;
-            const check = parseInt(m_check.value) || 0;
             const boost = parseInt(m_boost.value) || 0;
+            const ltv = parseInt(m_ltv.value) || 0;
 
             v_guests.innerText = formatNumber(guests);
-            v_check.innerText = formatCurrency(check);
             v_boost.innerText = '+' + boost + '%';
+            v_ltv.innerText = formatCurrency(ltv);
 
-            // Formula: Annual Gain = (Monthly Guests * Avg Check * (Boost / 100)) * 12
-            const monthlyRevenue = guests * check;
-            const monthlyGain = monthlyRevenue * (boost / 100);
-            const annualGain = monthlyGain * 12;
+            // Pro Formula
+            // ROI = ((Gain_Guests * LTV) - Invest) / Invest * 100
+            const invest = 5000;
+            const gainGuestsYearly = (guests * (boost / 100)) * 12; // Guests gained per year
+            const gainValueYearly = gainGuestsYearly * ltv; // Yearly Gain in Value (Total Value Created)
 
-            // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
-            const projectCost = 5000;
-            const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
-            const breakEvenMonths = projectCost / monthlyGain;
+            const roiPercent = ((gainValueYearly - invest) / invest) * 100;
+            const breakEvenMonths = invest / (gainValueYearly / 12);
 
-            // Animate Result Number
-            gsap.to({ val: currentGainValue }, {
-                val: annualGain,
-                duration: 1,
+            // Animate ROI Counter (Percent)
+            gsap.to({ val: currentRoiValue }, {
+                val: roiPercent,
+                duration: 1.2,
                 ease: "power2.out",
                 onUpdate: function () {
-                    res_gain.innerText = formatCurrency(this.targets()[0].val);
+                    if (res_roi_percent) res_roi_percent.innerText = Math.round(this.targets()[0].val) + '%';
                 },
-                onComplete: () => currentGainValue = annualGain
+                onComplete: () => currentRoiValue = roiPercent
             });
 
-            res_roi_percent.innerText = Math.round(roiPercent) + '%';
-            res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
+            if (res_gain_text) res_gain_text.innerText = "Annual Gain: " + formatCurrency(gainValueYearly);
+            if (res_breakeven) res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
 
-            // Re-Lucide
-            lucide.createIcons();
+            // Visuals
+            drawCurve(roiPercent);
+
+            // Aura Feedback State
+            if (roiPercent > 1000) {
+                document.documentElement.style.setProperty('--accent', '#fbbf24'); // Gold for success
+            } else {
+                document.documentElement.style.setProperty('--accent', '#6366f1'); // Default Indigo
+            }
         }
 
-        m_guests.addEventListener('input', calculate);
-        m_check.addEventListener('input', calculate);
-        m_boost.addEventListener('input', calculate);
+        [m_guests, m_boost, m_ltv].forEach(el => {
+            el.addEventListener('input', calculate);
+            // Spring Physics
+            el.addEventListener('pointerup', () => {
+                gsap.to(el, { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1, ease: "elastic.out(1, 0.3)" });
+            });
+        });
         calculate();
 
         // Multi-Step Logic
@@ -667,7 +712,6 @@
             setTimeout(() => {
                 form.classList.add('hidden');
                 document.getElementById('successMsg').classList.remove('hidden');
-                // Expletti confetti/particles here if we wanted
             }, 500);
         });
 
@@ -731,8 +775,6 @@
 
         // Observe elements
         document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
-            // Initial state done via class in CSS potentially, or just ensuring they animate here
-            // For now, let's just trigger GSAP on intersection
             gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
 
             observer.observe(el);
@@ -747,72 +789,6 @@
             }, observerOptions);
             animObserver.observe(el);
         });
-
-        // Neural Network Background Canvas
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(99, 102, 241, 0.2)'; // Indigo low opacity
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // Init Particles
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-
-                // Draw Connections
-                for (let j = index + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 150) {
-                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 - dist / 1500})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
 
         // Live Terminal Simulation
         const terminalStrings = [
