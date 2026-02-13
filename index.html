@@ -35,163 +35,210 @@
     <style>
         :root {
             --accent: #6366f1;
+            --bg-deep: #050505;
+            --tile-bg: rgba(20, 20, 20, 1);
+            --tile-border: rgba(255, 255, 255, 0.1);
         }
 
+        /* 1. Global Reset */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            color: white;
             margin: 0;
+            padding: 0;
+            width: 100%;
             overflow-x: hidden;
-            /* Viewport Safety */
+            background-color: var(--bg-deep);
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Aura Background (Fixed & Passive) */
+        #webgl-container,
+        .noise-overlay,
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .noise-overlay {
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+            z-index: 0;
+            /* Above WebGL, below content */
+        }
+
+        /* 2. Header (Fixed & Anti-Collision) */
+        nav#main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            /* Fixed Height */
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            /* Horizontal Padding */
+        }
+
+        /* 3. Main Container (The Grid Engine) */
+        main {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Desktop Grid (Default) */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            padding: 120px 20px 40px 20px;
+            /* Top padding > 80px Header */
+        }
+
+        .col-span-8 {
+            grid-column: span 8;
+        }
+
+        .col-span-4 {
+            grid-column: span 4;
+        }
+
+        .col-span-6 {
+            grid-column: span 6;
+        }
+
+        .col-span-12 {
+            grid-column: span 12;
+        }
+
+        /* 4. Tile Styling (Deep Dark) */
+        .glass,
+        .matrix-card,
+        .directory-tile {
+            background: var(--tile-bg);
+            border: 1px solid var(--tile-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass:hover,
+        .matrix-card:hover,
+        .directory-tile:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Directory Specifics */
+        .directory-tile {
+            height: fit-content;
+            /* Grows with content */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: sticky;
+            /* Optional: Stick if comfortable */
+            top: 100px;
+        }
+
+        .directory-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+        }
+
+        .directory-link:hover,
+        .directory-link.active {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent);
+            color: white;
+            padding-left: 1.5rem;
+            /* Slide effect */
+        }
+
+        /* 5. Mobile Flex Stack (< 1024px) */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 100px 15px 40px 15px;
+                /* Adjusted padding */
+            }
+
+            .col-span-8,
+            .col-span-4,
+            .col-span-6,
+            .col-span-12 {
+                width: 100%;
+                grid-column: auto;
+            }
+
+            .directory-tile {
+                position: relative;
+                top: 0;
+                order: 2;
+                /* Move below ROI on mobile if desired, or keep natural order */
+            }
+
+            nav#main-nav {
+                padding: 0 1.5rem;
+            }
+
+            h1 {
+                font-size: 3rem !important;
+            }
+        }
+
+        /* Utilities */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .mono {
             font-family: 'Fira Code', monospace;
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            will-change: transform, opacity;
-            /* GPU Acceleration */
-        }
-
-        @media (max-width: 768px) {
-            .glass {
-                backdrop-filter: blur(10px);
-                /* Adaptive Blur for Mobile */
-            }
-        }
-
-        /* Architecture Animation: Flowing Data Pulses */
-        .connector {
-            position: relative;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.05);
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .pulse {
-            position: absolute;
-            width: 60px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: flow 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
-            will-change: transform;
-            /* GPU Acceleration */
-        }
-
-        @keyframes flow {
-            0% {
-                left: -60px;
-                opacity: 0.5;
-            }
-
-            50% {
-                opacity: 1;
-                filter: brightness(1.5);
-            }
-
-            100% {
-                left: 100%;
-                opacity: 0.5;
-            }
-        }
-
-        /* ROI Card Interaction */
-        .matrix-card {
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .matrix-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(99, 102, 241, 0.5);
-            background: rgba(99, 102, 241, 0.03);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Noise Texture (Layer 2) */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
-        }
-
-        /* Aura Glows (Layer 1) */
-        #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(244, 63, 94, 0.05) 40%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-            will-change: transform, opacity;
-            filter: blur(80px);
-            /* Soften the gradient edges */
-            animation: breathe 10s ease-in-out infinite;
-        }
-
-        @keyframes breathe {
-
-            0%,
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: translate(-50%, -50%) scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        /* Content Layering (Layer 3) */
-        section {
-            z-index: 10;
-            position: relative;
-        }
-
-        /* Safe Zone Clamp */
-        .safe-padding {
-            padding-top: clamp(80px, 10vh, 120px);
-        }
-
-        /* Range Slider Styling */
+        /* Range Slider Reset */
         input[type=range] {
             -webkit-appearance: none;
-            appearance: none;
-            background: transparent;
-            cursor: pointer;
             width: 100%;
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
+            background: transparent;
         }
 
         input[type=range]::-webkit-slider-thumb {
@@ -200,36 +247,15 @@
             width: 16px;
             border-radius: 50%;
             background: var(--accent);
-            margin-top: -7px;
-            box-shadow: 0 0 10px var(--accent);
-            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            margin-top: -6px;
+            cursor: pointer;
         }
 
-        input[type=range]:active::-webkit-slider-thumb {
-            transform: scale(1.5);
-            background: #fff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-        }
-
-        /* Multi-Step Form */
-        .step {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .step.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Status Bar */
-        .status-bar {
-            font-family: 'Fira Code', monospace;
-            font-size: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -395,7 +421,7 @@
                 AURA SYSTEMS
             </div>
 
-            <!-- Header is now purely Brand & Status - Navigation is in Stealth Mode -->
+            <!-- Header is now purely Brand & Status -->
 
             <main>
                 <section class="py-24 px-6 text-center z-10 relative">
@@ -414,7 +440,7 @@
                     </p>
                 </section>
 
-                <div class="bento-grid px-6 pb-24">
+                <div class="bento-grid w-full">
                     <!-- ROI Section (Span 8) -->
                     <div class="col-span-8">
                         <section id="roi" class="glass p-8 md:p-12 rounded-[2rem] border-white/5 relative z-10">
@@ -799,22 +825,35 @@
                         mobileMenu.style.transform = "translateY(100%)";
                     });
                 });
-                gsap.fromTo(mobileLinks,
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
-                );
-                } else {
-                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                // --- GSAP Spring Physics & Stagger ---
+                // Elastic Hover Effect for Buttons & Cards
+                const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
 
-                    // Reset Toggle
-                    mobileToggle.children[0].style.transform = 'none';
-                    mobileToggle.children[1].style.opacity = '1';
-                    mobileToggle.children[2].style.transform = 'none';
-                }
-            });
+                interactives.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        gsap.to(el, {
+                            scale: 1.02, // Subtle scale
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        gsap.to(el, {
+                            scale: 1,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
+                    });
+                });
 
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', () => mobileToggle.click());
+                // Stagger Nav Links on Load
+                gsap.from(".directory-link", {
+                    y: 20,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    delay: 0.2
                 });
 
                 // Scroll Reveal Animation (Intersection Observer)
@@ -827,37 +866,18 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('active');
-
-                            // Specific animations based on element type
-                            if (entry.target.classList.contains('matrix-card')) {
-                                gsap.fromTo(entry.target,
-                                    { y: 50, opacity: 0 },
-                                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-                                );
-                            }
+                            gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
                             observer.unobserve(entry.target);
                         }
                     });
                 }, observerOptions);
 
                 // Observe elements
-                document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
-                    // Initial state done via class in CSS potentially, or just ensuring they animate here
-                    // For now, let's just trigger GSAP on intersection
+                document.querySelectorAll('section, .glass, .matrix-card, .directory-tile').forEach(el => {
                     gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
-
                     observer.observe(el);
-                    // Re-attach observer for GSAP override
-                    const animObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-                                animObserver.unobserve(entry.target);
-                            }
-                        });
-                    }, observerOptions);
-                    animObserver.observe(el);
                 });
+
 
                 // --- Cleaned up old particles code ---
 
@@ -1025,37 +1045,6 @@
                     }
                 });
 
-                // --- GSAP Spring Physics & Stagger ---
-                // Elastic Hover Effect for Buttons & Cards
-                const interactives = document.querySelectorAll('button, .matrix-card, input[type=range], a');
-
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        gsap.to(el, {
-                            scale: 1.05,
-                            duration: 0.8,
-                            ease: "elastic.out(1, 0.4)"
-                        });
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        gsap.to(el, {
-                            scale: 1,
-                            duration: 0.5,
-                            ease: "power2.out"
-                        });
-                    });
-                });
-
-                // Stagger Nav Links on Load
-                gsap.from("#main-nav a", {
-                    y: -20,
-                    opacity: 0,
-                    duration: 1,
-                    stagger: 0.1,
-                    ease: "power3.out",
-                    delay: 0.5
-                });
-
                 // --- END WebGL Core ---
 
                 // Live Terminal Simulation
@@ -1110,6 +1099,7 @@
                 // Start terminal
                 updateTerminal();
             </script>
+            </main>
     </body>
 
 </html>
