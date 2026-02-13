@@ -28,6 +28,7 @@
             color: white;
             margin: 0;
             overflow-x: hidden;
+            /* Viewport Safety */
         }
 
         .mono {
@@ -46,6 +47,15 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            will-change: transform, opacity;
+            /* GPU Acceleration */
+        }
+
+        @media (max-width: 768px) {
+            .glass {
+                backdrop-filter: blur(10px);
+                /* Adaptive Blur for Mobile */
+            }
         }
 
         /* Architecture Animation: Flowing Data Pulses */
@@ -63,6 +73,8 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
             animation: flow 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+            /* GPU Acceleration */
         }
 
         @keyframes flow {
@@ -105,6 +117,8 @@
             pointer-events: none;
             z-index: 1;
             transform: translate(-50%, -50%);
+            will-change: transform;
+            /* GPU Acceleration */
         }
 
         /* Range Slider Styling */
@@ -157,6 +171,8 @@
 <body class="antialiased">
     <div id="cursor-glow"></div>
 
+    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
+
     <!-- Live System Status -->
     <div
         class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest">
@@ -171,18 +187,45 @@
         </div>
     </div>
 
-    <nav
-        class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40">
-        <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3">
+    <nav class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40 transition-all duration-300"
+        id="main-nav">
+        <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 relative z-50">
             <div
                 class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
                 A</div>
             AURA SYSTEMS
         </div>
+
+        <!-- Desktop Menu -->
         <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
             <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
             <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
             <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-toggle"
+            class="md:hidden z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
+            <span class="w-8 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+            <span class="w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
+        </button>
+
+        <!-- Mobile Overlay -->
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
+            <div class="flex flex-col gap-8 text-center">
+                <a href="#architecture"
+                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">Full-Stack</a>
+                <a href="#roi"
+                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">ROI
+                    Audit</a>
+                <a href="#contact"
+                    class="text-4xl font-black uppercase tracking-tighter text-indigo-500 mobile-link">Starten</a>
+            </div>
+            <div class="absolute bottom-20 text-zinc-600 text-xs font-mono uppercase tracking-widest">
+                System Status: Online
+            </div>
         </div>
     </nav>
 
@@ -190,14 +233,13 @@
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
             Engineering Agentur</span>
         <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-            WE BUILD THE <br /><span class="gradient-text italic">INFRASTRUCTURE.</span>
+            WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
         </h1>
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-            Wir skalieren Ihre Operationen durch <span
-                class="text-white font-medium">Marktführerschafts-Strategien</span>.
-            Wir verkaufen keine Zeit, wir konstruieren Überlegenheit. <br>
-            <span class="italic text-zinc-500">Die Infrastruktur der Zukunft ist autonom. Sind Sie bereit zu
-                führen?</span>
+            Wir bauen keine Webseiten. Wir konstruieren autonome <span
+                class="text-white font-medium">Wertschöpfungs-Systeme</span>.
+            Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
+            <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
         </p>
     </section>
 
@@ -340,61 +382,80 @@
     <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
         <div class="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">Der
-                    <span class="text-indigo-500">Business</span> <br>Impact.
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
+                    <span class="text-indigo-500">Revenue</span> <br>Multiplier.
                 </h2>
                 <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                    Unternehmerische Entscheidungen brauchen Fundamente. Wir analysieren und eliminieren Ineffizienz:
-                    <strong>30% der Arbeitszeit</strong> gehen durch manuelle Prozesse verloren.
-                    AURA reduziert diesen Verlust um <strong>85%</strong>.
+                    Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
+                    Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
+                    Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
                 </p>
 
                 <div class="space-y-12 glass p-10 rounded-[3rem] border-white/5">
                     <div>
                         <div
                             class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4 text-zinc-400">
-                            <span>Mitarbeiteranzahl</span>
-                            <span class="text-indigo-400" id="v_emp">10 Köpfe</span>
+                            <span>Monatliche Gäste (Website)</span>
+                            <span class="text-indigo-400" id="v_guests">1.000</span>
                         </div>
-                        <input type="range" id="m_emp" min="1" max="100" value="10">
+                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000">
                     </div>
                     <div>
                         <div
                             class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4 text-zinc-400">
-                            <span>Durchschnittsgehalt</span>
-                            <span class="text-indigo-400" id="v_sal">55.000€</span>
+                            <span>Ø Umsatz pro Gast</span>
+                            <span class="text-indigo-400" id="v_check">25 €</span>
                         </div>
-                        <input type="range" id="m_sal" min="30000" max="150000" step="5000" value="55000">
+                        <input type="range" id="m_check" min="5" max="150" step="1" value="25">
+                    </div>
+                    <div>
+                        <div
+                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4 text-zinc-400">
+                            <span>SEO Sichtbarkeit Boost</span>
+                            <span class="text-green-400" id="v_boost">+20%</span>
+                        </div>
+                        <input type="range" id="m_boost" min="5" max="100" step="5" value="20">
+                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Erwartete Traffic-Steigerung nach Technical
+                            Fixes.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="matrix-card glass p-8 rounded-[2.5rem] border-white/5">
-                    <div class="text-[9px] font-black text-zinc-600 uppercase mb-4 tracking-[0.2em]">Kosten der
-                        Ineffizienz</div>
-                    <div class="text-4xl font-black tracking-tighter" id="res_waste">165.000€</div>
-                    <p class="text-[10px] text-zinc-500 mt-4 leading-relaxed">Verlust durch repetitive, manuelle
-                        Prozesse (Industrie-Schnitt: 30%).</p>
-                </div>
-                <div class="matrix-card glass p-8 rounded-[2.5rem] border-indigo-500/20 bg-indigo-600/5">
-                    <div class="text-[9px] font-black text-indigo-400 uppercase mb-4 tracking-[0.2em]">Netto-Ersparnis
-                        (AURA)</div>
-                    <div class="text-4xl font-black tracking-tighter text-indigo-500" id="res_save">140.250€</div>
-                    <p class="text-[10px] text-indigo-300/50 mt-4 leading-relaxed">Nach Implementierung autonomer
-                        Workflow-Architektur (85% Automatisierungsrate).</p>
-                </div>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Main Result Card -->
                 <div
-                    class="md:col-span-2 matrix-card glass p-10 rounded-[2.5rem] flex items-center justify-between border-white/5">
-                    <div class="flex flex-col">
-                        <div class="text-[9px] font-black text-zinc-600 uppercase mb-2 tracking-[0.2em]">Projekt-ROI (12
-                            Monate)</div>
-                        <div class="text-5xl font-black text-green-400 tracking-tighter" id="res_roi">935%</div>
+                    class="matrix-card glass p-12 rounded-[2.5rem] border-indigo-500/20 bg-indigo-600/5 flex flex-col justify-center items-center text-center relative overflow-hidden group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-rose-500/10 opacity-50 group-hover:opacity-100 transition duration-700">
                     </div>
-                    <div class="text-right flex flex-col items-end">
-                        <i data-lucide="trending-up" class="w-12 h-12 text-green-400 mb-2"></i>
-                        <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Skalierbarer
-                            Profit</span>
+
+                    <div class="relative z-10">
+                        <div class="text-[9px] font-black text-rose-300 uppercase mb-6 tracking-[0.3em]">Jährlicher
+                            Umsatz-Gewinn</div>
+                        <div class="text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl"
+                            id="res_gain">0 €</div>
+                        <p class="text-xs text-indigo-200/50 mt-6 leading-relaxed max-w-sm mx-auto">
+                            Zusätzlicher Jahresumsatz durch Wiederherstellung der Google-Sichtbarkeit und
+                            Conversion-Optimierung.
+                        </p>
+
+                        <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+                            class="mt-10 px-8 py-4 bg-white/10 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto">
+                            <span>Diesen Profit Realisieren</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass p-6 rounded-[2rem] border-white/5 text-center">
+                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">ROI (1 Jahr)
+                        </div>
+                        <div class="text-2xl font-black text-green-400" id="res_roi_percent">0%</div>
+                    </div>
+                    <div class="glass p-6 rounded-[2rem] border-white/5 text-center">
+                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Break-Even</div>
+                        <div class="text-2xl font-black text-white" id="res_breakeven">1.2 Mo.</div>
                     </div>
                 </div>
             </div>
@@ -495,35 +556,76 @@
     <script>
         lucide.createIcons();
 
-        // Cursor Glow
+        // Cursor Glow - Optimized with GSAP quickTo
         const glow = document.getElementById('cursor-glow');
+        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
+        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
+
         window.addEventListener('mousemove', (e) => {
-            glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+            xTo(e.clientX - 250);
+            yTo(e.clientY - 250);
         });
 
-        // ROI Matrix Logic (Enterprise Validation)
-        const m_emp = document.getElementById('m_emp');
-        const m_sal = document.getElementById('m_sal');
+        // ROI Matrix Logic (Hospitality SEO Model)
+        const m_guests = document.getElementById('m_guests');
+        const m_check = document.getElementById('m_check');
+        const m_boost = document.getElementById('m_boost');
+
+        const v_guests = document.getElementById('v_guests');
+        const v_check = document.getElementById('v_check');
+        const v_boost = document.getElementById('v_boost');
+
+        const res_gain = document.getElementById('res_gain');
+        const res_roi_percent = document.getElementById('res_roi_percent');
+        const res_breakeven = document.getElementById('res_breakeven');
+
+        // Number format helper
+        const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+        const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
+
+        // GSAP Counter Animation Helper
+        let currentGainValue = 0;
 
         function calculate() {
-            const emp = parseInt(m_emp.value);
-            const sal = parseInt(m_sal.value);
+            const guests = parseInt(m_guests.value) || 0;
+            const check = parseInt(m_check.value) || 0;
+            const boost = parseInt(m_boost.value) || 0;
 
-            document.getElementById('v_emp').innerText = emp + (emp > 1 ? " Köpfe" : " Kopf");
-            document.getElementById('v_sal').innerText = sal.toLocaleString() + '€';
+            v_guests.innerText = formatNumber(guests);
+            v_check.innerText = formatCurrency(check);
+            v_boost.innerText = '+' + boost + '%';
 
-            const payroll = emp * sal;
-            const waste = payroll * 0.30; // 30% Ineffizienz-Standard
-            const savings = waste * 0.85; // AURA Optimierungs-Rate
-            const roi = (savings / 15000) * 100; // Projekt-Base: 15k
+            // Formula: Annual Gain = (Monthly Guests * Avg Check * (Boost / 100)) * 12
+            const monthlyRevenue = guests * check;
+            const monthlyGain = monthlyRevenue * (boost / 100);
+            const annualGain = monthlyGain * 12;
 
-            document.getElementById('res_waste').innerText = Math.round(waste).toLocaleString() + '€';
-            document.getElementById('res_save').innerText = Math.round(savings).toLocaleString() + '€';
-            document.getElementById('res_roi').innerText = Math.round(roi) + '%';
+            // ROI & Break Even (Assuming 5000€ Project Cost for simple SEO Fixes)
+            const projectCost = 5000;
+            const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
+            const breakEvenMonths = projectCost / monthlyGain;
+
+            // Animate Result Number
+            gsap.to({ val: currentGainValue }, {
+                val: annualGain,
+                duration: 1,
+                ease: "power2.out",
+                onUpdate: function () {
+                    res_gain.innerText = formatCurrency(this.targets()[0].val);
+                },
+                onComplete: () => currentGainValue = annualGain
+            });
+
+            res_roi_percent.innerText = Math.round(roiPercent) + '%';
+            res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
+
+            // Re-Lucide
+            lucide.createIcons();
         }
 
-        m_emp.addEventListener('input', calculate);
-        m_sal.addEventListener('input', calculate);
+        m_guests.addEventListener('input', calculate);
+        m_check.addEventListener('input', calculate);
+        m_boost.addEventListener('input', calculate);
         calculate();
 
         // Multi-Step Logic
@@ -536,19 +638,23 @@
             document.getElementById('progressBar').style.width = progress;
         }
 
-        // Magnetic Buttons
+        // Magnetic Buttons - Optimized
         const magnets = document.querySelectorAll('.magnetic-btn');
         magnets.forEach((btn) => {
+            const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
+            const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
+
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-
-                gsap.to(btn, { duration: 0.3, x: x * 0.3, y: y * 0.3, ease: "power2.out" });
+                xTo(x * 0.5);
+                yTo(y * 0.5);
             });
 
             btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { duration: 0.5, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
+                xTo(0);
+                yTo(0);
             });
         });
 
@@ -569,6 +675,149 @@
             }, 500);
         });
 
+        // Mobile Menu Logic
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        mobileToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+
+                // Animate Toggle Button to 'X'
+                mobileToggle.children[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                mobileToggle.children[1].style.opacity = '0';
+                mobileToggle.children[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+
+                // Stagger Links
+                gsap.fromTo(mobileLinks,
+                    { y: 50, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
+                );
+            } else {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+
+                // Reset Toggle
+                mobileToggle.children[0].style.transform = 'none';
+                mobileToggle.children[1].style.opacity = '1';
+                mobileToggle.children[2].style.transform = 'none';
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileToggle.click());
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+
+                    // Specific animations based on element type
+                    if (entry.target.classList.contains('matrix-card')) {
+                        gsap.fromTo(entry.target,
+                            { y: 50, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+                        );
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
+            // Initial state done via class in CSS potentially, or just ensuring they animate here
+            // For now, let's just trigger GSAP on intersection
+            gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
+
+            observer.observe(el);
+            // Re-attach observer for GSAP override
+            const animObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
+                        animObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            animObserver.observe(el);
+        });
+
+        // Neural Network Background Canvas
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.2)'; // Indigo low opacity
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Init Particles
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                // Draw Connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 - dist / 1500})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
         // Live Terminal Simulation
         const terminalStrings = [
             ">> Analyzing lead structures...",
@@ -584,18 +833,38 @@
         let stringIndex = 0;
 
         function updateTerminal() {
-            if (!terminalDiv) return; // Guard clause in case element isn't found
+            if (!terminalDiv) return;
             const line = document.createElement('div');
-            line.className = 'mt-1 opacity-80';
-            line.innerText = terminalStrings[stringIndex];
+            line.className = 'mt-1 opacity-80 flex';
+
+            const timestamp = document.createElement('span');
+            timestamp.className = 'text-zinc-500 mr-2';
+            timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
+
+            const content = document.createElement('span');
+            content.className = 'text-indigo-400';
+
+            line.appendChild(timestamp);
+            line.appendChild(content);
             terminalDiv.appendChild(line);
+
+            // Typing effect
+            const text = terminalStrings[stringIndex];
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                content.innerText += text.charAt(i);
+                i++;
+                if (i >= text.length) clearInterval(typeInterval);
+            }, 20); // Typing speed
 
             if (terminalDiv.childNodes.length > 6) {
                 terminalDiv.removeChild(terminalDiv.firstChild);
             }
 
             stringIndex = (stringIndex + 1) % terminalStrings.length;
-            setTimeout(updateTerminal, Math.random() * 2000 + 1000);
+
+            // Random interval for next line
+            setTimeout(updateTerminal, Math.random() * 3000 + 2000);
         }
 
         // Start terminal
@@ -604,4 +873,3 @@
 </body>
 
 </html>
-```
