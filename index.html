@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de" class="scroll-smooth">
 
 <head>
@@ -600,16 +601,9 @@
             const roiPercent = ((annualGain - projectCost) / projectCost) * 100;
             const breakEvenMonths = projectCost / monthlyGain;
 
-            // Animate Result Number
-            gsap.to({ val: currentGainValue }, {
-                val: annualGain,
-                duration: 1,
-                ease: "power2.out",
-                onUpdate: function () {
-                    res_gain.innerText = formatCurrency(this.targets()[0].val);
-                },
-                onComplete: () => currentGainValue = annualGain
-            });
+            // Animate Result Number (Instant Feedback for Touch)
+            // Removed GSAP duration for 1:1 feel, or keep it extremely short (0.1s)
+            res_gain.innerText = formatCurrency(annualGain);
 
             res_roi_percent.innerText = Math.round(roiPercent) + '%';
             res_breakeven.innerText = breakEvenMonths < 1 ? '< 1 Mo.' : breakEvenMonths.toFixed(1) + ' Mo.';
