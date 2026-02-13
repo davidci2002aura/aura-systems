@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AURA SYSTEMS | Autonomous Value Architecture</title>
+    <title>AURA SYSTEMS | Digital Architecture</title>
     <meta name="description"
-        content="Wir ersetzen ineffiziente Webseiten durch autonome Wertschöpfungs-Systeme. AI-Driven Engineering & High-Performance Funnels.">
+        content="We engineer dominance. High-performance digital architecture and autonomous value systems.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Fira+Code&display=swap"
         rel="stylesheet">
-
     <style>
         :root {
-            --bg-color: #050505;
-            /* Deep Dark */
-            --accent: #6366f1;
+            --bg-color: #020202;
+            /* Deepest Void */
+            --accent-rose: #af8787;
+            --accent-gold: #d4af37;
         }
 
         * {
@@ -27,51 +27,24 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
             color: white;
             margin: 0;
             width: 100vw;
             overflow-x: hidden;
         }
 
-        /* Mobile Anti-Collision */
-        @media (max-width: 1024px) {
-            .desktop-menu {
-                display: none !important;
-            }
-
-            .mobile-toggle-btn {
-                display: flex !important;
-            }
-
-            #main-nav .logo-text {
-                font-size: 1.25rem;
-                /* Smaller logo on mobile */
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .mobile-toggle-btn {
-                display: none !important;
-            }
-        }
-
-        /* Safe Area Support */
+        /* Safe Area */
+        header,
         nav {
             padding-top: max(1.5rem, env(safe-area-inset-top));
         }
 
-        .status-bar {
-            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-        }
-
         .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
         .gradient-text {
@@ -80,33 +53,21 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .matrix-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .matrix-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(99, 102, 241, 0.5);
-            background: rgba(99, 102, 241, 0.03);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
-        }
-
         #cursor-glow {
             position: fixed;
             top: 0;
             left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(175, 135, 135, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
             transform: translate(-50%, -50%);
             will-change: transform;
-            /* GPU Acceleration */
         }
 
-        /* Range Slider Styling */
+        /* Impact Simulator Range Slider */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
@@ -116,795 +77,377 @@
         }
 
         input[type=range]::-webkit-slider-runnable-track {
-            height: 2px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
         }
 
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
+            height: 24px;
+            width: 24px;
             border-radius: 50%;
-            background: var(--accent);
-            margin-top: -7px;
-            box-shadow: 0 0 10px var(--accent);
+            background: white;
+            margin-top: -10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        /* Multi-Step Form */
-        .step {
-            display: none;
+        /* Fullscreen Menu */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 2, 2, 0.9);
+            backdrop-filter: blur(40px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
+            pointer-events: none;
             transition: opacity 0.5s ease;
         }
 
-        .step.active {
-            display: block;
+        .mobile-menu-overlay.active {
             opacity: 1;
+            pointer-events: auto;
         }
 
-        /* Status Bar */
-        .status-bar {
-            font-family: 'Fira Code', monospace;
-            font-size: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+        /* Mobile Bento */
+        @media (max-width: 768px) {
+            .matrix-card {
+                width: calc(100% - 40px);
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased selection:bg-rose-500/30">
     <div id="cursor-glow"></div>
+    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10"></canvas>
 
-    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
-
-    <!-- Live System Status -->
-    <div
-        class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest">
-        <div class="flex gap-6">
-            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                System: Operativ</span>
-            <span class="hidden md:inline">Aktive Agenten: <span class="text-indigo-400">14</span></span>
-            <span class="hidden md:inline">Latenz: <span class="text-indigo-400">24ms</span></span>
+    <!-- Minimalist Header -->
+    <nav class="fixed w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center mix-blend-difference">
+        <div class="text-xl font-bold tracking-tighter uppercase flex items-center gap-3">
+            <div class="w-8 h-8 border border-white/20 flex items-center justify-center">A</div>
+            <span class="hidden md:block tracking-[0.3em] text-xs">AURA SYSTEMS</span>
         </div>
-        <div>
-            Daten Verarbeitet: <span class="text-white">1.2TB</span>
+
+        <button id="menu-toggle" class="z-50 group flex flex-col gap-1.5 w-8 items-end cursor-pointer">
+            <span class="w-8 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+            <span class="w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+        </button>
+    </nav>
+
+    <!-- Fullscreen Menu -->
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <div class="flex flex-col gap-12 text-center">
+            <a href="#"
+                class="text-5xl font-black uppercase tracking-tighter text-white/50 hover:text-white transition menu-link">Architecture</a>
+            <a href="#"
+                class="text-5xl font-black uppercase tracking-tighter text-white/50 hover:text-white transition menu-link">Impact</a>
+            <a href="#"
+                class="text-5xl font-black uppercase tracking-tighter text-white/50 hover:text-white transition menu-link">Deploy</a>
         </div>
     </div>
 
-    <nav class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40 transition-all duration-300"
-        id="main-nav">
-        <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 relative z-50">
-            <div
-                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
-                A</div>
-            AURA SYSTEMS
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative z-10 pt-20">
+        <div class="text-[10px] font-bold tracking-[0.5em] text-zinc-500 uppercase mb-8 animate-fade-in">
+            Digital Architecture v2.0
         </div>
-
-        <!-- Desktop Menu -->
-        <div class="desktop-menu hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
-            <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
-            <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
-            <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
-        </div>
-
-        <!-- Mobile Menu Toggle -->
-        <button id="mobile-toggle"
-            class="mobile-toggle-btn md:hidden z-50 w-10 h-10 flex flex-col justify-center items-end gap-1.5 group">
-            <span class="w-8 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
-            <span class="w-6 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
-            <span class="w-4 h-0.5 bg-white transition-all duration-300 group-hover:w-10"></span>
-        </button>
-
-        <!-- Mobile Overlay -->
-        <div id="mobile-menu"
-            class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
-            <div class="flex flex-col gap-8 text-center">
-                <a href="#architecture"
-                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">Full-Stack</a>
-                <a href="#roi"
-                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">ROI
-                    Audit</a>
-                <a href="#contact"
-                    class="text-4xl font-black uppercase tracking-tighter text-indigo-500 mobile-link">Starten</a>
-            </div>
-            <div class="absolute bottom-20 text-zinc-600 text-xs font-mono uppercase tracking-widest">
-                System Status: Online
-            </div>
-        </div>
-    </nav>
-
-    <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
-        <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
-            Engineering Agentur</span>
-        <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-            WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
+        <h1
+            class="text-6xl md:text-[9rem] font-black tracking-tighter leading-[0.85] mb-12 uppercase mix-blend-overlay">
+            Liquid<br>Intelligence
         </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-            Wir bauen keine Webseiten. Wir konstruieren autonome <span
-                class="text-white font-medium">Wertschöpfungs-Systeme</span>.
-            Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
-            <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
+        <p class="max-w-xl text-zinc-400 font-light leading-relaxed mb-12">
+            We don't build websites. We engineer autonomous value systems that evolve with your business.
+            <br><span class="text-white/60 italic">Static is dead. Flux is the future.</span>
         </p>
     </section>
 
-    <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
-            <div class="text-center mb-20">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
-                    Insight</h2>
-                <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+    <!-- Impact Simulator -->
+    <section class="py-32 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-zinc-500 mb-4">Simulation Engine</h2>
+                <h3 class="text-4xl font-black">Past vs. Future</h3>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <!-- Frontend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
-                </div>
-
-                <div class="connector hidden md:block">
-                    <div class="pulse"></div>
-                </div>
-
-                <!-- AI Core Node -->
-                <div
-                    class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse"></div>
-                    <div class="relative z-10">
-                        <div
-                            class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                            <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                            </svg>
-                        </div>
-                        <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core</h4>
-                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
-                    </div>
-                </div>
-
-                <div class="connector hidden md:block">
-                    <div class="pulse" style="animation-delay: 1s"></div>
-                </div>
-
-                <!-- Backend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-20">
-            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
-            <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
-                    class="gradient-text">Datensatz.</span></h3>
-        </div>
-
-        <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="layout-template" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Frontend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
-                    <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für maximale
-                    Geschwindigkeit optimiert.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
-                </div>
-            </div>
-
+            <!-- Simulator Container -->
             <div
-                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                        <i data-lucide="brain-circuit" class="text-white"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
-                </div>
-                <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong> Workflows
-                    kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
-                    Geschäftsprozesse.</p>
+                class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 group select-none">
 
-                <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
-                    id="live-terminal">
-                    <div class="opacity-50">>> Initializing AURA_CORE...</div>
-                    <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
-                    <div class="text-white">>> Status: Autonomy active.</div>
-                </div>
-            </div>
-
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="database" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Backend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit <strong>Supabase</strong>
-                    und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen mitwächst.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
-                    <span class="text-indigo-500">Revenue</span> <br>Multiplier.
-                </h2>
-                <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                    Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
-                    Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
-                    Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
-                </p>
-
-                <!-- Bento Stats Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                    <div class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden"
-                        id="roi-card">
-                        <div class="absolute inset-0 bg-amber-500/10 opacity-0 transition-opacity duration-1000"
-                            id="gold-glow"></div>
-                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2 relative z-10">
-                            Amortisation
-                        </div>
-                        <div class="text-3xl font-black text-green-400 relative z-10" id="res_breakeven">0 Mo.</div>
-                    </div>
-                    <!-- Mini visualizer for Curve -->
-                    <div
-                        class="matrix-card glass p-4 rounded-[2rem] border-white/5 flex items-center justify-center overflow-hidden relative">
-                        <canvas id="roi-curve" width="150" height="80" class="opacity-50"></canvas>
-                        <div class="absolute bottom-4 text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                            Break-Even Curve</div>
-                    </div>
-                </div>
-
-                <!-- Ticker for Cost of Inaction -->
-                <div class="mt-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                    <p class="text-[10px] text-red-400 font-bold uppercase tracking-widest mb-1">Cost of Inaction</p>
-                    <div class="text-sm text-red-300 font-mono">
-                        Ihr täglicher Verlust durch SEO-Fehler: <span class="text-white font-bold"
-                            id="daily-loss-ticker">0,00 €</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
-                <!-- Input Section -->
-                <div class="space-y-6">
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Monatliche Gäste (Verlorener Traffic)</span>
-                            <span class="text-indigo-400" id="v_guests">1.000</span>
-                        </div>
-                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Ø-Umsatz pro Gast (Warenkorb)</span>
-                            <span class="text-green-400" id="v_check">50 €</span>
-                        </div>
-                        <input type="range" id="m_check" min="10" max="500" step="5" value="50" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Conversion Rate (Realistisch)</span>
-                            <span class="text-indigo-400" id="v_conv">2%</span>
-                        </div>
-                        <input type="range" id="m_conv" min="0.1" max="10" step="0.1" value="2" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Projektkosten (Investment)</span>
-                            <span class="text-rose-400" id="v_cost">5.000 €</span>
-                        </div>
-                        <input type="range" id="m_cost" min="1000" max="50000" step="500" value="5000" class="w-full">
-                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Einmaliges Investment in Aura Systems.</p>
-                    </div>
-                </div>
-
-                <!-- Divider -->
-                <div class="border-t border-rose-200/5 my-4"></div>
-
-                <!-- Result Section (Bottom Hierarchy) -->
-                <div class="text-center">
-                    <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Netto-ROI (1 Jahr)
-                    </div>
-                    <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
-                        id="res_roi_percent">0%</div>
-                    <p class="text-[10px] text-zinc-500 mt-2 font-mono" id="res_gain">Zusatzumsatz: 0€</p>
-
-                    <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                        class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
-                        <span>Diesen Profit Realisieren</span>
-                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
-            <br><span class="text-indigo-500">Level 2.</span>
-        </h2>
-
-        <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-            <!-- Progress Bar -->
-            <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
-                style="width: 33%"></div>
-
-            <form
-                action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                method="POST" id="leadForm" class="text-left relative min-h-[300px]">
-
-                <!-- Step 1: Volume -->
-                <div class="step active" id="step1">
-                    <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
-                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
-                        Operation?</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
-                            <div class="font-bold">1-10</div>
-                            <div class="text-[10px] text-zinc-500">Startup</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
-                            <div class="font-bold">11-50</div>
-                            <div class="text-[10px] text-zinc-500">Scale-Up</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
-                            <div class="font-bold">50+</div>
-                            <div class="text-[10px] text-zinc-500">Enterprise</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Stack -->
-                <div class="step" id="step2">
-                    <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
-                    <div class="space-y-6">
+                <!-- State 1: Yesterday (Left/Bottom Layer) -->
+                <div
+                    class="absolute inset-0 bg-zinc-900 flex flex-col items-center justify-center text-zinc-600 grayscale">
+                    <div class="grid grid-cols-3 gap-12 text-center opacity-30">
                         <div>
-                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
-                                Datenbank?</label>
-                            <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                            <div class="text-4xl font-mono mb-2">60%</div>
+                            <div class="text-[10px] uppercase tracking-widest">Bounce Rate</div>
                         </div>
-                        <button type="button"
-                            class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                            onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
+                        <div>
+                            <div class="text-4xl font-mono mb-2">0.5%</div>
+                            <div class="text-[10px] uppercase tracking-widest">Conversion</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-mono mb-2">Static</div>
+                            <div class="text-[10px] uppercase tracking-widest">Architecture</div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute bottom-10 flex items-center gap-2 text-xs font-mono tracking-widest text-red-900">
+                        <i data-lucide="triangle-alert" class="w-4 h-4"></i> SYSTEM LEGACY
+                    </div>
+                    <!-- Background Grid -->
+                    <div
+                        class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none">
                     </div>
                 </div>
 
-                <!-- Step 3: Contact -->
-                <div class="step" id="step3">
-                    <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <input name="name" placeholder="Name" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                    </div>
-                    <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
-                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
+                <!-- State 2: Aura (Right/Top Layer) - Clipped -->
+                <div id="aura-state"
+                    class="absolute inset-0 bg-black flex flex-col items-center justify-center text-white overflow-hidden"
+                    style="clip-path: inset(0 0 0 50%);">
 
-                    <button type="submit"
-                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
-                        Initialisieren
-                    </button>
-                    <button type="button"
-                        class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                        onclick="nextStep(1)">Audit Neustarten</button>
+                    <!-- Inner Liquid Background Copy for seamless feel -->
+                    <div class="absolute inset-0 bg-indigo-900/20 backdrop-blur-3xl"></div>
+
+                    <div class="grid grid-cols-3 gap-12 text-center relative z-10">
+                        <div class="animate-pulse">
+                            <div class="text-4xl font-mono mb-2 text-rose-300">300%</div>
+                            <div class="text-[10px] uppercase tracking-widest text-white/50">Engagement</div>
+                        </div>
+                        <div class="animate-pulse" style="animation-delay: 0.1s">
+                            <div class="text-4xl font-mono mb-2 text-amber-300">4.5%</div>
+                            <div class="text-[10px] uppercase tracking-widest text-white/50">Conversion</div>
+                        </div>
+                        <div class="animate-pulse" style="animation-delay: 0.2s">
+                            <div class="text-4xl font-mono mb-2 text-indigo-300">Fluid</div>
+                            <div class="text-[10px] uppercase tracking-widest text-white/50">Dynamics</div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute bottom-10 flex items-center gap-2 text-xs font-mono tracking-widest text-amber-300 shadow-[0_0_20px_rgba(212,175,55,0.5)] px-4 py-1 rounded-full border border-amber-500/30 bg-amber-500/10">
+                        <i data-lucide="zap" class="w-4 h-4"></i> AURA ACTIVE
+                    </div>
                 </div>
 
-            </form>
-            <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit angefordert.
+                <!-- Range Slider Control -->
+                <input type="range" min="0" max="100" value="50" id="impact-slider"
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-50">
+
+                <!-- Visual Handle -->
+                <div id="slider-handle"
+                    class="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_20px_white] z-40 pointer-events-none"
+                    style="left: 50%">
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-black">
+                        <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="text-center text-zinc-600 font-mono text-[10px] mt-6 tracking-widest">DRAG TO SIMULATE IMPACT</p>
+        </div>
+    </section>
+
+    <!-- Engineering Grid -->
+    <section class="py-24 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10">
+        <div class="md:col-span-8 matrix-card glass p-10 rounded-[3rem] min-h-[300px] flex flex-col justify-between">
+            <i data-lucide="cpu" class="w-10 h-10 text-rose-300 mb-6"></i>
+            <div>
+                <h3 class="text-2xl font-bold uppercase mb-2">Neural Core</h3>
+                <p class="text-zinc-500 text-sm max-w-md">Our systems learn from user interaction. The architecture
+                    adapts, optimizes, and evolves without human intervention.</p>
+            </div>
+        </div>
+        <div
+            class="md:col-span-4 matrix-card glass p-10 rounded-[3rem] min-h-[300px] bg-white/5 border-white/10 flex flex-col justify-between">
+            <i data-lucide="fingerprint" class="w-10 h-10 text-amber-300 mb-6"></i>
+            <div>
+                <h3 class="text-2xl font-bold uppercase mb-2">Identity</h3>
+                <p class="text-zinc-500 text-sm">Unique digital fingerprints.</p>
+            </div>
+        </div>
+        <div class="md:col-span-4 matrix-card glass p-10 rounded-[3rem] min-h-[300px] flex flex-col justify-between">
+            <i data-lucide="globe" class="w-10 h-10 text-indigo-300 mb-6"></i>
+            <div>
+                <h3 class="text-2xl font-bold uppercase mb-2">Global Edge</h3>
+                <p class="text-zinc-500 text-sm">Deployed heavily on the edge.</p>
+            </div>
+        </div>
+        <div
+            class="md:col-span-8 matrix-card glass p-10 rounded-[3rem] min-h-[300px] bg-indigo-900/10 border-indigo-500/20 flex flex-col justify-between">
+            <i data-lucide="shield-check" class="w-10 h-10 text-white mb-6"></i>
+            <div>
+                <h3 class="text-2xl font-bold uppercase mb-2 text-indigo-200">Sovereign Data</h3>
+                <p class="text-indigo-400/60 text-sm max-w-md">You own your infrastructure. No platform lock-in. Pure
+                    code ownership.</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
-        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+    <footer class="py-20 text-center relative z-10 border-t border-white/5 bg-black">
+        <div class="text-[10px] font-bold tracking-[1em] uppercase text-zinc-600">AURA SYSTEMS INC &copy; 2026</div>
+        <div class="mt-4 text-[10px] text-zinc-800 font-mono">EST. 2024 · ZURICH · TOKYO · SAN FRANCISCO</div>
     </footer>
 
     <script>
         lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
 
-        // Cursor Glow - Optimized with GSAP quickTo
+        // CURSOR
         const glow = document.getElementById('cursor-glow');
         const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
         const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
-
         window.addEventListener('mousemove', (e) => {
-            xTo(e.clientX - 250);
-            yTo(e.clientY - 250);
+            xTo(e.clientX);
+            yTo(e.clientY);
         });
 
-        // Fluid Aura Support (Canvas 2D) - Phase 5
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let blobs = [];
+        // IMPACT SIMULATOR
+        const slider = document.getElementById('impact-slider');
+        const auraState = document.getElementById('aura-state');
+        const handle = document.getElementById('slider-handle');
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            // Update Clip Path (Reveal)
+            auraState.style.clipPath = `inset(0 0 0 ${100 - val}%)`;
+            // Move Handle
+            handle.style.left = `${val}%`;
 
-        class Blob {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 200 + 150;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = (Math.random() - 0.5) * 1.5;
-                this.color = `hsla(${Math.random() * 40 + 220}, 70%, 60%, 0.15)`; // Indigo/Blue hues
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < -this.size || this.x > width + this.size) this.vx *= -1;
-                if (this.y < -this.size || this.y > height + this.size) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                gradient.addColorStop(0, this.color);
-                gradient.addColorStop(1, 'transparent');
-                ctx.fillStyle = gradient;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // Init Blobs
-        for (let i = 0; i < 6; i++) blobs.push(new Blob());
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.globalCompositeOperation = 'screen'; // Blend mode for "Fluid" look
-
-            blobs.forEach(blob => {
-                blob.update();
-                blob.draw();
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-        // ROI V2 (Cost of Inaction & High-Impact Logic)
-        const m_guests = document.getElementById('m_guests');
-        const m_check = document.getElementById('m_check');
-        const m_conv = document.getElementById('m_conv');
-        const m_cost = document.getElementById('m_cost');
-
-        const v_guests = document.getElementById('v_guests');
-        const v_check = document.getElementById('v_check');
-        const v_conv = document.getElementById('v_conv');
-        const v_cost = document.getElementById('v_cost');
-
-        const res_roi_percent = document.getElementById('res_roi_percent');
-        const res_breakeven = document.getElementById('res_breakeven');
-        const res_gain_text = document.getElementById('res_gain');
-        const daily_loss_ticker = document.getElementById('daily-loss-ticker');
-        const gold_glow = document.getElementById('gold-glow');
-
-        const curveCanvas = document.getElementById('roi-curve');
-        const curveCtx = curveCanvas ? curveCanvas.getContext('2d') : null;
-
-        const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
-        const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
-
-        let currentRoiValue = 0;
-
-        function drawCurve(roi) {
-            if (!curveCtx) return;
-            curveCtx.clearRect(0, 0, 150, 80);
-            curveCtx.strokeStyle = '#4ade80';
-            curveCtx.lineWidth = 2;
-            curveCtx.beginPath();
-            curveCtx.moveTo(0, 80);
-
-            // Draw exponential curve based on ROI
-            // Higher ROI = Steeper Curve
-            const steepness = Math.min(Math.max(roi, 0) / 500, 1) * 80; // ROI 500% = Max Curve
-            curveCtx.quadraticCurveTo(75, 80 - steepness, 150, 10);
-            curveCtx.stroke();
-        }
-
-        function calculate() {
-            const guests = parseInt(m_guests.value) || 0;
-            const check = parseInt(m_check.value) || 0;
-            const conv = parseFloat(m_conv.value) || 0;
-            const cost = parseInt(m_cost.value) || 0;
-
-            v_guests.innerText = formatNumber(guests);
-            v_check.innerText = formatCurrency(check);
-            v_conv.innerText = conv + '%';
-            v_cost.innerText = formatCurrency(cost);
-
-            // Formula V2
-            // 1. Calculate Annual Revenue Gain
-            // Guests * Conv Rate = Conversion Events
-            // Conv Events * Check = Revenue
-            // * 12 Months
-            const monthlyRevenue = (guests * (conv / 100)) * check;
-            const annualGain = monthlyRevenue * 12;
-
-            // 2. Net ROI
-            const netROI = ((annualGain - cost) / cost) * 100;
-
-            // 3. Amortization (Months)
-            // Cost / Monthly Gain
-            const amortization = monthlyRevenue > 0 ? cost / monthlyRevenue : 99;
-
-            // 4. Cost of Inaction (Daily Loss)
-            const dailyLoss = annualGain / 365;
-
-            // Animations & Updates
-            gsap.to({ val: currentRoiValue }, {
-                val: netROI,
-                duration: 1.2,
-                ease: "power2.out",
-                onUpdate: function () {
-                    if (res_roi_percent) res_roi_percent.innerText = Math.round(this.targets()[0].val) + '%';
-                },
-                onComplete: () => currentRoiValue = netROI
-            });
-
-            if (res_gain_text) res_gain_text.innerText = "Zusatzumsatz: " + formatCurrency(annualGain);
-            if (res_breakeven) res_breakeven.innerText = amortization > 90 ? '> 5 J.' : (amortization < 1 ? '< 1 Mo.' : amortization.toFixed(1) + ' Mo.');
-            if (daily_loss_ticker) daily_loss_ticker.innerText = formatCurrency(dailyLoss);
-
-            // Visuals
-            drawCurve(netROI);
-
-            // Ticker & Glow State
-            if (netROI > 0) {
-                gold_glow.classList.remove('opacity-0');
-                gold_glow.classList.add('animate-pulse');
-                document.documentElement.style.setProperty('--accent', '#fbbf24'); // Gold
+            // Haptic/Visual Feedback
+            if (val > 90) {
+                handle.querySelector('div').style.boxShadow = "0 0 30px #d4af37";
+                handle.querySelector('div').style.background = "#d4af37";
             } else {
-                gold_glow.classList.add('opacity-0');
-                gold_glow.classList.remove('animate-pulse');
-                document.documentElement.style.setProperty('--accent', '#6366f1'); // Indigo
+                handle.querySelector('div').style.boxShadow = "0 0 20px white";
+                handle.querySelector('div').style.background = "white";
             }
-        }
-
-        [m_guests, m_check, m_conv, m_cost].forEach(el => {
-            el.addEventListener('input', calculate);
-            // Spring Physics
-            el.addEventListener('pointerup', () => {
-                gsap.to(el, { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-        calculate();
-
-        // Multi-Step Logic
-        function nextStep(step) {
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-
-            // Update Progress
-            const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
-            document.getElementById('progressBar').style.width = progress;
-        }
-
-        // Magnetic Buttons - Optimized
-        const magnets = document.querySelectorAll('.magnetic-btn');
-        magnets.forEach((btn) => {
-            const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
-            const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
-
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                xTo(x * 0.5);
-                yTo(y * 0.5);
-            });
-
-            btn.addEventListener('mouseleave', () => {
-                xTo(0);
-                yTo(0);
-            });
         });
 
-        // Form Submission
-        const form = document.getElementById('leadForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
-
-            // Hide all steps, show success
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('progressBar').style.width = '100%';
-            setTimeout(() => {
-                form.classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-            }, 500);
-        });
-
-        // Mobile Menu Logic
-        const mobileToggle = document.getElementById('mobile-toggle');
+        // MENU LOGIC
+        const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const menuLinks = document.querySelectorAll('.menu-link');
         let isMenuOpen = false;
 
-        mobileToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
-                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-
-                // Animate Toggle Button to 'X'
-                mobileToggle.children[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-                mobileToggle.children[1].style.opacity = '0';
-                mobileToggle.children[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-
-                // Stagger Links
-                gsap.fromTo(mobileLinks,
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
-                );
+                mobileMenu.classList.add('active');
+                gsap.fromTo(menuLinks, { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 });
+                menuToggle.children[0].style.transform = "rotate(45deg) translate(5px, 5px)";
+                menuToggle.children[1].style.transform = "rotate(-45deg) translate(5px, -5px)";
             } else {
-                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-
-                // Reset Toggle
-                mobileToggle.children[0].style.transform = 'none';
-                mobileToggle.children[1].style.opacity = '1';
-                mobileToggle.children[2].style.transform = 'none';
+                mobileMenu.classList.remove('active');
+                menuToggle.children[0].style.transform = "none";
+                menuToggle.children[1].style.transform = "none";
             }
         });
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => mobileToggle.click());
-        });
+        // WEBGL SHADER ENGINE
+        const canvas = document.getElementById('canvas-bg');
+        const gl = canvas.getContext('webgl');
 
-        // Scroll Reveal Animation (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+        if (gl) {
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+            window.addEventListener('resize', resize);
+            resize();
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-
-                    // Specific animations based on element type
-                    if (entry.target.classList.contains('matrix-card')) {
-                        gsap.fromTo(entry.target,
-                            { y: 50, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-                        );
-                    }
-                    observer.unobserve(entry.target);
+            const vs = `attribute vec4 p; void main(){gl_Position=p;}`;
+            const fs = `precision mediump float;
+                uniform float t; uniform vec2 r;
+                vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+                vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+                vec4 perm(vec4 x){return mod289(((x*34.0)+1.0)*x);}
+                vec4 tay(vec4 r){return 1.7928-0.8537*r;}
+                float n3D(vec3 v){
+                    const vec2 C=vec2(1.0/6.0,1.0/3.0);
+                    const vec4 D=vec4(0.0,0.5,1.0,2.0);
+                    vec3 i=floor(v+dot(v,C.yyy));
+                    vec3 x0=v-i+dot(i,C.xxx);
+                    vec3 g=step(x0.yzx,x0.xyz);
+                    vec3 l=1.0-g;
+                    vec3 i1=min(g.xyz,l.zxy);
+                    vec3 i2=max(g.xyz,l.zxy);
+                    vec3 x1=x0-i1+C.xxx;
+                    vec3 x2=x0-i2+C.yyy;
+                    vec3 x3=x0-D.yyy;
+                    i=mod289(i);
+                    vec4 p=perm(perm(perm(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
+                    float n_=0.142857142857;
+                    vec3 ns=n_*D.wyz-D.xzx;
+                    vec4 j=p-49.0*floor(p*ns.z*ns.z);
+                    vec4 x_=floor(j*ns.z);
+                    vec4 y_=floor(j-7.0*x_);
+                    vec4 x=x_*ns.x+ns.yyyy;
+                    vec4 y=y_*ns.x+ns.yyyy;
+                    vec4 h=1.0-abs(x)-abs(y);
+                    vec4 b0=vec4(x.xy,y.xy);
+                    vec4 b1=vec4(x.zw,y.zw);
+                    vec4 s0=floor(b0)*2.0+1.0;
+                    vec4 s1=floor(b1)*2.0+1.0;
+                    vec4 sh=-step(h,vec4(0.0));
+                    vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;
+                    vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+                    vec3 p0=vec3(a0.xy,h.x);
+                    vec3 p1=vec3(a0.zw,h.y);
+                    vec3 p2=vec3(a1.xy,h.z);
+                    vec3 p3=vec3(a1.zw,h.w);
+                    vec4 norm=tay(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+                    p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+                    vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);
+                    m=m*m;
+                    return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
                 }
-            });
-        }, observerOptions);
+                void main(){
+                    vec2 uv=gl_FragCoord.xy/r.xy;
+                    float a=r.x/r.y;
+                    uv.x*=a;
+                    float n1=n3D(vec3(uv*2.0,t*0.1));
+                    float n2=n3D(vec3(uv*4.0,t*0.2+10.0));
+                    vec3 bg=vec3(0.01,0.01,0.01);
+                    vec3 rose=vec3(0.68,0.53,0.53);
+                    vec3 gold=vec3(0.83,0.68,0.22);
+                    vec3 c=mix(bg,rose,smoothstep(0.3,0.7,n1)*0.3);
+                    c=mix(c,gold,smoothstep(0.4,0.6,n2)*0.2);
+                    gl_FragColor=vec4(c,1.0);
+                }`;
 
-        // Observe elements
-        document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
-            gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
+            function cS(t, s) { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; }
+            const p = gl.createProgram();
+            gl.attachShader(p, cS(gl.VERTEX_SHADER, vs));
+            gl.attachShader(p, cS(gl.FRAGMENT_SHADER, fs));
+            gl.linkProgram(p);
+            gl.useProgram(p);
 
-            observer.observe(el);
-            // Re-attach observer for GSAP override
-            const animObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-                        animObserver.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            animObserver.observe(el);
-        });
+            const b = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, b);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, 1, 1, 1, -1, -1, 1, -1]), gl.STATIC_DRAW);
+            gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(0);
 
-        // Live Terminal Simulation
-        const terminalStrings = [
-            ">> Analyzing lead structures...",
-            ">> Optimizing API response time...",
-            ">> Compiling backend schemas...",
-            ">> Deploying autonomous agent...",
-            ">> Syncing Supabase database...",
-            ">> Encryption layer active.",
-            ">> Data stream stabilized."
-        ];
+            const uT = gl.getUniformLocation(p, 't');
+            const uR = gl.getUniformLocation(p, 'r');
 
-        const terminalDiv = document.getElementById('live-terminal');
-        let stringIndex = 0;
-
-        function updateTerminal() {
-            if (!terminalDiv) return;
-            const line = document.createElement('div');
-            line.className = 'mt-1 opacity-80 flex';
-
-            const timestamp = document.createElement('span');
-            timestamp.className = 'text-zinc-500 mr-2';
-            timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
-
-            const content = document.createElement('span');
-            content.className = 'text-indigo-400';
-
-            line.appendChild(timestamp);
-            line.appendChild(content);
-            terminalDiv.appendChild(line);
-
-            // Typing effect
-            const text = terminalStrings[stringIndex];
-            let i = 0;
-            const typeInterval = setInterval(() => {
-                content.innerText += text.charAt(i);
-                i++;
-                if (i >= text.length) clearInterval(typeInterval);
-            }, 20); // Typing speed
-
-            if (terminalDiv.childNodes.length > 6) {
-                terminalDiv.removeChild(terminalDiv.firstChild);
+            let start = Date.now();
+            function loop() {
+                gl.uniform1f(uT, (Date.now() - start) * 0.001);
+                gl.uniform2f(uR, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(loop);
             }
-
-            stringIndex = (stringIndex + 1) % terminalStrings.length;
-
-            // Random interval for next line
-            setTimeout(updateTerminal, Math.random() * 3000 + 2000);
+            loop();
         }
-
-        // Start terminal
-        updateTerminal();
     </script>
 </body>
 
