@@ -78,6 +78,7 @@
 
         .gradient-text {
             background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -217,7 +218,13 @@
         </div>
     </nav>
 
-    <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
+    <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section">
+        <!-- Image Sequence Canvas -->
+        <canvas id="hero-sequence"
+            class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-40 z-[-1]"
+            style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%); object-fit: contain;">
+        </canvas>
+
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
             Engineering Agentur</span>
         <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
@@ -229,6 +236,123 @@
             Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
             <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
         </p>
+
+        <script>
+            class ImageSequence {
+                constructor(canvasId, framePath, frameCount, fps = 30) {
+                    this.canvas = document.getElementById(canvasId);
+                    this.ctx = this.canvas.getContext('2d');
+                    this.framePath = framePath;
+                    this.frameCount = frameCount;
+                    this.fps = fps;
+                    this.images = [];
+                    this.loadedCount = 0;
+                    this.currentFrame = 0;
+                    this.lastTime = 0;
+                    this.isPlaying = false;
+
+                    this.resize();
+                    window.addEventListener('resize', () => this.resize());
+
+                    // Start Preload
+                    this.preload();
+                }
+
+                preload() {
+                    // Preload strategy: Load first 10 frames to start immediately, then load the rest in background
+                    const initialLoad = 10;
+
+                    // Prioritize first batch
+                    for (let i = 1; i <= this.frameCount; i++) {
+                        const img = new Image();
+                        const frameNum = String(i).padStart(3, '0');
+                        img.src = this.framePath.replace('[000]', frameNum);
+
+                        img.onload = () => {
+                            this.loadedCount++;
+                            // Check if we have enough to start (first batch)
+                            if (this.loadedCount === initialLoad) {
+                                this.start();
+                            }
+                        };
+                        this.images[i] = img; // Store at index 1-100
+                    }
+                }
+
+                resize() {
+                    // Canvas resolution matches CSS pixel size for sharp rendering
+                    const rect = this.canvas.parentElement.getBoundingClientRect();
+                    this.canvas.width = rect.width;
+                    this.canvas.height = rect.height;
+
+                    // Redraw immediately if playing
+                    if (this.isPlaying) this.drawFrame(this.currentFrame);
+                }
+
+                start() {
+                    if (this.isPlaying) return;
+                    this.isPlaying = true;
+                    this.loop();
+                }
+
+                drawFrame(frameIndex) {
+                    const img = this.images[frameIndex + 1]; // 1-based index in array
+                    if (!img || !img.complete) return;
+
+                    const cw = this.canvas.width;
+                    const ch = this.canvas.height;
+
+                    // "Subtle" Look Logic:
+                    // scale: 0.8 to not fill entire screen, keep it contained
+                    // blending handles the black background removal
+                    const isMobile = cw < 768;
+                    const targetScale = isMobile ? 1.0 : 0.8;
+
+                    const imgAspect = img.width / img.height;
+                    const canvasAspect = cw / ch;
+
+                    let drawW, drawH;
+
+                    if (canvasAspect > imgAspect) {
+                        drawH = ch * targetScale;
+                        drawW = drawH * imgAspect;
+                    } else {
+                        drawW = cw * targetScale;
+                        drawH = drawW / imgAspect;
+                    }
+
+                    // Position: Center
+                    const x = (cw - drawW) / 2;
+                    const y = (ch - drawH) / 2;
+
+                    this.ctx.clearRect(0, 0, cw, ch);
+                    // Global Alpha is handled by CSS opacity, but we can enforce here if needed
+                    // this.ctx.globalAlpha = 0.4; 
+
+                    // Draw
+                    this.ctx.drawImage(img, x, y, drawW, drawH);
+                }
+
+                loop(timestamp) {
+                    if (!this.lastTime) this.lastTime = timestamp;
+                    const elapsed = timestamp - this.lastTime;
+                    const interval = 1000 / this.fps;
+
+                    if (elapsed > interval) {
+                        this.drawFrame(this.currentFrame);
+                        this.currentFrame = (this.currentFrame + 1) % this.frameCount;
+                        this.lastTime = timestamp - (elapsed % interval);
+                    }
+
+                    requestAnimationFrame((t) => this.loop(t));
+                }
+            }
+
+            // Init Sequence with 240 frames and 30 FPS for cine-look
+            document.addEventListener('DOMContentLoaded', () => {
+                new ImageSequence('hero-sequence', 'assets/sequence/frame_[000].jpg', 240, 30);
+            });
+        </script>
     </section>
 
     <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
@@ -300,6 +424,9 @@
     </section>
 
     <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <!-- Technical Background Graphic -->
+        <img src="assets/tech_engine_bg.png" alt="Engineering Schematic Background"
+            class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none -z-10 mix-blend-screen">
         <div class="text-center mb-20">
             <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
             <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
@@ -367,106 +494,74 @@
         </div>
     </section>
 
-    <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">
-                    <span class="text-indigo-500">Revenue</span> <br>Multiplier.
-                </h2>
-                <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                    Sichtbarkeit ist kein "Nice-to-have", sondern Mathematik.
-                    Wir beheben technische SEO-Fehler (z.B. <code>noindex</code>), die Sie unsichtbar machen.
-                    Berechnen Sie Ihren <strong class="text-white">Umsatz-Verlust</strong> durch fehlende Rankings.
+    <section id="web-excellence" class="py-40 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="mb-20">
+            <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase italic leading-none mb-6">
+                Websites, <br>die <span class="text-indigo-500">performen.</span>
+            </h2>
+            <p class="text-zinc-500 text-xl font-light max-w-2xl leading-relaxed">
+                Wir bauen keine digitalen Visitenkarten. Wir konstruieren <strong
+                    class="text-white">Hochleistungs-Infrastruktur</strong>,
+                die Besucher in Kunden verwandelt. Geschwindigkeit, Ästhetik und Technologie in perfekter
+                Synchronisation.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Speed -->
+            <div
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                <div
+                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
+                    <i data-lucide="zap" class="w-12 h-12"></i>
+                </div>
+                <div class="h-32 flex items-end mb-6">
+                    <span
+                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">100<span
+                            class="text-2xl align-top text-zinc-600">ms</span></span>
+                </div>
+                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Hypersonic Speed</h3>
+                <p class="text-sm text-zinc-500 leading-relaxed">
+                    Ladezeiten unter der Wahrnehmungsschwelle. Google liebt es, Ihre Kunden erwarten es.
+                    Kein Aufblähen, cleaner Code.
                 </p>
-
-                <!-- Bento Stats Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
-                    <div class="matrix-card glass p-8 rounded-[2rem] border-white/5 text-center flex flex-col justify-center relative overflow-hidden"
-                        id="roi-card">
-                        <div class="absolute inset-0 bg-amber-500/10 opacity-0 transition-opacity duration-1000"
-                            id="gold-glow"></div>
-                        <div class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-2 relative z-10">
-                            Amortisation
-                        </div>
-                        <div class="text-3xl font-black text-green-400 relative z-10" id="res_breakeven">0 Mo.</div>
-                    </div>
-                    <!-- Mini visualizer for Curve -->
-                    <div
-                        class="matrix-card glass p-4 rounded-[2rem] border-white/5 flex items-center justify-center overflow-hidden relative">
-                        <canvas id="roi-curve" width="150" height="80" class="opacity-50"></canvas>
-                        <div class="absolute bottom-4 text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                            Break-Even Curve</div>
-                    </div>
-                </div>
-
-                <!-- Ticker for Cost of Inaction -->
-                <div class="mt-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                    <p class="text-[10px] text-red-400 font-bold uppercase tracking-widest mb-1">Cost of Inaction</p>
-                    <div class="text-sm text-red-300 font-mono">
-                        Ihr täglicher Verlust durch SEO-Fehler: <span class="text-white font-bold"
-                            id="daily-loss-ticker">0,00 €</span>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="space-y-8 glass p-6 md:p-10 rounded-[2rem] border-white/5 flex flex-col items-stretch">
-                <!-- Input Section -->
-                <div class="space-y-6">
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Monatliche Gäste (Verlorener Traffic)</span>
-                            <span class="text-indigo-400" id="v_guests">1.000</span>
-                        </div>
-                        <input type="range" id="m_guests" min="100" max="20000" step="100" value="1000" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Ø-Umsatz pro Gast (Warenkorb)</span>
-                            <span class="text-green-400" id="v_check">50 €</span>
-                        </div>
-                        <input type="range" id="m_check" min="10" max="500" step="5" value="50" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Conversion Rate (Realistisch)</span>
-                            <span class="text-indigo-400" id="v_conv">2%</span>
-                        </div>
-                        <input type="range" id="m_conv" min="0.1" max="10" step="0.1" value="2" class="w-full">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-2 text-zinc-400">
-                            <span>Projektkosten (Investment)</span>
-                            <span class="text-rose-400" id="v_cost">5.000 €</span>
-                        </div>
-                        <input type="range" id="m_cost" min="1000" max="50000" step="500" value="5000" class="w-full">
-                        <p class="text-[9px] text-zinc-600 mt-2 font-mono">Einmaliges Investment in Aura Systems.</p>
-                    </div>
+            <!-- Design -->
+            <div
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                <div
+                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
+                    <i data-lucide="gem" class="w-12 h-12"></i>
                 </div>
-
-                <!-- Divider -->
-                <div class="border-t border-rose-200/5 my-4"></div>
-
-                <!-- Result Section (Bottom Hierarchy) -->
-                <div class="text-center">
-                    <div class="text-[9px] font-black text-rose-300 uppercase mb-2 tracking-[0.3em]">Netto-ROI (1 Jahr)
-                    </div>
-                    <div class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300 drop-shadow-2xl py-2"
-                        id="res_roi_percent">0%</div>
-                    <p class="text-[10px] text-zinc-500 mt-2 font-mono" id="res_gain">Zusatzumsatz: 0€</p>
-
-                    <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                        class="mt-6 px-6 py-3 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition backdrop-blur-md border border-white/5 hover:border-rose-400/50 flex items-center gap-3 mx-auto w-full md:w-auto justify-center">
-                        <span>Diesen Profit Realisieren</span>
-                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </button>
+                <div class="h-32 flex items-end mb-6">
+                    <span
+                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">UI/UX</span>
                 </div>
+                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Dominante Ästhetik</h3>
+                <p class="text-sm text-zinc-500 leading-relaxed">
+                    Design, das Autorität ausstrahlt. Dark-Mode, Glassmorphism und flüssige Animationen,
+                    die im Gedächtnis bleiben.
+                </p>
             </div>
 
+            <!-- Tech -->
+            <div
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                <div
+                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
+                    <i data-lucide="cpu" class="w-12 h-12"></i>
+                </div>
+                <div class="h-32 flex items-end mb-6">
+                    <span
+                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">React</span>
+                </div>
+                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Modernster Stack</h3>
+                <p class="text-sm text-zinc-500 leading-relaxed">
+                    Vergessen Sie WordPress-Baukästen. Wir setzen auf React, Next.js und TailwindCSS
+                    für maximale Skalierbarkeit und Sicherheit.
+                </p>
+            </div>
         </div>
     </section>
 
@@ -628,113 +723,7 @@
         }
         animateCanvas();
 
-        // ROI V2 (Cost of Inaction & High-Impact Logic)
-        const m_guests = document.getElementById('m_guests');
-        const m_check = document.getElementById('m_check');
-        const m_conv = document.getElementById('m_conv');
-        const m_cost = document.getElementById('m_cost');
 
-        const v_guests = document.getElementById('v_guests');
-        const v_check = document.getElementById('v_check');
-        const v_conv = document.getElementById('v_conv');
-        const v_cost = document.getElementById('v_cost');
-
-        const res_roi_percent = document.getElementById('res_roi_percent');
-        const res_breakeven = document.getElementById('res_breakeven');
-        const res_gain_text = document.getElementById('res_gain');
-        const daily_loss_ticker = document.getElementById('daily-loss-ticker');
-        const gold_glow = document.getElementById('gold-glow');
-
-        const curveCanvas = document.getElementById('roi-curve');
-        const curveCtx = curveCanvas ? curveCanvas.getContext('2d') : null;
-
-        const formatCurrency = (val) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
-        const formatNumber = (val) => new Intl.NumberFormat('de-DE').format(val);
-
-        let currentRoiValue = 0;
-
-        function drawCurve(roi) {
-            if (!curveCtx) return;
-            curveCtx.clearRect(0, 0, 150, 80);
-            curveCtx.strokeStyle = '#4ade80';
-            curveCtx.lineWidth = 2;
-            curveCtx.beginPath();
-            curveCtx.moveTo(0, 80);
-
-            // Draw exponential curve based on ROI
-            // Higher ROI = Steeper Curve
-            const steepness = Math.min(Math.max(roi, 0) / 500, 1) * 80; // ROI 500% = Max Curve
-            curveCtx.quadraticCurveTo(75, 80 - steepness, 150, 10);
-            curveCtx.stroke();
-        }
-
-        function calculate() {
-            const guests = parseInt(m_guests.value) || 0;
-            const check = parseInt(m_check.value) || 0;
-            const conv = parseFloat(m_conv.value) || 0;
-            const cost = parseInt(m_cost.value) || 0;
-
-            v_guests.innerText = formatNumber(guests);
-            v_check.innerText = formatCurrency(check);
-            v_conv.innerText = conv + '%';
-            v_cost.innerText = formatCurrency(cost);
-
-            // Formula V2
-            // 1. Calculate Annual Revenue Gain
-            // Guests * Conv Rate = Conversion Events
-            // Conv Events * Check = Revenue
-            // * 12 Months
-            const monthlyRevenue = (guests * (conv / 100)) * check;
-            const annualGain = monthlyRevenue * 12;
-
-            // 2. Net ROI
-            const netROI = ((annualGain - cost) / cost) * 100;
-
-            // 3. Amortization (Months)
-            // Cost / Monthly Gain
-            const amortization = monthlyRevenue > 0 ? cost / monthlyRevenue : 99;
-
-            // 4. Cost of Inaction (Daily Loss)
-            const dailyLoss = annualGain / 365;
-
-            // Animations & Updates
-            gsap.to({ val: currentRoiValue }, {
-                val: netROI,
-                duration: 1.2,
-                ease: "power2.out",
-                onUpdate: function () {
-                    if (res_roi_percent) res_roi_percent.innerText = Math.round(this.targets()[0].val) + '%';
-                },
-                onComplete: () => currentRoiValue = netROI
-            });
-
-            if (res_gain_text) res_gain_text.innerText = "Zusatzumsatz: " + formatCurrency(annualGain);
-            if (res_breakeven) res_breakeven.innerText = amortization > 90 ? '> 5 J.' : (amortization < 1 ? '< 1 Mo.' : amortization.toFixed(1) + ' Mo.');
-            if (daily_loss_ticker) daily_loss_ticker.innerText = formatCurrency(dailyLoss);
-
-            // Visuals
-            drawCurve(netROI);
-
-            // Ticker & Glow State
-            if (netROI > 0) {
-                gold_glow.classList.remove('opacity-0');
-                gold_glow.classList.add('animate-pulse');
-                document.documentElement.style.setProperty('--accent', '#fbbf24'); // Gold
-            } else {
-                gold_glow.classList.add('opacity-0');
-                gold_glow.classList.remove('animate-pulse');
-                document.documentElement.style.setProperty('--accent', '#6366f1'); // Indigo
-            }
-        }
-
-        [m_guests, m_check, m_conv, m_cost].forEach(el => {
-            el.addEventListener('input', calculate);
-            // Spring Physics
-            el.addEventListener('pointerup', () => {
-                gsap.to(el, { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-        calculate();
 
         // Multi-Step Logic
         function nextStep(step) {
