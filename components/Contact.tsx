@@ -24,11 +24,11 @@ export const Contact: React.FC = () => {
         <section id="kontakt" className="py-24 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div ref={elementRef} className={`grid grid-cols-1 lg:grid-cols-2 gap-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-                    
+
                     {/* Info Side */}
                     <div className="flex flex-col justify-center">
                         <div className="mb-8">
-                            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 text-glow">Bereit für den <br/>nächsten Schritt?</h2>
+                            <h2 className="text-3xl md:text-5xl font-black text-white mb-6 text-glow">Bereit für den <br />nächsten Schritt?</h2>
                             <p className="text-gray-400 text-lg leading-relaxed mb-8">
                                 Lassen Sie uns besprechen, wie AURA Ihre Geschäftsprozesse revolutionieren kann. Vereinbaren Sie ein unverbindliches Erstgespräch mit unseren Experten.
                             </p>
@@ -62,7 +62,7 @@ export const Contact: React.FC = () => {
                         <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-600/20 rounded-full blur-[60px] pointer-events-none"></div>
 
                         <h3 className="text-2xl font-bold text-white mb-6">Projektanfrage</h3>
-                        
+
                         <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">Name</label>
@@ -71,7 +71,7 @@ export const Contact: React.FC = () => {
                                     id="name"
                                     required
                                     value={formState.name}
-                                    onChange={(e) => setFormState({...formState, name: e.target.value})}
+                                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 input-glow transition-all"
                                     placeholder="Ihr Name"
                                 />
@@ -83,7 +83,7 @@ export const Contact: React.FC = () => {
                                     id="email"
                                     required
                                     value={formState.email}
-                                    onChange={(e) => setFormState({...formState, email: e.target.value})}
+                                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 input-glow transition-all"
                                     placeholder="name@firma.de"
                                 />
@@ -95,12 +95,12 @@ export const Contact: React.FC = () => {
                                     rows={4}
                                     required
                                     value={formState.message}
-                                    onChange={(e) => setFormState({...formState, message: e.target.value})}
+                                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 input-glow transition-all resize-none"
                                     placeholder="Wie können wir helfen?"
                                 />
                             </div>
-                            
+
                             <button
                                 type="submit"
                                 disabled={isSubmitting || isSent}

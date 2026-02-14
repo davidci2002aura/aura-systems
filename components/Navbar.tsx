@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
           <div className="flex-shrink-0 flex items-center gap-2">
             <span className="text-2xl font-black tracking-tighter text-white text-glow">AURA.</span>
           </div>
-          
+
           {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
@@ -65,13 +65,13 @@ export const Navbar: React.FC = () => {
                 {link.name}
               </a>
             ))}
-             <a
-                href="#kontakt"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-md text-base font-medium transition"
-              >
-                Projekt starten
-              </a>
+            <a
+              href="#kontakt"
+              onClick={() => setIsOpen(false)}
+              className="block w-full text-center mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-md text-base font-medium transition"
+            >
+              Projekt starten
+            </a>
           </div>
         </div>
       )}

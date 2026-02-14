@@ -188,7 +188,7 @@
         id="hero-section">
         <!-- Static Fallback Image -->
         <img src="/assets/sequence/frame_001.jpg" id="hero-fallback"
-            class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
+            class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-[0.15] mix-blend-screen z-[-2] transition-opacity duration-1000"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%);"
             alt="Background Animation Frame">
 
@@ -281,7 +281,7 @@
                     this.isPlaying = true;
 
                     // Show Canvas (Overlay on top of fallback)
-                    this.canvas.style.opacity = '0.6';
+                    this.canvas.style.opacity = '0.4';
 
                     console.log('Animation started');
                     this.loop();
