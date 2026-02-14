@@ -210,7 +210,8 @@
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
             Wir konstruieren <span class="text-white font-medium">autonome Wertschöpfungs-Architekturen</span>,
             die Ihre Marktführerschaft automatisieren.
-            <br><span class="text-indigo-400 text-[10px] uppercase font-bold tracking-widest mt-4 block">Ultimative Performance. Keine Kompromisse.</span>
+            <br><span class="text-indigo-400 text-[10px] uppercase font-bold tracking-widest mt-4 block">Ultimative
+                Performance. Keine Kompromisse.</span>
         </p>
 
         <script>
@@ -244,33 +245,27 @@
                 }
 
                 preload() {
-                    // Preload strategy: Load first 10 frames to start immediately, then load the rest in background
-                    const initialLoad = 10;
+                    // Preload first frame to start as base
+                    const firstImg = new Image();
+                    firstImg.src = this.framePath.replace('[000]', '001');
+                    firstImg.onload = () => {
+                        this.images[1] = firstImg;
+                        this.successCount++;
+                        this.start();
+                    };
 
-                    // Fix Path: Use absolute path for Vercel
-                    // Clean the path string just in case
-                    const basePath = this.framePath.startsWith('.') ? this.framePath.substring(1) : this.framePath;
-
-                    // Prioritize first batch
-                    for (let i = 1; i <= this.frameCount; i++) {
+                    // Load the rest in background
+                    for (let i = 2; i <= this.frameCount; i++) {
                         const img = new Image();
                         const frameNum = String(i).padStart(3, '0');
                         img.src = this.framePath.replace('[000]', frameNum);
-
                         img.onload = () => {
-                            this.loadedCount++;
                             this.successCount++;
-                            // Check if we have enough to start (first batch)
-                            if (this.loadedCount === initialLoad) {
-                                this.start();
-                            }
+                            this.images[i] = img;
                         };
                         img.onerror = () => {
-                            console.error(`Frame failed to load: ${img.src}`);
-                            this.loadedCount++;
-                            if (this.loadedCount === initialLoad) this.start();
+                            console.error(`Frame failed: ${img.src}`);
                         };
-                        this.images[i] = img; // Store at index 1-100
                     }
                 }
 
