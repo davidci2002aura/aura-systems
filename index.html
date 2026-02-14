@@ -205,12 +205,7 @@
             class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
             <div class="flex flex-col gap-8 text-center">
                 <a href="#architecture"
-                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">Full-Stack</a>
-                <a href="#roi"
-                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">ROI
-                    Audit</a>
-                <a href="#contact"
-                    class="text-4xl font-black uppercase tracking-tighter text-indigo-500 mobile-link">Starten</a>
+                    class="text-4xl font-black uppercase tracking-tighter hover:text-indigo-500 transition mobile-link">Manifest</a>
             </div>
             <div class="absolute bottom-20 text-zinc-600 text-xs font-mono uppercase tracking-widest">
                 System Status: Online
@@ -221,7 +216,7 @@
     <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section">
         <!-- Static Fallback Image -->
         <img src="./assets/sequence/frame_001.jpg" id="hero-fallback"
-            class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-20 mix-blend-screen z-[-2] transition-opacity duration-1000"
+            class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
             alt="Background Animation Frame">
 
@@ -320,14 +315,8 @@
                     if (this.isPlaying) return;
                     this.isPlaying = true;
 
-                    // Cross-fade: Show Canvas, Hide Fallback (ONLY if we have content)
-                    const fallback = document.getElementById('hero-fallback');
-                    if (fallback && this.successCount > 0) {
-                        fallback.style.opacity = '0';
-                        this.canvas.style.opacity = '0.4';
-                    } else {
-                        console.warn('Animation started but no images loaded - keeping fallback');
-                    }
+                    // Show Canvas (Overlay on top of fallback)
+                    this.canvas.style.opacity = '0.6';
 
                     console.log('Animation started');
                     this.loop();
