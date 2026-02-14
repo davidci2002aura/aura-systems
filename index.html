@@ -190,7 +190,7 @@
         class="min-h-[80vh] pt-48 md:pt-64 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative flex flex-col justify-center items-center"
         id="hero-section">
         <!-- Static Fallback Image -->
-        <img src="./assets/sequence/frame_001.jpg" id="hero-fallback"
+        <img src="/assets/sequence/frame_001.jpg" id="hero-fallback"
             class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
             alt="Background Animation Frame">
@@ -348,7 +348,7 @@
 
             // Init Sequence with 240 frames and 30 FPS for cine-look
             document.addEventListener('DOMContentLoaded', () => {
-                new ImageSequence('hero-sequence', 'assets/sequence/frame_[000].jpg', 240, 30);
+                new ImageSequence('hero-sequence', '/assets/sequence/frame_[000].jpg', 240, 30);
             });
         </script>
     </section>
