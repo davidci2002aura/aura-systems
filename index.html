@@ -218,32 +218,30 @@
         </div>
     </nav>
 
-    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section"></section>
-        <!-- Static Fallback Image (Visible immediately, subtle) -->
-        <img src="./assets/sequence/frame_001.jpg" 
-             class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-20 mix-blend-screen z-[-2]"
-             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
-             alt="Aura Chip Background">
+    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section">
+        <!-- Static Fallback Image -->
+        <img src="./assets/sequence/frame_001.jpg" id="hero-fallback"
+            class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-20 mix-blend-screen z-[-2] transition-opacity duration-1000"
+            style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
+            alt="Background Animation Frame">
 
-        <!-- Image Sequence Canvas (Animate on top) -->
+        <!-- Image Sequence Canvas -->
         <canvas id="hero-sequence"
-            class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-40 z-[-1]"
+            class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-0 transition-opacity duration-1000 z-[-1]"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%); object-fit: contain;">
         </canvas>
 
-        <span
-            class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">Full-Stack
-            AI &
-            Engineering Agentur</span>
+        <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">
+            Webdesign & Development
+        </span>
         <h1
-            class="text-4xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
-            WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
+            class="text-4xl md:text-[6rem] font-black tracking-tighter leading-[1.1] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
+            MODERN. SCHNELL.<br /><span class="gradient-text italic">ERFOLGREICH.</span>
         </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
-            Wir bauen keine Webseiten. Wir konstruieren autonome <span
-                class="text-white font-medium">Wertschöpfungs-Systeme</span>.
-            Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
-            <span class="italic text-zinc-500">Ihre Konkurrenz schläft nicht – sie automatisiert.</span>
+        <p class="text-xl text-zinc-400 max-w-2xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
+            Wir entwickeln Webseiten, die gut aussehen und funktionieren.
+            <span class="text-white font-medium">Besseres Design, schnellere Ladezeiten, mehr Kunden.</span>
+            <br>Starten Sie jetzt in die digitale Zukunft.
         </p>
 
         <script>
@@ -306,6 +304,14 @@
                 start() {
                     if (this.isPlaying) return;
                     this.isPlaying = true;
+
+                    // Cross-fade: Show Canvas, Hide Fallback
+                    const fallback = document.getElementById('hero-fallback');
+                    if (fallback) fallback.style.opacity = '0';
+
+                    this.canvas.style.opacity = '0.4'; // Target opacity
+
+                    console.log('Animation started');
                     this.loop();
                 }
 
