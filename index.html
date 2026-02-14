@@ -218,20 +218,22 @@
         </div>
     </nav>
 
-    <section class="pt-40 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section">
+    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section"
+        style="background-image: url('./assets/sequence/frame_001.jpg'); background-position: center; background-size: contain; background-repeat: no-repeat; background-blend-mode: overlay;">
         <!-- Image Sequence Canvas -->
         <canvas id="hero-sequence" class="absolute inset-0 w-full h-full pointer-events-none opacity-60 z-[-1]"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%); object-fit: contain;">
         </canvas>
 
         <span
-            class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-20 md:mt-0">Full-Stack
+            class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">Full-Stack
             AI &
             Engineering Agentur</span>
-        <h1 class="text-4xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase px-4 md:px-0">
+        <h1
+            class="text-4xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
             WE ENGINEER <br /><span class="gradient-text italic">DOMINANCE.</span>
         </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
+        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
             Wir bauen keine Webseiten. Wir konstruieren autonome <span
                 class="text-white font-medium">Wertschöpfungs-Systeme</span>.
             Hören Sie auf, Zeit gegen Geld zu tauschen. <br>
@@ -356,7 +358,7 @@
 
             // Init Sequence with 240 frames and 30 FPS for cine-look
             document.addEventListener('DOMContentLoaded', () => {
-                new ImageSequence('hero-sequence', 'assets/sequence/frame_[000].jpg', 240, 30);
+                new ImageSequence('hero-sequence', './assets/sequence/frame_[000].jpg', 240, 30);
             });
         </script>
     </section>
