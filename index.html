@@ -186,7 +186,9 @@
         </div>
     </nav>
 
-    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section">
+    <section
+        class="min-h-[80vh] pt-48 md:pt-64 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative flex flex-col justify-center items-center"
+        id="hero-section">
         <!-- Static Fallback Image -->
         <img src="./assets/sequence/frame_001.jpg" id="hero-fallback"
             class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
@@ -200,17 +202,15 @@
         </canvas>
 
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">
-            Automated Value Architecture
+            Automated Intelligence Systems
         </span>
-        <h1
-            class="text-4xl md:text-[6rem] font-black tracking-tighter leading-[1.0] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
-            ENGINEERING <br /><span class="gradient-text italic">DIGITAL DOMINANCE.</span>
+        <h1 class="text-4xl md:text-[7rem] font-black tracking-tighter leading-[1.0] mb-12 uppercase text-shadow-lg">
+            ENGINEERING <br /><span class="gradient-text italic">DIGITAL SOVEREIGNTY.</span>
         </h1>
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
-            Schluss mit Standard-Webdesign. Wir konstruieren <span class="text-white font-medium">autonome
-                Wachstumssysteme</span>,
-            die Ihre Marktposition zementieren.
-            <br><span class="text-indigo-400 text-sm">Schnell. Skalierbar. Kompromisslos.</span>
+            Wir konstruieren <span class="text-white font-medium">autonome Wertschöpfungs-Architekturen</span>,
+            die Ihre Marktführerschaft automatisieren.
+            <br><span class="text-indigo-400 text-[10px] uppercase font-bold tracking-widest mt-4 block">Ultimative Performance. Keine Kompromisse.</span>
         </p>
 
         <script>
@@ -353,7 +353,7 @@
 
             // Init Sequence with 240 frames and 30 FPS for cine-look
             document.addEventListener('DOMContentLoaded', () => {
-                new ImageSequence('hero-sequence', './assets/sequence/frame_[000].jpg', 240, 30);
+                new ImageSequence('hero-sequence', 'assets/sequence/frame_[000].jpg', 240, 30);
             });
         </script>
     </section>
