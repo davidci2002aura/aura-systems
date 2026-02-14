@@ -12,7 +12,7 @@ interface AnimatedItemProps {
 
 const AnimatedItem: React.FC<AnimatedItemProps> = ({ children, delay = 0, index, onMouseEnter, onClick }) => {
     const ref = useRef(null);
-    const inView = useInView(ref, { amount: 0.5, triggerOnce: true });
+    const inView = useInView(ref, { amount: 0.5, once: true });
 
     return (
         <motion.div

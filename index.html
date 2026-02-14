@@ -137,6 +137,75 @@
             transition: opacity 0.5s ease;
         }
 
+        /* Premium Background enhancements */
+        .bg-container {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: -5;
+            overflow: hidden;
+        }
+
+        .grid-background {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center center;
+            transform: perspective(1000px) rotateX(60deg) translateY(-100px);
+            transform-origin: top;
+            animation: grid-move 20s linear infinite;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+        }
+
+        @keyframes grid-move {
+            0% {
+                background-position: center 0;
+            }
+
+            100% {
+                background-position: center 1000px;
+            }
+        }
+
+        .nebula {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.5;
+            animation: orbit 60s linear infinite;
+        }
+
+        .nebula-1 {
+            top: -200px;
+            left: -200px;
+            animation-duration: 80s;
+        }
+
+        .nebula-2 {
+            bottom: -200px;
+            right: -200px;
+            animation-duration: 100s;
+            animation-direction: reverse;
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg) translate(100px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translate(100px) rotate(-360deg);
+            }
+        }
+
         .step.active {
             display: block;
             opacity: 1;
@@ -182,6 +251,13 @@
             AURA SYSTEMS
         </div>
     </nav>
+
+    <!-- Dynamic Premium Background -->
+    <div class="bg-container">
+        <div class="grid-background"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+    </div>
 
     <section
         class="min-h-[80vh] pt-48 md:pt-64 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative flex flex-col justify-center items-center"
