@@ -188,14 +188,14 @@
         id="hero-section">
         <!-- Static Fallback Image -->
         <img src="/assets/sequence/frame_001.jpg" id="hero-fallback"
-            class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
-            style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
+            class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-30 mix-blend-screen z-[-2] transition-opacity duration-1000"
+            style="mask-image: radial-gradient(circle at center, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%);"
             alt="Background Animation Frame">
 
         <!-- Image Sequence Canvas -->
         <canvas id="hero-sequence"
             class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-0 transition-opacity duration-1000 z-[-1]"
-            style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%); object-fit: contain;">
+            style="mask-image: radial-gradient(circle at center, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%); object-fit: cover;">
         </canvas>
 
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">
@@ -298,7 +298,7 @@
                     // scale: 0.8 to not fill entire screen, keep it contained
                     // blending handles the black background removal
                     const isMobile = cw < 768;
-                    const targetScale = isMobile ? 1.0 : 0.8;
+                    const targetScale = isMobile ? 1.0 : 1.2;
 
                     const imgAspect = img.width / img.height;
                     const canvasAspect = cw / ch;
