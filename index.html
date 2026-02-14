@@ -275,6 +275,11 @@
                                 this.start();
                             }
                         };
+                        img.onerror = () => {
+                            console.error(`Frame failed to load: ${img.src}`);
+                            this.loadedCount++;
+                            if (this.loadedCount === initialLoad) this.start();
+                        };
                         this.images[i] = img; // Store at index 1-100
                     }
                 }
