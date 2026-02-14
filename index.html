@@ -218,10 +218,16 @@
         </div>
     </nav>
 
-    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section"
-        style="background-image: url('./assets/sequence/frame_001.jpg'); background-position: center; background-size: contain; background-repeat: no-repeat; background-blend-mode: overlay;">
-        <!-- Image Sequence Canvas -->
-        <canvas id="hero-sequence" class="absolute inset-0 w-full h-full pointer-events-none opacity-60 z-[-1]"
+    <section class="pt-48 md:pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative" id="hero-section"></section>
+        <!-- Static Fallback Image (Visible immediately, subtle) -->
+        <img src="./assets/sequence/frame_001.jpg" 
+             class="absolute inset-0 w-full h-full object-contain pointer-events-none opacity-20 mix-blend-screen z-[-2]"
+             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"
+             alt="Aura Chip Background">
+
+        <!-- Image Sequence Canvas (Animate on top) -->
+        <canvas id="hero-sequence"
+            class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-40 z-[-1]"
             style="mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%); object-fit: contain;">
         </canvas>
 
