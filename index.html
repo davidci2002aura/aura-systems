@@ -232,16 +232,17 @@
         </canvas>
 
         <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">
-            Webdesign & Development
+            Automated Value Architecture
         </span>
         <h1
-            class="text-4xl md:text-[6rem] font-black tracking-tighter leading-[1.1] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
-            MODERN. SCHNELL.<br /><span class="gradient-text italic">ERFOLGREICH.</span>
+            class="text-4xl md:text-[6rem] font-black tracking-tighter leading-[1.0] mb-12 uppercase px-2 md:px-0 text-shadow-lg">
+            ENGINEERING <br /><span class="gradient-text italic">DIGITAL DOMINANCE.</span>
         </h1>
-        <p class="text-xl text-zinc-400 max-w-2xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
-            Wir entwickeln Webseiten, die gut aussehen und funktionieren.
-            <span class="text-white font-medium">Besseres Design, schnellere Ladezeiten, mehr Kunden.</span>
-            <br>Starten Sie jetzt in die digitale Zukunft.
+        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
+            Schluss mit Standard-Webdesign. Wir konstruieren <span class="text-white font-medium">autonome
+                Wachstumssysteme</span>,
+            die Ihre Marktposition zementieren.
+            <br><span class="text-indigo-400 text-sm">Schnell. Skalierbar. Kompromisslos.</span>
         </p>
 
         <script>
@@ -257,17 +258,30 @@
                     this.currentFrame = 0;
                     this.lastTime = 0;
                     this.isPlaying = false;
+                    this.successCount = 0; // Track successful loads
 
                     this.resize();
                     window.addEventListener('resize', () => this.resize());
 
                     // Start Preload
                     this.preload();
+
+                    // Safety Timeout: Force start after 3s if loading hangs
+                    setTimeout(() => {
+                        if (!this.isPlaying) {
+                            console.warn('Force starting animation due to timeout');
+                            this.start();
+                        }
+                    }, 3000);
                 }
 
                 preload() {
                     // Preload strategy: Load first 10 frames to start immediately, then load the rest in background
                     const initialLoad = 10;
+
+                    // Fix Path: Use absolute path for Vercel
+                    // Clean the path string just in case
+                    const basePath = this.framePath.startsWith('.') ? this.framePath.substring(1) : this.framePath;
 
                     // Prioritize first batch
                     for (let i = 1; i <= this.frameCount; i++) {
@@ -277,6 +291,7 @@
 
                         img.onload = () => {
                             this.loadedCount++;
+                            this.successCount++;
                             // Check if we have enough to start (first batch)
                             if (this.loadedCount === initialLoad) {
                                 this.start();
@@ -305,11 +320,14 @@
                     if (this.isPlaying) return;
                     this.isPlaying = true;
 
-                    // Cross-fade: Show Canvas, Hide Fallback
+                    // Cross-fade: Show Canvas, Hide Fallback (ONLY if we have content)
                     const fallback = document.getElementById('hero-fallback');
-                    if (fallback) fallback.style.opacity = '0';
-
-                    this.canvas.style.opacity = '0.4'; // Target opacity
+                    if (fallback && this.successCount > 0) {
+                        fallback.style.opacity = '0';
+                        this.canvas.style.opacity = '0.4';
+                    } else {
+                        console.warn('Animation started but no images loaded - keeping fallback');
+                    }
 
                     console.log('Animation started');
                     this.loop();
@@ -360,6 +378,9 @@
 
                     if (elapsed > interval) {
                         this.drawFrame(this.currentFrame);
+                        // Debug: Log every 60 frames to confirm loop is alive
+                        if (this.currentFrame % 60 === 0) console.log(`Rendering Frame: ${this.currentFrame}`);
+
                         this.currentFrame = (this.currentFrame + 1) % this.frameCount;
                         this.lastTime = timestamp - (elapsed % interval);
                     }
@@ -370,7 +391,7 @@
 
             // Init Sequence with 240 frames and 30 FPS for cine-look
             document.addEventListener('DOMContentLoaded', () => {
-                new ImageSequence('hero-sequence', './assets/sequence/frame_[000].jpg', 240, 30);
+                new ImageSequence('hero-sequence', '/assets/sequence/frame_[000].jpg', 240, 30);
             });
         </script>
     </section>
