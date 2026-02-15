@@ -70,7 +70,8 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            /* Subtle border */
         }
 
         .gradient-text {
@@ -80,8 +81,21 @@
             -webkit-text-fill-color: transparent;
         }
 
-        h1,
+        h1 {
+            font-size: clamp(1.75rem, 8vw, 6rem);
+            /* Smaller, more elegant */
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to bottom, #fff 20%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         h2 {
+            font-size: clamp(1.4rem, 5vw, 4rem);
+            /* Refined scale */
+            line-height: 1.1;
             background: linear-gradient(to bottom, #fff 20%, #a5b4fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -181,9 +195,12 @@
             background-position: center center;
             transform: perspective(1000px) rotateX(60deg) translateY(-100px);
             transform-origin: top;
-            animation: grid-move 20s linear infinite;
+            animation: grid-move 40s linear infinite;
+            /* Slower, majestic movement */
             mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
             -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            opacity: 0.6;
+            /* Reduced opacity for subtlety */
         }
 
         @keyframes grid-move {
@@ -202,7 +219,8 @@
             height: 800px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            filter: blur(80px);
+            filter: blur(100px);
+            /* Softer nebula */
             pointer-events: none;
             opacity: 0.5;
             animation: orbit 60s linear infinite;
@@ -408,7 +426,7 @@
                     // Mobile Optimization: Play at lower FPS
                     this.isMobile = window.innerWidth < 1024;
                     this.step = 1;
-                    if (this.isMobile) this.fps = 15; // Save battery/GPU on mobile
+                    if (this.isMobile) this.fps = 24; // Cinematic 24 FPS for smoother premium feel
 
                     // Safety Timeout
                     setTimeout(() => {
@@ -553,7 +571,7 @@
         <div class="glass p-6 md:p-20 rounded-[4rem] border-white/5">
             <div class="text-center mb-16">
                 <h2
-                    class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-8 italic whitespace-nowrap">
+                    class="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-500 mb-8 italic whitespace-nowrap">
                     Infrastruktur Insight</h2>
                 <h3 class="text-3xl md:text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
             </div>
