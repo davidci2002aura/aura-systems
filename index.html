@@ -420,17 +420,22 @@
                 }
 
                 preload() {
-                    // Preload first frame to start as base
+                    this.isMobile = window.innerWidth < 1024;
+                    // LUXURY: Frame-Skipping for Mobile (load only every 2nd frame)
+                    this.loadStep = this.isMobile ? 2 : 1;
+
+                    // Preload first frame
                     const firstImg = new Image();
                     firstImg.src = this.framePath.replace('[000]', '001');
                     firstImg.onload = () => {
                         this.images[1] = firstImg;
                         this.successCount++;
-                        this.start();
+                        this.initObserver(); // Initialize observer after first frame
                     };
 
-                    // Load the rest in background
-                    for (let i = 2; i <= this.frameCount; i++) {
+                    // Load sequence in background with step
+                    for (let i = 1; i <= this.frameCount; i += this.loadStep) {
+                        if (i === 1) continue; // Skip first frame (already loading)
                         const img = new Image();
                         const frameNum = String(i).padStart(3, '0');
                         img.src = this.framePath.replace('[000]', frameNum);
@@ -438,10 +443,21 @@
                             this.successCount++;
                             this.images[i] = img;
                         };
-                        img.onerror = () => {
-                            console.error(`Frame failed: ${img.src}`);
-                        };
                     }
+                }
+
+                initObserver() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.start();
+                            } else {
+                                this.stop();
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    observer.observe(this.canvas);
                 }
 
                 resize() {
@@ -457,16 +473,23 @@
                 start() {
                     if (this.isPlaying) return;
                     this.isPlaying = true;
-
-                    // Show Canvas (Overlay on top of fallback)
                     this.canvas.style.opacity = '0.4';
+                    this.loop();
+                }
 
-                    console.log('Animation started');
-                    requestAnimationFrame((t) => this.loop(t));
+                stop() {
+                    this.isPlaying = false;
+                    this.canvas.style.opacity = '0';
                 }
 
                 drawFrame(frameIndex) {
-                    const img = this.images[frameIndex + 1]; // 1-based index in array
+                    // Account for loadStep when picking frame
+                    let actualIndex = frameIndex + 1;
+                    if (this.loadStep > 1) {
+                        actualIndex = Math.floor(frameIndex / this.loadStep) * this.loadStep + 1;
+                    }
+
+                    const img = this.images[actualIndex];
                     if (!img || !img.complete) return;
 
                     const cw = this.canvas.width;
@@ -504,13 +527,14 @@
                 }
 
                 loop(timestamp) {
+                    if (!this.isPlaying) return;
                     if (!this.lastTime) this.lastTime = timestamp;
                     const elapsed = timestamp - this.lastTime;
                     const interval = 1000 / this.fps;
 
                     if (elapsed > interval) {
                         this.drawFrame(this.currentFrame);
-                        this.currentFrame = (this.currentFrame + this.step) % this.frameCount;
+                        this.currentFrame = (this.currentFrame + this.loadStep) % this.frameCount;
                         this.lastTime = timestamp - (elapsed % interval);
                     }
 
@@ -839,7 +863,57 @@
     </footer>
 
     <script>
+        // High-Performance Monitor Hook
+        function checkHardwarePerformance() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            const isSlow = connection && (connection.saveData || /2g|3g/.test(connection.effectiveType));
+
+            if (isMobile || isSlow) {
+                document.body.classList.add('low-perf');
+                // Throttle intense visual effects
+                gsap.set('.nebula', { display: 'none' });
+                console.log('AURA Performance: Adaptive throttling active (Mobile/Slow Net)');
+            }
+            return { isMobile, isSlow };
+        }
+
+        const perfStatus = checkHardwarePerformance();
+
         lucide.createIcons();
+
+        // GSAP Implementation: Bento-Reveal & Vacuum-Plop
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Desktop: Staggered Fade-Up
+        if (!perfStatus.isMobile) {
+            gsap.from('.matrix-card, .glass', {
+                scrollTrigger: {
+                    trigger: '.matrix-card',
+                    start: 'top 85%',
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        } else {
+            // Mobile: "Vacuum-Plop" (Reveal from depth)
+            document.querySelectorAll('.matrix-card, .glass').forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 90%',
+                    },
+                    scale: 0.8,
+                    z: -100,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'back.out(1.7)'
+                });
+            });
+        }
 
         // Hover Detection
         document.querySelectorAll('a, button, .interactive-card').forEach(el => {
