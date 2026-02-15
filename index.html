@@ -266,17 +266,23 @@
 
     <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
 
-    <!-- Live System Status -->
+    <!-- Live System Status & Mobile CTA -->
     <div
-        class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest">
-        <div class="flex gap-6">
+        class="fixed bottom-0 w-full z-50 status-bar py-3 px-6 flex justify-between items-center text-zinc-500 uppercase tracking-widest border-t border-white/5">
+        <div class="flex gap-6 items-center">
             <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                System: Operativ</span>
-            <span class="hidden md:inline">Aktive Agenten: <span class="text-indigo-400">14</span></span>
-            <span class="hidden md:inline">Latenz: <span class="text-indigo-400">24ms</span></span>
+                <span class="hidden sm:inline">System:</span> Operativ</span>
+            <span class="hidden lg:inline">Agenten: <span class="text-indigo-400">14</span></span>
         </div>
-        <div>
-            Daten Verarbeitet: <span class="text-white">1.2TB</span>
+
+        <!-- Mobile CTA (Thumb Zone) -->
+        <a href="#audit"
+            class="md:hidden bg-indigo-600 text-white px-4 py-2 rounded-lg text-[10px] font-black tracking-widest shadow-[0_0_20px_rgba(99,102,241,0.3)] active:scale-95 transition-all">
+            Audit Starten →
+        </a>
+
+        <div class="hidden sm:block">
+            Daten: <span class="text-white">1.2TB</span>
         </div>
     </div>
 
