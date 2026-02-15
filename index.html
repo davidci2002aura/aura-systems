@@ -106,18 +106,18 @@
             box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
         }
 
-        #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            transform: translate(-50%, -50%);
-            will-change: transform;
+        @media (max-width: 768px) {
+
+            h1,
+            h2 {
+                max-width: 100%;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+
+            .tracking-\[0\.5em\] {
+                letter-spacing: 0.2em !important;
+            }
         }
 
         /* Metallic Shine Effect */
@@ -260,14 +260,28 @@
         /* Typography Refinement for Mobile */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.5rem !important;
-                line-height: 1.1;
+                font-size: 2.22rem !important;
+                line-height: 1.0;
                 letter-spacing: -0.02em;
             }
 
             h2 {
-                font-size: 2rem !important;
-                line-height: 1.1;
+                font-size: 1.88rem !important;
+                line-height: 1.0;
+            }
+
+            /* Fix for huge mobile italic headers */
+            section h2.text-5xl,
+            section h2.text-6xl {
+                font-size: 2.5rem !important;
+            }
+
+            .glass {
+                padding: 1.5rem !important;
+            }
+
+            #architecture .flex-col {
+                gap: 4rem;
             }
         }
 
@@ -290,8 +304,6 @@
 </head>
 
 <body class="antialiased">
-    <div id="cursor-glow"></div>
-
     <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
 
     <!-- Live System Status & Mobile CTA -->
@@ -393,22 +405,14 @@
                     // Start Preload
                     this.preload();
 
-                    // Mobile Optimization: Skip frames
+                    // Mobile Optimization: Play at lower FPS
                     this.isMobile = window.innerWidth < 1024;
-                    this.step = this.isMobile ? 2 : 1;
-
-                    // Scroll/Touch Control
-                    window.addEventListener('scroll', () => {
-                        if (this.isMobile) {
-                            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-                            this.currentFrame = Math.floor(scrollPercent * (this.frameCount - 1));
-                            this.drawFrame(this.currentFrame);
-                        }
-                    });
+                    this.step = 1;
+                    if (this.isMobile) this.fps = 15; // Save battery/GPU on mobile
 
                     // Safety Timeout
                     setTimeout(() => {
-                        if (!this.isPlaying && !this.isMobile) {
+                        if (!this.isPlaying) {
                             console.warn('Force starting animation due to timeout');
                             this.start();
                         }
@@ -504,7 +508,7 @@
                     const elapsed = timestamp - this.lastTime;
                     const interval = 1000 / this.fps;
 
-                    if (elapsed > interval && !this.isMobile) {
+                    if (elapsed > interval) {
                         this.drawFrame(this.currentFrame);
                         this.currentFrame = (this.currentFrame + this.step) % this.frameCount;
                         this.lastTime = timestamp - (elapsed % interval);
@@ -523,13 +527,13 @@
 
     <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
         <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
-            <div class="text-center mb-20">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
+            <div class="text-center mb-16">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500 mb-6 italic">Infrastruktur
                     Insight</h2>
-                <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+                <h3 class="text-3xl md:text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-6">
                 <!-- Frontend Node -->
                 <div
                     class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
@@ -835,16 +839,6 @@
 
     <script>
         lucide.createIcons();
-
-        // Cursor Glow - Optimized with GSAP quickTo
-        const glow = document.getElementById('cursor-glow');
-        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
-        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
-
-        window.addEventListener('mousemove', (e) => {
-            xTo(e.clientX - 250);
-            yTo(e.clientY - 250);
-        });
 
         // Hover Detection
         document.querySelectorAll('a, button, .interactive-card').forEach(el => {
