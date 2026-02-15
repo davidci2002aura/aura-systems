@@ -9,7 +9,7 @@ const ServiceCard: React.FC<{ title: string; desc: string; icon: React.ElementTy
     <div
       ref={elementRef}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`group p-10 rounded-3xl bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} relative overflow-hidden backdrop-blur-xl`}
+      className={`group p-10 rounded-3xl bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} relative overflow-hidden backdrop-blur-xl snap-center shrink-0 w-[85vw] md:w-auto`}
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
       <div className="relative z-10 flex flex-col h-full">
@@ -62,7 +62,7 @@ export const Services: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto snap-x snap-mandatory pb-12 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
           {services.map((s, idx) => (
             <ServiceCard key={idx} {...s} delay={idx * 200} />
           ))}
