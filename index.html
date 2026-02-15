@@ -462,7 +462,7 @@
                     this.canvas.style.opacity = '0.4';
 
                     console.log('Animation started');
-                    this.loop();
+                    requestAnimationFrame((t) => this.loop(t));
                 }
 
                 drawFrame(frameIndex) {
@@ -528,7 +528,7 @@
     <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
         <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
             <div class="text-center mb-16">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500 mb-6 italic">Infrastruktur
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-8 italic">Infrastruktur
                     Insight</h2>
                 <h3 class="text-3xl md:text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
             </div>
@@ -597,9 +597,10 @@
         <!-- Technical Background Graphic -->
         <img src="assets/tech_engine_bg.png" alt="Engineering Schematic Background"
             class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none -z-10 mix-blend-screen">
-        <div class="text-center mb-20">
-            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
-            <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
+        <div class="text-center mb-24">
+            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-8">Technische Architektur
+            </h2>
+            <h3 class="text-3xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
                     class="gradient-text">Datensatz.</span></h3>
         </div>
 
