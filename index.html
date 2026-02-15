@@ -15,11 +15,8 @@
 
     <style>
         :root {
-            --bg-color: #050505;
-            --accent: #af8787;
-            /* Luxurious Rose-Gold */
-            --platin: #e5e7eb;
-            --ethereal-border: linear-gradient(to bottom right, rgba(175, 135, 135, 0.3), rgba(175, 135, 135, 0.05));
+            --bg-color: #000000;
+            --accent: #6366f1;
         }
 
         * {
@@ -69,30 +66,15 @@
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid transparent;
-            background-clip: padding-box;
-            position: relative;
-        }
-
-        .glass::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: var(--ethereal-border);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--platin) 0%, var(--accent) 100%);
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -100,7 +82,7 @@
 
         h1,
         h2 {
-            background: linear-gradient(to bottom, var(--platin) 20%, var(--accent) 100%);
+            background: linear-gradient(to bottom, #fff 20%, #a5b4fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -114,80 +96,39 @@
         }
 
         .matrix-card {
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .matrix-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(175, 135, 135, 0.4);
-            background: rgba(175, 135, 135, 0.02);
-            box-shadow: 0 25px 50px -12px rgba(175, 135, 135, 0.15);
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(99, 102, 241, 0.03);
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
         }
 
-        #cursor-dot {
+        #cursor-glow {
             position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
+            top: 0;
+            left: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10000;
+            z-index: 1;
             transform: translate(-50%, -50%);
-        }
-
-        #cursor-ring {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 0.5px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
-        }
-
-        .cursor-hover #cursor-ring {
-            width: 40px;
-            height: 40px;
-            opacity: 0.1;
-        }
-
-        @media (pointer: coarse) {
-
-            #cursor-dot,
-            #cursor-ring {
-                display: none !important;
-            }
+            will-change: transform;
         }
 
         /* Metallic Shine Effect */
         .btn-shine {
             position: relative;
             overflow: hidden;
-            background: #000 !important;
-            border: 1px solid var(--accent) !important;
+            background: var(--accent) !important;
             min-height: 44px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .btn-shine::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(30deg);
-            transition: none;
-        }
-
-        .btn-shine:hover::after {
-            left: 140%;
-            transition: left 0.7s ease-in-out;
         }
 
         /* Range Slider Styling */
@@ -328,16 +269,6 @@
                 font-size: 2rem !important;
                 line-height: 1.1;
             }
-
-            body {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            section {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
         }
 
         /* Status Bar */
@@ -359,8 +290,7 @@
 </head>
 
 <body class="antialiased">
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
+    <div id="cursor-glow"></div>
 
     <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
 
@@ -375,7 +305,7 @@
 
         <!-- Mobile CTA (Thumb Zone) -->
         <a href="#contact"
-            class="md:hidden bg-[#000] border border-[#af8787]/50 text-white px-5 py-3 rounded-xl text-[12px] font-black tracking-widest shadow-[0_0_25px_rgba(175, 135, 135, 0.4)] active:scale-95 transition-all btn-shine">
+            class="md:hidden bg-indigo-600 text-white px-5 py-3 rounded-xl text-[12px] font-black tracking-widest shadow-[0_0_25px_rgba(99, 102, 241, 0.3)] active:scale-95 transition-all">
             Audit Starten →
         </a>
 
@@ -432,7 +362,7 @@
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full mb-24">
             <a href="#contact"
-                class="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(175,135,135,0.3)] hover:shadow-[0_0_50px_rgba(175,135,135,0.5)] flex items-center justify-center group btn-shine">
+                class="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(99, 102, 241, 0.3)] hover:shadow-[0_0_50px_rgba(99, 102, 241, 0.5)] flex items-center justify-center group">
                 Audit Starten
                 <i data-lucide="arrow-right" class="ml-2 h-6 w-6 group-hover:translate-x-2 transition-transform"></i>
             </a>
@@ -907,20 +837,13 @@
         lucide.createIcons();
 
         // Cursor Glow - Optimized with GSAP quickTo
-        // Precision Cursor - Points & Spring
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-
-        const dotX = gsap.quickTo(dot, "x", { duration: 0.1, ease: "power3" });
-        const dotY = gsap.quickTo(dot, "y", { duration: 0.1, ease: "power3" });
-        const ringX = gsap.quickTo(ring, "x", { duration: 0.4, ease: "power4.out" });
-        const ringY = gsap.quickTo(ring, "y", { duration: 0.4, ease: "power4.out" });
+        const glow = document.getElementById('cursor-glow');
+        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
+        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
 
         window.addEventListener('mousemove', (e) => {
-            dotX(e.clientX);
-            dotY(e.clientY);
-            ringX(e.clientX);
-            ringY(e.clientY);
+            xTo(e.clientX - 250);
+            yTo(e.clientY - 250);
         });
 
         // Hover Detection
