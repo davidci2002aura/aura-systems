@@ -15,9 +15,11 @@
 
     <style>
         :root {
-            --bg-color: #000000;
-            /* Pure Black to match sequence */
-            --accent: #6366f1;
+            --bg-color: #050505;
+            --accent: #af8787;
+            /* Luxurious Rose-Gold */
+            --platin: #e5e7eb;
+            --ethereal-border: linear-gradient(to bottom right, rgba(175, 135, 135, 0.3), rgba(175, 135, 135, 0.05));
         }
 
         * {
@@ -67,43 +69,125 @@
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: var(--ethereal-border);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            background: linear-gradient(135deg, var(--platin) 0%, var(--accent) 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        h1,
+        h2 {
+            background: linear-gradient(to bottom, var(--platin) 20%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3,
+        h4,
+        .text-xs,
+        .tracking-widest {
+            letter-spacing: 0.15em !important;
+        }
+
         .matrix-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .matrix-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(99, 102, 241, 0.5);
-            background: rgba(99, 102, 241, 0.03);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
+            transform: translateY(-8px);
+            border-color: rgba(175, 135, 135, 0.4);
+            background: rgba(175, 135, 135, 0.02);
+            box-shadow: 0 25px 50px -12px rgba(175, 135, 135, 0.15);
         }
 
-        #cursor-glow {
+        #cursor-dot {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 10000;
             transform: translate(-50%, -50%);
-            will-change: transform;
-            /* GPU Acceleration */
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 0.5px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cursor-hover #cursor-ring {
+            width: 40px;
+            height: 40px;
+            opacity: 0.1;
+        }
+
+        @media (pointer: coarse) {
+
+            #cursor-dot,
+            #cursor-ring {
+                display: none !important;
+            }
+        }
+
+        /* Metallic Shine Effect */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+            background: #000 !important;
+            border: 1px solid var(--accent) !important;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-shine::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(30deg);
+            transition: none;
+        }
+
+        .btn-shine:hover::after {
+            left: 140%;
+            transition: left 0.7s ease-in-out;
         }
 
         /* Range Slider Styling */
@@ -234,11 +318,25 @@
 
         /* Typography Refinement for Mobile */
         @media (max-width: 768px) {
-
-            h1,
-            h2 {
+            h1 {
+                font-size: 2.5rem !important;
                 line-height: 1.1;
                 letter-spacing: -0.02em;
+            }
+
+            h2 {
+                font-size: 2rem !important;
+                line-height: 1.1;
+            }
+
+            body {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            section {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
         }
 
@@ -261,7 +359,8 @@
 </head>
 
 <body class="antialiased">
-    <div id="cursor-glow"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
     <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
 
@@ -275,8 +374,8 @@
         </div>
 
         <!-- Mobile CTA (Thumb Zone) -->
-        <a href="#audit"
-            class="md:hidden bg-indigo-600 text-white px-4 py-2 rounded-lg text-[10px] font-black tracking-widest shadow-[0_0_20px_rgba(99,102,241,0.3)] active:scale-95 transition-all">
+        <a href="#contact"
+            class="md:hidden bg-[#000] border border-[#af8787]/50 text-white px-5 py-3 rounded-xl text-[12px] font-black tracking-widest shadow-[0_0_25px_rgba(175, 135, 135, 0.4)] active:scale-95 transition-all btn-shine">
             Audit Starten →
         </a>
 
@@ -331,6 +430,18 @@
                 Performance. Keine Kompromisse.</span>
         </p>
 
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full mb-24">
+            <a href="#contact"
+                class="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(175,135,135,0.3)] hover:shadow-[0_0_50px_rgba(175,135,135,0.5)] flex items-center justify-center group btn-shine">
+                Audit Starten
+                <i data-lucide="arrow-right" class="ml-2 h-6 w-6 group-hover:translate-x-2 transition-transform"></i>
+            </a>
+            <a href="#architecture"
+                class="w-full sm:w-auto px-10 py-5 bg-transparent border border-white/10 hover:bg-white/5 text-white rounded-2xl font-bold text-xl tracking-widest uppercase transition-all duration-300 flex items-center justify-center">
+                Technologie
+            </a>
+        </div>
+
         <script>
             class ImageSequence {
                 constructor(canvasId, framePath, frameCount, fps = 30) {
@@ -352,9 +463,22 @@
                     // Start Preload
                     this.preload();
 
-                    // Safety Timeout: Force start after 3s if loading hangs
+                    // Mobile Optimization: Skip frames
+                    this.isMobile = window.innerWidth < 1024;
+                    this.step = this.isMobile ? 2 : 1;
+
+                    // Scroll/Touch Control
+                    window.addEventListener('scroll', () => {
+                        if (this.isMobile) {
+                            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+                            this.currentFrame = Math.floor(scrollPercent * (this.frameCount - 1));
+                            this.drawFrame(this.currentFrame);
+                        }
+                    });
+
+                    // Safety Timeout
                     setTimeout(() => {
-                        if (!this.isPlaying) {
+                        if (!this.isPlaying && !this.isMobile) {
                             console.warn('Force starting animation due to timeout');
                             this.start();
                         }
@@ -450,12 +574,9 @@
                     const elapsed = timestamp - this.lastTime;
                     const interval = 1000 / this.fps;
 
-                    if (elapsed > interval) {
+                    if (elapsed > interval && !this.isMobile) {
                         this.drawFrame(this.currentFrame);
-                        // Debug: Log every 60 frames to confirm loop is alive
-                        if (this.currentFrame % 60 === 0) console.log(`Rendering Frame: ${this.currentFrame}`);
-
-                        this.currentFrame = (this.currentFrame + 1) % this.frameCount;
+                        this.currentFrame = (this.currentFrame + this.step) % this.frameCount;
                         this.lastTime = timestamp - (elapsed % interval);
                     }
 
@@ -549,7 +670,7 @@
         </div>
 
         <div
-            class="flex md:grid lg:grid-cols-3 gap-8 items-stretch overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
+            class="flex md:grid lg:grid-cols-3 gap-8 items-stretch overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar relative">
             <div
                 class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group snap-center shrink-0 w-[85vw] md:w-auto">
                 <div class="flex items-center gap-4 mb-8">
@@ -608,6 +729,13 @@
                     <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
                     <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
                 </div>
+            </div>
+
+            <!-- Carousel Indicator -->
+            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 md:hidden">
+                <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
             </div>
         </div>
     </section>
@@ -757,7 +885,7 @@
                         class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
 
                     <button type="submit"
-                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
+                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn btn-shine">
                         Initialisieren
                     </button>
                     <button type="button"
@@ -779,13 +907,26 @@
         lucide.createIcons();
 
         // Cursor Glow - Optimized with GSAP quickTo
-        const glow = document.getElementById('cursor-glow');
-        const xTo = gsap.quickTo(glow, "x", { duration: 0.1, ease: "power3" });
-        const yTo = gsap.quickTo(glow, "y", { duration: 0.1, ease: "power3" });
+        // Precision Cursor - Points & Spring
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        const dotX = gsap.quickTo(dot, "x", { duration: 0.1, ease: "power3" });
+        const dotY = gsap.quickTo(dot, "y", { duration: 0.1, ease: "power3" });
+        const ringX = gsap.quickTo(ring, "x", { duration: 0.4, ease: "power4.out" });
+        const ringY = gsap.quickTo(ring, "y", { duration: 0.4, ease: "power4.out" });
 
         window.addEventListener('mousemove', (e) => {
-            xTo(e.clientX - 250);
-            yTo(e.clientY - 250);
+            dotX(e.clientX);
+            dotY(e.clientY);
+            ringX(e.clientX);
+            ringY(e.clientY);
+        });
+
+        // Hover Detection
+        document.querySelectorAll('a, button, .interactive-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
         // Fluid Aura Support (Canvas 2D) - Phase 5
