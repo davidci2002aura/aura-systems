@@ -247,16 +247,15 @@
             font-family: 'Fira Code', monospace;
             font-size: 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.82);
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             z-index: 100;
             padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
     </style>
 </head>
@@ -549,8 +548,10 @@
                     class="gradient-text">Datensatz.</span></h3>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+        <div
+            class="flex md:grid lg:grid-cols-3 gap-8 items-stretch overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
+            <div
+                class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group snap-center shrink-0 w-[85vw] md:w-auto">
                 <div class="flex items-center gap-4 mb-8">
                     <div
                         class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
@@ -570,7 +571,7 @@
             </div>
 
             <div
-                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
+                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group snap-center shrink-0 w-[85vw] md:w-auto">
                 <div class="flex items-center gap-4 mb-8">
                     <div
                         class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
@@ -590,7 +591,8 @@
                 </div>
             </div>
 
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
+            <div
+                class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group snap-center shrink-0 w-[85vw] md:w-auto">
                 <div class="flex items-center gap-4 mb-8">
                     <div
                         class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
@@ -623,10 +625,11 @@
             </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
+        <div
+            class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
             <!-- Speed -->
             <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
                 <div
                     class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
                     <i data-lucide="zap" class="w-12 h-12"></i>
@@ -645,7 +648,7 @@
 
             <!-- Design -->
             <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
                 <div
                     class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
                     <i data-lucide="gem" class="w-12 h-12"></i>
@@ -663,7 +666,7 @@
 
             <!-- Tech -->
             <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500">
+                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
                 <div
                     class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
                     <i data-lucide="cpu" class="w-12 h-12"></i>
