@@ -820,16 +820,19 @@
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        mobileToggle.addEventListener('click', () => {
+        function toggleMenu() {
             mobileMenu.classList.toggle('active');
-        });
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking ANY link inside it
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.closest('a')) {
+                toggleMenu();
+            }
         });
 
         // LightRays Background (Studio Setup)
@@ -1120,7 +1123,7 @@
         // Form Multi-Step
         let currentStep = 1;
 
-        function nextStep(step) {
+        window.nextStep = function (step) {
             document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
             currentStep = step;
@@ -1134,12 +1137,14 @@
             }
         }
 
-        function selectService(service) {
-            document.getElementById('serviceInput').value = service;
+        window.selectService = function (service) {
+            const input = document.getElementById('serviceInput');
+            if (input) input.value = service;
         }
 
-        function selectBudget(budget) {
-            document.getElementById('budgetInput').value = budget;
+        window.selectBudget = function (budget) {
+            const input = document.getElementById('budgetInput');
+            if (input) input.value = budget;
         }
 
         // Form Submit
