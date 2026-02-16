@@ -128,8 +128,21 @@
                 linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0;
+            /* Hidden per user request (watermark removal) */
+            pointer-events: none;
         }
+
+        /* ... existing code ... */
+
+        // Initialize LightRays with adjusted visibility
+        new LightRays('hero-sequence', {
+            raysColor: '#4f46e5', // Indigo-600
+            raysOrigin: 'top-center',
+            lightSpread: 1.0, // Wider spread
+            raysSpeed: 0.8, // Faster, more visible movement
+            mouseInfluence: 0.5 // strong interaction
+        });
 
         /* Global Background Video Canvas */
         #hero-sequence,
@@ -1061,9 +1074,9 @@
         new LightRays('hero-sequence', {
             raysColor: '#4f46e5', // Indigo-600
             raysOrigin: 'top-center',
-            lightSpread: 0.6,
-            raysSpeed: 0.5, // Increased speed for better visibility of movement
-            mouseInfluence: 0.3 // Increased interaction for better feedback
+            lightSpread: 1.0, // Wider spread
+            raysSpeed: 0.8, // Faster, more visible movement
+            mouseInfluence: 0.5 // strong interaction
         });
 
         // Form Multi-Step
