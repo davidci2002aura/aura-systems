@@ -131,17 +131,21 @@
             opacity: 0.5;
         }
 
-        /* Hero Video Canvas */
+        /* Global Background Video Canvas */
         #hero-sequence,
         #hero-fallback {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            /* Global background */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
-            opacity: 0.2;
+            opacity: 0.08;
+            /* Very subtle */
             pointer-events: none;
-            z-index: -1;
+            z-index: -2;
+            /* Behind everything */
         }
 
         #hero-sequence {
@@ -261,8 +265,9 @@
 </head>
 
 <body>
-    <!-- Background Grid -->
-    <div class="bg-grid"></div>
+    <!-- Background Sequence (Global) -->
+    <img src="/assets/sequence/frame_001.jpg" id="hero-fallback" alt="Background">
+    <canvas id="hero-sequence"></canvas>
 
     <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
@@ -300,10 +305,7 @@
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-20" id="hero">
-        <!-- Video Sequence Canvas -->
-        <img src="/assets/sequence/frame_001.jpg" id="hero-fallback" alt="Background">
-        <canvas id="hero-sequence"></canvas>
-
+        <!-- Content -->
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <p class="text-indigo-500 font-semibold mb-6 text-sm uppercase tracking-wider">KI-Powered Web Solutions</p>
             <h1 class="mb-8">
@@ -464,7 +466,7 @@
                     <div>
                         <h3 class="mb-2">Konzept & Design</h3>
                         <p class="text-zinc-400">
-                            Innerhalb von 7 Tagen erhalten Sie erste Designs und ein detailliertes Konzept.
+                            Innerhalb von 2-3 Tagen erhalten Sie erste Designs und ein detailliertes Konzept.
                         </p>
                     </div>
                 </div>
