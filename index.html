@@ -135,17 +135,17 @@
         #hero-sequence,
         #hero-fallback {
             position: fixed;
-            /* Global background */
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            opacity: 0.08;
-            /* Very subtle */
+            opacity: 0.03;
+            /* Ultra subtle 3% */
+            filter: blur(3px);
+            /* Soften */
             pointer-events: none;
             z-index: -2;
-            /* Behind everything */
         }
 
         #hero-sequence {
@@ -154,7 +154,8 @@
         }
 
         #hero-sequence.loaded {
-            opacity: 0.3;
+            opacity: 0.03;
+            /* Ensure JS doesn't override with higher opacity */
         }
 
         /* Mobile Menu */
