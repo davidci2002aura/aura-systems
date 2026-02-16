@@ -40,11 +40,11 @@
 
         /* Typography */
         h1 {
-            font-size: clamp(3.5rem, 12vw, 7.5rem);
-            /* Significantly larger */
+            font-size: clamp(4.5rem, 15vw, 9.5rem);
+            /* Massive, dominant */
             font-weight: 800;
-            line-height: 1.0;
-            letter-spacing: -0.03em;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
         }
 
         h2 {
@@ -855,8 +855,8 @@
                 this.isPaused = false;
 
                 this.options = {
-                    beamColor: '#6366f1', // Indigo-500
-                    beamSpeed: 0.2,
+                    beamColor: '#818cf8', // Indigo-400 (Brighter)
+                    beamSpeed: 0.25,
                     beamDensity: 1.0,
                     ...options
                 };
@@ -904,7 +904,7 @@
                         vec2 rotatedUV = (uv - 0.5) * rot + 0.5;
 
                         // Create grid for beams
-                        float beamWidth = 0.1;
+                        float beamWidth = 0.15; // Wider beams
                         float gridPos = floor(rotatedUV.x / beamWidth);
                         
                         // Randomize speed/offset
@@ -973,7 +973,8 @@
             tl.to("#hero h1", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" })
                 .to("#hero p", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.2")
                 // 2. Silent Background Fade-In
-                .to("#hero-sequence", { opacity: 0.5, duration: 2.0, ease: "sine.inOut" }, "+=0.1");
+                // 2. Silent Background Fade-In
+                .to("#hero-sequence", { opacity: 0.8, duration: 2.0, ease: "sine.inOut" }, "+=0.1");
 
             // 3. Performance: Pause when not visible
             const observer = new IntersectionObserver((entries) => {
