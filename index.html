@@ -4,1170 +4,808 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AURA SYSTEMS | Autonomous Value Architecture</title>
+    <title>AURA SYSTEMS | KI-getriebene Web-Lösungen</title>
     <meta name="description"
-        content="Wir ersetzen ineffiziente Webseiten durch autonome Wertschöpfungs-Systeme. AI-Driven Engineering & High-Performance Funnels.">
+        content="Wir bauen Websites, die verkaufen. KI-gestützt. Blitzschnell. Conversion-optimiert.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=Fira+Code&display=swap"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <style>
-        :root {
-            --bg-color: #000000;
-            --accent: #6366f1;
-        }
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: white;
-            margin: 0;
-            width: 100vw;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Mobile Anti-Collision */
-        @media (max-width: 1024px) {
-            .desktop-menu {
-                display: none !important;
-            }
-
-            .mobile-toggle-btn {
-                display: flex !important;
-            }
-
-            #main-nav .logo-text {
-                font-size: 1rem !important;
-                /* Smaller logo on mobile (16px) */
-                letter-spacing: 0;
-                /* Tighten spacing on mobile */
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .mobile-toggle-btn {
-                display: none !important;
-            }
-        }
-
-        /* Safe Area Support */
-        nav {
-            padding-top: max(1.5rem, env(safe-area-inset-top));
-        }
-
-        .status-bar {
-            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            /* Subtle border */
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
+        /* Typography */
         h1 {
-            font-size: clamp(1.75rem, 8vw, 6rem);
-            /* Smaller, more elegant */
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
             line-height: 1.1;
             letter-spacing: -0.02em;
-            background: linear-gradient(to bottom, #fff 20%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         h2 {
-            font-size: clamp(1.4rem, 5vw, 4rem);
-            /* Refined scale */
-            line-height: 1.1;
-            background: linear-gradient(to bottom, #fff 20%, #a5b4fc 100%);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        h3,
-        h4,
-        .text-xs,
-        .tracking-widest {
-            letter-spacing: 0.15em !important;
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
-        .matrix-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
         }
 
-        .matrix-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(99, 102, 241, 0.5);
-            background: rgba(99, 102, 241, 0.03);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
-        }
-
-        @media (max-width: 768px) {
-
-            h1,
-            h2 {
-                max-width: 100%;
-                overflow-wrap: break-word;
-                word-wrap: break-word;
-            }
-
-            .tracking-\[0\.5em\] {
-                letter-spacing: 0.2em !important;
-            }
-        }
-
-        /* Metallic Shine Effect */
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-            background: var(--accent) !important;
-            min-height: 44px;
+        /* Button */
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
         }
 
-        /* Range Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
             background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
-            width: 100%;
         }
 
-        input[type=range]::-webkit-slider-runnable-track {
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
         }
 
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            background: var(--accent);
-            margin-top: -7px;
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        /* Multi-Step Form */
-        .step {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        /* Premium Background enhancements */
-        .bg-container {
+        /* Background */
+        .bg-grid {
             position: fixed;
             inset: 0;
-            background: #000;
-            z-index: -5;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* Hero Video Canvas */
+        #hero-sequence,
+        #hero-fallback {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #hero-sequence {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        #hero-sequence.loaded {
+            opacity: 0.3;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Card Hover */
+        .feature-card {
+            position: relative;
             overflow: hidden;
         }
 
-        .grid-background {
+        .feature-card::before {
+            content: '';
             position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            background-position: center center;
-            transform: perspective(1000px) rotateX(60deg) translateY(-100px);
-            transform-origin: top;
-            animation: grid-move 40s linear infinite;
-            /* Slower, majestic movement */
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            opacity: 0.6;
-            /* Reduced opacity for subtlety */
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s;
         }
 
-        @keyframes grid-move {
-            0% {
-                background-position: center 0;
-            }
-
-            100% {
-                background-position: center 1000px;
-            }
+        .feature-card:hover::before {
+            left: 100%;
         }
 
-        .nebula {
-            position: absolute;
-            width: 800px;
-            height: 800px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            filter: blur(100px);
-            /* Softer nebula */
-            pointer-events: none;
-            opacity: 0.5;
-            animation: orbit 60s linear infinite;
+        /* Process Steps */
+        .step-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
         }
 
-        .nebula-1 {
-            top: -200px;
-            left: -200px;
-            animation-duration: 80s;
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .nebula-2 {
-            bottom: -200px;
-            right: -200px;
-            animation-duration: 100s;
-            animation-direction: reverse;
+        /* Form Steps */
+        .form-step {
+            display: none;
         }
 
-        @keyframes orbit {
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
             from {
-                transform: rotate(0deg) translate(100px) rotate(0deg);
+                opacity: 0;
+                transform: translateY(10px);
             }
 
             to {
-                transform: rotate(360deg) translate(100px) rotate(-360deg);
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .step.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Scrollbar hiding for carousel */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Tactile Touch Feedback */
-        @media (hover: none) {
-
-            .group:active,
-            button:active,
-            .interactive-card:active {
-                transform: scale(0.97);
-                transition: transform 0.1s ease;
-            }
-        }
-
-        /* Typography Refinement for Mobile */
+        /* Responsive */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.22rem !important;
-                line-height: 1.0;
-                letter-spacing: -0.02em;
+                font-size: 2.25rem;
             }
 
             h2 {
-                font-size: 1.88rem !important;
-                line-height: 1.0;
+                font-size: 1.75rem;
             }
 
-            /* Fix for huge mobile italic headers */
-            section h2.text-5xl,
-            section h2.text-6xl {
-                font-size: 2.5rem !important;
-            }
-
-            .glass {
-                padding: 1.5rem !important;
-            }
-
-            #architecture .flex-col {
-                gap: 4rem;
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
             }
         }
 
-        /* Status Bar */
-        .status-bar {
-            font-family: 'Fira Code', monospace;
-            font-size: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.82);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
         }
     </style>
 </head>
 
-<body class="antialiased">
-    <canvas id="canvas-bg" class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-30"></canvas>
+<body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
 
-    <!-- Live System Status & Mobile CTA -->
-    <div
-        class="fixed bottom-0 w-full z-50 status-bar py-3 px-6 flex justify-between items-center text-zinc-500 uppercase tracking-widest border-t border-white/5">
-        <div class="flex gap-6 items-center">
-            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span class="hidden sm:inline">System:</span> Operativ</span>
-            <span class="hidden lg:inline">Agenten: <span class="text-indigo-400">14</span></span>
-        </div>
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-lg flex items-center justify-center text-white font-bold">
+                    A
+                </div>
+                <span class="font-bold text-lg">AURA</span>
+            </div>
 
-        <!-- Mobile CTA (Thumb Zone) -->
-        <a href="#contact"
-            class="md:hidden bg-indigo-600 text-white px-5 py-3 rounded-xl text-[12px] font-black tracking-widest shadow-[0_0_25px_rgba(99, 102, 241, 0.3)] active:scale-95 transition-all">
-            Audit Starten →
-        </a>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#leistungen" class="text-sm text-zinc-400 hover:text-white transition">Leistungen</a>
+                <a href="#prozess" class="text-sm text-zinc-400 hover:text-white transition">Prozess</a>
+                <a href="#kontakt" class="btn-primary text-sm">Termin buchen</a>
+            </div>
 
-        <div class="hidden sm:block">
-            Daten: <span class="text-white">1.2TB</span>
-        </div>
-    </div>
-
-    <nav class="fixed w-full z-50 p-4 md:p-6 lg:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40 transition-all duration-300"
-        id="main-nav">
-        <div
-            class="logo-text text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 relative z-50">
-            <div
-                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
-                A</div>
-            AURA SYSTEMS
+            <!-- Mobile Toggle -->
+            <button class="md:hidden" id="mobileToggle" aria-label="Menu">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <!-- Dynamic Premium Background -->
-    <div class="bg-container">
-        <div class="grid-background"></div>
-        <div class="nebula nebula-1"></div>
-        <div class="nebula nebula-2"></div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#leistungen" class="text-2xl font-semibold mobile-link">Leistungen</a>
+        <a href="#prozess" class="text-2xl font-semibold mobile-link">Prozess</a>
+        <a href="#kontakt" class="btn-primary text-lg mobile-link">Termin buchen</a>
     </div>
 
-    <section
-        class="min-h-[80vh] pt-48 md:pt-64 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative flex flex-col justify-center items-center"
-        id="hero-section">
-        <!-- Static Fallback Image -->
-        <img src="/assets/sequence/frame_001.jpg" id="hero-fallback"
-            class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-[0.15] mix-blend-screen z-[-2] transition-opacity duration-1000"
-            style="mask-image: radial-gradient(circle at center, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%);"
-            alt="Background Animation Frame">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-20" id="hero">
+        <!-- Video Sequence Canvas -->
+        <img src="/assets/sequence/frame_001.jpg" id="hero-fallback" alt="Background">
+        <canvas id="hero-sequence"></canvas>
 
-        <!-- Image Sequence Canvas -->
-        <canvas id="hero-sequence"
-            class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen opacity-0 transition-opacity duration-1000 z-[-1]"
-            style="mask-image: radial-gradient(circle at center, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 100%); object-fit: cover;">
-        </canvas>
-
-        <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block mt-12 md:mt-0">
-            Automated Intelligence Systems
-        </span>
-        <h1 class="text-4xl md:text-[7rem] font-black tracking-tighter leading-[1.0] mb-12 uppercase text-shadow-lg">
-            ENGINEERING <br /><span class="gradient-text italic">DIGITAL SOVEREIGNTY.</span>
-        </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed drop-shadow-md">
-            Wir konstruieren <span class="text-white font-medium">autonome Wertschöpfungs-Architekturen</span>,
-            die Ihre Marktführerschaft automatisieren.
-            <br><span class="text-indigo-400 text-[10px] uppercase font-bold tracking-widest mt-4 block">Ultimative
-                Performance. Keine Kompromisse.</span>
-        </p>
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full mb-24">
-            <a href="#contact"
-                class="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl tracking-widest uppercase transition-all duration-300 shadow-[0_0_30px_rgba(99, 102, 241, 0.3)] hover:shadow-[0_0_50px_rgba(99, 102, 241, 0.5)] flex items-center justify-center group">
-                Audit Starten
-                <i data-lucide="arrow-right" class="ml-2 h-6 w-6 group-hover:translate-x-2 transition-transform"></i>
-            </a>
-            <a href="#architecture"
-                class="w-full sm:w-auto px-10 py-5 bg-transparent border border-white/10 hover:bg-white/5 text-white rounded-2xl font-bold text-xl tracking-widest uppercase transition-all duration-300 flex items-center justify-center">
-                Technologie
-            </a>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <p class="text-indigo-500 font-semibold mb-6 text-sm uppercase tracking-wider">KI-Powered Web Solutions</p>
+            <h1 class="mb-8">
+                Websites, die<br>
+                <span class="gradient-text">verkaufen.</span>
+            </h1>
+            <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+                Wir bauen High-Performance Websites mit KI-Automatisierung.
+                Schnell. Conversion-optimiert. Skalierbar.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#kontakt" class="btn-primary text-lg">
+                    Kostenloses Erstgespräch
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14m-7-7l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#leistungen" class="btn-secondary text-lg">Mehr erfahren</a>
+            </div>
         </div>
-
-        <script>
-            class ImageSequence {
-                constructor(canvasId, framePath, frameCount, fps = 30) {
-                    this.canvas = document.getElementById(canvasId);
-                    this.ctx = this.canvas.getContext('2d');
-                    this.framePath = framePath;
-                    this.frameCount = frameCount;
-                    this.fps = fps;
-                    this.images = [];
-                    this.loadedCount = 0;
-                    this.currentFrame = 0;
-                    this.lastTime = 0;
-                    this.isPlaying = false;
-                    this.successCount = 0; // Track successful loads
-
-                    this.resize();
-                    window.addEventListener('resize', () => this.resize());
-
-                    // Start Preload
-                    this.preload();
-
-                    // Mobile Optimization: Play at lower FPS
-                    this.isMobile = window.innerWidth < 1024;
-                    this.step = 1;
-                    if (this.isMobile) this.fps = 24; // Cinematic 24 FPS for smoother premium feel
-
-                    // Safety Timeout
-                    setTimeout(() => {
-                        if (!this.isPlaying) {
-                            console.warn('Force starting animation due to timeout');
-                            this.start();
-                        }
-                    }, 3000);
-                }
-
-                preload() {
-                    this.isMobile = window.innerWidth < 1024;
-                    // LUXURY: Frame-Skipping for Mobile (load only every 2nd frame)
-                    this.loadStep = this.isMobile ? 2 : 1;
-
-                    // Preload first frame
-                    const firstImg = new Image();
-                    firstImg.src = this.framePath.replace('[000]', '001');
-                    firstImg.onload = () => {
-                        this.images[1] = firstImg;
-                        this.successCount++;
-                        this.initObserver(); // Initialize observer after first frame
-                    };
-
-                    // Load sequence in background with step
-                    for (let i = 1; i <= this.frameCount; i += this.loadStep) {
-                        if (i === 1) continue; // Skip first frame (already loading)
-                        const img = new Image();
-                        const frameNum = String(i).padStart(3, '0');
-                        img.src = this.framePath.replace('[000]', frameNum);
-                        img.onload = () => {
-                            this.successCount++;
-                            this.images[i] = img;
-                        };
-                    }
-                }
-
-                initObserver() {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                this.start();
-                            } else {
-                                this.stop();
-                            }
-                        });
-                    }, { threshold: 0.1 });
-
-                    observer.observe(this.canvas);
-                }
-
-                resize() {
-                    // Canvas resolution matches CSS pixel size for sharp rendering
-                    const rect = this.canvas.parentElement.getBoundingClientRect();
-                    this.canvas.width = rect.width;
-                    this.canvas.height = rect.height;
-
-                    // Redraw immediately if playing
-                    if (this.isPlaying) this.drawFrame(this.currentFrame);
-                }
-
-                start() {
-                    if (this.isPlaying) return;
-                    this.isPlaying = true;
-                    this.canvas.style.opacity = '0.4';
-                    this.loop();
-                }
-
-                stop() {
-                    this.isPlaying = false;
-                    this.canvas.style.opacity = '0';
-                }
-
-                drawFrame(frameIndex) {
-                    // Account for loadStep when picking frame
-                    let actualIndex = frameIndex + 1;
-                    if (this.loadStep > 1) {
-                        actualIndex = Math.floor(frameIndex / this.loadStep) * this.loadStep + 1;
-                    }
-
-                    const img = this.images[actualIndex];
-                    if (!img || !img.complete) return;
-
-                    const cw = this.canvas.width;
-                    const ch = this.canvas.height;
-
-                    // "Subtle" Look Logic:
-                    // scale: 0.8 to not fill entire screen, keep it contained
-                    // blending handles the black background removal
-                    const isMobile = cw < 768;
-                    const targetScale = isMobile ? 1.0 : 1.2;
-
-                    const imgAspect = img.width / img.height;
-                    const canvasAspect = cw / ch;
-
-                    let drawW, drawH;
-
-                    if (canvasAspect > imgAspect) {
-                        drawH = ch * targetScale;
-                        drawW = drawH * imgAspect;
-                    } else {
-                        drawW = cw * targetScale;
-                        drawH = drawW / imgAspect;
-                    }
-
-                    // Position: Center
-                    const x = (cw - drawW) / 2;
-                    const y = (ch - drawH) / 2;
-
-                    this.ctx.clearRect(0, 0, cw, ch);
-                    // Global Alpha is handled by CSS opacity, but we can enforce here if needed
-                    // this.ctx.globalAlpha = 0.4; 
-
-                    // Draw
-                    this.ctx.drawImage(img, x, y, drawW, drawH);
-                }
-
-                loop(timestamp) {
-                    if (!this.isPlaying) return;
-                    if (!this.lastTime) this.lastTime = timestamp;
-                    const elapsed = timestamp - this.lastTime;
-                    const interval = 1000 / this.fps;
-
-                    if (elapsed > interval) {
-                        this.drawFrame(this.currentFrame);
-                        this.currentFrame = (this.currentFrame + this.loadStep) % this.frameCount;
-                        this.lastTime = timestamp - (elapsed % interval);
-                    }
-
-                    requestAnimationFrame((t) => this.loop(t));
-                }
-            }
-
-            // Init Sequence with 240 frames and 30 FPS for cine-look
-            document.addEventListener('DOMContentLoaded', () => {
-                new ImageSequence('hero-sequence', '/assets/sequence/frame_[000].jpg', 240, 30);
-            });
-        </script>
     </section>
 
-    <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="glass p-4 md:p-20 rounded-[4rem] border-white/5">
+    <!-- Features -->
+    <section id="leistungen" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2
-                    class="!text-[8px] font-black uppercase !tracking-[0.1em] text-indigo-500 mb-8 italic whitespace-nowrap">
-                    Infrastruktur Insight</h2>
-                <h3 class="text-3xl md:text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Was wir bieten</p>
+                <h2 class="mb-6">Ihre Vorteile</h2>
+                <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+                    Moderne Technologie für messbare Ergebnisse
+                </p>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-6">
-                <!-- Frontend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Speed -->
+                <div class="glass feature-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                         </svg>
                     </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
+                    <h3 class="mb-4">Blitzschnell</h3>
+                    <p class="text-zinc-400">
+                        Ladezeiten unter 1 Sekunde. Ihre Besucher bleiben, Google liebt es.
+                    </p>
                 </div>
 
-                <div class="connector hidden md:block">
-                    <div class="pulse"></div>
+                <!-- AI -->
+                <div class="glass feature-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                        </svg>
+                    </div>
+                    <h3 class="mb-4">KI-Automatisierung</h3>
+                    <p class="text-zinc-400">
+                        Intelligente Workflows sparen Zeit und steigern Ihre Conversion-Rate.
+                    </p>
                 </div>
 
-                <!-- AI Core Node -->
-                <div
-                    class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse"></div>
-                    <div class="relative z-10">
+                <!-- Conversion -->
+                <div class="glass feature-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 class="mb-4">Mehr Conversions</h3>
+                    <p class="text-zinc-400">
+                        Design, das verkauft. Jedes Element ist auf Conversion optimiert.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="glass p-12 rounded-3xl">
+                <div class="text-center mb-12">
+                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Technologie</p>
+                    <h2 class="mb-4">Moderne Tools</h2>
+                    <p class="text-zinc-400">Der Stack, der Ergebnisse liefert</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div>
                         <div
-                            class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                            <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core</h4>
-                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
+                        <h4 class="font-semibold mb-2">Frontend</h4>
+                        <p class="text-sm text-zinc-400">React, Next.js, Tailwind</p>
                     </div>
-                </div>
 
-                <div class="connector hidden md:block">
-                    <div class="pulse" style="animation-delay: 1s"></div>
-                </div>
-
-                <!-- Backend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
-        <!-- Technical Background Graphic -->
-        <img src="assets/tech_engine_bg.png" alt="Engineering Schematic Background"
-            class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none -z-10 mix-blend-screen">
-        <div class="text-center mb-24">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-8">Technische Architektur
-            </h2>
-            <h3 class="text-3xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
-                    class="gradient-text">Datensatz.</span></h3>
-        </div>
-
-        <div
-            class="flex md:grid lg:grid-cols-3 gap-8 items-stretch overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar relative">
-            <div
-                class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group snap-center shrink-0 w-[85vw] md:w-auto">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="layout-template" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Frontend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
-                    <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für maximale
-                    Geschwindigkeit optimiert.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
-                </div>
-            </div>
-
-            <div
-                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group snap-center shrink-0 w-[85vw] md:w-auto">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                        <i data-lucide="brain-circuit" class="text-white"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
-                </div>
-                <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong> Workflows
-                    kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
-                    Geschäftsprozesse.</p>
-
-                <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
-                    id="live-terminal">
-                    <div class="opacity-50">>> Initializing AURA_CORE...</div>
-                    <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
-                    <div class="text-white">>> Status: Autonomy active.</div>
-                </div>
-            </div>
-
-            <div
-                class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group snap-center shrink-0 w-[85vw] md:w-auto">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="database" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Backend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit <strong>Supabase</strong>
-                    und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen mitwächst.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
-                </div>
-            </div>
-
-            <!-- Carousel Indicator -->
-            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 md:hidden">
-                <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
-                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
-                <div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="web-excellence" class="py-40 px-6 max-w-7xl mx-auto relative z-10">
-        <div class="mb-20">
-            <h2 class="text-5xl md:text-8xl font-black tracking-tighter uppercase italic leading-none mb-6">
-                Websites, <br>die <span class="text-indigo-500">performen.</span>
-            </h2>
-            <p class="text-zinc-500 text-xl font-light max-w-2xl leading-relaxed">
-                Wir bauen keine digitalen Visitenkarten. Wir konstruieren <strong
-                    class="text-white">Hochleistungs-Infrastruktur</strong>,
-                die Besucher in Kunden verwandelt. Geschwindigkeit, Ästhetik und Technologie in perfekter
-                Synchronisation.
-            </p>
-        </div>
-
-        <div
-            class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
-            <!-- Speed -->
-            <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
-                <div
-                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
-                    <i data-lucide="zap" class="w-12 h-12"></i>
-                </div>
-                <div class="h-32 flex items-end mb-6">
-                    <span
-                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">100<span
-                            class="text-2xl align-top text-zinc-600">ms</span></span>
-                </div>
-                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Hypersonic Speed</h3>
-                <p class="text-sm text-zinc-500 leading-relaxed">
-                    Ladezeiten unter der Wahrnehmungsschwelle. Google liebt es, Ihre Kunden erwarten es.
-                    Kein Aufblähen, cleaner Code.
-                </p>
-            </div>
-
-            <!-- Design -->
-            <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
-                <div
-                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
-                    <i data-lucide="gem" class="w-12 h-12"></i>
-                </div>
-                <div class="h-32 flex items-end mb-6">
-                    <span
-                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">UI/UX</span>
-                </div>
-                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Dominante Ästhetik</h3>
-                <p class="text-sm text-zinc-500 leading-relaxed">
-                    Design, das Autorität ausstrahlt. Dark-Mode, Glassmorphism und flüssige Animationen,
-                    die im Gedächtnis bleiben.
-                </p>
-            </div>
-
-            <!-- Tech -->
-            <div
-                class="matrix-card glass p-8 rounded-[2rem] border-white/5 relative overflow-hidden group hover:border-indigo-500/30 transition duration-500 snap-center shrink-0 w-[85vw] md:w-auto">
-                <div
-                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-100 transition duration-500 text-indigo-500">
-                    <i data-lucide="cpu" class="w-12 h-12"></i>
-                </div>
-                <div class="h-32 flex items-end mb-6">
-                    <span
-                        class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-t from-white to-zinc-600">React</span>
-                </div>
-                <h3 class="text-xl font-bold uppercase tracking-widest mb-2">Modernster Stack</h3>
-                <p class="text-sm text-zinc-500 leading-relaxed">
-                    Vergessen Sie WordPress-Baukästen. Wir setzen auf React, Next.js und TailwindCSS
-                    für maximale Skalierbarkeit und Sicherheit.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
-            <br><span class="text-indigo-500">Level 2.</span>
-        </h2>
-
-        <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-            <!-- Progress Bar -->
-            <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
-                style="width: 33%"></div>
-
-            <form
-                action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                method="POST" id="leadForm" class="text-left relative min-h-[300px]">
-
-                <!-- Step 1: Volume -->
-                <div class="step active" id="step1">
-                    <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
-                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
-                        Operation?</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
-                            <div class="font-bold">1-10</div>
-                            <div class="text-[10px] text-zinc-500">Startup</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
-                            <div class="font-bold">11-50</div>
-                            <div class="text-[10px] text-zinc-500">Scale-Up</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
-                            <div class="font-bold">50+</div>
-                            <div class="text-[10px] text-zinc-500">Enterprise</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Stack -->
-                <div class="step" id="step2">
-                    <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
-                                Datenbank?</label>
-                            <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
+                    <div>
+                        <div
+                            class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                            </svg>
                         </div>
-                        <button type="button"
-                            class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                            onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
+                        <h4 class="font-semibold mb-2">KI-Engine</h4>
+                        <p class="text-sm text-zinc-400">n8n, OpenAI, Python</p>
+                    </div>
+
+                    <div>
+                        <div
+                            class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">Backend</h4>
+                        <p class="text-sm text-zinc-400">Supabase, PostgreSQL</p>
                     </div>
                 </div>
-
-                <!-- Step 3: Contact -->
-                <div class="step" id="step3">
-                    <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <input name="name" placeholder="Name" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                    </div>
-                    <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
-                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
-
-                    <button type="submit"
-                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn btn-shine">
-                        Initialisieren
-                    </button>
-                    <button type="button"
-                        class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                        onclick="nextStep(1)">Audit Neustarten</button>
-                </div>
-
-            </form>
-            <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit angefordert.
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
-        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026 &middot; v2.0 (New Core)
+    <!-- Process -->
+    <section id="prozess" class="py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">So arbeiten wir</p>
+                <h2 class="mb-4">In 4 Schritten zum Erfolg</h2>
+                <p class="text-zinc-400 text-lg">Einfach. Transparent. Effektiv.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="mb-2">Erstgespräch</h3>
+                        <p class="text-zinc-400">
+                            Wir lernen Ihr Business kennen und definieren klare Ziele.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="mb-2">Konzept & Design</h3>
+                        <p class="text-zinc-400">
+                            Innerhalb von 7 Tagen erhalten Sie erste Designs und ein detailliertes Konzept.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="mb-2">Entwicklung</h3>
+                        <p class="text-zinc-400">
+                            Wir bauen Ihre Website mit modernster Technologie. Sie erhalten regelmäßige Updates.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="mb-2">Launch & Support</h3>
+                        <p class="text-zinc-400">
+                            Wir launchen Ihre Website und stehen Ihnen für Support und Optimierungen zur Verfügung.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="kontakt" class="py-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="mb-4">Bereit zu starten?</h2>
+                <p class="text-zinc-400 text-lg">
+                    Buchen Sie Ihr kostenloses Erstgespräch in 3 einfachen Schritten
+                </p>
+            </div>
+
+            <div class="glass p-8 md:p-12 rounded-3xl">
+                <!-- Progress -->
+                <div class="flex justify-between mb-8">
+                    <div class="flex-1 h-1 bg-indigo-500 rounded" id="progress1"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded ml-2" id="progress2"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded ml-2" id="progress3"></div>
+                </div>
+
+                <form id="contactForm"
+                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
+                    method="POST">
+                    <!-- Step 1 -->
+                    <div class="form-step active" id="step1">
+                        <h3 class="mb-6">Was benötigen Sie?</h3>
+                        <div class="space-y-4">
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectService('Neue Website'); nextStep(2)">
+                                <div class="font-semibold mb-1">Neue Website</div>
+                                <div class="text-sm text-zinc-400">Komplett neue Website von Grund auf</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectService('Website Redesign'); nextStep(2)">
+                                <div class="font-semibold mb-1">Website Redesign</div>
+                                <div class="text-sm text-zinc-400">Bestehende Website modernisieren</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectService('KI-Automatisierung'); nextStep(2)">
+                                <div class="font-semibold mb-1">KI-Automatisierung</div>
+                                <div class="text-sm text-zinc-400">Prozesse automatisieren</div>
+                            </button>
+                        </div>
+                        <input type="hidden" name="service" id="serviceInput">
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="form-step" id="step2">
+                        <h3 class="mb-6">Ihr Budget</h3>
+                        <div class="space-y-4">
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectBudget('5.000 - 10.000€'); nextStep(3)">
+                                <div class="font-semibold">5.000 - 10.000€</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectBudget('10.000 - 20.000€'); nextStep(3)">
+                                <div class="font-semibold">10.000 - 20.000€</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition"
+                                onclick="selectBudget('20.000€+'); nextStep(3)">
+                                <div class="font-semibold">20.000€+</div>
+                            </button>
+                        </div>
+                        <input type="hidden" name="budget" id="budgetInput">
+                        <button type="button" class="mt-6 text-sm text-zinc-400 hover:text-white transition"
+                            onclick="nextStep(1)">← Zurück</button>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="form-step" id="step3">
+                        <h3 class="mb-6">Ihre Kontaktdaten</h3>
+                        <div class="space-y-4">
+                            <input type="text" name="name" placeholder="Name" required
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
+                            <input type="email" name="email" placeholder="E-Mail" required
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
+                            <input type="tel" name="phone" placeholder="Telefon (optional)"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
+                            <textarea name="message" placeholder="Kurze Beschreibung Ihres Projekts..." rows="4"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition resize-none"></textarea>
+                            <button type="submit" class="btn-primary w-full text-lg py-4">
+                                Termin anfragen
+                            </button>
+                        </div>
+                        <button type="button" class="mt-4 text-sm text-zinc-400 hover:text-white transition"
+                            onclick="nextStep(2)">← Zurück</button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="successMsg" class="hidden text-center">
+                    <div class="text-6xl mb-4">✓</div>
+                    <h3 class="mb-2">Vielen Dank!</h3>
+                    <p class="text-zinc-400">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                    A
+                </div>
+                <span class="font-bold">AURA SYSTEMS</span>
+            </div>
+            <div class="text-sm text-zinc-500">
+                © 2026 AURA Systems. Alle Rechte vorbehalten.
+            </div>
+        </div>
     </footer>
 
     <script>
-        // High-Performance Monitor Hook
-        function checkHardwarePerformance() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            const isSlow = connection && (connection.saveData || /2g|3g/.test(connection.effectiveType));
-
-            if (isMobile || isSlow) {
-                document.body.classList.add('low-perf');
-                // Throttle intense visual effects
-                gsap.set('.nebula', { display: 'none' });
-                console.log('AURA Performance: Adaptive throttling active (Mobile/Slow Net)');
-            }
-            return { isMobile, isSlow };
-        }
-
-        const perfStatus = checkHardwarePerformance();
-
+        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // GSAP Implementation: Bento-Reveal & Vacuum-Plop
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Desktop: Staggered Fade-Up
-        if (!perfStatus.isMobile) {
-            gsap.from('.matrix-card, .glass', {
-                scrollTrigger: {
-                    trigger: '.matrix-card',
-                    start: 'top 85%',
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-        } else {
-            // Mobile: "Vacuum-Plop" (Reveal from depth)
-            document.querySelectorAll('.matrix-card, .glass').forEach(card => {
-                gsap.from(card, {
-                    scrollTrigger: {
-                        trigger: card,
-                        start: 'top 90%',
-                    },
-                    scale: 0.8,
-                    z: -100,
-                    opacity: 0,
-                    duration: 0.6,
-                    ease: 'back.out(1.7)'
-                });
-            });
-        }
-
-        // Hover Detection
-        document.querySelectorAll('a, button, .interactive-card').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-
-        // Fluid Aura Support (Canvas 2D) - Phase 5
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let blobs = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Blob {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 200 + 150;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = (Math.random() - 0.5) * 1.5;
-                this.color = `hsla(${Math.random() * 40 + 220}, 70%, 60%, 0.15)`; // Indigo/Blue hues
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < -this.size || this.x > width + this.size) this.vx *= -1;
-                if (this.y < -this.size || this.y > height + this.size) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                gradient.addColorStop(0, this.color);
-                gradient.addColorStop(1, 'transparent');
-                ctx.fillStyle = gradient;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // Init Blobs
-        for (let i = 0; i < 6; i++) blobs.push(new Blob());
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.globalCompositeOperation = 'screen'; // Blend mode for "Fluid" look
-
-            blobs.forEach(blob => {
-                blob.update();
-                blob.draw();
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-
-
-        // Multi-Step Logic
-        function nextStep(step) {
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-
-            // Update Progress
-            const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
-            document.getElementById('progressBar').style.width = progress;
-        }
-
-        // Magnetic Buttons - Optimized
-        const magnets = document.querySelectorAll('.magnetic-btn');
-        magnets.forEach((btn) => {
-            const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power4.out" });
-            const yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power4.out" });
-
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                xTo(x * 0.5);
-                yTo(y * 0.5);
-            });
-
-            btn.addEventListener('mouseleave', () => {
-                xTo(0);
-                yTo(0);
-            });
-        });
-
-        // Form Submission
-        const form = document.getElementById('leadForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
-
-            // Hide all steps, show success
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('progressBar').style.width = '100%';
-            setTimeout(() => {
-                form.classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-            }, 500);
-        });
-
-        // Mobile Menu Logic
-        const mobileToggle = document.getElementById('mobile-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
-        let isMenuOpen = false;
 
         mobileToggle.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-
-                // Animate Toggle Button to 'X'
-                mobileToggle.children[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-                mobileToggle.children[1].style.opacity = '0';
-                mobileToggle.children[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-
-                // Stagger Links
-                gsap.fromTo(mobileLinks,
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out' }
-                );
-            } else {
-                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-
-                // Reset Toggle
-                mobileToggle.children[0].style.transform = 'none';
-                mobileToggle.children[1].style.opacity = '1';
-                mobileToggle.children[2].style.transform = 'none';
-            }
+            mobileMenu.classList.toggle('active');
         });
 
         mobileLinks.forEach(link => {
-            link.addEventListener('click', () => mobileToggle.click());
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
         });
 
-        // Scroll Reveal Animation (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+        // Image Sequence for Hero (keeping original video code)
+        class ImageSequence {
+            constructor(canvasId, framePath, frameCount, fps = 30) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return;
 
+                this.ctx = this.canvas.getContext('2d');
+                this.framePath = framePath;
+                this.frameCount = frameCount;
+                this.fps = fps;
+                this.images = [];
+                this.currentFrame = 0;
+                this.isPlaying = false;
+                this.isMobile = window.innerWidth < 768;
+
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.preload();
+            }
+
+            preload() {
+                const step = this.isMobile ? 2 : 1;
+
+                for (let i = 1; i <= this.frameCount; i += step) {
+                    const img = new Image();
+                    const frameNum = String(i).padStart(3, '0');
+                    img.src = this.framePath.replace('[000]', frameNum);
+                    img.onload = () => {
+                        this.images[i] = img;
+                        if (i === 1) this.initObserver();
+                    };
+                }
+            }
+
+            initObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.start();
+                        } else {
+                            this.stop();
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                observer.observe(this.canvas);
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            start() {
+                if (this.isPlaying) return;
+                this.isPlaying = true;
+                this.canvas.classList.add('loaded');
+                this.loop();
+            }
+
+            stop() {
+                this.isPlaying = false;
+            }
+
+            drawFrame(frameIndex) {
+                const img = this.images[frameIndex + 1];
+                if (!img || !img.complete) return;
+
+                const cw = this.canvas.width;
+                const ch = this.canvas.height;
+                const imgAspect = img.width / img.height;
+                const canvasAspect = cw / ch;
+
+                let drawW, drawH;
+                if (canvasAspect > imgAspect) {
+                    drawW = cw;
+                    drawH = cw / imgAspect;
+                } else {
+                    drawH = ch;
+                    drawW = ch * imgAspect;
+                }
+
+                const x = (cw - drawW) / 2;
+                const y = (ch - drawH) / 2;
+
+                this.ctx.clearRect(0, 0, cw, ch);
+                this.ctx.drawImage(img, x, y, drawW, drawH);
+            }
+
+            loop() {
+                if (!this.isPlaying) return;
+                this.drawFrame(this.currentFrame);
+                this.currentFrame = (this.currentFrame + 1) % this.frameCount;
+                setTimeout(() => {
+                    requestAnimationFrame(() => this.loop());
+                }, 1000 / this.fps);
+            }
+        }
+
+        // Initialize sequence
+        new ImageSequence('hero-sequence', '/assets/sequence/frame_[000].jpg', 240, 30);
+
+        // Form Multi-Step
+        let currentStep = 1;
+
+        function nextStep(step) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            currentStep = step;
+
+            // Update progress
+            for (let i = 1; i <= 3; i++) {
+                const progress = document.getElementById('progress' + i);
+                if (progress) {
+                    progress.style.backgroundColor = i <= step ? '#6366f1' : 'rgba(255,255,255,0.1)';
+                }
+            }
+        }
+
+        function selectService(service) {
+            document.getElementById('serviceInput').value = service;
+        }
+
+        function selectBudget(budget) {
+            document.getElementById('budgetInput').value = budget;
+        }
+
+        // Form Submit
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            fetch(e.target.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            });
+
+            e.target.classList.add('hidden');
+            document.getElementById('successMsg').classList.remove('hidden');
+        });
+
+        // Scroll Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-
-                    // Specific animations based on element type
-                    if (entry.target.classList.contains('matrix-card')) {
-                        gsap.fromTo(entry.target,
-                            { y: 50, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-                        );
-                    }
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observe elements
-        document.querySelectorAll('section h2, section h3, .glass, .matrix-card').forEach(el => {
-            gsap.set(el, { y: 30, opacity: 0 }); // Initial hidden state
-
-            observer.observe(el);
-            // Re-attach observer for GSAP override
-            const animObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" });
-                        animObserver.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            animObserver.observe(el);
+        document.querySelectorAll('.step-card').forEach(card => {
+            observer.observe(card);
         });
 
-        // Live Terminal Simulation
-        const terminalStrings = [
-            ">> Analyzing lead structures...",
-            ">> Optimizing API response time...",
-            ">> Compiling backend schemas...",
-            ">> Deploying autonomous agent...",
-            ">> Syncing Supabase database...",
-            ">> Encryption layer active.",
-            ">> Data stream stabilized."
-        ];
+        // GSAP Scroll Animations
+        if (window.innerWidth > 768) {
+            gsap.registerPlugin(ScrollTrigger);
 
-        const terminalDiv = document.getElementById('live-terminal');
-        let stringIndex = 0;
-
-        function updateTerminal() {
-            if (!terminalDiv) return;
-            const line = document.createElement('div');
-            line.className = 'mt-1 opacity-80 flex';
-
-            const timestamp = document.createElement('span');
-            timestamp.className = 'text-zinc-500 mr-2';
-            timestamp.innerText = `[${new Date().toLocaleTimeString('de-DE', { hour12: false })}]`;
-
-            const content = document.createElement('span');
-            content.className = 'text-indigo-400';
-
-            line.appendChild(timestamp);
-            line.appendChild(content);
-            terminalDiv.appendChild(line);
-
-            // Typing effect
-            const text = terminalStrings[stringIndex];
-            let i = 0;
-            const typeInterval = setInterval(() => {
-                content.innerText += text.charAt(i);
-                i++;
-                if (i >= text.length) clearInterval(typeInterval);
-            }, 20); // Typing speed
-
-            if (terminalDiv.childNodes.length > 6) {
-                terminalDiv.removeChild(terminalDiv.firstChild);
-            }
-
-            stringIndex = (stringIndex + 1) % terminalStrings.length;
-
-            // Random interval for next line
-            setTimeout(updateTerminal, Math.random() * 3000 + 2000);
+            gsap.from('.feature-card', {
+                scrollTrigger: {
+                    trigger: '.feature-card',
+                    start: 'top 80%'
+                },
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8
+            });
         }
-
-        // Start terminal
-        updateTerminal();
     </script>
 </body>
 
