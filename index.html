@@ -119,18 +119,29 @@
             background: rgba(99, 102, 241, 0.1);
         }
 
-        /* Background */
         .bg-grid {
+            display: none;
+            /* Permanently removed */
+        }
+
+        /* Visual Depth Overlays */
+        .grain-overlay {
             position: fixed;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            opacity: 0;
-            /* Hidden per user request (watermark removal) */
             pointer-events: none;
+            z-index: -1;
+            /* Above background, below text */
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        .vignette-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at center, transparent 20%, rgba(10, 10, 10, 0.8) 120%);
         }
 
         /* ... existing code ... */
@@ -154,7 +165,8 @@
             height: 100vh;
             object-fit: cover;
             /* Update per user feedback: More present, less "mistake-like" */
-            opacity: 0.15;
+            opacity: 0;
+            /* Silent start - fades in later */
             filter: blur(0px);
             /* Removed blur for clarity */
             pointer-events: none;
@@ -332,16 +344,20 @@
 
 <body>
     <!-- Background Sequence (Global) -->
-    <img src="/assets/sequence/frame_001.jpg" id="hero-fallback" alt="Background">
+    <!-- Background Layers -->
+    <div class="grain-overlay"></div>
+    <div class="vignette-overlay"></div>
     <canvas id="hero-sequence"></canvas>
 
     <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-lg flex items-center justify-center text-white font-bold">
-                    A
+                <div class="w-10 h-10 flex items-center justify-center text-indigo-500">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4L4 36H36L20 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        <path d="M20 14L12 30H28L20 14Z" fill="currentColor" fill-opacity="0.5" />
+                    </svg>
                 </div>
                 <span class="font-bold text-lg">AURA</span>
             </div>
@@ -374,11 +390,11 @@
         <!-- Content -->
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <p class="text-indigo-500 font-semibold mb-6 text-sm uppercase tracking-wider">Premium Web Solutions</p>
-            <h1 class="mb-8">
+            <h1 class="mb-8" style="opacity: 0; transform: translateY(10px);">
                 Websites, die<br>
                 <span class="gradient-text">verkaufen.</span>
             </h1>
-            <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+            <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto" style="opacity: 0; transform: translateY(10px);">
                 Wir bauen High-Performance Websites.
                 Schnell. Sichtbar. Skalierbar.
             </p>
@@ -833,6 +849,7 @@
             constructor(containerId, options = {}) {
                 this.container = document.getElementById(containerId);
                 if (!this.container) return;
+                this.isPaused = false; // Performance flag
 
                 this.options = {
                     raysOrigin: 'top-center',
@@ -1057,6 +1074,7 @@
             }
 
             update(t) {
+                if (this.isPaused) return; // Stop loop if paused (Performance)
                 if (!this.mesh) return;
 
                 this.uniforms.iTime.value = t * 0.001;
@@ -1071,12 +1089,54 @@
         }
 
         // Initialize LightRays with adjusted visibility
-        new LightRays('hero-sequence', {
-            raysColor: '#4f46e5', // Indigo-600
+        // Initialize LightRays with Silent Start
+        const lightRays = new LightRays('hero-sequence', {
+            raysColor: '#4f46e5',
             raysOrigin: 'top-center',
-            lightSpread: 0.8, // Balanced spread
-            raysSpeed: 0.4, // Visible but calm movement
-            mouseInfluence: 0.2 // subtle interaction
+            lightSpread: 0.8,
+            raysSpeed: 0.4, // Meditative speed
+            mouseInfluence: 0.2
+        });
+
+        // Content First Loading Sequence
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Immediate Text Reveal (0s delay, 0.4s duration)
+            const tl = gsap.timeline();
+
+            tl.to("#hero h1", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            })
+                .to("#hero p", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: "power2.out"
+                }, "-=0.2") // slight overlap
+
+                // 2. Silent Background Fade-In (after text is established)
+                .to("#hero-sequence", {
+                    opacity: 0.4, // Target opacity for "Silent" feel
+                    duration: 2.0, // Slow, meditative fade
+                    ease: "sine.inOut"
+                }, "+=0.1"); // Start shortly after text finishes
+
+            // 3. Performance: Pause animation when not visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        lightRays.isPaused = false;
+                        lightRays.update(performance.now()); // Restart loop
+                    } else {
+                        lightRays.isPaused = true;
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const heroSection = document.getElementById('hero');
+            if (heroSection) observer.observe(heroSection);
         });
 
         // Form Multi-Step
