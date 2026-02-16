@@ -40,18 +40,244 @@
 
         /* Typography */
         h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(3.5rem, 12vw, 7.5rem);
+            /* Significantly larger */
             font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.02em;
         }
 
-        h2 {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
+        /* ... existing styles ... */
+
+        class Beams {
+            constructor(containerId, options= {}) {
+                this.container=document.getElementById(containerId);
+                if ( !this.container) return;
+                this.isPaused=false;
+
+                this.options= {
+                    beamColor: '#4f46e5',
+                        beamSpeed: 0.2,
+                        beamDensity: 1.0,
+                        ...options
+                }
+
+                ;
+
+                this.init();
+            }
+
+            hexToRgb(hex) {
+                const m=/^#?([a-f\d] {
+                        2
+
+                    })([a-f\d] {
+                        2
+
+                    })([a-f\d] {
+                        2
+                    })$/i.exec(hex);
+                return m ? [parseInt(m[1], 16) / 255,
+                parseInt(m[2], 16) / 255,
+                parseInt(m[3], 16) / 255] : [1,
+                1,
+                1];
+            }
+
+            init() {
+                this.renderer=new Renderer({
+                    alpha: true, dpr: Math.min(window.devicePixelRatio, 2)
+                });
+            this.gl=this.renderer.gl;
+            this.gl.canvas.style.width='100%';
+            this.gl.canvas.style.height='100%';
+
+            while (this.container.firstChild) this.container.removeChild(this.container.firstChild);
+            this.container.appendChild(this.gl.canvas);
+
+            const vert=` attribute vec2 position;
+            varying vec2 vUv;
+
+            void main() {
+                vUv=position * 0.5+0.5;
+                gl_Position=vec4(position, 0.0, 1.0);
+            }
+
+            `;
+
+            const frag=` precision highp float;
+            uniform float iTime;
+            uniform vec2 iResolution;
+            uniform vec3 beamColor;
+
+            // Simple hash function
+            float hash(vec2 p) {
+                return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+            }
+
+            void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+                vec2 uv=fragCoord / iResolution.xy;
+
+                // Rotate UV 45 degrees for diagonal beams
+                float angle=-0.785398; // -45 deg
+                mat2 rot=mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+                vec2 rotatedUV=(uv - 0.5) * rot+0.5;
+
+                // Create grid for beams
+                float beamWidth=0.1; // Width of each beam lane
+                float gridPos=floor(rotatedUV.x / beamWidth);
+
+                // Randomize speed and offset for each lane
+                float speed=0.1+hash(vec2(gridPos, 0.0)) * 0.5;
+                float offset=hash(vec2(gridPos, 1.0)) * 10.0;
+
+                // Moving beam logic
+                float beamPos=fract(rotatedUV.y + iTime * speed + offset);
+
+                // Fade in/out (shooting star effect)
+                // Smoothstep creates the "head" and "tail"
+                float beam=smoothstep(0.0, 0.2, beamPos) * smoothstep(1.0, 0.6, beamPos);
+
+                // Thin line within the lane
+                float line=smoothstep(0.48, 0.5, fract(rotatedUV.x / beamWidth)) * smoothstep(0.52, 0.5, fract(rotatedUV.x / beamWidth));
+
+                // Combine: A beam is a moving segment in a random lane
+                // Make it less frequent
+                float randomTrigger=step(0.6, hash(vec2(gridPos, floor(iTime * 0.5))));
+
+                // Soft glow
+                vec3 color=beamColor * beam * 2.0;
+
+                // Vignette (copied from previous logic for consistency)
+                float vignette=1.0 - length(uv - 0.5) * 1.5;
+                vignette=clamp(vignette, 0.0, 1.0);
+
+                fragColor=vec4(color * vignette, beam * vignette); // Use beam strength for alpha
+
+                // Extra subtle background noise
+                // fragColor.rgb += (hash(uv * iTime) - 0.5) * 0.05;
+            }
+
+            void main() {
+                mainImage(gl_FragColor, gl_FragCoord.xy);
+            }
+
+            `;
+
+            this.program=new Program(this.gl, {
+
+                vertex: vert,
+                fragment: frag,
+                uniforms: {
+                    iTime: {
+                        value: 0
+                    }
+
+                    ,
+                    iResolution: {
+                        value: new Vec2(this.gl.canvas.width, this.gl.canvas.height)
+                    }
+
+                    ,
+                    beamColor: {
+                        value: new Vec3(...this.hexToRgb(this.options.beamColor))
+                    }
+                }
+
+                ,
+                transparent: true
+            });
+
+        this.mesh=new Mesh(this.gl, {
+            geometry: new Triangle(this.gl), program: this.program
+        });
+
+        this.resize();
+        window.addEventListener('resize', this.resize.bind(this));
+        requestAnimationFrame(this.update.bind(this));
         }
+
+        resize() {
+            const width=this.container.clientWidth;
+            const height=this.container.clientHeight;
+            this.renderer.setSize(width, height);
+            this.program.uniforms.iResolution.value.set(width * this.renderer.dpr, height * this.renderer.dpr);
+        }
+
+        update(t) {
+            if (this.isPaused) return;
+            this.program.uniforms.iTime.value=t * 0.001;
+
+            this.renderer.render({
+                scene: this.mesh
+            });
+        requestAnimationFrame(this.update.bind(this));
+        }
+        }
+
+        // Initialize Beams
+        // Initialize Beams with Silent Start
+        const beams=new Beams('hero-sequence', {
+            beamColor: '#6366f1', // Indigo-500
+        });
+
+        // Content First Loading Sequence
+        document.addEventListener('DOMContentLoaded', ()=> {
+                // 1. Immediate Text Reveal (0s delay, 0.4s duration)
+                const tl=gsap.timeline();
+
+                tl.to("#hero h1", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: "power2.out"
+
+                }) .to("#hero p", {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            }
+
+            , "-=0.2") // slight overlap
+
+        // 2. Silent Background Fade-In (after text is established)
+        .to("#hero-sequence", {
+            opacity: 0.5, // Target opacity for "Silent" feel
+            duration: 2.0, // Slow, meditative fade
+            ease: "sine.inOut"
+        }
+
+        , "+=0.1"); // Start shortly after text finishes
+
+        // 3. Performance: Pause animation when not visible
+        const observer=new IntersectionObserver((entries)=> {
+                entries.forEach(entry=> {
+                        if (entry.isIntersecting) {
+                            beams.isPaused=false;
+                            beams.update(performance.now()); // Restart loop
+                        }
+
+                        else {
+                            beams.isPaused=true;
+                        }
+                    });
+            }
+
+            , {
+            threshold: 0.1
+        });
+
+        const heroSection=document.getElementById('hero');
+        if (heroSection) observer.observe(heroSection);
+        });
 
         h3 {
             font-size: clamp(1.25rem, 4vw, 1.75rem);
