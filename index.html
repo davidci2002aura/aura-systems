@@ -140,12 +140,14 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            opacity: 0.03;
-            /* Ultra subtle 3% */
-            filter: blur(3px);
-            /* Soften */
+            /* Update per user feedback: More present, less "mistake-like" */
+            opacity: 0.15;
+            filter: blur(0px);
+            /* Removed blur for clarity */
             pointer-events: none;
             z-index: -2;
+            transform: scale(0.9);
+            /* Slightly smaller as requested */
         }
 
         #hero-sequence {
@@ -154,8 +156,7 @@
         }
 
         #hero-sequence.loaded {
-            opacity: 0.03;
-            /* Ensure JS doesn't override with higher opacity */
+            opacity: 0.15;
         }
 
         /* Logo Loop CSS */
