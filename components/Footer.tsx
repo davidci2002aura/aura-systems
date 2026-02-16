@@ -2,52 +2,49 @@ import React from 'react';
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="bg-[#050505] border-t border-white/5 py-24 text-sm relative z-10">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+        <footer className="bg-[#020408] border-t border-white/5 py-12 text-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     <div className="col-span-1 md:col-span-1">
-                        <span className="text-2xl font-black italic tracking-tighter text-white uppercase">AURA SYSTEMS.</span>
-                        <p className="mt-6 text-zinc-500 font-light italic text-[10px] tracking-widest uppercase uppercase">
-                            Architecting Sovereignty. <br />HQ: Berlin // DE
+                        <span className="text-2xl font-black tracking-tighter text-white">AURA.</span>
+                        <p className="mt-4 text-gray-500">
+                            Next-Gen AI Agency. <br />Berlin, Germany.
                         </p>
                     </div>
 
                     <div>
-                        <h4 className="font-black text-[10px] tracking-widest uppercase italic text-zinc-300 mb-6">Discovery</h4>
-                        <ul className="space-y-4 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Origin Story</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Philosophy</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Manifesto</a></li>
+                        <h4 className="font-bold text-white mb-4">Unternehmen</h4>
+                        <ul className="space-y-2 text-gray-500">
+                            <li><a href="#" className="hover:text-indigo-400 transition">Über uns</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">Karriere</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">Partner</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="font-black text-[10px] tracking-widest uppercase italic text-zinc-300 mb-6">Protocols</h4>
-                        <ul className="space-y-4 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Terms of Compute</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Privacy Guard</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">Compliance</a></li>
+                        <h4 className="font-bold text-white mb-4">Rechtliches</h4>
+                        <ul className="space-y-2 text-gray-500">
+                            <li><a href="#" className="hover:text-indigo-400 transition">Impressum</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">Datenschutz</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">AGB</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className="font-black text-[10px] tracking-widest uppercase italic text-zinc-300 mb-6">Frequencies</h4>
-                        <ul className="space-y-4 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">LinkedIn_CMD</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">X_SIGNAL</a></li>
-                            <li><a href="#" className="hover:text-[#0077ff] transition-colors cursor-none">GITHUB_REPO</a></li>
+                        <h4 className="font-bold text-white mb-4">Social</h4>
+                        <ul className="space-y-2 text-gray-500">
+                            <li><a href="#" className="hover:text-indigo-400 transition">LinkedIn</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">Twitter / X</a></li>
+                            <li><a href="#" className="hover:text-indigo-400 transition">GitHub</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-black tracking-widest uppercase italic text-zinc-600">
-                    <p>&copy; {new Date().getFullYear()} AURA SYSTEMS. ALL RIGHTS TRANSMITTED.</p>
-                    <div className="flex items-center space-x-6 mt-6 md:mt-0">
-                        <div className="flex items-center">
-                            <span className="w-1.5 h-1.5 bg-[#0077ff] rounded-full mr-2 animate-pulse"></span>
-                            <span className="text-[#0077ff]">SYSTEMS_STABLE</span>
-                        </div>
-                        <div>CORE_VER: 2.1.0</div>
+                <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-gray-600">&copy; {new Date().getFullYear()} AURA AI Services. All rights reserved.</p>
+                    <div className="flex space-x-6 mt-4 md:mt-0">
+                        <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-green-500 font-medium tracking-wide uppercase">Systems Operational</span>
                     </div>
                 </div>
             </div>

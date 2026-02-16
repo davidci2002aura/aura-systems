@@ -1,65 +1,28 @@
-import React, { useRef } from 'react';
-import { Bot, Database, Terminal } from 'lucide-react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React from 'react';
+import { Bot, Database, Workflow, ShieldCheck, Terminal, LineChart } from 'lucide-react';
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 
-const ServiceCard: React.FC<{ title: string; desc: string; icon: React.ElementType }> = ({ title, desc, icon: Icon }) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+const ServiceCard: React.FC<{ title: string; desc: string; icon: React.ElementType; delay: number; gradient: string }> = ({ title, desc, icon: Icon, delay, gradient }) => {
+  const { elementRef, isVisible } = useIntersectionObserver();
 
   return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY,
-        rotateX,
-        transformStyle: "preserve-3d",
-      }}
-      className="group relative h-[450px] w-full rounded-[2.5rem] glass p-10 overflow-hidden cursor-none"
+    <div
+      ref={elementRef}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`group p-10 rounded-3xl bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} relative overflow-hidden backdrop-blur-xl snap-center shrink-0 w-[85vw] md:w-auto`}
     >
-      <div
-        style={{ transform: "translateZ(75px)" }}
-        className="relative z-10 flex flex-col h-full"
-      >
-        <div className="w-16 h-16 rounded-2xl bg-[#0077ff]/10 flex items-center justify-center mb-8 border border-[#0077ff]/20">
-          <Icon className="w-8 h-8 text-[#0ea5e9]" />
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 group-hover:border-indigo-500/50 group-hover:scale-110 transition-all duration-500">
+          <Icon className="h-8 w-8 text-indigo-400" />
         </div>
-        <h3 className="mb-6">{title}</h3>
-        <p className="text-zinc-500 font-light leading-relaxed mb-8 flex-grow">{desc}</p>
-        <div className="pt-6 border-t border-white/5 flex items-center text-[10px] font-black tracking-[0.3em] text-[#0077ff] uppercase italic">
-          System Details <span className="ml-2">→</span>
+        <h3 className="text-3xl font-black text-white mb-6 uppercase tracking-tight group-hover:text-indigo-300 transition-colors">{title}</h3>
+        <p className="text-gray-400 leading-relaxed text-lg font-light mb-8 flex-grow">{desc}</p>
+        <div className="pt-6 border-t border-white/5 flex items-center text-sm font-bold text-indigo-400 tracking-widest uppercase group-hover:gap-3 gap-2 transition-all">
+          Details <span className="text-lg">→</span>
         </div>
       </div>
-
-      {/* Decorative Blueprint Lines */}
-      <div className="absolute top-0 right-0 w-32 h-32 border-t border-r border-[#0077ff]/10 rounded-tr-[2.5rem]" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 border-b border-l border-[#0077ff]/10 rounded-bl-[2.5rem]" />
-    </motion.div>
+    </div>
   );
 };
 
@@ -68,41 +31,42 @@ export const Services: React.FC = () => {
     {
       title: "Frontend Sovereignty",
       desc: "Wir bauen Interfaces, die nicht nur beeindrucken, sondern konvertieren. Pixelfreies Engineering trifft auf intuitive Psychologie.",
-      icon: Terminal
+      icon: Terminal,
+      gradient: "from-indigo-600/20 to-transparent"
     },
     {
       title: "Backend Autonomy",
       desc: "Hochperformante Architekturen, die Ihr Unternehmen tragen. Skalierbar, sicher und bereit für die Ära der Automatisierung.",
-      icon: Database
+      icon: Database,
+      gradient: "from-purple-600/20 to-transparent"
     },
     {
       title: "AI Core Intelligence",
       desc: "Wir integrieren autonome Agenten direkt in Ihren Stack. Echte Intelligenz, die handelt, optimiert und lernt.",
-      icon: Bot
+      icon: Bot,
+      gradient: "from-blue-600/20 to-transparent"
     }
   ];
 
   return (
-    <section id="leistungen" className="py-32 px-6 max-w-7xl mx-auto relative z-10">
-      <div className="text-center mb-24">
-        <span className="text-[#0077ff] font-black text-[10px] tracking-[0.5em] uppercase mb-4 block italic">
-          Infrastructure Insight
-        </span>
-        <h2 className="mb-8 font-black italic">Die Drei Säulen der Evolution.</h2>
-      </div>
+    <section id="leistungen" className="py-32 relative overflow-hidden">
+      {/* Subtle Section Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-indigo-500/5 rounded-full blur-[150px] -z-10" />
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {services.map((s, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: idx * 0.2 }}
-          >
-            <ServiceCard {...s} />
-          </motion.div>
-        ))}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-24">
+          <span className="text-indigo-500 font-black text-xs tracking-[0.4em] uppercase mb-4 block">Core Capabilities</span>
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 text-glow tracking-tighter">DIE DREI SÄULEN.</h2>
+          <p className="max-w-3xl mx-auto text-gray-400 text-xl font-light">
+            Wir transformieren Unternehmen durch die perfekte Symbiose aus Visual Power, stabiler Struktur und autonomer Intelligenz.
+          </p>
+        </div>
+
+        <div className="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto snap-x snap-mandatory pb-12 -mx-6 px-6 sm:mx-0 sm:px-0 no-scrollbar">
+          {services.map((s, idx) => (
+            <ServiceCard key={idx} {...s} delay={idx * 200} />
+          ))}
+        </div>
       </div>
     </section>
   );
