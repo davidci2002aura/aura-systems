@@ -158,6 +158,55 @@
             /* Ensure JS doesn't override with higher opacity */
         }
 
+        /* Logo Loop CSS */
+        .logo-scroll {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            padding: 2rem 0;
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+
+        .logo-track {
+            flex-shrink: 0;
+            display: flex;
+            gap: 4rem;
+            min-width: 100%;
+            justify-content: space-around;
+            animation: scroll 30s linear infinite;
+        }
+
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(calc(-100% - 4rem));
+            }
+        }
+
+        .tech-logo {
+            height: 48px;
+            width: auto;
+            max-width: 120px;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            flex-shrink: 0;
+        }
+
+        .tech-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
         /* Mobile Menu */
         .mobile-menu {
             position: fixed;
