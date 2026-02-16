@@ -192,13 +192,15 @@
         }
 
         .tech-logo {
-            height: 48px;
-            width: auto;
+            height: 48px !important;
+            width: auto !important;
             max-width: 120px;
-            opacity: 0.4;
+            opacity: 0.5;
             transition: all 0.3s ease;
             filter: grayscale(100%);
             flex-shrink: 0;
+            display: block;
+            /* Ensure it behaves like a block */
         }
 
         .tech-logo:hover {
