@@ -78,14 +78,19 @@
         /* Utility to prevent shift */
         body,
         html {
+            width: 100%;
             max-width: 100%;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
+        /* Fix: Use 100% instead of 100vw to avoid scrollbar width issues */
         .marquee-section,
         .pricing-grid,
         .process-layout {
-            max-width: 100vw;
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
         }
 
@@ -1409,7 +1414,128 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
+        /* ─── CLASS DEFINITIONS (HOISTED FOR USAGE) ─── */
+
+        // SplitText Animation Class (Must be defined first)
+        class SplitText {
+            constructor(element, options = {}) {
+                this.element = typeof element === 'string' ? document.querySelector(element) : element;
+                if (!this.element) return;
+
+                this.options = {
+                    type: 'chars', // chars, words
+                    trigger: 'self',
+                    delay: 0.05,
+                    duration: 1.25,
+                    ease: 'power3.out',
+                    ...options
+                };
+
+                this.originalText = this.element.textContent;
+                this.chars = [];
+                this.words = [];
+
+                this.init();
+            }
+
+            init() {
+                const text = this.originalText.trim();
+                this.element.innerHTML = '';
+                this.element.style.opacity = '1';
+                this.element.style.visibility = 'visible';
+
+                const words = text.split(/\s+/);
+
+                words.forEach((word, wordIndex) => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'split-word';
+                    wordSpan.style.display = 'inline-block';
+                    wordSpan.style.overflow = 'hidden';
+                    wordSpan.style.verticalAlign = 'top';
+
+                    const letters = word.split('');
+                    letters.forEach((letter) => {
+                        const charSpan = document.createElement('span');
+                        charSpan.className = 'split-char';
+                        charSpan.style.display = 'inline-block';
+                        charSpan.style.transform = 'translateY(100%)';
+                        charSpan.style.opacity = '0';
+                        charSpan.textContent = letter;
+                        wordSpan.appendChild(charSpan);
+                        this.chars.push(charSpan);
+                    });
+
+                    this.element.appendChild(wordSpan);
+
+                    if (wordIndex < words.length - 1) {
+                        const space = document.createTextNode(' ');
+                        this.element.appendChild(space);
+                    }
+                });
+            }
+        }
+
+        // ─── INTRO & ANIMATIONS ───
+        document.addEventListener('DOMContentLoaded', () => {
+            const tl = gsap.timeline();
+
+            // 0. Cinematic Intro (SplitText Upgrade)
+            document.body.classList.add('intro-active');
+
+            // Apply SplitText to Intro
+            const introText = document.querySelector('.intro-text');
+            if (introText) {
+                // Ensure text is split before animation starts
+                new SplitText(introText, { type: 'chars' });
+            }
+
+            // Animate Intro Chars
+            tl.to(".intro-text .split-char", {
+                y: '0%',
+                opacity: 1,
+                duration: 1.2,
+                ease: "power2.out",
+                stagger: 0.05
+            })
+                // Fade Out & Remove Overlay
+                .to(".intro-text", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
+                .to("#intro-overlay", {
+                    opacity: 0, duration: 1.0, ease: "power2.inOut", onComplete: () => {
+                        document.getElementById('intro-overlay').style.display = 'none';
+                        document.body.classList.remove('intro-active');
+                    }
+                }, "-=0.5")
+
+                // 1. Hero Text Reveal (Chained after Intro)
+                .to("#hero h1", {
+                    opacity: 1, y: 0, duration: 0.4, ease: "power2.out", onStart: () => {
+                        // Trigger Hero SplitText here if needed, or simple fade
+                        const heroH1 = document.querySelector('#hero h1');
+                        if (heroH1) new SplitText(heroH1, { type: 'chars' });
+                        gsap.to("#hero h1 .split-char", { y: '0%', opacity: 1, duration: 1, stagger: 0.02 });
+                    }
+                }, "-=0.4")
+                .to("#hero p", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+
+                // 2. Silent Background Fade-In
+                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "-=0.2");
+
+            // 3. Performance: Pause when not visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof neuralGrid !== 'undefined') {
+                        neuralGrid.isPaused = false;
+                        neuralGrid.update(performance.now());
+                    } else if (typeof neuralGrid !== 'undefined') {
+                        neuralGrid.isPaused = true;
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const heroSection = document.getElementById('hero');
+            if (heroSection) observer.observe(heroSection);
+        });
+
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -1430,103 +1556,9 @@
         // LightRays Background (Studio Setup)
         import { Renderer, Program, Triangle, Mesh, Vec2, Vec3 } from 'https://esm.sh/ogl';
 
-        // SplitText Animation
-        class SplitText {
-            constructor(element, options = {}) {
-                this.element = typeof element === 'string' ? document.querySelector(element) : element;
-                if (!this.element) return;
+        // (SplitText Class removed from here - moved to top)
 
-                this.options = {
-                    type: 'chars', // chars, words, lines
-                    trigger: 'self',
-                    delay: 0.05,
-                    duration: 1.25,
-                    ease: 'power3.out',
-                    ...options
-                };
-
-                this.originalText = this.element.textContent;
-                this.chars = [];
-                this.words = [];
-
-                this.init();
-            }
-
-            init() {
-                // Simple splitting logic for chars/words
-                // Note: Full line splitting requires more complex logic or libraries like GSAP SplitText (Premium)
-                // This is a lightweight implementation for the requested effect.
-
-                const text = this.originalText.trim();
-                this.element.innerHTML = '';
-                this.element.style.opacity = '1'; // Ensure visible after js loads
-
-                const words = text.split(/\s+/);
-
-                words.forEach((word, wordIndex) => {
-                    const wordSpan = document.createElement('span');
-                    wordSpan.className = 'split-word';
-                    wordSpan.style.display = 'inline-block';
-                    wordSpan.style.overflow = 'hidden';
-                    wordSpan.style.verticalAlign = 'top';
-
-                    const letters = word.split('');
-                    letters.forEach((letter) => {
-                        const charSpan = document.createElement('span');
-                        charSpan.className = 'split-char';
-                        charSpan.style.display = 'inline-block';
-                        charSpan.style.transform = 'translateY(100%)'; // Start position for animation
-                        charSpan.style.opacity = '0';
-                        charSpan.textContent = letter;
-                        wordSpan.appendChild(charSpan);
-                        this.chars.push(charSpan);
-                    });
-
-                    this.element.appendChild(wordSpan);
-
-                    // Add space after word unless it's the last one
-                    if (wordIndex < words.length - 1) {
-                        const space = document.createTextNode(' ');
-                        this.element.appendChild(space);
-                    }
-                });
-
-                this.animate();
-            }
-
-            animate() {
-                // Use GSAP if available
-                if (typeof gsap !== 'undefined') {
-                    gsap.to(this.chars, {
-                        y: '0%',
-                        opacity: 1,
-                        duration: this.options.duration,
-                        ease: this.options.ease,
-                        stagger: this.options.delay,
-                        scrollTrigger: {
-                            trigger: this.element,
-                            start: 'top 80%',
-                            toggleActions: 'play none none reverse'
-                        }
-                    });
-                }
-            }
-        }
-
-        // Initialize SplitText on Hero Headline
-        document.addEventListener('DOMContentLoaded', () => {
-            // target the hero h1 or specific text
-            const heroHeadline = document.querySelector('#hero h1');
-            if (heroHeadline) {
-                new SplitText(heroHeadline, { type: 'chars', delay: 0.03 });
-            }
-
-            // Also apply to the "Websites, die verkaufen" text if present
-            const subHeadline = document.querySelector('#hero .text-xl.font-light');
-            if (subHeadline) {
-                new SplitText(subHeadline, { type: 'words', delay: 0.05 });
-            }
-        });
+        // Initialize Neural Grid & SplitText logic moved to Top
 
         class NeuralGrid {
             constructor(containerId, options = {}) {
@@ -1686,57 +1718,7 @@
         // Initialize Neural Grid
         const neuralGrid = new NeuralGrid('hero-sequence', { gridColor: '#0077ff' });
 
-        // Content First Loading Sequence
-        document.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
-
-            // 0. Cinematic Intro (SplitText Upgrade)
-            document.body.classList.add('intro-active');
-
-            // Apply SplitText to Intro
-            const introText = document.querySelector('.intro-text');
-            if (introText) {
-                new SplitText(introText, { type: 'chars', delay: 0.04 });
-            }
-
-            // Animate Intro Chars
-            tl.to(".intro-text .split-char", {
-                y: '0%',
-                opacity: 1,
-                duration: 1.2,
-                ease: "power2.out",
-                stagger: 0.05
-            })
-                .to(".intro-text", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
-                .to("#intro-overlay", {
-                    opacity: 0, duration: 1.0, ease: "power2.inOut", onComplete: () => {
-                        document.getElementById('intro-overlay').style.display = 'none';
-                        document.body.classList.remove('intro-active');
-                    }
-                }, "-=0.5")
-
-                // 1. Hero Text Reveal (Chained after Intro)
-                .to("#hero h1 .split-char", { y: '0%', opacity: 1, duration: 1, ease: "power3.out", stagger: 0.03 }, "-=0.4")
-                .to("#hero p", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
-
-                // 2. Silent Background Fade-In
-                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "-=0.2");
-
-            // 3. Performance: Pause when not visible
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        neuralGrid.isPaused = false;
-                        neuralGrid.update(performance.now());
-                    } else {
-                        neuralGrid.isPaused = true;
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            const heroSection = document.getElementById('hero');
-            if (heroSection) observer.observe(heroSection);
-        });
+        // (Previous intro code removed - moved to top)
 
         // Form Multi-Step
         let currentStep = 1;
