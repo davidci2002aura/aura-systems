@@ -13,6 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <style>
         * {
@@ -27,15 +30,63 @@
             --bg: #0a0a0a;
             --text: #ffffff;
             --text-muted: #a1a1aa;
+
+            /* Reference Variables */
+            --ink: #0c0c0e;
+            --ink-2: #13131a;
+            --surface: #18181f;
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #5b5ef7;
+            --accent-2: #a78bfa;
+            --accent-glow: rgba(91, 94, 247, 0.3);
+            --mono: 'Space Mono', monospace;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            /* Fix layout shift */
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── INTRO OVERLAY ─── */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            color: #fff;
+            letter-spacing: -0.05em;
+            /* Hidden initially for SplitText */
+            visibility: visible;
+        }
+
+        /* Utility to prevent shift */
+        body,
+        html {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .marquee-section,
+        .pricing-grid,
+        .process-layout {
+            max-width: 100vw;
+            overflow-x: hidden;
         }
 
         /* Typography */
@@ -419,12 +470,405 @@
             opacity: 0.5;
             pointer-events: none;
         }
+
+        /* ─── MARQUEE ─── */
+        .marquee-section {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            overflow: hidden;
+            background: var(--ink-2);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .marquee-item {
+            white-space: nowrap;
+            font-family: var(--mono);
+            font-size: .75rem;
+            letter-spacing: .15em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+        }
+
+        .marquee-item span {
+            color: var(--primary);
+        }
+
+        .marquee-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        /* ─── PROCESS ─── */
+        .process-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .process-step:first-child {
+            padding-top: 0;
+        }
+
+        .process-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text-muted);
+            letter-spacing: .08em;
+            padding-top: .1rem;
+        }
+
+        .step-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: .5rem;
+        }
+
+        .step-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .step-time {
+            font-family: var(--mono);
+            font-size: .7rem;
+            color: var(--primary);
+            letter-spacing: .1em;
+            margin-top: .75rem;
+        }
+
+        .process-step.active {
+            padding-left: 1rem;
+            border-left: 2px solid var(--primary);
+        }
+
+        .process-step.active .step-num {
+            color: var(--primary);
+        }
+
+        /* Process visual */
+        .process-visual {
+            position: sticky;
+            top: 120px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .pv-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .pv-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .pv-body {
+            padding: 1.5rem;
+        }
+
+        .pv-code {
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            background: var(--ink);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .pv-code .kw {
+            color: var(--accent-2);
+        }
+
+        .pv-code .str {
+            color: #86efac;
+        }
+
+        .pv-code .num {
+            color: #f9a8d4;
+        }
+
+        .pv-code .fn {
+            color: #93c5fd;
+        }
+
+        .pv-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+        }
+
+        .pv-check-item {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-size: .9rem;
+        }
+
+        .pv-check-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(74, 222, 128, .1);
+            border: 1px solid rgba(74, 222, 128, .3);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .pv-check-icon svg {
+            width: 10px;
+            height: 10px;
+            stroke: #4ade80;
+        }
+
+        /* ─── PRICING ─── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .price-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, .3);
+        }
+
+        .price-card-featured {
+            background: linear-gradient(145deg, rgba(99, 102, 241, .15), var(--surface));
+            border-color: rgba(99, 102, 241, .4);
+            position: relative;
+        }
+
+        .price-card-featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: -1px;
+            right: 2rem;
+            font-family: var(--mono);
+            font-size: .6rem;
+            letter-spacing: .15em;
+            background: var(--primary);
+            color: #fff;
+            padding: .3rem .8rem;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .price-name {
+            font-family: var(--mono);
+            font-size: .75rem;
+            color: var(--text-muted);
+            letter-spacing: .12em;
+        }
+
+        .price-amount {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            letter-spacing: -.03em;
+        }
+
+        .price-amount span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .price-desc {
+            font-size: .9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .price-divider {
+            height: 1px;
+            background: var(--border);
+        }
+
+        .price-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .65rem;
+        }
+
+        .price-features li {
+            font-size: .9rem;
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-family: var(--mono);
+            flex-shrink: 0;
+        }
+
+        .price-features li.off {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .price-features li.off::before {
+            content: '—';
+            color: var(--text-muted);
+        }
+
+        /* ─── FAQ ─── */
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .faq-q .faq-arrow {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform .3s;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(45deg);
+            color: var(--primary);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease, padding .35s;
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 300px;
+            padding-bottom: 1.5rem;
+        }
+
+        @media(max-width: 1024px) {
+
+            .process-layout,
+            .pricing-grid,
+            .faq-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .process-visual {
+                display: none;
+            }
+
+            .pricing-grid {
+                max-width: 500px;
+                mx-auto;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Background Sequence (Global) -->
-    <!-- Background Layers -->
+    <div id="intro-overlay">
+        <div class="intro-text">AURA</div>
+    </div>
+
+    <!-- Background -->
     <div class="grain-overlay"></div>
     <div class="vignette-overlay"></div>
     <canvas id="hero-sequence"></canvas>
@@ -633,65 +1077,209 @@
     </section>
 
     <!-- Process -->
-    <section id="prozess" class="py-20 px-6">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-16">
+    <section id="prozess" class="py-20 px-6 bg-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
                 <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">So arbeiten wir</p>
                 <h2 class="mb-4">In 4 Schritten zum Erfolg</h2>
-                <p class="text-zinc-400 text-lg">Einfach. Transparent. Effektiv.</p>
+                <p class="text-zinc-400 text-lg">Kein Rätselraten. Unser erprobter Prozess bringt Ihre Website schnell
+                    und zuverlässig ans Ziel.</p>
             </div>
 
-            <div class="space-y-6">
-                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
-                    <div
-                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
-                        1
+            <div class="process-layout">
+                <div class="process-steps" id="processSteps">
+                    <div class="process-step active" data-step="0">
+                        <div class="step-num">01</div>
+                        <div>
+                            <div class="step-title">Kostenloses Erstgespräch</div>
+                            <p class="step-desc">In einem 30-minütigen Gespräch lernen wir Ihr Unternehmen und Ihre
+                                Ziele kennen. Kein Verkaufsgespräch – ehrliche Beratung.</p>
+                            <div class="step-time">DAUER: 30 MIN</div>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="mb-2">Anfrage & Kontakt</h3>
-                        <p class="text-zinc-400">
-                            Nach Ihrer Anfrage melden wir uns umgehend per Mail oder Telefon bei Ihnen, um das weitere
-                            Vorgehen zu besprechen.
-                        </p>
+                    <div class="process-step" data-step="1">
+                        <div class="step-num">02</div>
+                        <div>
+                            <div class="step-title">Strategie & Konzept</div>
+                            <p class="step-desc">Auf Basis Ihrer Ziele erstellen wir ein maßgeschneidertes Konzept mit
+                                Seitenstruktur, Designrichtung und Architektur.</p>
+                            <div class="step-time">DAUER: 2–3 TAGE</div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-step="2">
+                        <div class="step-num">03</div>
+                        <div>
+                            <div class="step-title">Design & Prototyping</div>
+                            <p class="step-desc">Sie erhalten interaktive Prototypen. Wir iterieren gemeinsam, bis das
+                                Design exakt Ihrer Vorstellung entspricht.</p>
+                            <div class="step-time">DAUER: 3–5 TAGE</div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-step="3">
+                        <div class="step-num">04</div>
+                        <div>
+                            <div class="step-title">Entwicklung & Launch</div>
+                            <p class="step-desc">Sauberer Code, tägliche Updates und ein stressfreier Launch inkl.
+                                Analytics und Performance-Setup.</p>
+                            <div class="step-time">DAUER: 1–3 WOCHEN</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
-                    <div
-                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
-                        2
+                <div class="process-visual">
+                    <div class="pv-header">
+                        <div class="pv-dot" style="background:#ff5f57;"></div>
+                        <div class="pv-dot" style="background:#febc2e;"></div>
+                        <div class="pv-dot" style="background:#28c840;"></div>
+                        <span
+                            style="font-family:var(--mono);font-size:.7rem;color:var(--text-muted);margin-left:.75rem;">project.config.ts</span>
                     </div>
-                    <div>
-                        <h3 class="mb-2">Konzept & Design</h3>
-                        <p class="text-zinc-400">
-                            Innerhalb von 2-3 Tagen erhalten Sie erste Designs und ein detailliertes Konzept.
-                        </p>
+                    <div class="pv-body">
+                        <div class="pv-code">
+                            <span class="kw">const</span> project = {<br>
+                            &nbsp;&nbsp;client: <span class="str">"Ihr Unternehmen"</span>,<br>
+                            &nbsp;&nbsp;lighthouse: <span class="num">100</span>,<br>
+                            &nbsp;&nbsp;loadTime: <span class="str">"0.8s"</span>,<br>
+                            &nbsp;&nbsp;seoScore: <span class="num">100</span>,<br>
+                            &nbsp;&nbsp;status: <span class="fn">fn</span>.<span class="kw">live</span>()<br>
+                            }
+                        </div>
+                        <div class="pv-checklist">
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Zieldefinition & Briefing
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Design-Prototyp freigegeben
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Entwicklung abgeschlossen
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Live gegangen · 🎉
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
-                    <div
-                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
-                        3
-                    </div>
+    <!-- Pricing -->
+    <section id="preise" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 max-w-2xl mx-auto">
+                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Investition</p>
+                <h2 class="mb-4">Transparente Preise</h2>
+                <p class="text-zinc-400 text-lg">Keine versteckten Kosten. Sie zahlen für Ergebnisse.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card reveal">
                     <div>
-                        <h3 class="mb-2">Entwicklung</h3>
-                        <p class="text-zinc-400">
-                            Wir bauen Ihre Website mit modernster Technologie. Sie erhalten regelmäßige Updates.
-                        </p>
+                        <div class="price-name">STARTER</div>
+                        <div class="price-amount">999€ <span>einmalig</span></div>
                     </div>
+                    <p class="price-desc">Perfekt für Selbständige, die eine professionelle Visitenkarte benötigen.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Bis zu 5 Seiten</li>
+                        <li>Responsive Design</li>
+                        <li>On-Page SEO</li>
+                        <li>Kontaktformular</li>
+                        <li class="off">A/B Testing</li>
+                        <li class="off">KI-Integration</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary w-full justify-center">Anfragen →</a>
                 </div>
 
-                <div class="glass step-card p-8 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
-                    <div
-                        class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-xl">
-                        4
-                    </div>
+                <div class="price-card price-card-featured reveal">
                     <div>
-                        <h3 class="mb-2">Launch & Support</h3>
-                        <p class="text-zinc-400">
-                            Wir launchen Ihre Website und stehen Ihnen für Support und Optimierungen zur Verfügung.
-                        </p>
+                        <div class="price-name">PROFESSIONAL</div>
+                        <div class="price-amount">2.999€ <span>einmalig</span></div>
+                    </div>
+                    <p class="price-desc">Die meistgebuchte Option für Unternehmen, die wachsen wollen.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Bis zu 15 Seiten</li>
+                        <li>Premium Custom Design</li>
+                        <li>Technisches SEO komplett</li>
+                        <li>CMS-Integration</li>
+                        <li>Conversion Optimierung</li>
+                        <li>3 Monate Support</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-primary w-full justify-center">Jetzt starten →</a>
+                </div>
+
+                <div class="price-card reveal">
+                    <div>
+                        <div class="price-name">ENTERPRISE</div>
+                        <div class="price-amount">Auf Anfrage</div>
+                    </div>
+                    <p class="price-desc">Für komplexe Anforderungen, E-Commerce und große Teams.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Unbegrenzte Seiten</li>
+                        <li>Design System</li>
+                        <li>KI-Chatbots & Automation</li>
+                        <li>E-Commerce</li>
+                        <li>Multilingual</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary w-full justify-center">Gespräch buchen →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 px-6 bg-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="faq-layout">
+                <div>
+                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">FAQ</p>
+                    <h2 class="mb-4">Häufige Fragen</h2>
+                    <p class="text-zinc-400 text-lg mb-8">
+                        Alles, was Sie wissen müssen – ehrlich und auf den Punkt.
+                    </p>
+                    <a href="#kontakt" class="btn-primary">Frage stellen</a>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item open">
+                        <button class="faq-q">Wie lange dauert eine Website?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Ein Starter-Paket ist oft in 7–10 Tagen fertig, während komplexe Websites 3–6
+                            Wochen benötigen. Wir geben Ihnen beim Erstgespräch eine verbindliche Zeitschätzung.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Kann ich meine Inhalte selbst pflegen?<span
+                                class="faq-arrow">+</span></button>
+                        <div class="faq-a">Ja. Wir integrieren ein benutzerfreundliches CMS (z. B. Sanity oder
+                            WordPress), das auch für Nicht-Techniker einfach zu bedienen ist.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Was passiert nach dem Launch?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Im Professional Paket ist 3 Monate Support inklusive. Danach bieten wir
+                            Wartungspakete für Updates und Optimierungen an.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Bieten Sie auch Hosting an?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Wir richten Ihr Hosting (z.B. auf Vercel oder einem deutschen Hoster)
+                            komplett ein. Sie bleiben Vertragspartner für volle Kontrolle.</div>
                     </div>
                 </div>
             </div>
@@ -1100,13 +1688,39 @@
 
         // Content First Loading Sequence
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Immediate Text Reveal
             const tl = gsap.timeline();
-            tl.to("#hero h1", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" })
-                .to("#hero p", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.2")
+
+            // 0. Cinematic Intro (SplitText Upgrade)
+            document.body.classList.add('intro-active');
+
+            // Apply SplitText to Intro
+            const introText = document.querySelector('.intro-text');
+            if (introText) {
+                new SplitText(introText, { type: 'chars', delay: 0.04 });
+            }
+
+            // Animate Intro Chars
+            tl.to(".intro-text .split-char", {
+                y: '0%',
+                opacity: 1,
+                duration: 1.2,
+                ease: "power2.out",
+                stagger: 0.05
+            })
+                .to(".intro-text", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
+                .to("#intro-overlay", {
+                    opacity: 0, duration: 1.0, ease: "power2.inOut", onComplete: () => {
+                        document.getElementById('intro-overlay').style.display = 'none';
+                        document.body.classList.remove('intro-active');
+                    }
+                }, "-=0.5")
+
+                // 1. Hero Text Reveal (Chained after Intro)
+                .to("#hero h1 .split-char", { y: '0%', opacity: 1, duration: 1, ease: "power3.out", stagger: 0.03 }, "-=0.4")
+                .to("#hero p", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+
                 // 2. Silent Background Fade-In
-                // 2. Silent Background Fade-In
-                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "+=0.1");
+                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "-=0.2");
 
             // 3. Performance: Pause when not visible
             const observer = new IntersectionObserver((entries) => {
@@ -1177,6 +1791,27 @@
 
         document.querySelectorAll('.step-card').forEach(card => {
             observer.observe(card);
+        });
+
+        // Process Steps Interaction
+        document.querySelectorAll('.process-step').forEach((step) => {
+            step.addEventListener('click', () => {
+                // Remove active class from all
+                document.querySelectorAll('.process-step').forEach(s => s.classList.remove('active'));
+                // Add to clicked
+                step.classList.add('active');
+            });
+        });
+
+        // FAQ Interaction
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-q').addEventListener('click', () => {
+                const wasOpen = item.classList.contains('open');
+                // Close all others
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                // Toggle clicked
+                if (!wasOpen) item.classList.add('open');
+            });
         });
 
         // GSAP Scroll Animations
