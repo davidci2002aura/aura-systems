@@ -3,390 +3,1200 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA SYSTEMS | Full-Stack AI Engineering</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AURA SYSTEMS | KI-getriebene Web-Lösungen</title>
+    <meta name="description"
+        content="Wir bauen Websites, die verkaufen. KI-gestützt. Blitzschnell. Conversion-optimiert.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --accent: #6366f1;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+
+            /* Reference Variables */
+            --ink: #0c0c0e;
+            --ink-2: #13131a;
+            --surface: #18181f;
+            --border: rgba(255, 255, 255, 0.06);
+            --accent: #5b5ef7;
+            --accent-2: #a78bfa;
+            --accent-glow: rgba(91, 94, 247, 0.3);
+            --mono: 'Space Mono', monospace;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            color: white;
-            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
+            /* Radial Gradient for depth */
+            background-image: radial-gradient(circle at 50% 30%, #1a1a2e 0%, #0a0a0a 70%);
+            /* Fix layout shift */
+            -webkit-font-smoothing: antialiased;
         }
 
-        .mono {
-            font-family: 'Fira Code', monospace;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 40%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Architecture Animation: Flowing Data Pulses */
-        .connector {
-            position: relative;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.05);
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        .pulse {
+        /* Neural Operations Nodes */
+        .neural-network {
             position: absolute;
-            width: 60px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: flow 2s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-
-        @keyframes flow {
-            0% {
-                left: -60px;
-                opacity: 0.5;
-            }
-
-            50% {
-                opacity: 1;
-                filter: brightness(1.5);
-            }
-
-            100% {
-                left: 100%;
-                opacity: 0.5;
-            }
-        }
-
-        /* ROI Card Interaction */
-        .matrix-card {
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .matrix-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(99, 102, 241, 0.5);
-            background: rgba(99, 102, 241, 0.03);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(99, 102, 241, 0.1);
-        }
-
-        #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
+            inset: 0;
+            overflow: hidden;
+            opacity: 0.2;
             pointer-events: none;
-            z-index: 1;
-            transform: translate(-50%, -50%);
         }
 
-        /* Range Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
-            background: transparent;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
+        .neural-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
             border-radius: 50%;
-            background: var(--accent);
-            margin-top: -7px;
-            box-shadow: 0 0 10px var(--accent);
+            animation: pulse-node 3s infinite ease-in-out;
         }
 
-        /* Multi-Step Form */
-        .step {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        .neural-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform-origin: left center;
+            opacity: 0.3;
         }
 
-        .step.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Status Bar */
-        .status-bar {
-            font-family: 'Fira Code', monospace;
-            font-size: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Vocal Identity Waveform */
-        .voice-wave-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            height: 100%;
-            width: 100%;
-        }
-
-        .voice-bar {
-            width: 6px;
-            background: var(--accent);
-            border-radius: 9999px;
-            animation: voice-wave 1.5s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-        }
-
-        @keyframes voice-wave {
+        @keyframes pulse-node {
 
             0%,
             100% {
-                height: 20%;
-                opacity: 0.3;
+                transform: scale(1);
+                opacity: 0.5;
             }
 
             50% {
-                height: 80%;
+                transform: scale(1.5);
                 opacity: 1;
-                filter: brightness(1.3);
+                box-shadow: 0 0 10px var(--accent);
+            }
+        }
+
+        /* ─── INTRO OVERLAY ─── */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: clamp(4rem, 15vw, 10rem);
+            color: #fff;
+            letter-spacing: -0.05em;
+            /* Relaxed from -0.08em */
+            line-height: 1.2;
+            /* Prevent vertical clipping */
+            padding: 2rem;
+            /* Prevent shadow clipping */
+            text-transform: uppercase;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+            /* Hidden initially for SplitText */
+            visibility: visible;
+        }
+
+        /* Intro specifically blurred initially */
+        .intro-text .split-char {
+            filter: blur(20px);
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        /* Utility to prevent shift */
+        body,
+        html {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Fix: Use 100% instead of 100vw to avoid scrollbar width issues */
+        .marquee-section,
+        .pricing-grid,
+        .process-layout {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(4.5rem, 15vw, 9.5rem);
+            /* Massive, dominant */
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        /* ... existing styles ... */
+
+
+        h3 {
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Button */
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .bg-grid {
+            display: none;
+            /* Permanently removed */
+        }
+
+        /* Visual Depth Overlays */
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            /* Above background, below text */
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        .vignette-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at center, transparent 20%, rgba(10, 10, 10, 0.8) 120%);
+        }
+
+        /* ... existing code ... */
+
+
+
+        /* Global Background Video Canvas */
+        #hero-sequence,
+        #hero-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            /* Update per user feedback: More present, less "mistake-like" */
+            opacity: 0;
+            /* Silent start - fades in later */
+            filter: blur(0px);
+            /* Removed blur for clarity */
+            pointer-events: none;
+            z-index: -2;
+            transform: scale(0.9);
+            /* Slightly smaller as requested */
+        }
+
+        #hero-sequence {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        #hero-sequence.loaded {
+            opacity: 0.15;
+        }
+
+        /* Logo Loop CSS */
+        .logo-scroll {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            padding: 2rem 0;
+            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+        }
+
+        .logo-track {
+            flex-shrink: 0;
+            display: flex;
+            gap: 4rem;
+            min-width: 100%;
+            justify-content: space-around;
+            animation: scroll 30s linear infinite;
+        }
+
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(calc(-100% - 4rem));
+            }
+        }
+
+        .tech-logo {
+            height: 48px !important;
+            width: auto !important;
+            max-width: 120px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            flex-shrink: 0;
+            display: block;
+            /* Ensure it behaves like a block */
+        }
+
+        .tech-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Card Hover */
+        /* Card Hover (Spotlight) */
+        .feature-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Spotlight radial gradient */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle closest-side, rgba(99, 102, 241, 0.15), transparent);
+            transition: width 0.3s ease, height 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .feature-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Process Steps */
+        .step-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Form Steps */
+        .form-step {
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            z-index: 10;
+            animation: fadeInScroll 1s ease 2s forwards;
+        }
+
+        @keyframes fadeInScroll {
+            to {
+                opacity: 0.7;
+            }
+        }
+
+        .mouse {
+            width: 20px;
+            height: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .wheel {
+            width: 2px;
+            height: 4px;
+            background: #fff;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 1.5s infinite;
+        }
+
+        .arrow-scroll {
+            width: 10px;
+            height: 10px;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transform: rotate(45deg);
+            animation: scrollArrow 1.5s infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                top: 6px;
+                opacity: 1;
+            }
+
+            100% {
+                top: 18px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes scrollArrow {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) translate(-5px, -5px);
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* ─── MARQUEE ─── */
+        .marquee-section {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            overflow: hidden;
+            background: var(--ink-2);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 3rem;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .marquee-item {
+            white-space: nowrap;
+            font-family: var(--mono);
+            font-size: .75rem;
+            letter-spacing: .15em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+        }
+
+        .marquee-item span {
+            color: var(--primary);
+        }
+
+        .marquee-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        /* ─── PROCESS ─── */
+        .process-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .process-step:first-child {
+            padding-top: 0;
+        }
+
+        .process-step:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text-muted);
+            letter-spacing: .08em;
+            padding-top: .1rem;
+        }
+
+        .step-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: .5rem;
+        }
+
+        .step-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .step-time {
+            font-family: var(--mono);
+            font-size: .7rem;
+            color: var(--primary);
+            letter-spacing: .1em;
+            margin-top: .75rem;
+        }
+
+        .process-step.active {
+            padding-left: 1rem;
+            border-left: 2px solid var(--primary);
+        }
+
+        .process-step.active .step-num {
+            color: var(--primary);
+        }
+
+        /* Process visual */
+        .process-visual {
+            position: sticky;
+            top: 120px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .pv-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .pv-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .pv-body {
+            padding: 1.5rem;
+        }
+
+        .pv-code {
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            background: var(--ink);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .pv-code .kw {
+            color: var(--accent-2);
+        }
+
+        .pv-code .str {
+            color: #86efac;
+        }
+
+        .pv-code .num {
+            color: #f9a8d4;
+        }
+
+        .pv-code .fn {
+            color: #93c5fd;
+        }
+
+        .pv-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+        }
+
+        .pv-check-item {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-size: .9rem;
+        }
+
+        /*
+        const config = {
+            particleCount: 150, // Increased from 80
+            connectionDistance: 120,
+            mouseDistance: 200,
+            baseColor: 'rgba(99, 102, 241, 0.6)', // Brighter
+            activeColor: 'rgba(167, 139, 250, 0.8)'
+        };
+        */
+        .pv-check-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(74, 222, 128, .1);
+            border: 1px solid rgba(74, 222, 128, .3);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .pv-check-icon svg {
+            width: 10px;
+            height: 10px;
+            stroke: #4ade80;
+        }
+
+        /* ─── PRICING ─── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .price-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, .3);
+        }
+
+        .price-card-featured {
+            background: linear-gradient(145deg, rgba(99, 102, 241, .15), var(--surface));
+            border-color: rgba(99, 102, 241, .4);
+            position: relative;
+        }
+
+        .price-card-featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: -1px;
+            right: 2rem;
+            font-family: var(--mono);
+            font-size: .6rem;
+            letter-spacing: .15em;
+            background: var(--primary);
+            color: #fff;
+            padding: .3rem .8rem;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .price-name {
+            font-family: var(--mono);
+            font-size: .75rem;
+            color: var(--text-muted);
+            letter-spacing: .12em;
+        }
+
+        .price-amount {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            letter-spacing: -.03em;
+        }
+
+        .price-amount span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .price-desc {
+            font-size: .9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .price-divider {
+            height: 1px;
+            background: var(--border);
+        }
+
+        .price-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .65rem;
+        }
+
+        .price-features li {
+            font-size: .9rem;
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-family: var(--mono);
+            flex-shrink: 0;
+        }
+
+        .price-features li.off {
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        .price-features li.off::before {
+            content: '—';
+            color: var(--text-muted);
+        }
+
+        /* ─── FAQ ─── */
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .faq-q .faq-arrow {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform .3s;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(45deg);
+            color: var(--primary);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease, padding .35s;
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 300px;
+            padding-bottom: 1.5rem;
+        }
+
+        @media(max-width: 1024px) {
+
+            .process-layout,
+            .pricing-grid,
+            .faq-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .process-visual {
+                display: none;
+            }
+
+            .pricing-grid {
+                max-width: 500px;
+                mx-auto;
             }
         }
     </style>
 </head>
 
-<body class="antialiased">
-    <div id="cursor-glow"></div>
-
-    <!-- Live System Status -->
-    <div
-        class="fixed bottom-0 w-full z-50 status-bar py-2 px-6 flex justify-between text-zinc-500 uppercase tracking-widest">
-        <div class="flex gap-6">
-            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                System: Operativ</span>
-            <span class="hidden md:inline">Aktive Agenten: <span class="text-indigo-400">14</span></span>
-            <span class="hidden md:inline">Latenz: <span class="text-indigo-400">24ms</span></span>
-        </div>
-        <div>
-            Daten Verarbeitet: <span class="text-white">1.2TB</span>
-        </div>
+<body>
+    <!-- Background Sequence (Global) -->
+    <div id="intro-overlay">
+        <div class="intro-text">AURA</div>
     </div>
 
-    <nav
-        class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40">
-        <div class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3">
-            <div
-                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
-                A</div>
-            AURA SYSTEMS
-        </div>
-        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
-            <a href="#architecture" class="hover:text-white transition magnetic-btn">Full-Stack</a>
-            <a href="#roi" class="hover:text-white transition magnetic-btn">ROI Audit</a>
-            <a href="#contact" class="text-indigo-500 font-bold magnetic-btn">Projekt Starten</a>
+    <!-- Background -->
+    <div class="grain-overlay"></div>
+    <div class="vignette-overlay"></div>
+    <canvas id="hero-sequence"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 flex items-center justify-center text-indigo-500">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4L4 36H36L20 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        <path d="M20 14L12 30H28L20 14Z" fill="currentColor" fill-opacity="0.5" />
+                    </svg>
+                </div>
+                <span class="font-bold text-lg">AURA</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#leistungen" class="text-sm text-zinc-400 hover:text-white transition">Leistungen</a>
+                <a href="#prozess" class="text-sm text-zinc-400 hover:text-white transition">Prozess</a>
+                <a href="#kontakt" class="btn-primary text-sm">Termin buchen</a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="md:hidden" id="mobileToggle" aria-label="Menu">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <section class="pt-56 pb-24 px-6 max-w-7xl mx-auto text-center z-10 relative">
-        <span class="text-indigo-500 font-bold text-[10px] tracking-[0.5em] uppercase mb-8 block">Full-Stack AI &
-            Engineering Agentur</span>
-        <h1 class="text-5xl md:text-[7rem] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-            WE BUILD THE <br /><span class="gradient-text italic">INFRASTRUCTURE.</span>
-        </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
-            Wir skalieren Ihre Operationen durch <span
-                class="text-white font-medium">Marktführerschafts-Strategien</span>.
-            Wir verkaufen keine Zeit, wir konstruieren Überlegenheit. <br>
-            <span class="italic text-zinc-500">Die Infrastruktur der Zukunft ist autonom. Sind Sie bereit zu
-                führen?</span>
-        </p>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#leistungen" class="text-2xl font-semibold mobile-link">Leistungen</a>
+        <a href="#prozess" class="text-2xl font-semibold mobile-link">Prozess</a>
+        <a href="#kontakt" class="btn-primary text-lg mobile-link">Termin buchen</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-20" id="hero">
+        <!-- Content -->
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <p class="text-indigo-500 font-semibold mb-6 text-sm uppercase tracking-wider">Premium Web Solutions</p>
+            <h1 class="mb-8" style="opacity: 0; transform: translateY(10px);">
+                Websites, die<br>
+                <span class="gradient-text">verkaufen.</span>
+            </h1>
+            <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto" style="opacity: 0; transform: translateY(10px);">
+                Wir bauen High-Performance Websites.
+                Schnell. Sichtbar. Skalierbar.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#kontakt" class="btn-primary text-lg">
+                    Kostenloses Erstgespräch
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14m-7-7l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#leistungen" class="btn-secondary text-lg">Mehr erfahren</a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow-scroll"></div>
+        </div>
     </section>
 
-    <section id="architecture" class="py-24 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="glass p-12 md:p-20 rounded-[4rem] border-white/5">
-            <div class="text-center mb-20">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4 italic">Infrastruktur
-                    Insight</h2>
-                <h3 class="text-4xl font-black italic">Der AURA Full-Stack Flow</h3>
+    <!-- Features -->
+    <section id="leistungen" class="py-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8">
+                <p class="text-indigo-500 font-semibold mb-2 text-sm uppercase tracking-wider">Was wir bieten</p>
+                <h2 class="mb-4">Ihre Vorteile</h2>
+                <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-6">
+                    Moderne Technologie für messbare Ergebnisse
+                </p>
+                <!-- Separator -->
+                <div
+                    class="w-16 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent mx-auto opacity-50">
+                </div>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <!-- Frontend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Frontend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Next.js / React<br>High-Conversion UI</p>
-                </div>
-
-                <div class="connector hidden md:block">
-                    <div class="pulse"></div>
-                </div>
-
-                <!-- AI Core Node -->
-                <div
-                    class="w-full md:w-80 glass p-10 rounded-3xl text-center border-indigo-500/50 bg-indigo-600/5 shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-50 animate-pulse"></div>
-                    <div class="relative z-10">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Speed -->
+                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
+                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
+                    <div class="feature-card-content">
                         <div
-                            class="w-20 h-20 mx-auto mb-6 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.3)]">
-                            <svg class="w-10 h-10 text-indigo-400 animate-[spin_10s_linear_infinite]" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                             </svg>
                         </div>
-                        <h4 class="font-bold text-lg uppercase mb-2 tracking-widest text-indigo-400">AURA AI Core</h4>
-                        <p class="text-[10px] text-indigo-300 mono">n8n / Python / LLMs<br>Prozess-Intelligenz</p>
+                        <h3 class="mb-4 text-xl font-bold">Blitzschnell</h3>
+                        <p class="text-zinc-400 leading-relaxed">
+                            Ladezeiten unter 1 Sekunde. Ihre Besucher bleiben, Google liebt es.
+                        </p>
                     </div>
                 </div>
 
-                <div class="connector hidden md:block">
-                    <div class="pulse" style="animation-delay: 1s"></div>
+                <!-- SEO -->
+                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
+                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
+                    <div class="feature-card-content">
+                        <div
+                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                        </div>
+                        <h3 class="mb-4 text-xl font-bold">SEO & Sichtbarkeit</h3>
+                        <p class="text-zinc-400 leading-relaxed">
+                            Technisch perfektes SEO für Top-Rankings. Werden Sie von Ihren Kunden gefunden.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Backend Node -->
-                <div
-                    class="w-full md:w-64 glass p-8 rounded-3xl text-center border-white/10 hover:border-indigo-500/50 transition group">
-                    <div
-                        class="w-16 h-16 mx-auto mb-6 bg-zinc-900/50 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                        </svg>
+                <!-- Conversion -->
+                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
+                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
+                    <div class="feature-card-content">
+                        <div
+                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                        <h3 class="mb-4 text-xl font-bold">Mehr Conversions</h3>
+                        <p class="text-zinc-400 leading-relaxed">
+                            Design, das verkauft. Jedes Element ist auf Conversion optimiert.
+                        </p>
                     </div>
-                    <h4 class="font-bold text-sm uppercase mb-2 tracking-widest">Backend</h4>
-                    <p class="text-[10px] text-zinc-500 mono">Supabase / PostgreSQL<br>Echtzeit-Infrastruktur</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="engineering-deep-dive" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-20">
-            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-indigo-500 mb-4">Technische Architektur</h2>
-            <h3 class="text-4xl md:text-6xl font-black italic tracking-tighter">Vom Interface bis zum <span
-                    class="gradient-text">Datensatz.</span></h3>
+    <!-- Tech Stack (Logo Loop) -->
+    <section class="py-20 px-0 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-12 text-center">
+            <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Technologie</p>
+            <h2 class="mb-4">Modernster Stack</h2>
+            <p class="text-zinc-400">Wir nutzen die besten Tools am Markt.</p>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="layout-template" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Frontend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Wir entwickeln High-Performance Interfaces mit
-                    <strong>Next.js</strong> und <strong>React</strong>. Pixelgenau, konversionsstark und für maximale
-                    Geschwindigkeit optimiert.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SSR</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">TAILWIND</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">GSAP</span>
-                </div>
+        <div class="logo-scroll">
+            <!-- Content duplicated for seamless loop -->
+            <div class="logo-track">
+                <!-- React -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2a8 0 100 16 8 8 0 000-16z" />
+                    <circle cx="12" cy="12" r="2" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)" stroke="currentColor"
+                        stroke-width="1.5" fill="none" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)" stroke="currentColor"
+                        stroke-width="1.5" fill="none" />
+                </svg>
+                <!-- Next.js -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10 0 2.22-.724 4.27-1.956 5.957L8.609 5.609A9.957 9.957 0 0112 2zm-7.957 8.044l11.666 12.608A9.962 9.962 0 012 12c0-3.13 1.185-5.986 3.144-8.156l.008.008.891 1.192z" />
+                </svg>
+                <!-- Tailwind -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12.001,4.8c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4c2.209,0,4-1.791,4-4C16.001,6.591,14.21,4.8,12.001,4.8z M8.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C10.001,14.696,9.105,13.8,8.001,13.8z M16.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C18.001,14.696,17.105,13.8,16.001,13.8z" />
+                </svg>
+                <!-- TypeScript -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M2.25 0h19.5c1.24 0 2.25 1.01 2.25 2.25v19.5c0 1.24-1.01 2.25-2.25 2.25H2.25C1.01 24 0 23 0 21.75V2.25C0 1.01 1.01 0 2.25 0zm11.32 14.5c.34-1.6.86-2.58 3.54-2.58 1.48 0 2.37.5 2.8 1.54l-1.93.9c-.28-.7-.6-1.02-1.3-1.02-.78 0-1.18.57-1.18 1.19 0 .56.34.93 1.18 1.18.96.28 2.29.6 2.29 2.5 0 1.83-1.48 2.5-3 2.5-2.03 0-2.82-1.1-3.08-2.3l1.96-.8c.2.8.74 1.48 1.74 1.48.97 0 1.34-.48 1.34-1.08 0-.54-.34-.96-1.54-1.3-.96-.1.92-2.14 2.1-2.14zM10 17.5h-1.8v-7h-2v-1.8h5.8v1.8H10v7z" />
+                </svg>
+                <!-- Supabase -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12.924 22.067C12.502 22.569 11.697 22.28 11.697 21.625V13.875H4.568C3.961 13.875 3.616 13.181 3.996 12.729L11.076 4.308C11.498 3.806 12.303 4.095 12.303 4.75V12.5H19.432C20.039 12.5 20.384 13.194 20.004 13.646L12.924 22.067Z" />
+                </svg>
             </div>
+            <!-- Duplicate for infinite loop -->
+            <div class="logo-track" aria-hidden="true">
+                <!-- React -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="2" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)" stroke="currentColor"
+                        stroke-width="1.5" fill="none" />
+                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)" stroke="currentColor"
+                        stroke-width="1.5" fill="none" />
+                </svg>
+                <!-- Next.js -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10 0 2.22-.724 4.27-1.956 5.957L8.609 5.609A9.957 9.957 0 0112 2zm-7.957 8.044l11.666 12.608A9.962 9.962 0 012 12c0-3.13 1.185-5.986 3.144-8.156l.008.008.891 1.192z" />
+                </svg>
+                <!-- Tailwind -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12.001,4.8c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4c2.209,0,4-1.791,4-4C16.001,6.591,14.21,4.8,12.001,4.8z M8.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C10.001,14.696,9.105,13.8,8.001,13.8z M16.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C18.001,14.696,17.105,13.8,16.001,13.8z" />
+                </svg>
+                <!-- TypeScript -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M2.25 0h19.5c1.24 0 2.25 1.01 2.25 2.25v19.5c0 1.24-1.01 2.25-2.25 2.25H2.25C1.01 24 0 23 0 21.75V2.25C0 1.01 1.01 0 2.25 0zm11.32 14.5c.34-1.6.86-2.58 3.54-2.58 1.48 0 2.37.5 2.8 1.54l-1.93.9c-.28-.7-.6-1.02-1.3-1.02-.78 0-1.18.57-1.18 1.19 0 .56.34.93 1.18 1.18.96.28 2.29.6 2.29 2.5 0 1.83-1.48 2.5-3 2.5-2.03 0-2.82-1.1-3.08-2.3l1.96-.8c.2.8.74 1.48 1.74 1.48.97 0 1.34-.48 1.34-1.08 0-.54-.34-.96-1.54-1.3-.96-.28-1.92-.88-1.92-2.33 0-1.4.92-2.14 2.1-2.14zM10 17.5h-1.8v-7h-2v-1.8h5.8v1.8H10v7z" />
+                </svg>
+                <!-- Supabase -->
+                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12.924 22.067C12.502 22.569 11.697 22.28 11.697 21.625V13.875H4.568C3.961 13.875 3.616 13.181 3.996 12.729L11.076 4.308C11.498 3.806 12.303 4.095 12.303 4.75V12.5H19.432C20.039 12.5 20.384 13.194 20.004 13.646L12.924 22.067Z" />
+                </svg>
+            </div>
+        </div>
+    </section>
 
+    <!-- Neural Operations (NEW SECTION) -->
+    <section id="neural-ops" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
             <div
-                class="glass p-10 rounded-[3rem] border-indigo-500/20 bg-indigo-600/5 shadow-2xl relative overflow-hidden group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40">
-                        <i data-lucide="brain-circuit" class="text-white"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">AI Core (Logic)</h4>
-                </div>
-                <p class="text-zinc-300 text-sm leading-relaxed mb-8 italic">Das Gehirn: <strong>n8n</strong> Workflows
-                    kombiniert mit <strong>OpenAI</strong> Modellen. Autonome Entscheidungslogik für Ihre
-                    Geschäftsprozesse.</p>
+                class="lg:col-span-3 glass p-12 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group relative overflow-hidden">
+                <!-- Background Animation -->
+                <div class="neural-network">
+                    <div class="neural-node" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+                    <div class="neural-node" style="top: 50%; left: 30%; animation-delay: 1s;"></div>
+                    <div class="neural-node" style="top: 80%; left: 15%; animation-delay: 2s;"></div>
+                    <div class="neural-node" style="top: 30%; left: 70%; animation-delay: 0.5s;"></div>
+                    <div class="neural-node" style="top: 60%; left: 80%; animation-delay: 1.5s;"></div>
 
-                <div class="bg-black/40 rounded-2xl p-4 mono text-[10px] text-indigo-400 border border-white/5 h-32 overflow-hidden"
-                    id="live-terminal">
-                    <div class="opacity-50">>> Initializing AURA_CORE...</div>
-                    <div class="opacity-70">>> Connecting to Neural_Nodes...</div>
-                    <div class="text-white">>> Status: Autonomy active.</div>
-                </div>
-            </div>
-
-            <div class="glass p-10 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group">
-                <div class="flex items-center gap-4 mb-8">
-                    <div
-                        class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-indigo-600/20 transition">
-                        <i data-lucide="database" class="text-indigo-500"></i>
-                    </div>
-                    <h4 class="text-lg font-black uppercase">Backend</h4>
-                </div>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-6">Sichere Datenhaltung mit <strong>Supabase</strong>
-                    und <strong>PostgreSQL</strong>. Wir bauen die Infrastruktur, die mit Ihren Anforderungen mitwächst.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">SQL</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">APIS</span>
-                    <span class="px-3 py-1 bg-white/5 rounded-full text-[9px] font-bold text-zinc-400">AUTH</span>
-                </div>
-            </div>
-            <!-- Vocal Identity & Neural Agents (NEW SECTION) -->
-            <div
-                class="lg:col-span-3 glass p-12 rounded-[3rem] border-indigo-500/20 bg-gradient-to-r from-indigo-900/10 to-transparent shadow-2xl relative overflow-hidden group">
-                <!-- Background Waveform Effect -->
-                <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-                    <div class="voice-wave-container">
-                        <div class="voice-bar" style="animation-delay: 0.0s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.2s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.4s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.1s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.3s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.5s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.2s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.4s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.1s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.3s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.0s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.2s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.5s"></div>
-                        <div class="voice-bar" style="animation-delay: 0.1s"></div>
+                    <div class="neural-line" style="top: 20%; left: 10%; width: 200px; transform: rotate(15deg);"></div>
+                    <div class="neural-line" style="top: 50%; left: 30%; width: 150px; transform: rotate(-10deg);">
                     </div>
                 </div>
 
@@ -394,67 +1204,46 @@
                     <div class="flex-1">
                         <div class="flex items-center gap-6 mb-8">
                             <div
-                                class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/40 border border-white/10">
-                                <i data-lucide="mic-vocal" class="text-white w-8 h-8"></i>
+                                class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="text-indigo-500">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                                </svg>
                             </div>
                             <div>
-                                <h3 class="text-xs font-black uppercase tracking-[0.3em] text-indigo-400 mb-2">Neue
-                                    Dimension</h3>
+                                <h3 class="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 mb-2">Automation
+                                    Layer</h3>
                                 <h4
                                     class="text-4xl font-black uppercase italic tracking-tighter text-white leading-none">
-                                    Vocal Identity <br><span class="gradient-text">Neural Agents</span></h4>
+                                    Neural <span class="gradient-text">Operations</span>
+                                </h4>
                             </div>
                         </div>
 
                         <p class="text-zinc-300 text-lg leading-relaxed mb-10 max-w-2xl font-light">
-                            Wir erschaffen <strong>Digitale Zwillinge</strong>. Keine Standard-Bots, sondern Ihre
-                            Stimme,
-                            Ihre Tonalität, Ihre Identität.
-                            <br><span class="italic text-indigo-400 font-medium">Human-Machine-Symbiose:</span>
-                            Authentizität durch neuronale Stimmsynthese.
+                            <strong>Ready-to-Deploy</strong> Systeme für sofortige Digitalisierung. Wir verbinden Ihre
+                            Tools zu einem autonomen Organismus.
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div
-                                class="bg-black/40 border border-white/5 p-6 rounded-2xl hover:border-indigo-500/30 transition">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Vocal
-                                    Cloning</div>
-                                <div class="text-zinc-500 text-xs leading-relaxed">1:1 Replikation Ihrer Stimme für
-                                    maximale
-                                    Marken-Vertrautheit.</div>
+                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Autonomous
+                                    Pipelines</div>
+                                <div class="text-zinc-500 text-xs leading-relaxed">Nahtlose Verbindung von CRM, E-Mail
+                                    und Marketing-Tools.</div>
                             </div>
-                            <div
-                                class="bg-black/40 border border-white/5 p-6 rounded-2xl hover:border-indigo-500/30 transition">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">24/7
-                                    Autonomy</div>
-                                <div class="text-zinc-500 text-xs leading-relaxed">Intelligente Anrufannahme und
-                                    Echtzeit-Dialogführung.</div>
+                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Efficiency
+                                    Blueprints</div>
+                                <div class="text-zinc-500 text-xs leading-relaxed">Vorinstallierte n8n-Logik für
+                                    sofortige Zeitersparnis.</div>
                             </div>
-                            <div
-                                class="bg-black/40 border border-white/5 p-6 rounded-2xl hover:border-indigo-500/30 transition">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Identity
-                                    Synthesis</div>
-                                <div class="text-zinc-500 text-[10px] leading-relaxed">Nahtlose Integration in Ihr
-                                    Support-Ökosystem.</div>
+                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
+                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Zero-Touch
+                                    Ops</div>
+                                <div class="text-zinc-500 text-xs leading-relaxed">Prozesse, die im Hintergrund ohne
+                                    menschliches Zutun laufen.</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Visual Tech Representation -->
-                    <div class="hidden md:flex flex-col items-center justify-center gap-4">
-                        <div class="relative w-40 h-40 flex items-center justify-center">
-                            <div
-                                class="absolute inset-0 border border-indigo-500/20 rounded-full animate-[spin_10s_linear_infinite]">
-                            </div>
-                            <div
-                                class="absolute inset-4 border border-white/10 rounded-full animate-[spin_15s_linear_infinite_reverse]">
-                            </div>
-                            <div
-                                class="w-24 h-24 bg-indigo-600/10 rounded-full backdrop-blur-md flex items-center justify-center border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.2)]">
-                                <i data-lucide="audio-waveform" class="text-indigo-400 w-10 h-10 animate-pulse"></i>
-                            </div>
-                        </div>
-                        <div class="text-[10px] mono text-indigo-400/50 uppercase tracking-widest">Neural Engine Active
                         </div>
                     </div>
                 </div>
@@ -462,322 +1251,922 @@
         </div>
     </section>
 
-    <section id="roi" class="py-40 px-6 max-w-7xl mx-auto z-10 relative">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-8 leading-none">Der
-                    <span class="text-indigo-500">Business</span> <br>Impact.
+    <!-- Process -->
+    <section id="faq" class="py-10 px-4 bg-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 max-w-2xl mx-auto">
+                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">So arbeiten wir</p>
+                <h2 class="mb-4">In 4 Schritten zum Erfolg</h2>
+                <p class="text-zinc-400 text-lg">Kein Rätselraten. Unser erprobter Prozess bringt Ihre Website schnell
+                    und zuverlässig ans Ziel.</p>
+            </div>
+
+            <div class="process-layout">
+                <div class="process-steps" id="processSteps">
+                    <div class="process-step active" data-step="0">
+                        <div class="step-num">01</div>
+                        <div>
+                            <div class="step-title">Anfrage & Briefing</div>
+                            <p class="step-desc">Senden Sie uns Ihre Anforderungen digital. Wir analysieren Ihr
+                                Potenzial und erstellen ein erstes Konzept – ohne langwierige Calls.</p>
+                            <div class="step-time">DAUER: 30 MIN</div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-step="1">
+                        <div class="step-num">02</div>
+                        <div>
+                            <div class="step-title">Strategie & Konzept</div>
+                            <p class="step-desc">Auf Basis Ihrer Ziele erstellen wir ein maßgeschneidertes Konzept mit
+                                Seitenstruktur, Designrichtung und Architektur.</p>
+                            <div class="step-time">DAUER: 2–3 TAGE</div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-step="2">
+                        <div class="step-num">03</div>
+                        <div>
+                            <div class="step-title">Design & Prototyping</div>
+                            <p class="step-desc">Sie erhalten interaktive Prototypen. Wir iterieren gemeinsam, bis das
+                                Design exakt Ihrer Vorstellung entspricht.</p>
+                            <div class="step-time">DAUER: 3–5 TAGE</div>
+                        </div>
+                    </div>
+                    <div class="process-step" data-step="3">
+                        <div class="step-num">04</div>
+                        <div>
+                            <div class="step-title">Entwicklung & Launch</div>
+                            <p class="step-desc">Sauberer Code, tägliche Updates und ein stressfreier Launch inkl.
+                                Analytics und Performance-Setup.</p>
+                            <div class="step-time">DAUER: 1–3 WOCHEN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-visual">
+                    <div class="pv-header">
+                        <div class="pv-dot" style="background:#ff5f57;"></div>
+                        <div class="pv-dot" style="background:#febc2e;"></div>
+                        <div class="pv-dot" style="background:#28c840;"></div>
+                        <span
+                            style="font-family:var(--mono);font-size:.7rem;color:var(--text-muted);margin-left:.75rem;">project.config.ts</span>
+                    </div>
+                    <div class="pv-body">
+                        <div class="pv-code">
+                            <span class="kw">const</span> project = {<br>
+                            &nbsp;&nbsp;client: <span class="str">"Ihr Unternehmen"</span>,<br>
+                            &nbsp;&nbsp;lighthouse: <span class="num">100</span>,<br>
+                            &nbsp;&nbsp;loadTime: <span class="str">"0.8s"</span>,<br>
+                            &nbsp;&nbsp;seoScore: <span class="num">100</span>,<br>
+                            &nbsp;&nbsp;status: <span class="fn">fn</span>.<span class="kw">live</span>()<br>
+                            }
+                        </div>
+                        <div class="pv-checklist">
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Zieldefinition & Briefing
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Design-Prototyp freigegeben
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Entwicklung abgeschlossen
+                            </div>
+                            <div class="pv-check-item">
+                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
+                                        viewBox="0 0 24 24">
+                                        <path d="M5 13l4 4L19 7" />
+                                    </svg></div>
+                                Live gegangen · 🎉
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="preise" class="py-10 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 max-w-2xl mx-auto">
+                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Investition</p>
+                <h2 class="mb-4">Transparente Preise</h2>
+                <p class="text-zinc-400 text-lg">Keine versteckten Kosten. Sie zahlen für Ergebnisse.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card reveal">
+                    <div class="price-header">
+                        <h3>Starter</h3>
+                        <div class="price">
+                            <span class="currency"></span>Auf Anfrage
+                        </div>
+                        <p>Perfekt für kleine Unternehmen & Startups</p>
+                    </div>
+                    <p class="price-desc">Perfekt für Selbständige, die eine professionelle Visitenkarte benötigen.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Onepager / Landingpage</li>
+                        <li>Responsive Design</li>
+                        <li>On-Page SEO</li>
+                        <li>Kontaktformular</li>
+                        <li class="off">A/B Testing</li>
+                        <li class="off">KI-Integration</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary w-full justify-center">Anfragen →</a>
+                </div>
+
+                <div class="price-card price-card-featured reveal">
+                    <div class="price-header">
+                        <h3>Enterprise</h3>
+                        <div class="price">
+                            <span class="currency"></span>Auf Anfrage
+                        </div>
+                        <p>Maximale Performance & Custom Development</p>
+                    </div>
+                    <p class="price-desc">Die meistgebuchte Option für Unternehmen, die wachsen wollen.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Bis zu 3 Unterseiten</li>
+                        <li>Premium Custom Design</li>
+                        <li>Technisches SEO komplett</li>
+                        <li>Premium Content-Service</li>
+                        <li>Conversion Optimierung</li>
+                        <li>3 Monate Support</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-primary w-full justify-center">Jetzt starten →</a>
+                </div>
+
+                <div class="price-card reveal">
+                    <div>
+                        <div class="price-name">ENTERPRISE</div>
+                        <div class="price-amount">Auf Anfrage</div>
+                    </div>
+                    <p class="price-desc">Für komplexe Anforderungen, E-Commerce und große Teams.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Bis zu 5 Unterseiten</li>
+                        <li>Design System</li>
+                        <li>KI-Chatbots & Automation</li>
+                        <li>E-Commerce</li>
+                        <li>Multilingual</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary w-full justify-center">Gespräch buchen →</a>
+                </div>
+            </div>
+            <!-- Disclaimer -->
+            <div class="text-center mt-12 text-gray-500 text-sm max-w-2xl mx-auto">
+                <p>* Alle Preise sind Netto-Richtwerte und hängen vom individuellen Projektumfang ab. Wir glauben an
+                    maßgeschneiderte Lösungen, keine starren Pakete. Kontaktieren Sie uns für ein verbindliches Angebot.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 px-6 bg-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="faq-layout">
+                <div>
+                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">FAQ</p>
+                    <h2 class="mb-4">Häufige Fragen</h2>
+                    <p class="text-zinc-400 text-lg mb-8">
+                        Alles, was Sie wissen müssen – ehrlich und auf den Punkt.
+                    </p>
+                    <a href="#kontakt" class="btn-primary">Frage stellen</a>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item open">
+                        <button class="faq-q">Wie lange dauert eine Website?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Ein Starter-Paket ist oft in 7–10 Tagen fertig, während komplexe Websites 3–6
+                            Wochen benötigen. Wir geben Ihnen beim Erstgespräch eine verbindliche Zeitschätzung.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Muss ich die Inhalte selbst pflegen?<span
+                                class="faq-arrow">+</span></button>
+                        <div class="faq-a">Nein. Wir übernehmen das komplett für Sie. Senden Sie uns einfach Ihre
+                            Änderungswünsche – wir setzen diese professionell um und präsentieren Ihnen das Ergebnis.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Was passiert nach dem Launch?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Im Professional Paket ist 3 Monate Support inklusive. Danach bieten wir
+                            Wartungspakete für Updates und Optimierungen an.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q">Bieten Sie auch Hosting an?<span class="faq-arrow">+</span></button>
+                        <div class="faq-a">Wir richten Ihr Hosting (z.B. auf Vercel oder einem deutschen Hoster)
+                            komplett ein. Sie bleiben Vertragspartner für volle Kontrolle.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="kontakt" class="py-10 px-4">
+        <div class="max-w-xl mx-auto text-center">
+            <h2 class="mb-6">Projekt starten</h2>
+            <div class="text-center mb-12">
+                <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit
+                    für
+                    <br><span class="text-indigo-500">Level 2.</span>
                 </h2>
-                <p class="text-zinc-500 text-lg mb-12 font-light leading-relaxed">
-                    Unternehmerische Entscheidungen brauchen Fundamente. Wir analysieren und eliminieren Ineffizienz:
-                    <strong>30% der Arbeitszeit</strong> gehen durch manuelle Prozesse verloren.
-                    AURA reduziert diesen Verlust um <strong>85%</strong>.
+                <p class="text-zinc-400 text-lg max-w-xl mx-auto font-light leading-relaxed">
+                    Präzision beginnt beim Dialog. Nutzen Sie das Anfragefeld für spezifische technische Fragen – unsere
+                    Architekten antworten im Detail.
+                </p>
+            </div>
+
+            <div class="glass p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col justify-center"
+                style="min-height: 480px;">
+                <!-- Progress -->
+                <div class="flex justify-between mb-8 gap-2">
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress1"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress2"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress3"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress4"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress5"></div>
+                </div>
+
+                <form id="contactForm"
+                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
+                    method="POST" class="relative w-full h-full flex-1">
+
+                    <!-- Step 1: Service -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300"
+                        id="step1">
+                        <h3 class="mb-6 text-2xl">Was benötigen Sie?</h3>
+                        <div class="space-y-4">
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectService('Neue Website'); nextStep(2)">
+                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Neue Website
+                                </div>
+                                <div class="text-sm text-zinc-400">Komplett neue Website von Grund auf</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectService('Website Redesign'); nextStep(2)">
+                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Website Redesign
+                                </div>
+                                <div class="text-sm text-zinc-400">Bestehende Website modernisieren</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectService('SEO & Sichtbarkeit'); nextStep(2)">
+                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">SEO &
+                                    Sichtbarkeit</div>
+                                <div class="text-sm text-zinc-400">Gefunden werden & Rankings verbessern</div>
+                            </button>
+                        </div>
+                        <input type="hidden" name="service" id="serviceInput">
+                    </div>
+
+                    <!-- Step 2: Budget -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
+                        id="step2">
+                        <h3 class="mb-6 text-2xl">Ihr Budget</h3>
+                        <div class="space-y-4">
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectBudget('500 - 1.500€'); nextStep(3)">
+                                <div class="font-semibold group-hover:text-indigo-400 transition">500€ - 1.500€</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectBudget('1.500 - 5.000€'); nextStep(3)">
+                                <div class="font-semibold group-hover:text-indigo-400 transition">1.500€ - 5.000€</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectBudget('5.000€+'); nextStep(3)">
+                                <div class="font-semibold group-hover:text-indigo-400 transition">5.000€+</div>
+                            </button>
+                        </div>
+                        <input type="hidden" name="budget" id="budgetInput">
+                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
+                            onclick="nextStep(1)">← Zurück</button>
+                    </div>
+
+                    <!-- Step 3: Name -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
+                        id="step3">
+                        <h3 class="mb-6 text-2xl">Wie dürfen wir Sie nennen?</h3>
+                        <div class="space-y-4">
+                            <input type="text" name="name" id="inputName" placeholder="Ihr Name" required
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition text-lg"
+                                onkeypress="handleEnter(event, 4)">
+                            <button type="button" class="btn-primary w-full text-lg py-4"
+                                onclick="validateAndNext(3, 'inputName', 4)">
+                                Weiter
+                            </button>
+                        </div>
+                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
+                            onclick="nextStep(2)">← Zurück</button>
+                    </div>
+
+                    <!-- Step 4: Email -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
+                        id="step4">
+                        <h3 class="mb-6 text-2xl">Wie erreichen wir Sie?</h3>
+                        <div class="space-y-4">
+                            <input type="email" name="email" id="inputEmail" placeholder="name@firma.de" required
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition text-lg"
+                                onkeypress="handleEnter(event, 5)">
+                            <button type="button" class="btn-primary w-full text-lg py-4"
+                                onclick="validateAndNext(4, 'inputEmail', 5)">
+                                Weiter
+                            </button>
+                        </div>
+                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
+                            onclick="nextStep(3)">← Zurück</button>
+                    </div>
+
+                    <!-- Step 5: Message & Details -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
+                        id="step5">
+                        <h3 class="mb-6 text-2xl">Erzählen Sie uns mehr</h3>
+                        <div class="space-y-4">
+                            <input type="tel" name="phone" placeholder="Telefon (optional)"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
+                            <textarea name="message" placeholder="Kurze Beschreibung Ihres Projekts..." rows="3"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition resize-none"></textarea>
+                            <button type="submit" class="btn-primary w-full text-lg py-4">
+                                Termin anfragen
+                            </button>
+                        </div>
+                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
+                            onclick="nextStep(4)">← Zurück</button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="successMsg" class="hidden text-center scale-90 transition-all duration-500">
+                    <div
+                        class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="mb-2 text-2xl">Anfrage gesendet!</h3>
+                    <p class="text-zinc-400">Wir melden uns in Kürze bei Ihnen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer Upgrade -->
+    <footer class="py-12 px-4 border-t border-white/10 bg-black relative overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 relative z-10">
+            <!-- Col 1: Brand -->
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" class="text-indigo-500">
+                        <path d="M12 2L2 22h20L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                    </svg>
+                    <span class="font-bold text-xl tracking-tighter">AURA</span>
+                </div>
+                <p class="text-zinc-500 text-sm leading-relaxed">
+                    Premium Web Solutions für ambitionierte Unternehmen. Schnell. Skalierbar. Sichtbar.
                 </p>
 
-                <div class="space-y-12 glass p-10 rounded-[3rem] border-white/5">
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4 text-zinc-400">
-                            <span>Mitarbeiteranzahl</span>
-                            <span class="text-indigo-400" id="v_emp">10 Köpfe</span>
-                        </div>
-                        <input type="range" id="m_emp" min="1" max="100" value="10">
-                    </div>
-                    <div>
-                        <div
-                            class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4 text-zinc-400">
-                            <span>Durchschnittsgehalt</span>
-                            <span class="text-indigo-400" id="v_sal">55.000€</span>
-                        </div>
-                        <input type="range" id="m_sal" min="30000" max="150000" step="5000" value="55000">
-                    </div>
+                <div class="mt-8 text-[0.7rem] text-white/40 font-normal normal-case leading-relaxed">
+                    <p>Inhaber: David Lamberts</p>
+                    <p>Adresse: Am Bergle 28, 88284 Schlier</p>
+                    <p>Kontakt: 017691336194 | davidci2002@gmail.com</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="matrix-card glass p-8 rounded-[2.5rem] border-white/5">
-                    <div class="text-[9px] font-black text-zinc-600 uppercase mb-4 tracking-[0.2em]">Kosten der
-                        Ineffizienz</div>
-                    <div class="text-4xl font-black tracking-tighter" id="res_waste">165.000€</div>
-                    <p class="text-[10px] text-zinc-500 mt-4 leading-relaxed">Verlust durch repetitive, manuelle
-                        Prozesse (Industrie-Schnitt: 30%).</p>
-                </div>
-                <div class="matrix-card glass p-8 rounded-[2.5rem] border-indigo-500/20 bg-indigo-600/5">
-                    <div class="text-[9px] font-black text-indigo-400 uppercase mb-4 tracking-[0.2em]">Netto-Ersparnis
-                        (AURA)</div>
-                    <div class="text-4xl font-black tracking-tighter text-indigo-500" id="res_save">140.250€</div>
-                    <p class="text-[10px] text-indigo-300/50 mt-4 leading-relaxed">Nach Implementierung autonomer
-                        Workflow-Architektur (85% Automatisierungsrate).</p>
-                </div>
-                <div
-                    class="md:col-span-2 matrix-card glass p-10 rounded-[2.5rem] flex items-center justify-between border-white/5">
-                    <div class="flex flex-col">
-                        <div class="text-[9px] font-black text-zinc-600 uppercase mb-2 tracking-[0.2em]">Projekt-ROI (12
-                            Monate)</div>
-                        <div class="text-5xl font-black text-green-400 tracking-tighter" id="res_roi">935%</div>
-                    </div>
-                    <div class="text-right flex flex-col items-end">
-                        <i data-lucide="trending-up" class="w-12 h-12 text-green-400 mb-2"></i>
-                        <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Skalierbarer
-                            Profit</span>
-                    </div>
+            <!-- Col 2: Sitemap -->
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Menu</h4>
+                <ul class="space-y-2 text-sm text-zinc-400">
+                    <li><a href="#leistungen" class="hover:text-white transition-colors">Leistungen</a></li>
+                    <li><a href="#prozess" class="hover:text-white transition-colors">Prozess</a></li>
+                    <li><a href="#preise" class="hover:text-white transition-colors">Preise</a></li>
+                    <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Rechtliches -->
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Rechtliches</h4>
+                <ul class="space-y-4 text-zinc-400">
+                    <li><a href="impressum.html" class="hover:text-white transition flex items-center group"><span
+                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>Impressum</a>
+                    </li>
+                    <li><a href="datenschutz.html" class="hover:text-white transition flex items-center group"><span
+                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>Datenschutz</a>
+                    </li>
+                    <li><a href="agb.html" class="hover:text-white transition flex items-center group"><span
+                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>AGB</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Desired Action -->
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Kontakt</h4>
+                <a href="https://calendly.com/david-ci-aura-systems/30min" target="_blank"
+                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-all text-sm mb-4 group">
+                    <span>Termin buchen</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <div class="flex gap-4">
+                    <!-- Social Placeholders -->
+                    <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="linkedin"
+                            class="w-5 h-5"></i></a>
+                    <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="instagram"
+                            class="w-5 h-5"></i></a>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="contact" class="py-40 px-6 max-w-4xl mx-auto relative z-10 text-center">
-        <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit für
-            <br><span class="text-indigo-500">Level 2.</span>
-        </h2>
-
-        <div class="glass p-12 md:p-20 rounded-[4rem] border-indigo-500/10 shadow-2xl relative overflow-hidden">
-            <!-- Progress Bar -->
-            <div class="absolute top-0 left-0 h-1 bg-indigo-500 transition-all duration-500" id="progressBar"
-                style="width: 33%"></div>
-
-            <form
-                action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                method="POST" id="leadForm" class="text-left relative min-h-[300px]">
-
-                <!-- Step 1: Volume -->
-                <div class="step active" id="step1">
-                    <h3 class="text-2xl font-bold mb-8">System Skalierungs-Audit</h3>
-                    <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Wie groß ist Ihre
-                        Operation?</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏢</div>
-                            <div class="font-bold">1-10</div>
-                            <div class="text-[10px] text-zinc-500">Startup</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏭</div>
-                            <div class="font-bold">11-50</div>
-                            <div class="text-[10px] text-zinc-500">Scale-Up</div>
-                        </button>
-                        <button type="button"
-                            class="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-indigo-500 hover:bg-indigo-500/10 transition text-left group"
-                            onclick="nextStep(2)">
-                            <div class="text-3xl mb-2 group-hover:scale-110 transition">🏙️</div>
-                            <div class="font-bold">50+</div>
-                            <div class="text-[10px] text-zinc-500">Enterprise</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Stack -->
-                <div class="step" id="step2">
-                    <h3 class="text-2xl font-bold mb-8">Technische Umgebung</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-zinc-400 text-sm uppercase tracking-widest mb-4">Primäres CRM /
-                                Datenbank?</label>
-                            <input name="crm" placeholder="e.g. Salesforce, HubSpot, Excel..."
-                                class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        </div>
-                        <button type="button"
-                            class="w-full bg-white/10 py-6 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/20 transition"
-                            onclick="nextStep(3)">Weiter zur Analyse &rarr;</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Contact -->
-                <div class="step" id="step3">
-                    <h3 class="text-2xl font-bold mb-8">Audit Finalisieren</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <input name="name" placeholder="Name" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                        <input name="email" type="email" placeholder="Geschäfts-E-Mail" required
-                            class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white">
-                    </div>
-                    <textarea name="message" placeholder="Spezifische Ziele..." rows="3"
-                        class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none focus:border-indigo-500 transition font-bold text-white mb-8"></textarea>
-
-                    <button type="submit"
-                        class="w-full bg-indigo-600 py-8 rounded-3xl font-black text-2xl uppercase tracking-widest hover:bg-indigo-500 transition shadow-2xl shadow-indigo-600/30 magnetic-btn">
-                        Initialisieren
-                    </button>
-                    <button type="button"
-                        class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 hover:text-white"
-                        onclick="nextStep(1)">Audit Neustarten</button>
-                </div>
-
-            </form>
-            <div id="successMsg" class="hidden text-3xl font-black text-green-400 italic">✓ System-Audit angefordert.
-            </div>
+        <div
+            class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-600">
+            <p>&copy; 2024 AURA SYSTEMS. All rights reserved.</p>
+            <div class="font-mono">v1.6-density</div>
         </div>
-    </section>
-
-    <footer class="py-20 text-center opacity-70 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
-        <a href="impressum.html" class="hover:text-white transition">Impressum</a>
-        <a href="datenschutz.html" class="hover:text-white transition">Datenschutz</a>
-        <a href="agb.html" class="hover:text-white transition">AGB</a>
-        </div>
-        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
     </footer>
-
-    <script>
+    <script type="module">
+        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Cursor Glow
-        const glow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
-        });
+        /* ─── CLASS DEFINITIONS (HOISTED FOR USAGE) ─── */
 
-        // ROI Matrix Logic (Enterprise Validation)
-        const m_emp = document.getElementById('m_emp');
-        const m_sal = document.getElementById('m_sal');
+        // SplitText Animation Class (Must be defined first)
+        class SplitText {
+            constructor(element, options = {}) {
+                this.element = typeof element === 'string' ? document.querySelector(element) : element;
+                if (!this.element) return;
 
-        function calculate() {
-            const emp = parseInt(m_emp.value);
-            const sal = parseInt(m_sal.value);
+                this.options = {
+                    type: 'chars', // chars, words
+                    trigger: 'self',
+                    delay: 0.05,
+                    duration: 1.25,
+                    ease: 'power3.out',
+                    ...options
+                };
 
-            document.getElementById('v_emp').innerText = emp + (emp > 1 ? " Köpfe" : " Kopf");
-            document.getElementById('v_sal').innerText = sal.toLocaleString() + '€';
+                this.originalText = this.element.textContent;
+                this.chars = [];
+                this.words = [];
 
-            const payroll = emp * sal;
-            const waste = payroll * 0.30; // 30% Ineffizienz-Standard
-            const savings = waste * 0.85; // AURA Optimierungs-Rate
-            const roi = (savings / 15000) * 100; // Projekt-Base: 15k
-
-            document.getElementById('res_waste').innerText = Math.round(waste).toLocaleString() + '€';
-            document.getElementById('res_save').innerText = Math.round(savings).toLocaleString() + '€';
-            document.getElementById('res_roi').innerText = Math.round(roi) + '%';
-        }
-
-        m_emp.addEventListener('input', calculate);
-        m_sal.addEventListener('input', calculate);
-        calculate();
-
-        // Multi-Step Logic
-        function nextStep(step) {
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-
-            // Update Progress
-            const progress = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
-            document.getElementById('progressBar').style.width = progress;
-        }
-
-        // Magnetic Buttons
-        const magnets = document.querySelectorAll('.magnetic-btn');
-        magnets.forEach((btn) => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-
-                gsap.to(btn, { duration: 0.3, x: x * 0.3, y: y * 0.3, ease: "power2.out" });
-            });
-
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { duration: 0.5, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-
-        // Form Submission
-        const form = document.getElementById('leadForm');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            fetch(form.action, { method: 'POST', body: formData, mode: 'no-cors' });
-
-            // Hide all steps, show success
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('progressBar').style.width = '100%';
-            setTimeout(() => {
-                form.classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-                // Expletti confetti/particles here if we wanted
-            }, 500);
-        });
-
-        // Live Terminal Simulation
-        const terminalStrings = [
-            ">> Analyzing lead structures...",
-            ">> Optimizing API response time...",
-            ">> Compiling backend schemas...",
-            ">> Deploying autonomous agent...",
-            ">> Syncing Supabase database...",
-            ">> Encryption layer active.",
-            ">> Data stream stabilized."
-        ];
-
-        const terminalDiv = document.getElementById('live-terminal');
-        let stringIndex = 0;
-
-        function updateTerminal() {
-            if (!terminalDiv) return; // Guard clause in case element isn't found
-            const line = document.createElement('div');
-            line.className = 'mt-1 opacity-80';
-            line.innerText = terminalStrings[stringIndex];
-            terminalDiv.appendChild(line);
-
-            if (terminalDiv.childNodes.length > 6) {
-                terminalDiv.removeChild(terminalDiv.firstChild);
+                this.init();
             }
 
-            stringIndex = (stringIndex + 1) % terminalStrings.length;
-            setTimeout(updateTerminal, Math.random() * 2000 + 1000);
+            init() {
+                const text = this.originalText.trim();
+                this.element.innerHTML = '';
+                this.element.style.opacity = '1';
+                this.element.style.visibility = 'visible';
+
+                const words = text.split(/\s+/);
+
+                words.forEach((word, wordIndex) => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'split-word';
+                    wordSpan.style.display = 'inline-block';
+                    wordSpan.style.overflow = 'visible'; /* Changed from hidden to visible */
+                    wordSpan.style.verticalAlign = 'top';
+                    wordSpan.style.padding = '0.2em 0.1em'; /* Add breathing room for shadows */
+                    wordSpan.style.margin = '-0.2em -0.1em'; /* Compensate layout */
+
+                    const letters = word.split('');
+                    letters.forEach((letter) => {
+                        const charSpan = document.createElement('span');
+                        charSpan.className = 'split-char';
+                        charSpan.style.display = 'inline-block';
+                        charSpan.style.transform = 'translateY(100%)';
+                        /* REMOVED: charSpan.style.filter = 'blur(20px)'; - Fixed Bug */
+                        charSpan.style.opacity = '0';
+                        charSpan.textContent = letter;
+                        wordSpan.appendChild(charSpan);
+                        this.chars.push(charSpan);
+                    });
+
+                    this.element.appendChild(wordSpan);
+
+                    if (wordIndex < words.length - 1) {
+                        const space = document.createTextNode(' ');
+                        this.element.appendChild(space);
+                    }
+                });
+            }
         }
 
-        // Start terminal
-        updateTerminal();
-    </script>
-    <!-- Cookie Banner -->
-    <div id="cookie-banner"
-        class="fixed bottom-0 left-0 w-full bg-black/90 backdrop-blur-xl border-t border-white/10 p-6 z-[100] transform translate-y-full transition-transform duration-500 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="text-xs text-zinc-400 max-w-3xl leading-relaxed">
-            <strong class="text-white block mb-1 uppercase tracking-widest">Privacy Protocol</strong>
-            Wir nutzen Cookies, um Ihr System-Erlebnis zu optimieren. Essenzielle Cookies sind für die Infrastruktur
-            notwendig. Tracking-Cookies helfen uns, die AURA-Intelligenz zu verbessern.
-        </div>
-        <div class="flex gap-4">
-            <button onclick="acceptCookies()"
-                class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-indigo-600/20">
-                Akzeptieren
-            </button>
-            <button onclick="declineCookies()"
-                class="bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition border border-white/5">
-                Ablehnen
-            </button>
-        </div>
-    </div>
+        // ─── INTRO & ANIMATIONS ───
+        document.addEventListener('DOMContentLoaded', () => {
+            const tl = gsap.timeline();
 
-    <script>
-        // ... (existing code)
+            // 0. Cinematic Intro (SplitText Upgrade)
+            document.body.classList.add('intro-active');
 
-        // Cookie Logic
-        const cookieBanner = document.getElementById('cookie-banner');
+            // Apply SplitText to Intro
+            const introText = document.querySelector('.intro-text');
+            if (introText) {
+                // Ensure text is split before animation starts
+                new SplitText(introText, { type: 'chars' });
+            }
 
-        if (!localStorage.getItem('aura_consent')) {
-            setTimeout(() => {
-                cookieBanner.classList.remove('translate-y-full');
-            }, 1000);
+            // Animate Intro Chars
+            tl.to(".intro-text .split-char", {
+                y: '0%',
+                opacity: 1,
+                filter: 'blur(0px)', // Animate to clear
+                duration: 1.5,
+                ease: "power3.out", // Snappier ease
+                stagger: 0.05
+            })
+                // Fade Out & Remove Overlay
+                .to(".intro-text", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
+                .to("#intro-overlay", {
+                    opacity: 0, duration: 1.0, ease: "power2.inOut", onComplete: () => {
+                        document.getElementById('intro-overlay').style.display = 'none';
+                        document.body.classList.remove('intro-active');
+                    }
+                }, "-=0.5")
+
+                // 1. Hero Text Reveal (Chained after Intro)
+                .to("#hero h1", {
+                    opacity: 1, y: 0, duration: 0.4, ease: "power2.out", onStart: () => {
+                        // Trigger Hero SplitText here if needed, or simple fade
+                        const heroH1 = document.querySelector('#hero h1');
+                        if (heroH1) new SplitText(heroH1, { type: 'chars' });
+                        gsap.to("#hero h1 .split-char", { y: '0%', opacity: 1, duration: 1, stagger: 0.02 });
+                    }
+                }, "-=0.4")
+                .to("#hero p", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+
+                // 2. Silent Background Fade-In
+                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "-=0.2");
+
+            // 3. Performance: Pause when not visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && typeof neuralGrid !== 'undefined') {
+                        neuralGrid.isPaused = false;
+                        neuralGrid.update(performance.now());
+                    } else if (typeof neuralGrid !== 'undefined') {
+                        neuralGrid.isPaused = true;
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const heroSection = document.getElementById('hero');
+            if (heroSection) observer.observe(heroSection);
+        });
+
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }
 
-        function acceptCookies() {
-            localStorage.setItem('aura_consent', 'accepted');
-            hideBanner();
-            // Here you would trigger analytics
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking ANY link inside it
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.closest('a')) {
+                toggleMenu();
+            }
+        });
+
+        // LightRays Background (Studio Setup)
+        import { Renderer, Program, Triangle, Mesh, Vec2, Vec3 } from 'https://esm.sh/ogl';
+
+        // (SplitText Class removed from here - moved to top)
+
+        // Initialize Neural Grid & SplitText logic moved to Top
+
+        class NeuralGrid {
+            constructor(containerId, options = {}) {
+                this.container = document.getElementById(containerId);
+                if (!this.container) return;
+                this.isPaused = false;
+
+                this.options = {
+                    gridColor: '#0077ff', // Electric Blue
+                    ...options
+                };
+
+                this.mouse = new Vec2(0.5, 0.5);
+                this.targetMouse = new Vec2(0.5, 0.5);
+
+                this.init();
+            }
+
+            hexToRgb(hex) {
+                const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return m ? [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255] : [1, 1, 1];
+            }
+
+            init() {
+                this.renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio, 2) });
+                this.gl = this.renderer.gl;
+                this.gl.canvas.style.width = '100%';
+                this.gl.canvas.style.height = '100%';
+
+                while (this.container.firstChild) this.container.removeChild(this.container.firstChild);
+                this.container.appendChild(this.gl.canvas);
+
+                const vert = `
+                    attribute vec2 position;
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = position * 0.5 + 0.5;
+                        gl_Position = vec4(position, 0.0, 1.0);
+                    }
+                `;
+
+                const frag = `
+                    precision highp float;
+                    uniform float iTime;
+                    uniform vec2 iResolution;
+                    uniform vec2 mousePos;
+                    uniform vec3 gridColor;
+                    
+                    void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+                        vec2 uv = fragCoord.xy / iResolution.xy;
+                        vec2 aspect = vec2(iResolution.x/iResolution.y, 1.0);
+                        vec2 p = (uv - 0.5) * aspect; // centered UV
+                        // Correct mouse aspect
+                        vec2 m = (mousePos - 0.5) * aspect; 
+                        
+                        // Flip Y for mouse calculation to match GL coords
+                        m.y = -m.y; 
+
+                        // 1. Neural Grid
+                        float gridScale = 20.0;
+                        vec2 gridUV = fract(p * gridScale) - 0.5;
+                        float distToLine = min(abs(gridUV.x), abs(gridUV.y));
+                        float lineThickness = 0.05; 
+                        float gridLine = smoothstep(lineThickness, 0.0, distToLine);
+                        
+                        // Data Flow (Pulses logic)
+                        float pulseSpeed = 1.0;
+                        float vPulse = step(0.95, sin(p.y * 3.0 + iTime * pulseSpeed)) * step(abs(gridUV.x), 0.1); 
+                        float hPulse = step(0.95, sin(p.x * 3.0 - iTime * pulseSpeed * 0.8)) * step(abs(gridUV.y), 0.1);
+                        float dataFlow = vPulse + hPulse;
+
+                        // 2. Reactive Void (Flashlight)
+                        float dMouse = distance(p, m);
+                        float mouseGlow = exp(-dMouse * 2.5);
+                        
+                        // 3. Ambient Photonics (Breathing Background)
+                        float ambient1 = exp(-distance(p, vec2(0.3, 0.2)) * 1.5) * (0.5 + 0.5 * sin(iTime * 0.5));
+                        float ambient2 = exp(-distance(p, vec2(-0.3, -0.2)) * 1.2) * (0.5 + 0.5 * cos(iTime * 0.3));
+                        
+                        // Compositing
+                        vec3 deepBlue = vec3(0.0, 0.05, 0.2); // Deep atmospheric blue
+                        vec3 electric = gridColor;
+                        vec3 bg = vec3(0.01, 0.01, 0.02); // Deep Onyx
+                        
+                        vec3 finalColor = bg;
+                        // Add Ambient
+                        finalColor += deepBlue * (ambient1 + ambient2) * 0.5;
+                        
+                        // Add Grid
+                        float gridAlpha = 0.08; // Base visibility 
+                        gridAlpha += mouseGlow * 0.4; // Mouse reveal
+                        gridAlpha += dataFlow * 0.8; // Pulses are bright
+                        
+                        finalColor += electric * gridLine * gridAlpha;
+                        
+                        // Vignette
+                        float vignette = 1.0 - length(uv - 0.5) * 1.2;
+                        finalColor *= clamp(vignette, 0.0, 1.0);
+                        
+                        fragColor = vec4(finalColor, 1.0);
+                    }
+
+                    void main() { mainImage(gl_FragColor, gl_FragCoord.xy); }
+                `;
+
+                this.program = new Program(this.gl, {
+                    vertex: vert,
+                    fragment: frag,
+                    uniforms: {
+                        iTime: { value: 0 },
+                        iResolution: { value: new Vec2(this.gl.canvas.width, this.gl.canvas.height) },
+                        mousePos: { value: new Vec2(0.5, 0.5) },
+                        gridColor: { value: new Vec3(...this.hexToRgb(this.options.gridColor)) }
+                    },
+                    transparent: true
+                });
+
+                this.mesh = new Mesh(this.gl, { geometry: new Triangle(this.gl), program: this.program });
+
+                this.addListeners();
+                this.resize();
+                requestAnimationFrame(this.update.bind(this));
+            }
+
+            addListeners() {
+                window.addEventListener('resize', this.resize.bind(this));
+                window.addEventListener('mousemove', this.onMouseMove.bind(this));
+            }
+
+            onMouseMove(e) {
+                // Normalize mouse 0..1 (flip Y for GL)
+                const x = e.clientX / window.innerWidth;
+                const y = 1.0 - (e.clientY / window.innerHeight);
+                this.targetMouse.set(x, y);
+            }
+
+            resize() {
+                const width = this.container.clientWidth;
+                const height = this.container.clientHeight;
+                this.renderer.setSize(width, height);
+                this.program.uniforms.iResolution.value.set(width * this.renderer.dpr, height * this.renderer.dpr);
+            }
+
+            update(t) {
+                if (this.isPaused) return;
+
+                // Lerp mouse
+                this.mouse.lerp(this.targetMouse, 0.1);
+                this.program.uniforms.mousePos.value.copy(this.mouse);
+
+                this.program.uniforms.iTime.value = t * 0.001;
+                this.renderer.render({ scene: this.mesh });
+                requestAnimationFrame(this.update.bind(this));
+            }
         }
 
-        function declineCookies() {
-            localStorage.setItem('aura_consent', 'declined');
-            hideBanner();
+        // Initialize Neural Grid
+        const neuralGrid = new NeuralGrid('hero-sequence', { gridColor: '#0077ff' });
+
+        // (Previous intro code removed - moved to top)
+
+        // Form Multi-Step
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        window.nextStep = function (step) {
+            // Hide all
+            document.querySelectorAll('.form-step').forEach(s => {
+                s.classList.remove('active', 'opacity-100', 'pointer-events-auto');
+                s.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            // Show next
+            const next = document.getElementById('step' + step);
+            if (next) {
+                // Ensure layout is ready
+                next.classList.add('active'); // Keep valid if needed for logic
+
+                // Force reflow
+                void next.offsetWidth;
+
+                next.classList.remove('opacity-0', 'pointer-events-none');
+                next.classList.add('opacity-100', 'pointer-events-auto');
+
+                const input = next.querySelector('input, textarea');
+                if (input) setTimeout(() => input.focus(), 100);
+            }
+
+            currentStep = step;
+
+            // Update progress
+            for (let i = 1; i <= totalSteps; i++) {
+                const progress = document.getElementById('progress' + i);
+                if (progress) {
+                    progress.style.backgroundColor = i <= step ? '#6366f1' : 'rgba(255,255,255,0.1)';
+                }
+            }
         }
 
-        function hideBanner() {
-            cookieBanner.classList.add('translate-y-full');
+        window.validateAndNext = function (step, inputId, nextStepNum) {
+            const input = document.getElementById(inputId);
+            if (input && input.checkValidity()) {
+                nextStep(nextStepNum);
+            } else {
+                input.reportValidity();
+                // Shake animation for error
+                input.classList.add('shake');
+                setTimeout(() => input.classList.remove('shake'), 400);
+            }
+        }
+
+        window.handleEnter = function (e, nextStepNum) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // Find the validate button for this step and click it
+                const btn = e.target.parentElement.querySelector('button');
+                if (btn) btn.click();
+            }
+        }
+
+        window.selectService = function (service) {
+            const input = document.getElementById('serviceInput');
+            if (input) input.value = service;
+        }
+
+        window.selectBudget = function (budget) {
+            const input = document.getElementById('budgetInput');
+            if (input) input.value = budget;
+        }
+
+        // Form Submit
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            fetch(e.target.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            });
+
+            e.target.classList.add('hidden');
+            document.getElementById('successMsg').classList.remove('hidden');
+        });
+
+        // Spotlight Effect
+        window.updateSpotlight = function (e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--x', x + 'px');
+            card.style.setProperty('--y', y + 'px');
+        }
+
+        window.resetSpotlight = function (e) {
+            const card = e.currentTarget;
+            // Optional: reset to center or fade out logic if needed
+        }
+
+        // --- GSAP Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.step-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Process Steps Interaction
+        document.querySelectorAll('.process-step').forEach((step) => {
+            step.addEventListener('click', () => {
+                // Remove active class from all
+                document.querySelectorAll('.process-step').forEach(s => s.classList.remove('active'));
+                // Add to clicked
+                step.classList.add('active');
+            });
+        });
+
+        // FAQ Interaction
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-q').addEventListener('click', () => {
+                const wasOpen = item.classList.contains('open');
+                // Close all others
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                // Toggle clicked
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+
+        // GSAP Scroll Animations
+        if (window.innerWidth > 768) {
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from('.feature-card', {
+                scrollTrigger: {
+                    trigger: '.feature-card',
+                    start: 'top 80%'
+                },
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8
+            });
         }
     </script>
 </body>
 
 </html>
-```
