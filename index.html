@@ -1183,7 +1183,7 @@
     </section>
 
     <!-- Neural Operations (NEW SECTION) -->
-    <section id="neural-ops" class="py-20 px-6">
+    <section id="neural-ops" class="pt-20 pb-40 px-6">
         <div class="max-w-7xl mx-auto">
             <div
                 class="lg:col-span-3 glass p-12 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group relative overflow-hidden">
@@ -1311,6 +1311,84 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- n8n Workflow Templates (NEW SECTION) -->
+    <section id="n8n-workflows" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Visual Flowchart -->
+                <div
+                    class="glass p-12 rounded-[2.5rem] border-white/5 relative overflow-hidden min-h-[500px] flex items-center justify-center">
+                    <!-- Workflow Nodes -->
+                    <div class="relative z-10 flex flex-col items-center gap-8 w-full max-w-sm">
+                        <!-- Node 1 -->
+                        <div class="w-full glass bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-4 animate-pulse"
+                            style="animation-duration: 3s;">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400">
+                                <i data-lucide="mail"></i>
+                            </div>
+                            <div class="text-sm font-mono text-zinc-300">Email Received</div>
+                        </div>
+                        <!-- Connector -->
+                        <div class="h-8 w-0.5 bg-white/10"></div>
+                        <!-- Node 2 -->
+                        <div
+                            class="w-full glass bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/30 flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                <i data-lucide="brain"></i>
+                            </div>
+                            <div class="text-sm font-mono text-white">AI Analysis (GPT-4)</div>
+                        </div>
+                        <!-- Connector -->
+                        <div class="h-8 w-0.5 bg-white/10"></div>
+                        <!-- Split -->
+                        <div class="grid grid-cols-2 gap-4 w-full">
+                            <div
+                                class="glass bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center gap-2 text-center">
+                                <i data-lucide="file-check" class="text-green-400 w-6 h-6"></i>
+                                <span class="text-xs font-mono text-zinc-400">Draft Reply</span>
+                            </div>
+                            <div
+                                class="glass bg-white/5 p-4 rounded-xl border border-white/10 flex flex-col items-center gap-2 text-center">
+                                <i data-lucide="webhook" class="text-blue-400 w-6 h-6"></i>
+                                <span class="text-xs font-mono text-zinc-400">Update CRM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div>
+                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Automation Library
+                    </p>
+                    <h2 class="mb-6 text-5xl md:text-6xl font-black tracking-tighter text-white">
+                        n8n <span class="gradient-text">Templates.</span>
+                    </h2>
+                    <p class="text-zinc-400 text-lg leading-relaxed mb-8">
+                        Starten Sie nicht bei Null. Nutzen Sie unsere Bibliothek aus getesteten n8n-Workflows für
+                        Marketing, Sales und Operations.
+                    </p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
+                            <span>Drag & Drop Implementation</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
+                            <span>Vorintegrierte API-Keys</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-zinc-300">
+                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
+                            <span>Skalierbare Logik</span>
+                        </li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary">Templates ansehen</a>
                 </div>
             </div>
         </div>
@@ -1599,6 +1677,20 @@
                                     Sichtbarkeit</div>
                                 <div class="text-sm text-zinc-400">Gefunden werden & Rankings verbessern</div>
                             </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectService('Voice & AI Agents'); nextStep(2)">
+                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Voice & AI Agents
+                                </div>
+                                <div class="text-sm text-zinc-400">Intelligente Telefonie & Chatbots</div>
+                            </button>
+                            <button type="button"
+                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
+                                onclick="selectService('Workflow Automation'); nextStep(2)">
+                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Workflow
+                                    Automation</div>
+                                <div class="text-sm text-zinc-400">Prozesse mit n8n automatisieren</div>
+                            </button>
                         </div>
                         <input type="hidden" name="service" id="serviceInput">
                     </div>
@@ -1769,7 +1861,7 @@
         <div
             class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-600">
             <p>&copy; 2024 AURA SYSTEMS. All rights reserved.</p>
-            <div class="font-mono">v1.8.0</div>
+            <div class="font-mono">v1.9.0</div>
         </div>
     </footer>
     <script type="module">
