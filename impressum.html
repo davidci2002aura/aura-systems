@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum | AURA SYSTEMS</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #6366f1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .magnetic-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <nav
+        class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40">
+        <a href="index.html"
+            class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 hover:opacity-80 transition">
+            <div
+                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
+                A</div>
+            AURA SYSTEMS
+        </a>
+        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
+            <a href="index.html" class="hover:text-white transition magnetic-btn">Home</a>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-24 px-6 max-w-4xl mx-auto z-10 relative">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-12">Impressum</h1>
+
+        <div class="glass p-10 rounded-[3rem] border-white/5 space-y-8 text-zinc-300">
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">Angaben gemäß § 5 TMG</h2>
+                <p>David Lamberts / AuraSky</p>
+                <p>Am Bergle 28</p>
+                <p>88213 Ravensburg</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">Kontakt</h2>
+                <p>Telefon: 0176 91336194</p>
+                <p>E-Mail: davidci2002@gmail.com</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">Umsatzsteuer-ID</h2>
+                <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
+                    [DE000000000]</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">Redaktionell verantwortlich</h2>
+                <p>David Lamberts</p>
+                <p>Am Bergle 28</p>
+                <p>88213 Ravensburg</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">EU-Streitschlichtung</h2>
+                <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a
+                        href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer"
+                        class="text-indigo-400 hover:text-indigo-300">https://ec.europa.eu/consumers/odr/</a>.<br>
+                    Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">Verbraucher­streit­beilegung/Universal­schlichtungs­stelle
+                </h2>
+                <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+                    Verbraucherschlichtungsstelle teilzunehmen.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
+        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Magnetic Buttons
+        const magnets = document.querySelectorAll('.magnetic-btn');
+        magnets.forEach((btn) => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, { duration: 0.3, x: x * 0.3, y: y * 0.3, ease: "power2.out" });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { duration: 0.5, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    </script>
+</body>
+
+</html>

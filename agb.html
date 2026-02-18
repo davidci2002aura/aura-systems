@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGB | AURA SYSTEMS</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #6366f1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .magnetic-btn {
+            transition: all 0.3s ease;
+        }
+
+        h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #a5b4fc;
+            /* Indigo-300 */
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p,
+        li {
+            color: #d4d4d8;
+            /* Zinc-300 */
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <nav
+        class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40">
+        <a href="index.html"
+            class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 hover:opacity-80 transition">
+            <div
+                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
+                A</div>
+            AURA SYSTEMS
+        </a>
+        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
+            <a href="index.html" class="hover:text-white transition magnetic-btn">Home</a>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-24 px-6 max-w-4xl mx-auto z-10 relative">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-4">AGB</h1>
+        <p class="text-indigo-500 font-bold tracking-widest uppercase text-xs mb-12">Allgemeine Geschäftsbedingungen</p>
+
+        <div class="glass p-10 md:p-16 rounded-[3rem] border-white/5 space-y-8 text-zinc-300">
+
+            <div>
+                <h2>1. Geltungsbereich & Vertragsgegenstand</h2>
+                <p>1.1. Diese Allgemeinen Geschäftsbedingungen (nachfolgend "AGB") gelten für alle Verträge, die
+                    zwischen <strong>David Lamberts / AuraSky</strong> (nachfolgend "Auftragnehmer" oder "AURA") und dem
+                    Auftraggeber (nachfolgend "Kunde") geschlossen werden.</p>
+                <p>1.2. Gegenstand des Vertrages ist die Erbringung von Dienstleistungen im Bereich AI Consulting,
+                    Softwareentwicklung, Implementierung von künstlicher Intelligenz (KI), Automatisierungslösungen
+                    sowie Beratungsleistungen.</p>
+                <p>1.3. Entgegenstehende oder von diesen AGB abweichende Bedingungen des Kunden erkennt der
+                    Auftragnehmer nicht an, es sei denn, er hat ihrer Geltung ausdrücklich schriftlich zugestimmt.</p>
+            </div>
+
+            <div>
+                <h2>2. Leistungsumfang & KI-Beschaffenheit</h2>
+                <p>2.1. Der konkrete Leistungsumfang ergibt sich aus dem jeweiligen Angebot oder Vertrag.</p>
+                <p>2.2. AURA schuldet die Tätigkeit, nicht einen bestimmten wirtschaftlichen Erfolg, sofern nicht
+                    ausdrücklich ein Werkvertrag vereinbart wurde.</p>
+                <p>2.3. <strong>Besonderheit bei KI-Systemen:</strong> Der Kunde nimmt zur Kenntnis, dass KI-Systeme
+                    (z.B. LLMs wie GPT-4) auf Wahrscheinlichkeiten basieren. Der Auftragnehmer kann daher keine
+                    Gewährleistung für die absolute Fehlerfreiheit, Faktentreue ("Halluzinationen") oder
+                    diskriminierungsfreie Ausgabe der KI-Modelle übernehmen. Die Leistungen beschränken sich auf die
+                    fachgerechte Implementierung und das "Prompt Engineering" nach aktuellem Stand der Technik.</p>
+            </div>
+
+            <div>
+                <h2>3. Mitwirkungspflichten des Kunden</h2>
+                <p>3.1. Der Kunde unterstützt AURA bei der Erfüllung der geschuldeten Leistungen. Dazu gehört
+                    insbesondere die rechtzeitige Bereitstellung von Informationen, Daten, Zugängen (API-Keys,
+                    Server-Zugänge) und erforderlicher Hard-/Softwareumgebungen.</p>
+                <p>3.2. Verzögerungen, die durch fehlende Mitwirkung des Kunden entstehen, gehen nicht zu Lasten von
+                    AURA.</p>
+            </div>
+
+            <div>
+                <h2>4. Nutzungsrechte & Urheberrecht</h2>
+                <p>4.1. An den individuell für den Kunden entwickelten Arbeitsergebnissen räumt AURA dem Kunden – sofern
+                    nicht anders vereinbart – ein einfaches, nicht übertragbares, zeitlich und räumlich unbeschränktes
+                    Nutzungsrecht ein. Dies gilt nach vollständiger Bezahlung der Vergütung.</p>
+                <p>4.2. AURA behält sich das Recht vor, allgemeine Komponenten, Bibliotheken, "Prompts" und Methoden,
+                    die im Rahmen des Projekts entwickelt wurden, auch für andere Projekte zu nutzen ("Wiederverwendbare
+                    Bausteine"), sofern dabei keine vertraulichen Daten des Kunden offengelegt werden.</p>
+                <p>4.3. Setzt der Kunde Output von KI-Systemen geschäftlich ein, ist er selbst für die Einhaltung
+                    urheberrechtlicher Bestimmungen verantwortlich (z.B. bei KI-generierten Bildern oder Texten).</p>
+            </div>
+
+            <div>
+                <h2>5. Vergütung & Zahlungsbedingungen</h2>
+                <p>5.1. Es gelten die im Angebot vereinbarten Preise. Alle Preise verstehen sich zuzüglich der
+                    gesetzlichen Umsatzsteuer, sofern diese anfällt.</p>
+                <p>5.2. Rechnungen sind sofort nach Erhalt ohne Abzug zahlbar, sofern nicht anders vereinbart.</p>
+            </div>
+
+            <div>
+                <h2>6. Haftung</h2>
+                <p>6.1. AURA haftet unbeschränkt für Vorsatz und grobe Fahrlässigkeit.</p>
+                <p>6.2. Für leichte Fahrlässigkeit haftet AURA nur bei Verletzung wesentlicher Vertragspflichten
+                    (Kardinalpflichten). In diesem Fall ist die Haftung auf den vertragstypischen, vorhersehbaren
+                    Schaden begrenzt.</p>
+                <p>6.3. <strong>Haftungsausschluss für KI-Output:</strong> AURA haftet nicht für Schäden, die durch die
+                    inhaltliche Nutzung von KI-generierten Ergebnissen entstehen (z.B. falsche Informationen in
+                    Chatbots, Urheberrechtsverletzungen durch generierte Bilder), sofern die Implementierung technisch
+                    einwandfrei erfolgte. Der Kunde ist verpflichtet, KI-Ergebnisse vor veröffentlichter Nutzung zu
+                    prüfen ("Human-in-the-loop").</p>
+                <p>6.4. AURA haftet nicht für Datenverlust, sofern der Kunde keine regelmäßigen Backups durchgeführt
+                    hat.</p>
+            </div>
+
+            <div>
+                <h2>7. Geheimhaltung</h2>
+                <p>7.1. Beide Parteien verpflichten sich, alle im Rahmen der Zusammenarbeit bekannt gewordenen
+                    vertraulichen Informationen der jeweils anderen Partei geheim zu halten und nur für die Zwecke des
+                    Vertrages zu verwenden.</p>
+                <p>7.2. Diese Verpflichtung gilt auch über das Ende des Vertrages hinaus.</p>
+            </div>
+
+            <div>
+                <h2>8. Schlussbestimmungen</h2>
+                <p>8.1. Es gilt das Recht der Bundesrepublik Deutschland.</p>
+                <p>8.2. Gerichtsstand für alle Streitigkeiten aus diesem Vertragsverhältnis ist der Sitz des
+                    Auftragnehmers (Ravensburg), sofern der Kunde Kaufmann oder juristische Person des öffentlichen
+                    Rechts ist.</p>
+                <p>8.3. Sollte eine Bestimmung dieser AGB unwirksam sein, bleibt der Vertrag im Übrigen wirksam.</p>
+            </div>
+
+            <div class="mt-12 pt-12 border-t border-white/10 text-xs text-zinc-500 text-center">
+                Stand: Februar 2026
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-70 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
+        <div class="mb-4 space-x-6">
+            <a href="impressum.html" class="hover:text-white transition">Impressum</a>
+            <a href="datenschutz.html" class="hover:text-white transition">Datenschutz</a>
+            <a href="agb.html" class="text-white transition">AGB</a>
+        </div>
+        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Magnetic Buttons
+        const magnets = document.querySelectorAll('.magnetic-btn');
+        magnets.forEach((btn) => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, { duration: 0.3, x: x * 0.3, y: y * 0.3, ease: "power2.out" });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { duration: 0.5, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    </script>
+</body>
+
+</html>

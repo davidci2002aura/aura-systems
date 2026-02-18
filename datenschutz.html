@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz | AURA SYSTEMS</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Fira+Code:wght@400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #6366f1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .magnetic-btn {
+            transition: all 0.3s ease;
+        }
+
+        h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <nav
+        class="fixed w-full z-50 p-6 md:px-12 flex justify-between items-center backdrop-blur-xl border-b border-white/5 bg-black/40">
+        <a href="index.html"
+            class="text-xl font-black tracking-tighter uppercase italic flex items-center gap-3 hover:opacity-80 transition">
+            <div
+                class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-600/20">
+                A</div>
+            AURA SYSTEMS
+        </a>
+        <div class="hidden md:flex gap-10 text-[10px] font-black tracking-[0.4em] text-zinc-500 uppercase">
+            <a href="index.html" class="hover:text-white transition magnetic-btn">Home</a>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-24 px-6 max-w-4xl mx-auto z-10 relative">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-12">Datenschutz</h1>
+
+        <div class="glass p-10 rounded-[3rem] border-white/5 space-y-8 text-zinc-300">
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">1. Datenschutz auf einen Blick</h2>
+                <h3 class="text-lg">Allgemeine Hinweise</h3>
+                <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten
+                    passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie
+                    persönlich identifiziert werden können.</p>
+
+                <h3 class="text-lg">Datenerfassung auf dieser Website</h3>
+                <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong></p>
+                <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten
+                    können Sie dem Impressum dieser Website entnehmen.</p>
+
+                <p><strong>Wie erfassen wir Ihre Daten?</strong></p>
+                <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B.
+                    um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
+                <p>Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere
+                    IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder
+                    Uhrzeit des Seitenaufrufs).</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">2. Hosting</h2>
+                <p>Wir hosten die Inhalte unserer Website bei folgendem Anbieter:</p>
+                <p>[Name des Hosters]</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">3. Allgemeine Hinweise und Pflichtinformationen</h2>
+                <h3 class="text-lg">Datenschutz</h3>
+                <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre
+                    personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie
+                    dieser Datenschutzerklärung.</p>
+
+                <h3 class="text-lg">Hinweis zur verantwortlichen Stelle</h3>
+                <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+                <p>David Lamberts / AuraSky<br>
+                    Am Bergle 28<br>
+                    88213 Ravensburg<br>
+                    Telefon: 0176 91336194<br>
+                    E-Mail: davidci2002@gmail.com</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">4. Datenerfassung auf dieser Website</h2>
+                <h3 class="text-lg">Cookies</h3>
+                <p>Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Textdateien und richten
+                    auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung
+                    (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert.</p>
+
+                <h3 class="text-lg">Kontaktformular</h3>
+                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
+                    Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage
+                    und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre
+                    Einwilligung weiter.</p>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-white mb-4">5. Analyse-Tools und Werbung</h2>
+                <p>[Falls Google Analytics oder ähnliches genutzt wird, hier ergänzen. Standardmäßig deaktiviert für
+                    dieses Template.]</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center opacity-10 text-[10px] font-black tracking-[1em] uppercase">
+        AURA SYSTEMS &middot; Engineered Intelligence &middot; 2026
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Magnetic Buttons
+        const magnets = document.querySelectorAll('.magnetic-btn');
+        magnets.forEach((btn) => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, { duration: 0.3, x: x * 0.3, y: y * 0.3, ease: "power2.out" });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { duration: 0.5, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+    </script>
+</body>
+
+</html>
