@@ -775,7 +775,7 @@
         /* ─── PRICING ─── */
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-top: 3.5rem;
         }
@@ -1611,6 +1611,28 @@
                     <a href="#kontakt" class="btn-primary w-full justify-center">Jetzt starten →</a>
                 </div>
 
+                <!-- Workflow Automation Card -->
+                <div class="price-card reveal" style="border-color: rgba(16, 185, 129, 0.3);">
+                    <div>
+                        <div class="price-name text-emerald-400">WORKFLOWS</div>
+                        <div class="price-amount" style="font-size: 2.5rem;">Auf Anfrage</div>
+                        <div class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Monatliches Abo</div>
+                    </div>
+                    <p class="price-desc">Automatisieren Sie Ihre Prozesse. Sparen Sie Zeit und Kosten durch
+                        intelligente n8n Workflows.</p>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li>Custom n8n Logic</li>
+                        <li>API Integrationen</li>
+                        <li>Fehler-Monitoring</li>
+                        <li>Laufende Wartung</li>
+                        <li>Skalierbare Server</li>
+                        <li>Monatlich kündbar</li>
+                    </ul>
+                    <a href="#kontakt" class="btn-secondary w-full justify-center"
+                        onclick="selectService('Workflow Automation')">Anfragen →</a>
+                </div>
+
                 <div class="price-card reveal" style="border-color: rgba(99, 102, 241, 0.3);">
                     <div>
                         <div class="price-name text-indigo-400">VOICE AGENT</div>
@@ -1706,6 +1728,7 @@
                     <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress3"></div>
                     <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress4"></div>
                     <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress5"></div>
+                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress6"></div>
                 </div>
 
                 <form id="contactForm"
@@ -1825,12 +1848,44 @@
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
                             <textarea name="message" placeholder="Kurze Beschreibung Ihres Projekts..." rows="3"
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition resize-none"></textarea>
-                            <button type="submit" class="btn-primary w-full text-lg py-4">
-                                Termin anfragen
+                            <button type="button" class="btn-primary w-full text-lg py-4"
+                                onclick="nextStep(6); updateReview();">
+                                Weiter zur Überprüfung
                             </button>
                         </div>
                         <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
                             onclick="nextStep(4)">← Zurück</button>
+                    </div>
+
+                    <!-- Step 6: Review -->
+                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
+                        id="step6">
+                        <h3 class="mb-6 text-2xl">Zusammenfassung</h3>
+                        <div class="space-y-4 bg-white/5 p-6 rounded-xl border border-white/10 text-left mb-6">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Service</div>
+                                    <div class="text-white font-semibold text-sm" id="summaryService">-</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Budget</div>
+                                    <div class="text-white font-semibold text-sm" id="summaryBudget">-</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Name</div>
+                                    <div class="text-white font-semibold text-sm" id="summaryName">-</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Email</div>
+                                    <div class="text-white font-semibold text-sm" id="summaryEmail">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary w-full text-lg py-4">
+                            Anfrage absenden
+                        </button>
+                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
+                            onclick="nextStep(5)">← Zurück</button>
                     </div>
                 </form>
 
@@ -2243,7 +2298,14 @@
 
         // Form Multi-Step
         let currentStep = 1;
-        const totalSteps = 5;
+        const totalSteps = 6;
+
+        window.updateReview = function () {
+            document.getElementById('summaryService').textContent = document.getElementById('serviceInput').value || '-';
+            document.getElementById('summaryBudget').textContent = document.getElementById('budgetInput').value || '-';
+            document.getElementById('summaryName').textContent = document.getElementById('inputName').value || '-';
+            document.getElementById('summaryEmail').textContent = document.getElementById('inputEmail').value || '-';
+        }
 
         window.nextStep = function (step) {
             // Hide all
