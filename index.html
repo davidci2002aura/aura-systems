@@ -30,7 +30,7 @@
       const [activeStep, setActiveStep] = useState(0);
       const [openFaq, setOpenFaq] = useState(0);
       const [formStep, setFormStep] = useState(1);
-      const [formData, setFormData] = useState({ service: "", budget: "", name: "", email: "", inquiry: "" });
+      const [formData, setFormData] = useState({ service: "", budget: "", name: "", email: "" });
       const [submitted, setSubmitted] = useState(false);
 
       // Intro sequence
@@ -120,43 +120,9 @@
       const introLetters = ["A", "U", "R", "A"];
 
       const sf = `
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif; }
-
-        /* Branding Classes */
-        .brand-aura {
-          font-family: 'Syne', sans-serif !important;
-          letter-spacing: 0.2em !important;
-          text-transform: uppercase;
-        }
-        .brand-sub {
-          font-family: 'Inter', sans-serif;
-          font-weight: 200;
-          letter-spacing: 0.4em;
-          color: #d1e8ff;
-          text-shadow: 0 0 10px rgba(0, 119, 255, 0.5);
-          text-transform: uppercase;
-        }
-
-        /* Neu: Animationen für die Bento Core Kacheln */
-        @keyframes moveWave { to { transform: translateX(50%); } }
-        @keyframes pulseGrid2 { from { opacity: 0.4; } to { opacity: 1; } }
-
-        .waveform-bg {
-          position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
-          background: repeating-linear-gradient(90deg, transparent, rgba(0, 119, 255, 0.08) 5px, transparent 10px);
-          animation: moveWave 15s linear infinite;
-        }
-
-        .node-network-bg {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          background: linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 0), linear-gradient(180deg, rgba(255,255,255,0.03) 1px, transparent 0);
-          background-size: 20px 20px;
-          animation: pulseGrid2 4s ease-in-out infinite alternate;
-        }
-
         @keyframes shimmer {
           0% { background-position: 200% center; }
           100% { background-position: -200% center; }
@@ -207,9 +173,10 @@
 
               <div style={{ display: "flex", overflow: "hidden", padding: "0.5rem 0" }}>
                 {introLetters.map((l, i) => (
-                  <span key={i} className="brand-aura" style={{
-                    fontSize: "clamp(5rem,15vw,10rem)",
-                    color: "#fff", lineHeight: 1,
+                  <span key={i} style={{
+                    fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif",
+                    fontWeight: 800, fontSize: "clamp(5rem,15vw,10rem)",
+                    letterSpacing: "0.25em", color: "#fff", lineHeight: 1,
                     display: "inline-block",
                     transform: introPhase >= 1 ? "translateY(0)" : "translateY(110%)",
                     opacity: introPhase >= 1 ? 1 : 0,
@@ -226,8 +193,10 @@
                 transition: "transform 1s cubic-bezier(0.16,1,0.3,1) 0.4s, opacity 0.5s ease 0.4s",
               }} />
 
-              <div className="brand-sub" style={{
-                fontSize: "0.55rem", letterSpacing: "0.4em",
+              <div style={{
+                fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace",
+                fontSize: "0.55rem", letterSpacing: "0.3em", color: "rgba(255,255,255,0.2)",
+                textTransform: "uppercase", fontWeight: 400,
                 opacity: introPhase >= 2 ? 1 : 0, transition: "opacity 0.6s ease",
               }}>Neural Architecture · Loaded</div>
             </div>
@@ -252,9 +221,9 @@
             }} />
             {/* Orbs */}
             {[
-              { w: 600, h: 600, c: "rgba(0,119,255,0.06)", t: "-8%", l: "-12%", a: "orbFloat1 25s ease-in-out infinite" },
-              { w: 400, h: 400, c: "rgba(168,85,247,0.05)", t: "35%", r: "-8%", a: "orbFloat2 30s ease-in-out infinite" },
-              { w: 500, h: 500, c: "rgba(0,194,255,0.04)", b: "5%", l: "15%", a: "orbFloat3 20s ease-in-out infinite" },
+              { w:600,h:600,c:"rgba(0,119,255,0.06)",t:"-8%",l:"-12%",a:"orbFloat1 25s ease-in-out infinite" },
+              { w:400,h:400,c:"rgba(168,85,247,0.05)",t:"35%",r:"-8%",a:"orbFloat2 30s ease-in-out infinite" },
+              { w:500,h:500,c:"rgba(0,194,255,0.04)",b:"5%",l:"15%",a:"orbFloat3 20s ease-in-out infinite" },
             ].map((o, i) => (
               <div key={i} style={{
                 position: "absolute", borderRadius: "50%",
@@ -273,7 +242,7 @@
           </div>
 
           {/* ── MAIN ── */}
-          <div style={{ position: "relative", zIndex: 10, background: "transparent", minHeight: "100vh", color: "#f0f4ff" }}>
+          <div style={{ position: "relative", zIndex: 10, background: "#000000", minHeight: "100vh", color: "#f0f4ff" }}>
 
             {/* NAV */}
             <nav style={{
@@ -283,9 +252,9 @@
               background: "rgba(0,0,0,0.8)", backdropFilter: "blur(24px)",
               borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div className="brand-aura" style={{ fontSize: "1.1rem", color: "#fff", lineHeight: 1 }}>AURA</div>
-                <div className="brand-sub" style={{ fontSize: "0.45rem", marginTop: "0.2rem" }}>Neural Architecture</div>
+              <div>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "1rem", letterSpacing: "0.22em", color: "#fff" }}>AURA</div>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.48rem", letterSpacing: "0.18em", color: "rgba(0,119,255,0.8)", marginTop: "0.1rem", textTransform: "uppercase" }}>Neural Architecture</div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
                 {["Leistungen", "Prozess", "Preise", "FAQ"].map(l => (
@@ -332,12 +301,14 @@
               }}>Premium Web Solutions · KI-gestützt · 2025</div>
 
               <h1 style={{
+                fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif",
+                fontWeight: 800, fontSize: "clamp(3.5rem,10vw,8.5rem)",
                 lineHeight: 1.0, letterSpacing: "-0.04em",
                 marginBottom: "1.5rem",
                 opacity: introGone ? 1 : 0, transition: "opacity 1s ease 0.4s",
               }}>
-                <span className="shimmer-text brand-aura" style={{ fontSize: "clamp(3.5rem,10vw,8.5rem)" }}>AURA</span>
-                <span className="brand-sub" style={{ display: "block", fontSize: "0.75rem", marginTop: "0.8em", letterSpacing: "0.5em" }}>Neural Architecture</span>
+                <span className="shimmer-text">AURA</span>
+                <span style={{ display: "block", fontWeight: 200, fontSize: "0.38em", letterSpacing: "0.06em", color: "rgba(255,255,255,0.3)", marginTop: "0.4em", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif" }}>Neural Architecture</span>
               </h1>
 
               <p style={{
@@ -406,7 +377,7 @@
                   <div style={{ gridColumn: "span 2", gridRow: "span 2", minHeight: "320px" }}>
                     <BentoCard tag="01 — Neural Operations" title="n8n Automation Workflows" desc="Verbinden Sie Ihre Tools zu einem autonomen Organismus. CRM, E-Mail, Marketing — alles fließt nahtlos." accent>
                       <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                        {[["blue", "Email Inbound · AI Classify"], ["purple", "GPT-4o Analysis · Route"], ["green", "CRM Update · Slack Notify"], ["orange", "Report Generate · Send"]].map(([c, t]) => (
+                        {[["blue","Email Inbound · AI Classify"],["purple","GPT-4o Analysis · Route"],["green","CRM Update · Slack Notify"],["orange","Report Generate · Send"]].map(([c,t]) => (
                           <div key={t} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "0.5rem 0.85rem", display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.65rem", letterSpacing: "0.04em", color: "rgba(255,255,255,0.5)" }}>
                             <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: c === "blue" ? "#0077ff" : c === "purple" ? "#a855f7" : c === "green" ? "#22c55e" : "#f59e0b", flexShrink: 0 }} />{t}
                           </div>
@@ -418,20 +389,9 @@
                   <BentoCard tag="02 — Performance" title="Blitzschnell." desc="Ladezeiten unter 1 Sekunde." stat="0.8s" statLabel="avg. load time" />
                   <BentoCard tag="03 — SEO" title="Lighthouse 100." desc="Technisch perfekt. Semantisch präzise." stat="100" statLabel="Lighthouse Score" statColor="#22c55e" />
 
-                  {/* NEUE KACHELN */}
-                  <BentoCard tag="04 — Vocal Identity" title="Vocal Identity Synthesis" desc="Voice-Cloning & 24/7 Support. 'Ready-to-Deploy' Blueprints für menschlich klingende KI-Agenten." purple>
-                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "hidden", zIndex: -1 }}>
-                      <div className="waveform-bg" />
-                    </div>
-                  </BentoCard>
-
-                  <BentoCard tag="05 — Automation" title="Autonomous Operations" desc="Maßgeschneiderte Prozess-Architekturen zur vollautomatischen Steuerung Ihrer Unternehmensabläufe." accent>
-                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "hidden", zIndex: -1 }}>
-                      <div className="node-network-bg" />
-                    </div>
-                  </BentoCard>
-
-                  <BentoCard tag="06 — Conversion" title="Design, das verkauft." desc="Jedes Element auf Conversion optimiert. A/B getestet." stat="+38%" statLabel="Conversion Rate" />
+                  <BentoCard tag="04 — Voice Agent" title="24/7 Vocal Identity" desc="Mehrsprachige KI-Telefonie. Vollständig in Ihre Systeme integriert." purple />
+                  <BentoCard tag="05 — Conversion" title="Design, das verkauft." desc="Jedes Element auf Conversion optimiert. A/B getestet." stat="+38%" statLabel="Conversion Rate" />
+                  <BentoCard tag="06 — KI Support" title="AI Ecosystem." desc="Chatbots, die echte Probleme lösen. In jeder Sprache." stat="24/7" statLabel="System Online" />
                 </div>
               </div>
             </section>
@@ -469,7 +429,7 @@
                   {/* Visual */}
                   <div style={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "14px", overflow: "hidden" }}>
                     <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                      {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
                       <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.5rem", letterSpacing: "0.06em" }}>project.config.ts</span>
                     </div>
                     <div style={{ padding: "1.5rem" }}>
@@ -508,10 +468,10 @@
                 </h2>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "10px" }}>
                   {[
-                    { name: "STARTER", color: "rgba(0,119,255,0.7)", bg: null, features: ["Onepager / Landingpage", "Responsive Design", "On-Page SEO", "Kontaktformular"], off: ["A/B Testing", "KI-Integration"] },
-                    { name: "ENTERPRISE", color: "rgba(0,119,255,0.9)", bg: "rgba(0,119,255,0.06)", border: "rgba(0,119,255,0.25)", featured: true, features: ["Bis zu 5 Unterseiten", "Premium Custom Design", "Technisches SEO", "Conversion Optimierung", "KI-Integration", "3 Monate Support"], off: [] },
-                    { name: "WORKFLOWS", color: "rgba(34,197,94,0.8)", bg: null, border: "rgba(34,197,94,0.15)", features: ["Custom n8n Logic", "API Integrationen", "Fehler-Monitoring", "Laufende Wartung", "Monatlich kündbar"], off: [] },
-                    { name: "VOICE AGENT", color: "rgba(168,85,247,0.8)", bg: null, border: "rgba(168,85,247,0.15)", features: ["24/7 Anrufannahme", "Mehrsprachig DE/EN/ES", "Stimmen wählbar", "System-Integration", "Monatlich kündbar"], off: [] },
+                    { name: "STARTER", color: "rgba(0,119,255,0.7)", bg: null, features: ["Onepager / Landingpage","Responsive Design","On-Page SEO","Kontaktformular"], off: ["A/B Testing","KI-Integration"] },
+                    { name: "ENTERPRISE", color: "rgba(0,119,255,0.9)", bg: "rgba(0,119,255,0.06)", border: "rgba(0,119,255,0.25)", featured: true, features: ["Bis zu 5 Unterseiten","Premium Custom Design","Technisches SEO","Conversion Optimierung","KI-Integration","3 Monate Support"], off: [] },
+                    { name: "WORKFLOWS", color: "rgba(34,197,94,0.8)", bg: null, border: "rgba(34,197,94,0.15)", features: ["Custom n8n Logic","API Integrationen","Fehler-Monitoring","Laufende Wartung","Monatlich kündbar"], off: [] },
+                    { name: "VOICE AGENT", color: "rgba(168,85,247,0.8)", bg: null, border: "rgba(168,85,247,0.15)", features: ["24/7 Anrufannahme","Mehrsprachig DE/EN/ES","Stimmen wählbar","System-Integration","Monatlich kündbar"], off: [] },
                   ].map((p, i) => (
                     <div key={i} style={{
                       background: p.bg || "rgba(255,255,255,0.02)",
@@ -602,7 +562,7 @@
                   {/* Terminal header */}
                   <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.7)" }}>
                     <div style={{ display: "flex", gap: "0.4rem" }}>
-                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                      {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
                     </div>
                     <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>neural-inquiry.ts</span>
                     <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", color: "#22c55e", display: "flex", alignItems: "center", gap: "0.35rem", letterSpacing: "0.08em" }}>
@@ -613,13 +573,13 @@
                   <div style={{ padding: "1.75rem" }}>
                     {/* Progress */}
                     <div style={{ display: "flex", gap: "4px", marginBottom: "1.75rem" }}>
-                      {[1, 2, 3, 4, 5, 6].map(n => <div key={n} style={{ flex: 1, height: "2px", borderRadius: "2px", background: n <= formStep ? "#0077ff" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />)}
+                      {[1,2,3,4,5,6].map(n => <div key={n} style={{ flex: 1, height: "2px", borderRadius: "2px", background: n <= formStep ? "#0077ff" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />)}
                     </div>
 
                     {submitted ? (
                       <div style={{ textAlign: "center", padding: "2rem 0" }}>
                         <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)", display: "grid", placeItems: "center", margin: "0 auto 1.25rem" }}>
-                          <svg width="20" height="20" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M17 5L8 14.5l-4-4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          <svg width="20" height="20" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M17 5L8 14.5l-4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>
                         </div>
                         <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.4rem", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Anfrage gesendet.</div>
                         <p style={{ fontWeight: 300, fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", letterSpacing: "-0.005em" }}>Wir melden uns innerhalb von 24h bei Ihnen.</p>
@@ -634,48 +594,35 @@
             </section>
 
             {/* FOOTER */}
-            <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "5rem 2.5rem 3rem", background: "rgba(0,0,0,0.6)", position: "relative", zIndex: 10 }}>
+            <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "5rem 2.5rem 3rem", background: "rgba(0,0,0,0.6)" }}>
               <div style={{ maxWidth: "1160px", margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "4rem", marginBottom: "3rem" }}>
                 <div>
-                  <div className="brand-aura" style={{ fontSize: "1.4rem", color: "#fff", marginBottom: "0.3rem" }}>AURA</div>
-                  <div className="brand-sub" style={{ fontSize: "0.45rem", marginBottom: "1rem" }}>Neural Architecture</div>
-                  <p style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.7, marginBottom: "1.5rem", letterSpacing: "-0.005em" }}>Premium Web Solutions für ambitionierte Unternehmen.</p>
-
-                  {/* Minimalistischer Legal Info Block */}
-                  <div
-                    style={{
-                      fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace",
-                      fontSize: "0.75rem",
-                      color: "rgba(255,255,255,0.2)",
-                      lineHeight: 1.8,
-                      letterSpacing: "0.02em",
-                      opacity: 0.6,
-                      transition: "opacity 0.3s ease"
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.opacity = 1}
-                    onMouseLeave={e => e.currentTarget.style.opacity = 0.6}
-                  >
+                  <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "1.4rem", letterSpacing: "0.2em", marginBottom: "0.3rem" }}>AURA</div>
+                  <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.5rem", letterSpacing: "0.18em", color: "rgba(0,119,255,0.7)", marginBottom: "1rem", textTransform: "uppercase" }}>Neural Architecture</div>
+                  <p style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.7, marginBottom: "1.5rem", letterSpacing: "-0.005em" }}>Premium Web Solutions für ambitionierte Unternehmen. Schnell. Skalierbar. Sichtbar.</p>
+                  <div style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.6rem", color: "rgba(255,255,255,0.18)", lineHeight: 2, letterSpacing: "0.02em" }}>
                     <div>Inhaber: David Lamberts</div>
-                    <div>Anschrift: Am Bergle 28, 88284 Schlier</div>
-                    <div>017691336194 | aura.neural.architecture@gmx.de</div>
+                    <div>Am Bergle 28, 88284 Schlier</div>
+                    <div>Tel: 017691336194</div>
+                    <div>davidci2002@gmail.com</div>
+                    <div style={{ marginTop: "0.4rem" }}>aura-systems.de</div>
                   </div>
-
                 </div>
                 {[
-                  { title: "Navigation", links: ["Leistungen", "Prozess", "Preise", "FAQ", "Kontakt"] },
-                  { title: "Rechtliches", links: ["Impressum", "Datenschutz", "AGB"] },
+                  { title: "Navigation", links: ["Leistungen","Prozess","Preise","FAQ","Kontakt"] },
+                  { title: "Rechtliches", links: ["Impressum","Datenschutz","AGB"] },
                   { title: "Kontakt", links: ["Termin buchen"] },
                 ].map(col => (
                   <div key={col.title}>
                     <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "1.25rem" }}>{col.title}</div>
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                      {col.links.map(l => <li key={l}><a href="#" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = "#fff"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.35)"}>{l}</a></li>)}
+                      {col.links.map(l => <li key={l}><a href="#" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color 0.2s" }} onMouseEnter={e=>e.target.style.color="#fff"} onMouseLeave={e=>e.target.style.color="rgba(255,255,255,0.35)"}>{l}</a></li>)}
                     </ul>
                   </div>
                 ))}
               </div>
               <div style={{ maxWidth: "1160px", margin: "0 auto", paddingTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.2)" }}>
-                <span>© 2026 AURA Neural Architecture. All rights reserved.</span>
+                <span>© 2025 AURA Neural Architecture. All rights reserved.</span>
                 <span>v2.4.0</span>
               </div>
             </footer>
@@ -691,7 +638,6 @@
           onMouseEnter={() => setHov(true)}
           onMouseLeave={() => setHov(false)}
           style={{
-            position: "relative",
             background: accent ? "linear-gradient(135deg,rgba(0,119,255,0.1),rgba(0,0,0,0))" : purple ? "linear-gradient(135deg,rgba(168,85,247,0.08),rgba(0,0,0,0))" : "rgba(255,255,255,0.02)",
             border: `1px solid ${hov ? (accent ? "rgba(0,119,255,0.3)" : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.07)"}`,
             borderRadius: "14px", padding: "1.75rem",
@@ -701,20 +647,14 @@
             transform: hov ? "translateY(-3px)" : "none",
             boxShadow: hov ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 48px rgba(0,0,0,0.35)" : "none",
             cursor: "default",
-            overflow: "hidden"
           }}
         >
-          {/* Background Children wie Waveform oder Network */}
+          <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.1em", color: purple ? "rgba(168,85,247,0.8)" : "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "0.75rem" }}>{tag}</div>
+          <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(1.1rem,2.2vw,1.5rem)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "0.6rem" }}>{title}</div>
+          <div style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, letterSpacing: "-0.005em" }}>{desc}</div>
           {children}
-
-          <div style={{ position: "relative", zIndex: 2 }}>
-            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.1em", color: purple ? "rgba(168,85,247,0.8)" : "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "0.75rem" }}>{tag}</div>
-            <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(1.1rem,2.2vw,1.5rem)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "0.6rem" }}>{title}</div>
-            <div style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, letterSpacing: "-0.005em" }}>{desc}</div>
-          </div>
-
           {stat && (
-            <div style={{ marginTop: "auto", paddingTop: "1.25rem", position: "relative", zIndex: 2 }}>
+            <div style={{ marginTop: "auto", paddingTop: "1.25rem" }}>
               <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 800, fontSize: "2.2rem", letterSpacing: "-0.04em", lineHeight: 1, color: statColor || "rgba(0,119,255,0.9)" }}>{stat}</div>
               <div style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", marginTop: "0.2rem", textTransform: "uppercase" }}>{statLabel}</div>
             </div>
@@ -726,16 +666,12 @@
     function FormStep({ step, setStep, formData, setFormData, setSubmitted }) {
       const [name, setName] = useState("");
       const [email, setEmail] = useState("");
-      const [inquiry, setInquiry] = useState("");
 
       const labelStyle = { fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.55rem", letterSpacing: "0.18em", color: "rgba(0,119,255,0.7)", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" };
       const titleStyle = { fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.25rem", letterSpacing: "-0.02em", marginBottom: "1.25rem" };
       const choiceStyle = (hov) => ({ width: "100%", background: hov ? "rgba(0,119,255,0.06)" : "rgba(255,255,255,0.02)", border: `1px solid ${hov ? "rgba(0,119,255,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: "10px", padding: "0.9rem 1.1rem", textAlign: "left", cursor: "pointer", transition: "all 0.2s", marginBottom: "0.45rem", color: "#f0f4ff" });
       const inputStyle = { width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "10px", padding: "0.85rem 1rem", color: "#f0f4ff", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.92rem", letterSpacing: "-0.01em", outline: "none", marginBottom: "0.75rem", display: "block" };
       const backStyle = { background: "none", border: "none", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.6rem", letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", cursor: "pointer", marginTop: "0.85rem", padding: 0 };
-      const ActionBtn = ({ label, onClick }) => (
-        <button onClick={onClick} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.85rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em", transition: "background 0.2s" }} onMouseEnter={e => e.target.style.background = "#0062d4"} onMouseLeave={e => e.target.style.background = "#0077ff"}>{label}</button>
-      );
 
       const ChoiceBtn = ({ main, sub, onClick }) => {
         const [h, setH] = useState(false);
@@ -753,8 +689,8 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_01</span>
           <div style={titleStyle}>Was benötigen Sie?</div>
-          {[["Neue Website", "Komplett neue Website von Grund auf"], ["Website Redesign", "Bestehende Website modernisieren"], ["SEO & Sichtbarkeit", "Rankings verbessern"], ["Voice & AI Agents", "Intelligente Telefonie"], ["Workflow Automation", "Prozesse mit n8n automatisieren"]].map(([m, s]) => (
-            <ChoiceBtn key={m} main={m} sub={s} onClick={() => { setFormData(d => ({ ...d, service: m })); setStep(2); }} />
+          {[["Neue Website","Komplett neue Website von Grund auf"],["Website Redesign","Bestehende Website modernisieren"],["SEO & Sichtbarkeit","Rankings verbessern · gefunden werden"],["Voice & AI Agents","Intelligente Telefonie & Chatbots"],["Workflow Automation","Prozesse mit n8n automatisieren"]].map(([m,s]) => (
+            <ChoiceBtn key={m} main={m} sub={s} onClick={() => { setFormData(d=>({...d,service:m})); setStep(2); }} />
           ))}
         </div>
       );
@@ -763,8 +699,8 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_02</span>
           <div style={titleStyle}>Ihr Investitionsrahmen?</div>
-          {["500€ – 1.500€", "1.500€ – 5.000€", "5.000€+"].map(b => (
-            <ChoiceBtn key={b} main={b} onClick={() => { setFormData(d => ({ ...d, budget: b })); setStep(3); }} />
+          {["500€ – 1.500€","1.500€ – 5.000€","5.000€+"].map(b => (
+            <ChoiceBtn key={b} main={b} onClick={() => { setFormData(d=>({...d,budget:b})); setStep(3); }} />
           ))}
           <button style={backStyle} onClick={() => setStep(1)}>← Zurück</button>
         </div>
@@ -774,8 +710,8 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_03</span>
           <div style={titleStyle}>Wie dürfen wir Sie nennen?</div>
-          <input style={inputStyle} placeholder="Ihr Name" value={name} onChange={e => setName(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && name.trim()) { setFormData(d => ({ ...d, name })); setStep(4) } }} autoFocus />
-          <ActionBtn label="Weiter →" onClick={() => { if (name.trim()) { setFormData(d => ({ ...d, name })); setStep(4) } }} />
+          <input style={inputStyle} placeholder="Ihr Name" value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&name.trim()){setFormData(d=>({...d,name}));setStep(4)}}} autoFocus />
+          <button onClick={()=>{if(name.trim()){setFormData(d=>({...d,name}));setStep(4)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Weiter →</button>
           <button style={backStyle} onClick={() => setStep(2)}>← Zurück</button>
         </div>
       );
@@ -784,58 +720,9 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_04</span>
           <div style={titleStyle}>Wie erreichen wir Sie?</div>
-          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && email.includes("@")) { setFormData(d => ({ ...d, email })); setStep(5) } }} autoFocus />
-          <ActionBtn label="Weiter →" onClick={() => { if (email.includes("@")) { setFormData(d => ({ ...d, email })); setStep(5) } }} />
+          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&email.includes("@")){setFormData(d=>({...d,email}));setSubmitted(true)}}} autoFocus />
+          <button onClick={()=>{if(email.includes("@")){setFormData(d=>({...d,email}));setSubmitted(true)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Absenden →</button>
           <button style={backStyle} onClick={() => setStep(3)}>← Zurück</button>
-        </div>
-      );
-
-      if (step === 5) return (
-        <div style={anim}>
-          <span style={labelStyle}>QUERY_05</span>
-          <div style={titleStyle}>Technical Inquiry Mode</div>
-
-          {/* Hinweisblock */}
-          <div style={{ background: "rgba(0,119,255,0.06)", border: "1px solid rgba(0,119,255,0.2)", borderRadius: "10px", padding: "1rem", marginBottom: "1.25rem" }}>
-            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 600, fontSize: "0.75rem", color: "rgba(0,119,255,0.9)", marginBottom: "0.2rem" }}>Präzision beginnt beim Dialog.</div>
-            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.75rem", color: "rgba(0,119,255,0.7)", lineHeight: 1.5 }}>
-              Stellen Sie hier spezifische technische Fragen oder schildern Sie uns detailliert Ihre Prozess-Gedankengänge.
-            </div>
-          </div>
-
-          <textarea
-            style={{ ...inputStyle, minHeight: "120px", resize: "vertical" }}
-            placeholder="System-Architektur, APIs, Projektziele..."
-            value={inquiry}
-            onChange={e => setInquiry(e.target.value)}
-          />
-          <ActionBtn label="Zusammenfassung →" onClick={() => { setFormData(d => ({ ...d, inquiry })); setStep(6) }} />
-          <button style={backStyle} onClick={() => setStep(4)}>← Zurück</button>
-        </div>
-      );
-
-      if (step === 6) return (
-        <div style={anim}>
-          <span style={labelStyle}>QUERY_06</span>
-          <div style={titleStyle}>System Checkout</div>
-          <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "1.1rem", marginBottom: "1.25rem" }}>
-            {[["Service", formData.service], ["Budget", formData.budget], ["Name", formData.name], ["Email", formData.email]].map(([l, v]) => (
-              <div key={l} style={{ display: "grid", gridTemplateColumns: "80px 1fr", marginBottom: "0.5rem" }}>
-                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", paddingTop: "0.1rem" }}>{l}</span>
-                <span style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em", overflowWrap: "break-word" }}>{v || "—"}</span>
-              </div>
-            ))}
-            {formData.inquiry && (
-              <div style={{ display: "grid", gridTemplateColumns: "80px 1fr", marginBottom: "0.5rem" }}>
-                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", paddingTop: "0.1rem" }}>Inquiry</span>
-                <span style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em", overflowWrap: "break-word" }}>{formData.inquiry}</span>
-              </div>
-            )}
-          </div>
-          <button onClick={() => setSubmitted(true)} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.9rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em", transition: "background 0.2s" }} onMouseEnter={e => e.target.style.background = "#0062d4"} onMouseLeave={e => e.target.style.background = "#0077ff"}>
-            Anfrage absenden →
-          </button>
-          <button style={backStyle} onClick={() => setStep(5)}>← Zurück</button>
         </div>
       );
 
