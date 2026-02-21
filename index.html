@@ -720,9 +720,28 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_04</span>
           <div style={titleStyle}>Wie erreichen wir Sie?</div>
-          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&email.includes("@")){setFormData(d=>({...d,email}));setSubmitted(true)}}} autoFocus />
-          <button onClick={()=>{if(email.includes("@")){setFormData(d=>({...d,email}));setSubmitted(true)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Absenden →</button>
+          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&email.includes("@")){setFormData(d=>({...d,email}));setStep(5)}}} autoFocus />
+          <button onClick={()=>{if(email.includes("@")){setFormData(d=>({...d,email}));setStep(5)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Weiter →</button>
           <button style={backStyle} onClick={() => setStep(3)}>← Zurück</button>
+        </div>
+      );
+
+      if (step === 5) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_05</span>
+          <div style={titleStyle}>Alles bereit.</div>
+          <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "1.1rem", marginBottom: "1.25rem" }}>
+            {[["Service", formData.service], ["Budget", formData.budget], ["Name", formData.name], ["Email", formData.email]].map(([l, v]) => (
+              <div key={l} style={{ display: "grid", gridTemplateColumns: "80px 1fr", marginBottom: "0.5rem" }}>
+                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", paddingTop: "0.1rem" }}>{l}</span>
+                <span style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>{v || "—"}</span>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setSubmitted(true)} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.9rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>
+            Anfrage absenden →
+          </button>
+          <button style={backStyle} onClick={() => setStep(4)}>← Zurück</button>
         </div>
       );
 
