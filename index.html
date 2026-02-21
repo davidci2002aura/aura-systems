@@ -1,2448 +1,850 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
-
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AURA SYSTEMS | KI-getriebene Web-Lösungen</title>
-    <meta name="description"
-        content="Wir bauen Websites, die verkaufen. KI-gestützt. Blitzschnell. Conversion-optimiert.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --bg: #0a0a0a;
-            --text: #ffffff;
-            --text-muted: #a1a1aa;
-
-            /* Reference Variables */
-            --ink: #0c0c0e;
-            --ink-2: #13131a;
-            --surface: #18181f;
-            --border: rgba(255, 255, 255, 0.06);
-            --accent: #5b5ef7;
-            --accent-2: #a78bfa;
-            --accent-glow: rgba(91, 94, 247, 0.3);
-            --mono: 'Space Mono', monospace;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            /* Radial Gradient for depth */
-            background-image: radial-gradient(circle at 50% 30%, #1a1a2e 0%, #0a0a0a 70%);
-            /* Fix layout shift */
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Neural Operations Nodes */
-        .neural-network {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            opacity: 0.2;
-            pointer-events: none;
-        }
-
-        .neural-node {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse-node 3s infinite ease-in-out;
-        }
-
-        .neural-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            transform-origin: left center;
-            opacity: 0.3;
-        }
-
-        @keyframes pulse-node {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-
-            50% {
-                transform: scale(1.5);
-                opacity: 1;
-                box-shadow: 0 0 10px var(--accent);
-            }
-        }
-
-        /* ─── INTRO OVERLAY ─── */
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .intro-text {
-            font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: clamp(4rem, 15vw, 10rem);
-            color: #fff;
-            letter-spacing: -0.05em;
-            /* Relaxed from -0.08em */
-            line-height: 1.2;
-            /* Prevent vertical clipping */
-            padding: 2rem;
-            /* Prevent shadow clipping */
-            text-transform: uppercase;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
-            /* Hidden initially for SplitText */
-            visibility: visible;
-        }
-
-        /* Intro specifically blurred initially */
-        .intro-text .split-char {
-            filter: blur(20px);
-            opacity: 0;
-            transform: translateY(100%);
-        }
-
-        /* Utility to prevent shift */
-        body,
-        html {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Fix: Use 100% instead of 100vw to avoid scrollbar width issues */
-        .marquee-section,
-        .pricing-grid,
-        .process-layout {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: clamp(4.5rem, 15vw, 9.5rem);
-            /* Massive, dominant */
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -0.04em;
-        }
-
-        h2 {
-            font-size: clamp(2.5rem, 7vw, 4rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-        }
-
-        /* ... existing styles ... */
-
-
-        h3 {
-            font-size: clamp(1.25rem, 4vw, 1.75rem);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        h3 {
-            font-size: clamp(1.25rem, 4vw, 1.75rem);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        /* Gradient Text */
-        .gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Glass Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .glass:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Button */
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .bg-grid {
-            display: none;
-            /* Permanently removed */
-        }
-
-        /* Visual Depth Overlays */
-        .grain-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            /* Above background, below text */
-            opacity: 0.35;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            mix-blend-mode: overlay;
-        }
-
-        .vignette-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            background: radial-gradient(circle at center, transparent 20%, rgba(10, 10, 10, 0.8) 120%);
-        }
-
-        /* ... existing code ... */
-
-
-
-        /* Global Background Video Canvas */
-        #hero-sequence,
-        #hero-fallback {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            /* Update per user feedback: More present, less "mistake-like" */
-            opacity: 0;
-            /* Silent start - fades in later */
-            filter: blur(0px);
-            /* Removed blur for clarity */
-            pointer-events: none;
-            z-index: -2;
-            transform: scale(0.9);
-            /* Slightly smaller as requested */
-        }
-
-        #hero-sequence {
-            opacity: 0;
-            transition: opacity 1s;
-        }
-
-        #hero-sequence.loaded {
-            opacity: 0.15;
-        }
-
-        /* Logo Loop CSS */
-        .logo-scroll {
-            display: flex;
-            overflow: hidden;
-            user-select: none;
-            padding: 2rem 0;
-            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-        }
-
-        .logo-track {
-            flex-shrink: 0;
-            display: flex;
-            gap: 4rem;
-            min-width: 100%;
-            justify-content: space-around;
-            animation: scroll 30s linear infinite;
-        }
-
-        .logo-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(calc(-100% - 4rem));
-            }
-        }
-
-        .tech-logo {
-            height: 48px !important;
-            width: auto !important;
-            max-width: 120px;
-            opacity: 0.5;
-            transition: all 0.3s ease;
-            filter: grayscale(100%);
-            flex-shrink: 0;
-            display: block;
-            /* Ensure it behaves like a block */
-        }
-
-        .tech-logo:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-            transform: scale(1.1);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .mobile-menu.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Card Hover */
-        /* Card Hover (Spotlight) */
-        .feature-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(99, 102, 241, 0.3);
-            box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.2);
-        }
-
-        /* Spotlight radial gradient */
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: var(--y, 50%);
-            left: var(--x, 50%);
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle closest-side, rgba(99, 102, 241, 0.15), transparent);
-            transition: width 0.3s ease, height 0.3s ease;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .feature-card:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .feature-card-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Process Steps */
-        .step-card {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .step-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Form Steps */
-        .form-step {
-            scrollbar-width: none;
-            /* Firefox */
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0;
-            z-index: 10;
-            animation: fadeInScroll 1s ease 2s forwards;
-        }
-
-        @keyframes fadeInScroll {
-            to {
-                opacity: 0.7;
-            }
-        }
-
-        .mouse {
-            width: 20px;
-            height: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .wheel {
-            width: 2px;
-            height: 4px;
-            background: #fff;
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: scrollWheel 1.5s infinite;
-        }
-
-        .arrow-scroll {
-            width: 10px;
-            height: 10px;
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            transform: rotate(45deg);
-            animation: scrollArrow 1.5s infinite;
-        }
-
-        @keyframes scrollWheel {
-            0% {
-                top: 6px;
-                opacity: 1;
-            }
-
-            100% {
-                top: 18px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes scrollArrow {
-            0% {
-                opacity: 0;
-                transform: rotate(45deg) translate(-5px, -5px);
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-        }
-
-        .form-step.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.25rem;
-            }
-
-            h2 {
-                font-size: 1.75rem;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading State */
-        .loading {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* ─── MARQUEE ─── */
-        .marquee-section {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            overflow: hidden;
-            background: var(--ink-2);
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 3rem;
-            width: max-content;
-            animation: marquee 25s linear infinite;
-        }
-
-        .marquee-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-            from {
-                transform: translateX(0)
-            }
-
-            to {
-                transform: translateX(-50%)
-            }
-        }
-
-        .marquee-item {
-            white-space: nowrap;
-            font-family: var(--mono);
-            font-size: .75rem;
-            letter-spacing: .15em;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-transform: uppercase;
-        }
-
-        .marquee-item span {
-            color: var(--primary);
-        }
-
-        .marquee-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--border);
-        }
-
-        /* ─── PROCESS ─── */
-        .process-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 6rem;
-            align-items: start;
-        }
-
-        .process-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .process-step {
-            display: grid;
-            grid-template-columns: 48px 1fr;
-            gap: 1.5rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: all .3s;
-        }
-
-        .process-step:first-child {
-            padding-top: 0;
-        }
-
-        .process-step:last-child {
-            border-bottom: none;
-        }
-
-        .step-num {
-            font-family: var(--mono);
-            font-size: .8rem;
-            color: var(--text-muted);
-            letter-spacing: .08em;
-            padding-top: .1rem;
-        }
-
-        .step-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: .5rem;
-        }
-
-        .step-desc {
-            font-size: 1rem;
-            color: var(--text-muted);
-            line-height: 1.65;
-        }
-
-        .step-time {
-            font-family: var(--mono);
-            font-size: .7rem;
-            color: var(--primary);
-            letter-spacing: .1em;
-            margin-top: .75rem;
-        }
-
-        .process-step.active {
-            padding-left: 1rem;
-            border-left: 2px solid var(--primary);
-        }
-
-        .process-step.active .step-num {
-            color: var(--primary);
-        }
-
-        /* Process visual */
-        .process-visual {
-            position: sticky;
-            top: 120px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .pv-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .pv-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .pv-body {
-            padding: 1.5rem;
-        }
-
-        .pv-code {
-            font-family: var(--mono);
-            font-size: .8rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            background: var(--ink);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .pv-code .kw {
-            color: var(--accent-2);
-        }
-
-        .pv-code .str {
-            color: #86efac;
-        }
-
-        .pv-code .num {
-            color: #f9a8d4;
-        }
-
-        .pv-code .fn {
-            color: #93c5fd;
-        }
-
-        .pv-checklist {
-            display: flex;
-            flex-direction: column;
-            gap: .75rem;
-        }
-
-        .pv-check-item {
-            display: flex;
-            align-items: center;
-            gap: .75rem;
-            font-size: .9rem;
-        }
-
-        /*
-        const config = {
-            particleCount: 150, // Increased from 80
-            connectionDistance: 120,
-            mouseDistance: 200,
-            baseColor: 'rgba(99, 102, 241, 0.6)', // Brighter
-            activeColor: 'rgba(167, 139, 250, 0.8)'
-        };
-        */
-        .pv-check-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(74, 222, 128, .1);
-            border: 1px solid rgba(74, 222, 128, .3);
-            display: grid;
-            place-items: center;
-            flex-shrink: 0;
-        }
-
-        .pv-check-icon svg {
-            width: 10px;
-            height: 10px;
-            stroke: #4ade80;
-        }
-
-        /* ─── PRICING ─── */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3.5rem;
-        }
-
-        .price-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            transition: transform .3s, box-shadow .3s;
-        }
-
-        .price-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, .3);
-        }
-
-        .price-card-featured {
-            background: linear-gradient(145deg, rgba(99, 102, 241, .15), var(--surface));
-            border-color: rgba(99, 102, 241, .4);
-            position: relative;
-        }
-
-        .price-card-featured::before {
-            content: 'POPULAR';
-            position: absolute;
-            top: -1px;
-            right: 2rem;
-            font-family: var(--mono);
-            font-size: .6rem;
-            letter-spacing: .15em;
-            background: var(--primary);
-            color: #fff;
-            padding: .3rem .8rem;
-            border-radius: 0 0 4px 4px;
-        }
-
-        .price-name {
-            font-family: var(--mono);
-            font-size: .75rem;
-            color: var(--text-muted);
-            letter-spacing: .12em;
-        }
-
-        .price-amount {
-            font-family: 'DM Serif Display', serif;
-            font-size: 3rem;
-            letter-spacing: -.03em;
-        }
-
-        .price-amount span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .price-desc {
-            font-size: .9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .price-divider {
-            height: 1px;
-            background: var(--border);
-        }
-
-        .price-features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: .65rem;
-        }
-
-        .price-features li {
-            font-size: .9rem;
-            display: flex;
-            align-items: center;
-            gap: .65rem;
-        }
-
-        .price-features li::before {
-            content: '✓';
-            color: var(--primary);
-            font-family: var(--mono);
-            flex-shrink: 0;
-        }
-
-        .price-features li.off {
-            color: var(--text-muted);
-            opacity: 0.6;
-        }
-
-        .price-features li.off::before {
-            content: '—';
-            color: var(--text-muted);
-        }
-
-        /* ─── FAQ ─── */
-        .faq-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-        }
-
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .faq-q {
-            width: 100%;
-            background: none;
-            border: none;
-            color: var(--text);
-            padding: 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 500;
-            text-align: left;
-        }
-
-        .faq-q .faq-arrow {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            transition: transform .3s;
-        }
-
-        .faq-item.open .faq-arrow {
-            transform: rotate(45deg);
-            color: var(--primary);
-        }
-
-        .faq-a {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height .35s ease, padding .35s;
-            font-size: 1rem;
-            color: var(--text-muted);
-            line-height: 1.75;
-        }
-
-        .faq-item.open .faq-a {
-            max-height: 300px;
-            padding-bottom: 1.5rem;
-        }
-
-        @media(max-width: 1024px) {
-
-            .process-layout,
-            .pricing-grid,
-            .faq-layout {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .process-visual {
-                display: none;
-            }
-
-            .pricing-grid {
-                max-width: 500px;
-                mx-auto;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA | Neural Architecture</title>
+  <meta name="description" content="Premium Web Solutions für ambitionierte Unternehmen. Atmosphärisch. Präzise. Skalierbar.">
+
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel Standalone for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body { margin: 0; overflow-x: hidden; }
+  </style>
 </head>
-
 <body>
-    <!-- Background Sequence (Global) -->
-    <div id="intro-overlay">
-        <div class="intro-content text-center">
-            <div class="intro-text">AURA</div>
-            <div
-                class="intro-line w-32 h-[1px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent mx-auto mt-4 scale-x-0">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    function AuraNeural() {
+      const canvasRef = useRef(null);
+      const [introGone, setIntroGone] = useState(false);
+      const [introPhase, setIntroPhase] = useState(0);
+      const [activeStep, setActiveStep] = useState(0);
+      const [openFaq, setOpenFaq] = useState(0);
+      const [formStep, setFormStep] = useState(1);
+      const [formData, setFormData] = useState({ service: "", budget: "", name: "", email: "", inquiry: "" });
+      const [submitted, setSubmitted] = useState(false);
+
+      // Intro sequence
+      useEffect(() => {
+        const t1 = setTimeout(() => setIntroPhase(1), 200);
+        const t2 = setTimeout(() => setIntroPhase(2), 1800);
+        const t3 = setTimeout(() => setIntroPhase(3), 2800);
+        const t4 = setTimeout(() => setIntroGone(true), 3600);
+        return () => [t1, t2, t3, t4].forEach(clearTimeout);
+      }, []);
+
+      // Neural canvas
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        let animId;
+        const mouse = { x: 0.5, y: 0.5 };
+        const nodes = Array.from({ length: 70 }, () => ({
+          x: Math.random(), y: Math.random(),
+          vx: (Math.random() - 0.5) * 0.0004,
+          vy: (Math.random() - 0.5) * 0.0004,
+        }));
+
+        const onMove = (e) => {
+          const r = canvas.getBoundingClientRect();
+          mouse.x = (e.clientX - r.left) / r.width;
+          mouse.y = (e.clientY - r.top) / r.height;
+        };
+        window.addEventListener("mousemove", onMove);
+
+        const draw = () => {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+          const w = canvas.width, h = canvas.height;
+          ctx.clearRect(0, 0, w, h);
+
+          nodes.forEach(n => {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < 0 || n.x > 1) n.vx *= -1;
+            if (n.y < 0 || n.y > 1) n.vy *= -1;
+            const dx = mouse.x - n.x, dy = mouse.y - n.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 0.18) { n.vx += dx * 0.00002; n.vy += dy * 0.00002; }
+          });
+
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+              const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+              const d = Math.sqrt(dx * dx + dy * dy);
+              if (d < 0.13) {
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x * w, nodes[i].y * h);
+                ctx.lineTo(nodes[j].x * w, nodes[j].y * h);
+                ctx.strokeStyle = `rgba(0,119,255,${(1 - d / 0.13) * 0.22})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+              }
+            }
+            const dm = Math.sqrt((nodes[i].x - mouse.x) ** 2 + (nodes[i].y - mouse.y) ** 2);
+            const g = dm < 0.2 ? 1 - dm / 0.2 : 0;
+            ctx.beginPath();
+            ctx.arc(nodes[i].x * w, nodes[i].y * h, 1.5 + g * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0,${119 + g * 80},255,${0.25 + g * 0.55})`;
+            ctx.fill();
+          }
+          animId = requestAnimationFrame(draw);
+        };
+        draw();
+        return () => { cancelAnimationFrame(animId); window.removeEventListener("mousemove", onMove); };
+      }, [introGone]);
+
+      const steps = [
+        { num: "01", title: "Anfrage & Briefing", desc: "Senden Sie uns Ihre Anforderungen digital. Wir analysieren Ihr Potenzial und erstellen ein erstes Konzept.", time: "Dauer: 30 Min" },
+        { num: "02", title: "Strategie & Konzept", desc: "Maßgeschneidertes Konzept mit Seitenstruktur, Designrichtung und technischer Architektur.", time: "Dauer: 2–3 Tage" },
+        { num: "03", title: "Design & Prototyping", desc: "Interaktive Prototypen. Wir iterieren gemeinsam, bis das Design exakt Ihrer Vorstellung entspricht.", time: "Dauer: 3–5 Tage" },
+        { num: "04", title: "Entwicklung & Launch", desc: "Sauberer Code, tägliche Updates und ein stressfreier Launch inkl. Analytics.", time: "Dauer: 1–3 Wochen" },
+      ];
+
+      const faqs = [
+        { q: "Wie lange dauert eine Website?", a: "Ein Starter-Paket ist oft in 7–10 Tagen fertig, während komplexe Websites 3–6 Wochen benötigen." },
+        { q: "Muss ich Inhalte selbst pflegen?", a: "Nein. Wir übernehmen das komplett. Senden Sie uns Änderungswünsche – wir setzen diese professionell um." },
+        { q: "Was passiert nach dem Launch?", a: "Im Enterprise Paket sind 3 Monate Support inklusive. Danach bieten wir Wartungspakete an." },
+        { q: "Bieten Sie Hosting an?", a: "Wir richten Ihr Hosting komplett ein. Sie bleiben Vertragspartner – volle Kontrolle, keine Abhängigkeit." },
+      ];
+
+      const introLetters = ["A", "U", "R", "A"];
+
+      const sf = `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif; }
+
+        /* Branding Classes */
+        .brand-aura {
+          font-family: 'Syne', sans-serif !important;
+          letter-spacing: 0.2em !important;
+          text-transform: uppercase;
+        }
+        .brand-sub {
+          font-family: 'Inter', sans-serif;
+          font-weight: 200;
+          letter-spacing: 0.4em;
+          color: #d1e8ff;
+          text-shadow: 0 0 10px rgba(0, 119, 255, 0.5);
+          text-transform: uppercase;
+        }
+
+        /* Neu: Animationen für die Bento Core Kacheln */
+        @keyframes moveWave { to { transform: translateX(50%); } }
+        @keyframes pulseGrid2 { from { opacity: 0.4; } to { opacity: 1; } }
+
+        .waveform-bg {
+          position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
+          background: repeating-linear-gradient(90deg, transparent, rgba(0, 119, 255, 0.08) 5px, transparent 10px);
+          animation: moveWave 15s linear infinite;
+        }
+
+        .node-network-bg {
+          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+          background: linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 0), linear-gradient(180deg, rgba(255,255,255,0.03) 1px, transparent 0);
+          background-size: 20px 20px;
+          animation: pulseGrid2 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes shimmer {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+        @keyframes orbFloat1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(50px,40px)} }
+        @keyframes orbFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,50px)} }
+        @keyframes orbFloat3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-40px)} }
+        @keyframes gridBreathe { 0%,100%{transform:perspective(800px) rotateX(32deg) scale(1.5) translateY(-12%);opacity:0.5} 50%{transform:perspective(800px) rotateX(32deg) scale(1.6) translateY(-14%);opacity:0.9} }
+        @keyframes grainShift { 0%{background-position:0 0} 25%{background-position:-40px 20px} 50%{background-position:15px -30px} 75%{background-position:-20px -15px} }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+        @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        @keyframes stepIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes scrollLine { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        .shimmer-text {
+          background: linear-gradient(90deg, #fff 0%, #fff 25%, rgba(0,194,255,0.95) 45%, #fff 65%, #fff 100%);
+          background-size: 250% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer 5s linear infinite;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #04040a; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,119,255,0.3); border-radius: 2px; }
+        ::selection { background: rgba(0,119,255,0.3); }
+      `;
+
+      return (
+        <>
+          <style>{sf}</style>
+
+          {/* ── INTRO ── */}
+          {!introGone && (
+            <div style={{
+              position: "fixed", inset: 0, zIndex: 9999,
+              background: "#000",
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem",
+              opacity: introPhase >= 3 ? 0 : 1,
+              transition: "opacity 0.8s ease",
+              pointerEvents: introPhase >= 3 ? "none" : "all",
+            }}>
+              <div style={{
+                fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                fontSize: "0.55rem", letterSpacing: "0.45em", color: "rgba(0,119,255,0.5)",
+                textTransform: "uppercase", fontWeight: 500,
+                opacity: introPhase >= 1 ? 1 : 0, transition: "opacity 0.6s ease 0.1s",
+              }}>System v2.4 — Initializing</div>
+
+              <div style={{ display: "flex", overflow: "hidden", padding: "0.5rem 0" }}>
+                {introLetters.map((l, i) => (
+                  <span key={i} className="brand-aura" style={{
+                    fontSize: "clamp(5rem,15vw,10rem)",
+                    color: "#fff", lineHeight: 1,
+                    display: "inline-block",
+                    transform: introPhase >= 1 ? "translateY(0)" : "translateY(110%)",
+                    opacity: introPhase >= 1 ? 1 : 0,
+                    transition: `transform 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 0.07}s, opacity 0.9s ease ${i * 0.07}s`,
+                  }}>{l}</span>
+                ))}
+              </div>
+
+              <div style={{
+                width: "70px", height: "1px",
+                background: "linear-gradient(90deg,transparent,rgba(0,119,255,0.8),transparent)",
+                transform: introPhase >= 1 ? "scaleX(1)" : "scaleX(0)",
+                opacity: introPhase >= 1 ? 1 : 0,
+                transition: "transform 1s cubic-bezier(0.16,1,0.3,1) 0.4s, opacity 0.5s ease 0.4s",
+              }} />
+
+              <div className="brand-sub" style={{
+                fontSize: "0.55rem", letterSpacing: "0.4em",
+                opacity: introPhase >= 2 ? 1 : 0, transition: "opacity 0.6s ease",
+              }}>Neural Architecture · Loaded</div>
             </div>
-            <div class="intro-sub text-zinc-500 font-mono text-[10px] mt-4 tracking-[0.4em] opacity-0">SYSTEM
-                INITIALIZED</div>
-        </div>
-    </div>
+          )}
 
-    <!-- Background -->
-    <div class="grain-overlay"></div>
-    <div class="vignette-overlay"></div>
-    <canvas id="hero-sequence"></canvas>
+          {/* ── BACKGROUND SYSTEM ── */}
+          <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#000" }}>
+            {/* Iso grid */}
+            <div style={{
+              position: "absolute", inset: 0,
+              backgroundImage: "linear-gradient(rgba(0,119,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,119,255,0.04) 1px,transparent 1px)",
+              backgroundSize: "55px 55px",
+              transform: "perspective(800px) rotateX(32deg) scale(1.5) translateY(-12%)",
+              animation: "gridBreathe 20s ease-in-out infinite",
+            }} />
+            {/* Grain */}
+            <div style={{
+              position: "absolute", inset: 0, opacity: 0.055,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundSize: "256px 256px", mixBlendMode: "overlay",
+              animation: "grainShift 0.15s steps(1) infinite",
+            }} />
+            {/* Orbs */}
+            {[
+              { w: 600, h: 600, c: "rgba(0,119,255,0.06)", t: "-8%", l: "-12%", a: "orbFloat1 25s ease-in-out infinite" },
+              { w: 400, h: 400, c: "rgba(168,85,247,0.05)", t: "35%", r: "-8%", a: "orbFloat2 30s ease-in-out infinite" },
+              { w: 500, h: 500, c: "rgba(0,194,255,0.04)", b: "5%", l: "15%", a: "orbFloat3 20s ease-in-out infinite" },
+            ].map((o, i) => (
+              <div key={i} style={{
+                position: "absolute", borderRadius: "50%",
+                width: o.w, height: o.h,
+                background: `radial-gradient(circle,${o.c},transparent 70%)`,
+                filter: "blur(80px)",
+                top: o.t, left: o.l, right: o.r, bottom: o.b,
+                animation: o.a,
+              }} />
+            ))}
+            {/* Vignette */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.85) 100%)",
+            }} />
+          </div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-50 bg-black/50 backdrop-blur-xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 flex items-center justify-center text-indigo-500">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 4L4 36H36L20 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                        <path d="M20 14L12 30H28L20 14Z" fill="currentColor" fill-opacity="0.5" />
-                    </svg>
-                </div>
-                <span class="font-bold text-lg">AURA</span>
-            </div>
+          {/* ── MAIN ── */}
+          <div style={{ position: "relative", zIndex: 10, background: "transparent", minHeight: "100vh", color: "#f0f4ff" }}>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#leistungen" class="text-sm text-zinc-400 hover:text-white transition">Leistungen</a>
-                <a href="#prozess" class="text-sm text-zinc-400 hover:text-white transition">Prozess</a>
-                <a href="#kontakt" class="btn-primary text-sm">Termin buchen</a>
-            </div>
+            {/* NAV */}
+            <nav style={{
+              position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+              padding: "1.1rem 2.5rem",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              background: "rgba(0,0,0,0.8)", backdropFilter: "blur(24px)",
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+            }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="brand-aura" style={{ fontSize: "1.1rem", color: "#fff", lineHeight: 1 }}>AURA</div>
+                <div className="brand-sub" style={{ fontSize: "0.45rem", marginTop: "0.2rem" }}>Neural Architecture</div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+                {["Leistungen", "Prozess", "Preise", "FAQ"].map(l => (
+                  <a key={l} href={`#${l.toLowerCase()}`} style={{
+                    fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                    fontWeight: 400, fontSize: "0.82rem", color: "rgba(255,255,255,0.5)",
+                    textDecoration: "none", letterSpacing: "-0.01em",
+                    transition: "color 0.2s",
+                  }}
+                    onMouseEnter={e => e.target.style.color = "#fff"}
+                    onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.5)"}
+                  >{l}</a>
+                ))}
+                <a href="#kontakt" style={{
+                  fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                  fontWeight: 500, fontSize: "0.78rem", letterSpacing: "-0.01em",
+                  background: "rgba(0,119,255,1)", color: "#fff",
+                  padding: "0.6rem 1.25rem", borderRadius: "8px", textDecoration: "none",
+                  transition: "all 0.2s",
+                }}
+                  onMouseEnter={e => { e.target.style.background = "#0062d4"; e.target.style.boxShadow = "0 0 24px rgba(0,119,255,0.4)"; }}
+                  onMouseLeave={e => { e.target.style.background = "rgba(0,119,255,1)"; e.target.style.boxShadow = "none"; }}
+                >Projekt starten →</a>
+              </div>
+            </nav>
 
-            <!-- Mobile Toggle -->
-            <button class="md:hidden" id="mobileToggle" aria-label="Menu">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-    </nav>
+            {/* HERO */}
+            <section style={{
+              minHeight: "100vh", display: "flex", flexDirection: "column",
+              alignItems: "center", justifyContent: "center",
+              textAlign: "center", padding: "9rem 2rem 5rem",
+              position: "relative",
+            }}>
+              <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", opacity: 0.65 }} />
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#leistungen" class="text-2xl font-semibold mobile-link">Leistungen</a>
-        <a href="#prozess" class="text-2xl font-semibold mobile-link">Prozess</a>
-        <a href="#kontakt" class="btn-primary text-lg mobile-link">Termin buchen</a>
-    </div>
+              <div style={{
+                fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                fontWeight: 500, fontSize: "0.62rem", letterSpacing: "0.08em",
+                color: "rgba(0,119,255,0.9)", textTransform: "uppercase",
+                border: "1px solid rgba(0,119,255,0.2)", padding: "0.38rem 0.9rem",
+                borderRadius: "100px", background: "rgba(0,119,255,0.06)",
+                marginBottom: "2rem", display: "inline-block",
+                opacity: introGone ? 1 : 0, transition: "opacity 0.8s ease 0.2s",
+              }}>Premium Web Solutions · KI-gestützt · 2025</div>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-20" id="hero">
-        <!-- Content -->
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <p class="text-indigo-500 font-semibold mb-6 text-sm uppercase tracking-wider">Premium Web Solutions</p>
-            <h1 class="mb-8" style="opacity: 0; transform: translateY(10px);">
-                Websites, die<br>
-                <span class="gradient-text">verkaufen.</span>
-            </h1>
-            <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto" style="opacity: 0; transform: translateY(10px);">
-                Wir bauen High-Performance Websites.
-                Schnell. Sichtbar. Skalierbar.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#kontakt" class="btn-primary text-lg">
-                    Kostenloses Erstgespräch
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14m-7-7l7 7-7 7" />
-                    </svg>
-                </a>
-                <a href="#leistungen" class="btn-secondary text-lg">Mehr erfahren</a>
-            </div>
-        </div>
+              <h1 style={{
+                lineHeight: 1.0, letterSpacing: "-0.04em",
+                marginBottom: "1.5rem",
+                opacity: introGone ? 1 : 0, transition: "opacity 1s ease 0.4s",
+              }}>
+                <span className="shimmer-text brand-aura" style={{ fontSize: "clamp(3.5rem,10vw,8.5rem)" }}>AURA</span>
+                <span className="brand-sub" style={{ display: "block", fontSize: "0.75rem", marginTop: "0.8em", letterSpacing: "0.5em" }}>Neural Architecture</span>
+              </h1>
 
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <div class="arrow-scroll"></div>
-        </div>
-    </section>
+              <p style={{
+                fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                fontWeight: 300, fontSize: "1.05rem", color: "rgba(255,255,255,0.5)",
+                lineHeight: 1.75, letterSpacing: "-0.01em",
+                maxWidth: "420px", marginBottom: "2.5rem",
+                opacity: introGone ? 1 : 0, transition: "opacity 0.8s ease 0.7s",
+              }}>
+                Wir bauen digitale Erlebnisse, die konvertieren.<br />Atmosphärisch. Präzise. Skalierbar.
+              </p>
 
-    <!-- Features -->
-    <section id="leistungen" class="py-10 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-8">
-                <p class="text-indigo-500 font-semibold mb-2 text-sm uppercase tracking-wider">Was wir bieten</p>
-                <h2 class="mb-4">Ihre Vorteile</h2>
-                <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-6">
-                    Moderne Technologie für messbare Ergebnisse
-                </p>
-                <!-- Separator -->
-                <div
-                    class="w-16 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent mx-auto opacity-50">
-                </div>
-            </div>
+              <div style={{
+                display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center",
+                opacity: introGone ? 1 : 0, transition: "opacity 0.8s ease 0.9s",
+              }}>
+                <a href="#kontakt" style={{
+                  fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                  fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em",
+                  background: "#0077ff", color: "#fff",
+                  padding: "0.85rem 1.75rem", borderRadius: "10px", textDecoration: "none",
+                  display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                }}>Kostenloses Erstgespräch →</a>
+                <a href="#leistungen" style={{
+                  fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                  fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em",
+                  background: "transparent", color: "rgba(255,255,255,0.55)",
+                  padding: "0.85rem 1.75rem", borderRadius: "10px", textDecoration: "none",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}>Mehr erfahren</a>
+              </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Speed -->
-                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
-                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
-                    <div class="feature-card-content">
-                        <div
-                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                            </svg>
-                        </div>
-                        <h3 class="mb-4 text-xl font-bold">Blitzschnell</h3>
-                        <p class="text-zinc-400 leading-relaxed">
-                            Ladezeiten unter 1 Sekunde. Ihre Besucher bleiben, Google liebt es.
-                        </p>
-                    </div>
-                </div>
+              <div style={{ position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", opacity: introGone ? 0.5 : 0, transition: "opacity 0.8s ease 1.2s" }}>
+                <div style={{ width: "1px", height: "48px", background: "linear-gradient(to bottom,rgba(0,119,255,0.8),transparent)", animation: "scrollLine 2s ease infinite" }} />
+                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.5rem", letterSpacing: "0.2em", color: "rgba(255,255,255,0.3)" }}>SCROLL</span>
+              </div>
+            </section>
 
-                <!-- SEO -->
-                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
-                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
-                    <div class="feature-card-content">
-                        <div
-                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                            </svg>
-                        </div>
-                        <h3 class="mb-4 text-xl font-bold">SEO & Sichtbarkeit</h3>
-                        <p class="text-zinc-400 leading-relaxed">
-                            Technisch perfektes SEO für Top-Rankings. Werden Sie von Ihren Kunden gefunden.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Conversion -->
-                <div class="glass feature-card p-8 rounded-2xl h-full flex flex-col justify-start"
-                    onmousemove="updateSpotlight(event)" onmouseleave="resetSpotlight(event)">
-                    <div class="feature-card-content">
-                        <div
-                            class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                            </svg>
-                        </div>
-                        <h3 class="mb-4 text-xl font-bold">Mehr Conversions</h3>
-                        <p class="text-zinc-400 leading-relaxed">
-                            Design, das verkauft. Jedes Element ist auf Conversion optimiert.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Stack (Logo Loop) -->
-    <section class="py-20 px-0 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 mb-12 text-center">
-            <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Technologie</p>
-            <h2 class="mb-4">Modernster Stack</h2>
-            <p class="text-zinc-400">Wir nutzen die besten Tools am Markt.</p>
-        </div>
-
-        <div class="logo-scroll">
-            <!-- Content duplicated for seamless loop -->
-            <div class="logo-track">
-                <!-- React -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2a8 0 100 16 8 8 0 000-16z" />
-                    <circle cx="12" cy="12" r="2" />
-                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)" stroke="currentColor"
-                        stroke-width="1.5" fill="none" />
-                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)" stroke="currentColor"
-                        stroke-width="1.5" fill="none" />
-                </svg>
-                <!-- Next.js -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10 0 2.22-.724 4.27-1.956 5.957L8.609 5.609A9.957 9.957 0 0112 2zm-7.957 8.044l11.666 12.608A9.962 9.962 0 012 12c0-3.13 1.185-5.986 3.144-8.156l.008.008.891 1.192z" />
-                </svg>
-                <!-- Tailwind -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12.001,4.8c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4c2.209,0,4-1.791,4-4C16.001,6.591,14.21,4.8,12.001,4.8z M8.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C10.001,14.696,9.105,13.8,8.001,13.8z M16.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C18.001,14.696,17.105,13.8,16.001,13.8z" />
-                </svg>
-                <!-- TypeScript -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M2.25 0h19.5c1.24 0 2.25 1.01 2.25 2.25v19.5c0 1.24-1.01 2.25-2.25 2.25H2.25C1.01 24 0 23 0 21.75V2.25C0 1.01 1.01 0 2.25 0zm11.32 14.5c.34-1.6.86-2.58 3.54-2.58 1.48 0 2.37.5 2.8 1.54l-1.93.9c-.28-.7-.6-1.02-1.3-1.02-.78 0-1.18.57-1.18 1.19 0 .56.34.93 1.18 1.18.96.28 2.29.6 2.29 2.5 0 1.83-1.48 2.5-3 2.5-2.03 0-2.82-1.1-3.08-2.3l1.96-.8c.2.8.74 1.48 1.74 1.48.97 0 1.34-.48 1.34-1.08 0-.54-.34-.96-1.54-1.3-.96-.1.92-2.14 2.1-2.14zM10 17.5h-1.8v-7h-2v-1.8h5.8v1.8H10v7z" />
-                </svg>
-                <!-- Supabase -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12.924 22.067C12.502 22.569 11.697 22.28 11.697 21.625V13.875H4.568C3.961 13.875 3.616 13.181 3.996 12.729L11.076 4.308C11.498 3.806 12.303 4.095 12.303 4.75V12.5H19.432C20.039 12.5 20.384 13.194 20.004 13.646L12.924 22.067Z" />
-                </svg>
-            </div>
-            <!-- Duplicate for infinite loop -->
-            <div class="logo-track" aria-hidden="true">
-                <!-- React -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="2" />
-                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(45 12 12)" stroke="currentColor"
-                        stroke-width="1.5" fill="none" />
-                    <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-45 12 12)" stroke="currentColor"
-                        stroke-width="1.5" fill="none" />
-                </svg>
-                <!-- Next.js -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10 0 2.22-.724 4.27-1.956 5.957L8.609 5.609A9.957 9.957 0 0112 2zm-7.957 8.044l11.666 12.608A9.962 9.962 0 012 12c0-3.13 1.185-5.986 3.144-8.156l.008.008.891 1.192z" />
-                </svg>
-                <!-- Tailwind -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12.001,4.8c-2.209,0-4,1.791-4,4c0,2.209,1.791,4,4,4c2.209,0,4-1.791,4-4C16.001,6.591,14.21,4.8,12.001,4.8z M8.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C10.001,14.696,9.105,13.8,8.001,13.8z M16.001,13.8c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2c1.104,0,2-0.896,2-2C18.001,14.696,17.105,13.8,16.001,13.8z" />
-                </svg>
-                <!-- TypeScript -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M2.25 0h19.5c1.24 0 2.25 1.01 2.25 2.25v19.5c0 1.24-1.01 2.25-2.25 2.25H2.25C1.01 24 0 23 0 21.75V2.25C0 1.01 1.01 0 2.25 0zm11.32 14.5c.34-1.6.86-2.58 3.54-2.58 1.48 0 2.37.5 2.8 1.54l-1.93.9c-.28-.7-.6-1.02-1.3-1.02-.78 0-1.18.57-1.18 1.19 0 .56.34.93 1.18 1.18.96.28 2.29.6 2.29 2.5 0 1.83-1.48 2.5-3 2.5-2.03 0-2.82-1.1-3.08-2.3l1.96-.8c.2.8.74 1.48 1.74 1.48.97 0 1.34-.48 1.34-1.08 0-.54-.34-.96-1.54-1.3-.96-.28-1.92-.88-1.92-2.33 0-1.4.92-2.14 2.1-2.14zM10 17.5h-1.8v-7h-2v-1.8h5.8v1.8H10v7z" />
-                </svg>
-                <!-- Supabase -->
-                <svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12.924 22.067C12.502 22.569 11.697 22.28 11.697 21.625V13.875H4.568C3.961 13.875 3.616 13.181 3.996 12.729L11.076 4.308C11.498 3.806 12.303 4.095 12.303 4.75V12.5H19.432C20.039 12.5 20.384 13.194 20.004 13.646L12.924 22.067Z" />
-                </svg>
-            </div>
-        </div>
-    </section>
-
-    <!-- Neural Operations (NEW SECTION) -->
-    <section id="neural-ops" class="pt-20 pb-40 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div
-                class="lg:col-span-3 glass p-12 rounded-[3rem] border-white/5 hover:border-indigo-500/30 transition-all group relative overflow-hidden">
-                <!-- Background Animation -->
-                <div class="neural-network">
-                    <div class="neural-node" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-                    <div class="neural-node" style="top: 50%; left: 30%; animation-delay: 1s;"></div>
-                    <div class="neural-node" style="top: 80%; left: 15%; animation-delay: 2s;"></div>
-                    <div class="neural-node" style="top: 30%; left: 70%; animation-delay: 0.5s;"></div>
-                    <div class="neural-node" style="top: 60%; left: 80%; animation-delay: 1.5s;"></div>
-
-                    <div class="neural-line" style="top: 20%; left: 10%; width: 200px; transform: rotate(15deg);"></div>
-                    <div class="neural-line" style="top: 50%; left: 30%; width: 150px; transform: rotate(-10deg);">
-                    </div>
-                </div>
-
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-6 mb-8">
-                            <div
-                                class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-indigo-500/30 transition">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="text-indigo-500">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 mb-2">Automation
-                                    Layer</h3>
-                                <h4
-                                    class="text-4xl font-black uppercase italic tracking-tighter text-white leading-tight pr-4">
-                                    Neural <span class="gradient-text">Operations</span>
-                                </h4>
-                            </div>
-                        </div>
-
-                        <p class="text-zinc-300 text-lg leading-relaxed mb-10 max-w-2xl font-light">
-                            <strong>Ready-to-Deploy</strong> Systeme für sofortige Digitalisierung. Wir verbinden Ihre
-                            Tools zu einem autonomen Organismus.
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Autonomous
-                                    Pipelines</div>
-                                <div class="text-zinc-500 text-xs leading-relaxed">Nahtlose Verbindung von CRM, E-Mail
-                                    und Marketing-Tools.</div>
-                            </div>
-                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Efficiency
-                                    Blueprints</div>
-                                <div class="text-zinc-500 text-xs leading-relaxed">Vorinstallierte n8n-Logik für
-                                    sofortige Zeitersparnis.</div>
-                            </div>
-                            <div class="bg-white/5 border border-white/5 p-6 rounded-2xl">
-                                <div class="text-indigo-400 font-bold text-xs uppercase tracking-widest mb-3">Zero-Touch
-                                    Ops</div>
-                                <div class="text-zinc-500 text-xs leading-relaxed">Prozesse, die im Hintergrund ohne
-                                    menschliches Zutun laufen.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI Support Ecosystem (NEW SECTION) -->
-    <section id="ai-support" class="py-20 px-6 bg-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
-                <div class="flex-1">
-                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Erreichbarkeit</p>
-                    <h2 class="mb-6 text-5xl md:text-6xl font-black tracking-tighter text-white">
-                        AI Support <br><span class="text-zinc-500">Ecosystem.</span>
-                    </h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed max-w-xl">
-                        Verwandeln Sie Service in ein Erlebnis. Unsere KI-Agenten lösen Probleme sofort, in jeder
-                        Sprache, zu jeder Zeit – ohne menschliches Eingreifen.
-                    </p>
-                </div>
-                <div class="flex-1 w-full">
-                    <div class="grid grid-cols-1 gap-6">
-                        <!-- Feature 1 -->
-                        <div class="glass p-8 rounded-3xl border-white/5 hover:border-indigo-500/30 transition group">
-                            <div class="flex items-start gap-6">
-                                <div
-                                    class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition">
-                                    <i data-lucide="clock" class="text-indigo-400 w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-white mb-2">24/7 Always On</h3>
-                                    <p class="text-zinc-500 text-sm leading-relaxed">Keine Wartezeiten, keine Pausen.
-                                        Ihre Kunden erhalten sofortige Antworten, auch nachts und am Wochenende.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Feature 2 -->
-                        <div class="glass p-8 rounded-3xl border-white/5 hover:border-indigo-500/30 transition group">
-                            <div class="flex items-start gap-6">
-                                <div
-                                    class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition">
-                                    <i data-lucide="globe" class="text-indigo-400 w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-white mb-2">Multi-Language Native</h3>
-                                    <p class="text-zinc-500 text-sm leading-relaxed">Spricht die Sprache Ihrer Kunden.
-                                        Automatische Erkennung und fließende Konversation in DE, EN, ES und mehr.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Feature 3 -->
-                        <div class="glass p-8 rounded-3xl border-white/5 hover:border-indigo-500/30 transition group">
-                            <div class="flex items-start gap-6">
-                                <div
-                                    class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition">
-                                    <i data-lucide="zap" class="text-indigo-400 w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-white mb-2">Smart Escalation</h3>
-                                    <p class="text-zinc-500 text-sm leading-relaxed">Löst Standardanfragen autonom und
-                                        erkennt komplexe Fälle zur nahtlosen Weiterleitung an Ihr Team (Jira/Zendesk).
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- n8n Workflow Templates (NEW SECTION) -->
-    <section id="n8n-workflows" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <!-- Visual Flowchart -->
-                <!-- Visual Flowchart (Complex) -->
-                <div
-                    class="glass p-8 rounded-[2.5rem] border-white/5 relative overflow-hidden min-h-[600px] flex items-center justify-center">
-                    <!-- Workflow Nodes -->
-                    <div class="relative z-10 flex flex-col items-center gap-6 w-full max-w-md scale-90">
-                        <!-- Trigger -->
-                        <div
-                            class="w-full glass bg-white/5 p-4 rounded-xl border border-white/10 flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
-                                <i data-lucide="mail"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-zinc-500 font-mono">Trigger</div>
-                                <div class="text-sm text-white">Email Inbound</div>
-                            </div>
-                        </div>
-
-                        <!-- Connector -->
-                        <div class="h-6 w-0.5 bg-white/10"></div>
-
-                        <!-- Analysis -->
-                        <div
-                            class="w-full glass bg-purple-500/10 p-4 rounded-xl border border-purple-500/30 flex items-center gap-4 animate-pulse">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
-                                <i data-lucide="brain"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-purple-400 font-mono">AI Analysis</div>
-                                <div class="text-sm text-white">Classify & Extract (GPT-4o)</div>
-                            </div>
-                        </div>
-
-                        <!-- Connector -->
-                        <div class="h-6 w-0.5 bg-white/10"></div>
-
-                        <!-- Router -->
-                        <div
-                            class="w-full glass bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/30 flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
-                                <i data-lucide="git-branch"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-indigo-400 font-mono">Router</div>
-                                <div class="text-sm text-white">Spam vs. Business</div>
-                            </div>
-                        </div>
-
-                        <!-- Connector Split -->
-                        <div class="relative h-8 w-full">
-                            <div class="absolute left-1/2 top-0 h-4 w-0.5 bg-white/10 -translate-x-1/2"></div>
-                            <div class="absolute left-[20%] right-[20%] top-4 h-0.5 bg-white/10"></div>
-                            <div class="absolute left-[20%] top-4 h-4 w-0.5 bg-white/10"></div>
-                            <div class="absolute right-[20%] top-4 h-4 w-0.5 bg-white/10"></div>
-                        </div>
-
-                        <!-- Branches -->
-                        <div class="grid grid-cols-2 gap-4 w-full">
-                            <!-- Spam Branch -->
-                            <div class="flex flex-col gap-4">
-                                <div class="glass bg-red-500/10 p-3 rounded-xl border border-red-500/20 text-center">
-                                    <div class="text-[10px] text-red-400 font-bold tracking-wider mb-1">SPAM</div>
-                                    <div class="flex items-center justify-center gap-2 text-white text-xs">
-                                        <i data-lucide="trash-2" class="w-3 h-3"></i> Auto-Delete
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Valid Branch -->
-                            <div class="flex flex-col gap-4">
-                                <div
-                                    class="glass bg-green-500/10 p-3 rounded-xl border border-green-500/20 text-center">
-                                    <div class="text-[10px] text-green-400 font-bold tracking-wider mb-1">VALID</div>
-                                    <div class="flex items-center justify-center gap-2 text-white text-xs">
-                                        <i data-lucide="database" class="w-3 h-3"></i> Save CRM
-                                    </div>
-                                </div>
-                                <div class="h-4 w-0.5 bg-white/10 mx-auto"></div>
-                                <div class="glass bg-white/5 p-3 rounded-xl border border-white/10 text-center">
-                                    <div class="flex items-center justify-center gap-2 text-zinc-300 text-xs">
-                                        <i data-lucide="slack" class="w-3 h-3"></i> Notify Team
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Content -->
-                <div>
-                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Automation Library
-                    </p>
-                    <h2 class="mb-6 text-5xl md:text-6xl font-black tracking-tighter text-white">
-                        n8n <span class="gradient-text">Templates.</span>
-                    </h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed mb-8">
-                        Starten Sie nicht bei Null. Nutzen Sie unsere Bibliothek aus getesteten n8n-Workflows für
-                        Marketing, Sales und Operations.
-                    </p>
-                    <ul class="space-y-4 mb-10">
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
-                            <span>Drag & Drop Implementation</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
-                            <span>Vorintegrierte API-Keys</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <i data-lucide="check-circle-2" class="text-indigo-500 w-5 h-5"></i>
-                            <span>Skalierbare Logik</span>
-                        </li>
-                    </ul>
-                    <a href="#kontakt" class="btn-secondary">Workflows anfragen</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process -->
-    <section id="faq" class="py-10 px-4 bg-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-10 max-w-2xl mx-auto">
-                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">So arbeiten wir</p>
-                <h2 class="mb-4">In 4 Schritten zum Erfolg</h2>
-                <p class="text-zinc-400 text-lg">Kein Rätselraten. Unser erprobter Prozess bringt Ihre Website schnell
-                    und zuverlässig ans Ziel.</p>
+            {/* MARQUEE */}
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0.7rem 0", overflow: "hidden", background: "rgba(0,0,0,0.7)" }}>
+              <div style={{ display: "flex", gap: "3rem", width: "max-content", animation: "marquee 28s linear infinite" }}>
+                {[...Array(2)].flatMap(() =>
+                  ["Web Development", "KI-Integration", "Voice Agents", "n8n Automation", "SEO Performance", "Neural Operations", "Conversion Design", "API Integration"].map((t, i) => (
+                    <span key={i + t} style={{ whiteSpace: "nowrap", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                      {t} <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "rgba(0,119,255,0.6)", display: "inline-block" }} />
+                    </span>
+                  ))
+                )}
+              </div>
             </div>
 
-            <div class="process-layout">
-                <div class="process-steps" id="processSteps">
-                    <div class="process-step active" data-step="0">
-                        <div class="step-num">01</div>
-                        <div>
-                            <div class="step-title">Anfrage & Briefing</div>
-                            <p class="step-desc">Senden Sie uns Ihre Anforderungen digital. Wir analysieren Ihr
-                                Potenzial und erstellen ein erstes Konzept – ohne langwierige Calls.</p>
-                            <div class="step-time">DAUER: 30 MIN</div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-step="1">
-                        <div class="step-num">02</div>
-                        <div>
-                            <div class="step-title">Strategie & Konzept</div>
-                            <p class="step-desc">Auf Basis Ihrer Ziele erstellen wir ein maßgeschneidertes Konzept mit
-                                Seitenstruktur, Designrichtung und Architektur.</p>
-                            <div class="step-time">DAUER: 2–3 TAGE</div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-step="2">
-                        <div class="step-num">03</div>
-                        <div>
-                            <div class="step-title">Design & Prototyping</div>
-                            <p class="step-desc">Sie erhalten interaktive Prototypen. Wir iterieren gemeinsam, bis das
-                                Design exakt Ihrer Vorstellung entspricht.</p>
-                            <div class="step-time">DAUER: 3–5 TAGE</div>
-                        </div>
-                    </div>
-                    <div class="process-step" data-step="3">
-                        <div class="step-num">04</div>
-                        <div>
-                            <div class="step-title">Entwicklung & Launch</div>
-                            <p class="step-desc">Sauberer Code, tägliche Updates und ein stressfreier Launch inkl.
-                                Analytics und Performance-Setup.</p>
-                            <div class="step-time">DAUER: 1–3 WOCHEN</div>
-                        </div>
-                    </div>
+            {/* LEISTUNGEN */}
+            <section id="leistungen" style={{ padding: "7rem 2.5rem" }}>
+              <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span style={{ width: "18px", height: "1px", background: "rgba(0,119,255,0.8)" }} /> Was wir bauen
                 </div>
-
-                <div class="process-visual">
-                    <div class="pv-header">
-                        <div class="pv-dot" style="background:#ff5f57;"></div>
-                        <div class="pv-dot" style="background:#febc2e;"></div>
-                        <div class="pv-dot" style="background:#28c840;"></div>
-                        <span
-                            style="font-family:var(--mono);font-size:.7rem;color:var(--text-muted);margin-left:.75rem;">project.config.ts</span>
-                    </div>
-                    <div class="pv-body">
-                        <div class="pv-code">
-                            <span class="kw">const</span> project = {<br>
-                            &nbsp;&nbsp;client: <span class="str">"Ihr Unternehmen"</span>,<br>
-                            &nbsp;&nbsp;lighthouse: <span class="num">100</span>,<br>
-                            &nbsp;&nbsp;loadTime: <span class="str">"0.8s"</span>,<br>
-                            &nbsp;&nbsp;seoScore: <span class="num">100</span>,<br>
-                            &nbsp;&nbsp;status: <span class="fn">fn</span>.<span class="kw">live</span>()<br>
-                            }
-                        </div>
-                        <div class="pv-checklist">
-                            <div class="pv-check-item">
-                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
-                                        viewBox="0 0 24 24">
-                                        <path d="M5 13l4 4L19 7" />
-                                    </svg></div>
-                                Zieldefinition & Briefing
-                            </div>
-                            <div class="pv-check-item">
-                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
-                                        viewBox="0 0 24 24">
-                                        <path d="M5 13l4 4L19 7" />
-                                    </svg></div>
-                                Design-Prototyp freigegeben
-                            </div>
-                            <div class="pv-check-item">
-                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
-                                        viewBox="0 0 24 24">
-                                        <path d="M5 13l4 4L19 7" />
-                                    </svg></div>
-                                Entwicklung abgeschlossen
-                            </div>
-                            <div class="pv-check-item">
-                                <div class="pv-check-icon"><svg fill="none" stroke="currentColor" stroke-width="2.5"
-                                        viewBox="0 0 24 24">
-                                        <path d="M5 13l4 4L19 7" />
-                                    </svg></div>
-                                Live gegangen · 🎉
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="preise" class="py-10 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-10 max-w-2xl mx-auto">
-                <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">Investition</p>
-                <h2 class="mb-4">Transparente Preise</h2>
-                <p class="text-zinc-400 text-lg">Keine versteckten Kosten. Sie zahlen für Ergebnisse.</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="price-card reveal">
-                    <div>
-                        <div class="price-name text-indigo-400">STARTER</div>
-                        <div class="price-amount" style="font-size: 2.5rem;">Auf Anfrage</div>
-                        <div class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Projektbasis</div>
-                    </div>
-                    <p class="price-desc">Perfekt für Selbständige, die eine professionelle Visitenkarte benötigen.</p>
-                    <div class="price-divider"></div>
-                    <ul class="price-features">
-                        <li>Onepager / Landingpage</li>
-                        <li>Responsive Design</li>
-                        <li>On-Page SEO</li>
-                        <li>Kontaktformular</li>
-                        <li class="off">A/B Testing</li>
-                        <li class="off">KI-Integration</li>
-                    </ul>
-                    <a href="#kontakt" class="btn-secondary w-full justify-center">Anfragen →</a>
-                </div>
-
-                <div class="price-card price-card-featured reveal">
-                    <div>
-                        <div class="price-name text-indigo-400">ENTERPRISE</div>
-                        <div class="price-amount" style="font-size: 2.5rem;">Auf Anfrage</div>
-                        <div class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Individuell</div>
-                    </div>
-                    <p class="price-desc">Die meistgebuchte Option für Unternehmen, die wachsen wollen.</p>
-                    <div class="price-divider"></div>
-                    <ul class="price-features">
-                        <li>Bis zu 3 Unterseiten</li>
-                        <li>Premium Custom Design</li>
-                        <li>Technisches SEO komplett</li>
-                        <li>Premium Content-Service</li>
-                        <li>Conversion Optimierung</li>
-                        <li>3 Monate Support</li>
-                    </ul>
-                    <a href="#kontakt" class="btn-primary w-full justify-center">Jetzt starten →</a>
-                </div>
-
-                <!-- Workflow Automation Card -->
-                <div class="price-card reveal" style="border-color: rgba(16, 185, 129, 0.3);">
-                    <div>
-                        <div class="price-name text-emerald-400">WORKFLOWS</div>
-                        <div class="price-amount" style="font-size: 2.5rem;">Auf Anfrage</div>
-                        <div class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Monatliches Abo</div>
-                    </div>
-                    <p class="price-desc">Automatisieren Sie Ihre Prozesse. Sparen Sie Zeit und Kosten durch
-                        intelligente n8n Workflows.</p>
-                    <div class="price-divider"></div>
-                    <ul class="price-features">
-                        <li>Custom n8n Logic</li>
-                        <li>API Integrationen</li>
-                        <li>Fehler-Monitoring</li>
-                        <li>Laufende Wartung</li>
-                        <li>Skalierbare Server</li>
-                        <li>Monatlich kündbar</li>
-                    </ul>
-                    <a href="#kontakt" class="btn-secondary w-full justify-center"
-                        onclick="selectService('Workflow Automation')">Anfragen →</a>
-                </div>
-
-                <div class="price-card reveal" style="border-color: rgba(99, 102, 241, 0.3);">
-                    <div>
-                        <div class="price-name text-indigo-400">VOICE AGENT</div>
-                        <div class="price-amount" style="font-size: 2.5rem;">Auf Anfrage</div>
-                        <div class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Monatliches Abo</div>
-                    </div>
-                    <p class="price-desc">Die intelligente Telefonie-Lösung. 24/7 erreichbar, menschlich und voll
-                        integriert.</p>
-                    <div class="price-divider"></div>
-                    <ul class="price-features">
-                        <li>24/7 Anrufannahme</li>
-                        <li>Mehrsprachig (DE/EN/ES)</li>
-                        <li>Stimmen frei wählbar</li>
-                        <li>Tiefe System-Integration</li>
-                        <li>Skalierbare Performance</li>
-                        <li>Monatlich kündbar</li>
-                    </ul>
-                    <a href="#kontakt" class="btn-primary w-full justify-center"
-                        style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border:none;">Demo buchen
-                        →</a>
-                </div>
-            </div>
-            <!-- Disclaimer -->
-            <div class="text-center mt-12 text-gray-500 text-sm max-w-2xl mx-auto">
-                <p>* Alle Preise sind Netto-Richtwerte und hängen vom individuellen Projektumfang ab. Wir glauben an
-                    maßgeschneiderte Lösungen, keine starren Pakete. Kontaktieren Sie uns für ein verbindliches Angebot.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-20 px-6 bg-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="faq-layout">
-                <div>
-                    <p class="text-indigo-500 font-semibold mb-4 text-sm uppercase tracking-wider">FAQ</p>
-                    <h2 class="mb-4">Häufige Fragen</h2>
-                    <p class="text-zinc-400 text-lg mb-8">
-                        Alles, was Sie wissen müssen – ehrlich und auf den Punkt.
-                    </p>
-                    <a href="#kontakt" class="btn-primary">Frage stellen</a>
-                </div>
-                <div class="faq-list">
-                    <div class="faq-item open">
-                        <button class="faq-q">Wie lange dauert eine Website?<span class="faq-arrow">+</span></button>
-                        <div class="faq-a">Ein Starter-Paket ist oft in 7–10 Tagen fertig, während komplexe Websites 3–6
-                            Wochen benötigen. Wir geben Ihnen beim Erstgespräch eine verbindliche Zeitschätzung.</div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-q">Muss ich die Inhalte selbst pflegen?<span
-                                class="faq-arrow">+</span></button>
-                        <div class="faq-a">Nein. Wir übernehmen das komplett für Sie. Senden Sie uns einfach Ihre
-                            Änderungswünsche – wir setzen diese professionell um und präsentieren Ihnen das Ergebnis.
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-q">Was passiert nach dem Launch?<span class="faq-arrow">+</span></button>
-                        <div class="faq-a">Im Professional Paket ist 3 Monate Support inklusive. Danach bieten wir
-                            Wartungspakete für Updates und Optimierungen an.</div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-q">Bieten Sie auch Hosting an?<span class="faq-arrow">+</span></button>
-                        <div class="faq-a">Wir richten Ihr Hosting (z.B. auf Vercel oder einem deutschen Hoster)
-                            komplett ein. Sie bleiben Vertragspartner für volle Kontrolle.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form -->
-    <section id="kontakt" class="py-10 px-4">
-        <div class="max-w-xl mx-auto text-center">
-            <h2 class="mb-6">Projekt starten</h2>
-            <div class="text-center mb-12">
-                <h2 class="text-6xl md:text-8xl font-black mb-12 tracking-tighter uppercase italic leading-none">Bereit
-                    für
-                    <br><span class="text-indigo-500">Level 2.</span>
+                <h2 style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem,5vw,3.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "3.5rem" }}>
+                  Ihre Vorteile.<br />
+                  <span style={{ fontWeight: 300, color: "rgba(255,255,255,0.3)" }}>Messbar.</span>
                 </h2>
-                <p class="text-zinc-400 text-lg max-w-xl mx-auto font-light leading-relaxed">
-                    Präzision beginnt beim Dialog. Nutzen Sie das Anfragefeld für spezifische technische Fragen – unsere
-                    Architekten antworten im Detail.
-                </p>
-            </div>
 
-            <div class="glass p-8 md:p-12 rounded-3xl relative overflow-hidden flex flex-col justify-center"
-                style="min-height: 480px;">
-                <!-- Progress -->
-                <div class="flex justify-between mb-8 gap-2">
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress1"></div>
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress2"></div>
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress3"></div>
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress4"></div>
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress5"></div>
-                    <div class="flex-1 h-1 bg-white/10 rounded transition-colors duration-300" id="progress6"></div>
+                {/* Bento */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px" }}>
+                  {/* Big card */}
+                  <div style={{ gridColumn: "span 2", gridRow: "span 2", minHeight: "320px" }}>
+                    <BentoCard tag="01 — Neural Operations" title="n8n Automation Workflows" desc="Verbinden Sie Ihre Tools zu einem autonomen Organismus. CRM, E-Mail, Marketing — alles fließt nahtlos." accent>
+                      <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                        {[["blue", "Email Inbound · AI Classify"], ["purple", "GPT-4o Analysis · Route"], ["green", "CRM Update · Slack Notify"], ["orange", "Report Generate · Send"]].map(([c, t]) => (
+                          <div key={t} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "0.5rem 0.85rem", display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.65rem", letterSpacing: "0.04em", color: "rgba(255,255,255,0.5)" }}>
+                            <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: c === "blue" ? "#0077ff" : c === "purple" ? "#a855f7" : c === "green" ? "#22c55e" : "#f59e0b", flexShrink: 0 }} />{t}
+                          </div>
+                        ))}
+                      </div>
+                    </BentoCard>
+                  </div>
+
+                  <BentoCard tag="02 — Performance" title="Blitzschnell." desc="Ladezeiten unter 1 Sekunde." stat="0.8s" statLabel="avg. load time" />
+                  <BentoCard tag="03 — SEO" title="Lighthouse 100." desc="Technisch perfekt. Semantisch präzise." stat="100" statLabel="Lighthouse Score" statColor="#22c55e" />
+
+                  {/* NEUE KACHELN */}
+                  <BentoCard tag="04 — Vocal Identity" title="Vocal Identity Synthesis" desc="Voice-Cloning & 24/7 Support. 'Ready-to-Deploy' Blueprints für menschlich klingende KI-Agenten." purple>
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "hidden", zIndex: -1 }}>
+                      <div className="waveform-bg" />
+                    </div>
+                  </BentoCard>
+
+                  <BentoCard tag="05 — Automation" title="Autonomous Operations" desc="Maßgeschneiderte Prozess-Architekturen zur vollautomatischen Steuerung Ihrer Unternehmensabläufe." accent>
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "hidden", zIndex: -1 }}>
+                      <div className="node-network-bg" />
+                    </div>
+                  </BentoCard>
+
+                  <BentoCard tag="06 — Conversion" title="Design, das verkauft." desc="Jedes Element auf Conversion optimiert. A/B getestet." stat="+38%" statLabel="Conversion Rate" />
                 </div>
+              </div>
+            </section>
 
-                <form id="contactForm"
-                    action="https://script.google.com/macros/s/AKfycby-mf9M4BnkUWtZgFXyyazn4FGQjfh7xbv4EppWRfTBb7cctmu1y8kfVuPw5rerAwA/exec"
-                    method="POST" class="relative w-full h-full flex-1">
-
-                    <!-- Step 1: Service -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300"
-                        id="step1">
-                        <h3 class="mb-6 text-2xl">Was benötigen Sie?</h3>
-                        <div class="space-y-4">
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectService('Neue Website'); nextStep(2)">
-                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Neue Website
-                                </div>
-                                <div class="text-sm text-zinc-400">Komplett neue Website von Grund auf</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectService('Website Redesign'); nextStep(2)">
-                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Website Redesign
-                                </div>
-                                <div class="text-sm text-zinc-400">Bestehende Website modernisieren</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectService('SEO & Sichtbarkeit'); nextStep(2)">
-                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">SEO &
-                                    Sichtbarkeit</div>
-                                <div class="text-sm text-zinc-400">Gefunden werden & Rankings verbessern</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectService('Voice & AI Agents'); nextStep(2)">
-                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Voice & AI Agents
-                                </div>
-                                <div class="text-sm text-zinc-400">Intelligente Telefonie & Chatbots</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectService('Workflow Automation'); nextStep(2)">
-                                <div class="font-semibold mb-1 group-hover:text-indigo-400 transition">Workflow
-                                    Automation</div>
-                                <div class="text-sm text-zinc-400">Prozesse mit n8n automatisieren</div>
-                            </button>
-                        </div>
-                        <input type="hidden" name="service" id="serviceInput">
-                    </div>
-
-                    <!-- Step 2: Budget -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
-                        id="step2">
-                        <h3 class="mb-6 text-2xl">Ihr Budget</h3>
-                        <div class="space-y-4">
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectBudget('500 - 1.500€'); nextStep(3)">
-                                <div class="font-semibold group-hover:text-indigo-400 transition">500€ - 1.500€</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectBudget('1.500 - 5.000€'); nextStep(3)">
-                                <div class="font-semibold group-hover:text-indigo-400 transition">1.500€ - 5.000€</div>
-                            </button>
-                            <button type="button"
-                                class="w-full glass p-6 rounded-xl text-left hover:border-indigo-500 transition group"
-                                onclick="selectBudget('5.000€+'); nextStep(3)">
-                                <div class="font-semibold group-hover:text-indigo-400 transition">5.000€+</div>
-                            </button>
-                        </div>
-                        <input type="hidden" name="budget" id="budgetInput">
-                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
-                            onclick="nextStep(1)">← Zurück</button>
-                    </div>
-
-                    <!-- Step 3: Name -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
-                        id="step3">
-                        <h3 class="mb-6 text-2xl">Wie dürfen wir Sie nennen?</h3>
-                        <div class="space-y-4">
-                            <input type="text" name="name" id="inputName" placeholder="Ihr Name" required
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition text-lg"
-                                onkeypress="handleEnter(event, 4)">
-                            <button type="button" class="btn-primary w-full text-lg py-4"
-                                onclick="validateAndNext(3, 'inputName', 4)">
-                                Weiter
-                            </button>
-                        </div>
-                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
-                            onclick="nextStep(2)">← Zurück</button>
-                    </div>
-
-                    <!-- Step 4: Email -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
-                        id="step4">
-                        <h3 class="mb-6 text-2xl">Wie erreichen wir Sie?</h3>
-                        <div class="space-y-4">
-                            <input type="email" name="email" id="inputEmail" placeholder="name@firma.de" required
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition text-lg"
-                                onkeypress="handleEnter(event, 5)">
-                            <button type="button" class="btn-primary w-full text-lg py-4"
-                                onclick="validateAndNext(4, 'inputEmail', 5)">
-                                Weiter
-                            </button>
-                        </div>
-                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
-                            onclick="nextStep(3)">← Zurück</button>
-                    </div>
-
-                    <!-- Step 5: Message & Details -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
-                        id="step5">
-                        <h3 class="mb-6 text-2xl">Erzählen Sie uns mehr</h3>
-                        <div class="space-y-4">
-                            <input type="tel" name="phone" placeholder="Telefon (optional)"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition">
-                            <textarea name="message" placeholder="Kurze Beschreibung Ihres Projekts..." rows="3"
-                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-indigo-500 transition resize-none"></textarea>
-                            <button type="button" class="btn-primary w-full text-lg py-4"
-                                onclick="nextStep(6); updateReview();">
-                                Weiter zur Überprüfung
-                            </button>
-                        </div>
-                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
-                            onclick="nextStep(4)">← Zurück</button>
-                    </div>
-
-                    <!-- Step 6: Review -->
-                    <div class="form-step absolute inset-0 flex flex-col justify-center transition-all duration-300 opacity-0 pointer-events-none"
-                        id="step6">
-                        <h3 class="mb-6 text-2xl">Zusammenfassung</h3>
-                        <div class="space-y-4 bg-white/5 p-6 rounded-xl border border-white/10 text-left mb-6">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Service</div>
-                                    <div class="text-white font-semibold text-sm" id="summaryService">-</div>
-                                </div>
-                                <div>
-                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Budget</div>
-                                    <div class="text-white font-semibold text-sm" id="summaryBudget">-</div>
-                                </div>
-                                <div>
-                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Name</div>
-                                    <div class="text-white font-semibold text-sm" id="summaryName">-</div>
-                                </div>
-                                <div>
-                                    <div class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Email</div>
-                                    <div class="text-white font-semibold text-sm" id="summaryEmail">-</div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-primary w-full text-lg py-4">
-                            Anfrage absenden
-                        </button>
-                        <button type="button" class="mt-6 text-sm text-zinc-500 hover:text-white transition text-left"
-                            onclick="nextStep(5)">← Zurück</button>
-                    </div>
-                </form>
-
-                <!-- Success Message -->
-                <div id="successMsg" class="hidden text-center scale-90 transition-all duration-500">
-                    <div
-                        class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="3">
-                            <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <h3 class="mb-2 text-2xl">Anfrage gesendet!</h3>
-                    <p class="text-zinc-400">Wir melden uns in Kürze bei Ihnen.</p>
+            {/* PROZESS */}
+            <section id="prozess" style={{ padding: "7rem 2.5rem", background: "rgba(0,0,0,0.5)", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span style={{ width: "18px", height: "1px", background: "rgba(0,119,255,0.8)" }} /> So arbeiten wir
                 </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- Footer Upgrade -->
-    <footer class="py-12 px-4 border-t border-white/10 bg-black relative overflow-hidden">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 relative z-10">
-            <!-- Col 1: Brand -->
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-2 mb-4">
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" class="text-indigo-500">
-                        <path d="M12 2L2 22h20L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                    </svg>
-                    <span class="font-bold text-xl tracking-tighter">AURA</span>
+                <h2 style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem,5vw,3.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "4rem" }}>
+                  In 4 Schritten<br /><span style={{ fontWeight: 300, color: "rgba(255,255,255,0.3)" }}>zum Ziel.</span>
+                </h2>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: "5rem", alignItems: "start" }}>
+                  <div>
+                    {steps.map((s, i) => (
+                      <div key={i} onClick={() => setActiveStep(i)} style={{
+                        padding: "1.75rem 0", borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                        display: "grid", gridTemplateColumns: "44px 1fr", gap: "1.25rem",
+                        cursor: "pointer",
+                        paddingLeft: activeStep === i ? "1.1rem" : "0",
+                        borderLeft: activeStep === i ? "2px solid rgba(0,119,255,0.8)" : "2px solid transparent",
+                        marginLeft: activeStep === i ? "-1.1rem" : "0",
+                        transition: "all 0.3s ease",
+                      }}>
+                        <div style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.6rem", letterSpacing: "0.08em", color: activeStep === i ? "rgba(0,119,255,0.8)" : "rgba(255,255,255,0.3)", paddingTop: "0.2rem", transition: "color 0.3s" }}>{s.num}</div>
+                        <div>
+                          <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.1rem", letterSpacing: "-0.02em", marginBottom: "0.45rem" }}>{s.title}</div>
+                          <p style={{ fontWeight: 300, fontSize: "0.86rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, letterSpacing: "-0.005em" }}>{s.desc}</p>
+                          <div style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", letterSpacing: "0.08em", color: "rgba(0,119,255,0.7)", marginTop: "0.65rem", textTransform: "uppercase" }}>{s.time}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Visual */}
+                  <div style={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "14px", overflow: "hidden" }}>
+                    <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                      <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.5rem", letterSpacing: "0.06em" }}>project.config.ts</span>
+                    </div>
+                    <div style={{ padding: "1.5rem" }}>
+                      <div style={{ background: "rgba(0,0,0,0.5)", padding: "1.1rem", borderRadius: "8px", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.72rem", lineHeight: 1.85, marginBottom: "1.25rem", border: "1px solid rgba(255,255,255,0.05)" }}>
+                        <span style={{ color: "rgba(255,255,255,0.3)" }}>// Neural Architecture Config</span><br />
+                        <span style={{ color: "#a78bfa" }}>const</span> project = {"{"}<br />
+                        &nbsp;&nbsp;client: <span style={{ color: "#86efac" }}>"Ihr Unternehmen"</span>,<br />
+                        &nbsp;&nbsp;lighthouse: <span style={{ color: "#f9a8d4" }}>100</span>,<br />
+                        &nbsp;&nbsp;loadTime: <span style={{ color: "#86efac" }}>"0.8s"</span>,<br />
+                        &nbsp;&nbsp;aiEnabled: <span style={{ color: "#a78bfa" }}>true</span>,<br />
+                        &nbsp;&nbsp;status: <span style={{ color: "#93c5fd" }}>fn</span>.<span style={{ color: "#a78bfa" }}>live</span>()<br />
+                        {"}"}
+                      </div>
+                      {["Zieldefinition & Briefing", "Design-Prototyp freigegeben", "Entwicklung abgeschlossen", "Live gegangen · 🎉"].map((t, i) => (
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.65rem", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontSize: "0.84rem", fontWeight: 300, letterSpacing: "-0.005em" }}>
+                          <div style={{ width: "17px", height: "17px", borderRadius: "50%", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)", display: "grid", placeItems: "center", flexShrink: 0 }}>
+                            <svg width="7" height="7" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M1 4l2 2 4-4" /></svg>
+                          </div>
+                          {t}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <p class="text-zinc-500 text-sm leading-relaxed">
-                    Premium Web Solutions für ambitionierte Unternehmen. Schnell. Skalierbar. Sichtbar.
+              </div>
+            </section>
+
+            {/* PREISE */}
+            <section id="preise" style={{ padding: "7rem 2.5rem" }}>
+              <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span style={{ width: "18px", height: "1px", background: "rgba(0,119,255,0.8)" }} /> Investition
+                </div>
+                <h2 style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(2.2rem,5vw,3.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "3rem" }}>
+                  Transparente<br /><span style={{ fontWeight: 300, color: "rgba(255,255,255,0.3)" }}>Preise.</span>
+                </h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "10px" }}>
+                  {[
+                    { name: "STARTER", color: "rgba(0,119,255,0.7)", bg: null, features: ["Onepager / Landingpage", "Responsive Design", "On-Page SEO", "Kontaktformular"], off: ["A/B Testing", "KI-Integration"] },
+                    { name: "ENTERPRISE", color: "rgba(0,119,255,0.9)", bg: "rgba(0,119,255,0.06)", border: "rgba(0,119,255,0.25)", featured: true, features: ["Bis zu 5 Unterseiten", "Premium Custom Design", "Technisches SEO", "Conversion Optimierung", "KI-Integration", "3 Monate Support"], off: [] },
+                    { name: "WORKFLOWS", color: "rgba(34,197,94,0.8)", bg: null, border: "rgba(34,197,94,0.15)", features: ["Custom n8n Logic", "API Integrationen", "Fehler-Monitoring", "Laufende Wartung", "Monatlich kündbar"], off: [] },
+                    { name: "VOICE AGENT", color: "rgba(168,85,247,0.8)", bg: null, border: "rgba(168,85,247,0.15)", features: ["24/7 Anrufannahme", "Mehrsprachig DE/EN/ES", "Stimmen wählbar", "System-Integration", "Monatlich kündbar"], off: [] },
+                  ].map((p, i) => (
+                    <div key={i} style={{
+                      background: p.bg || "rgba(255,255,255,0.02)",
+                      border: `1px solid ${p.border || "rgba(255,255,255,0.07)"}`,
+                      borderRadius: "14px", padding: "1.75rem",
+                      display: "flex", flexDirection: "column", gap: "1rem",
+                      position: "relative", overflow: "hidden",
+                      transition: "transform 0.3s,box-shadow 0.3s",
+                    }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 24px 60px rgba(0,0,0,0.4)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}
+                    >
+                      {p.featured && <div style={{ position: "absolute", top: 0, right: "1.25rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.48rem", letterSpacing: "0.15em", background: "#0077ff", color: "#fff", padding: "0.22rem 0.6rem", borderRadius: "0 0 4px 4px" }}>POPULAR</div>}
+                      <div>
+                        <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.15em", color: p.color, marginBottom: "0.6rem", textTransform: "uppercase" }}>{p.name}</div>
+                        <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.5rem", letterSpacing: "-0.03em", lineHeight: 1.1 }}>Auf Anfrage</div>
+                        <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", marginTop: "0.2rem", letterSpacing: "-0.005em" }}>Projektbasis</div>
+                      </div>
+                      <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
+                      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                        {p.features.map(f => <li key={f} style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.8rem", display: "flex", alignItems: "center", gap: "0.55rem", letterSpacing: "-0.005em" }}><span style={{ color: p.color, fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.75rem" }}>✓</span>{f}</li>)}
+                        {p.off.map(f => <li key={f} style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.8rem", display: "flex", alignItems: "center", gap: "0.55rem", color: "rgba(255,255,255,0.25)", letterSpacing: "-0.005em" }}><span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.75rem" }}>—</span>{f}</li>)}
+                      </ul>
+                      <a href="#kontakt" style={{
+                        marginTop: "auto", display: "block", textAlign: "center",
+                        fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                        fontWeight: 500, fontSize: "0.78rem", letterSpacing: "-0.01em",
+                        padding: "0.7rem", borderRadius: "8px", textDecoration: "none",
+                        background: p.featured ? "#0077ff" : "transparent",
+                        color: p.featured ? "#fff" : "rgba(255,255,255,0.5)",
+                        border: p.featured ? "none" : "1px solid rgba(255,255,255,0.1)",
+                        transition: "all 0.2s",
+                      }}>Anfragen →</a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ */}
+            <section id="faq" style={{ padding: "7rem 2.5rem", background: "rgba(0,0,0,0.5)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ maxWidth: "1160px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: "5rem", alignItems: "start" }}>
+                <div>
+                  <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                    <span style={{ width: "18px", height: "1px", background: "rgba(0,119,255,0.8)" }} /> FAQ
+                  </div>
+                  <h2 style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(2rem,4vw,3.2rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1rem" }}>
+                    Häufige<br /><span style={{ fontWeight: 300, color: "rgba(255,255,255,0.3)" }}>Fragen.</span>
+                  </h2>
+                  <p style={{ fontWeight: 300, fontSize: "0.88rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, marginBottom: "2rem", letterSpacing: "-0.005em" }}>Ehrlich. Auf den Punkt. Ohne Marketingsprache.</p>
+                  <a href="#kontakt" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.82rem", background: "#0077ff", color: "#fff", padding: "0.75rem 1.5rem", borderRadius: "8px", textDecoration: "none", display: "inline-block" }}>Frage stellen →</a>
+                </div>
+                <div>
+                  {faqs.map((f, i) => (
+                    <div key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} style={{
+                        width: "100%", background: "none", border: "none", color: "#f0f4ff",
+                        padding: "1.2rem 0", display: "flex", justifyContent: "space-between", alignItems: "center",
+                        cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif",
+                        fontWeight: 500, fontSize: "0.92rem", letterSpacing: "-0.01em", textAlign: "left",
+                      }}>
+                        {f.q}
+                        <span style={{ fontSize: "1rem", color: openFaq === i ? "#0077ff" : "rgba(255,255,255,0.35)", transform: openFaq === i ? "rotate(45deg)" : "none", transition: "all 0.3s", flexShrink: 0, marginLeft: "1rem" }}>+</span>
+                      </button>
+                      <div style={{ maxHeight: openFaq === i ? "200px" : 0, overflow: "hidden", transition: "max-height 0.35s ease", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.75, letterSpacing: "-0.005em", paddingBottom: openFaq === i ? "1.25rem" : 0 }}>
+                        {f.a}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* KONTAKT FORM */}
+            <section id="kontakt" style={{ padding: "7rem 2.5rem" }}>
+              <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+                <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.6rem", letterSpacing: "0.1em", color: "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span style={{ width: "18px", height: "1px", background: "rgba(0,119,255,0.8)" }} /> Neural Inquiry
+                </div>
+                <h2 style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(2.5rem,6vw,4.5rem)", letterSpacing: "-0.04em", lineHeight: 1.0, marginBottom: "0.75rem" }}>
+                  Bereit für<br /><span style={{ fontWeight: 300, color: "rgba(255,255,255,0.3)" }}>Level 2.</span>
+                </h2>
+                <p style={{ fontWeight: 300, fontSize: "0.9rem", color: "rgba(255,255,255,0.4)", lineHeight: 1.75, marginBottom: "2.5rem", letterSpacing: "-0.01em" }}>
+                  Präzision beginnt beim Dialog. Unsere Architekten antworten im Detail.
                 </p>
 
-                <div class="mt-8 text-[0.7rem] text-white/40 font-normal normal-case leading-relaxed">
-                    <p>Inhaber: David Lamberts</p>
-                    <p>Adresse: Am Bergle 28, 88284 Schlier</p>
-                    <p>Kontakt: 017691336194 | davidci2002@gmail.com</p>
+                <div style={{ background: "rgba(0,0,0,0.85)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "16px", overflow: "hidden" }}>
+                  {/* Terminal header */}
+                  <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.7)" }}>
+                    <div style={{ display: "flex", gap: "0.4rem" }}>
+                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                    </div>
+                    <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>neural-inquiry.ts</span>
+                    <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", color: "#22c55e", display: "flex", alignItems: "center", gap: "0.35rem", letterSpacing: "0.08em" }}>
+                      <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#22c55e", animation: "blink 2s ease infinite", display: "inline-block" }} />SYSTEM READY
+                    </span>
+                  </div>
+
+                  <div style={{ padding: "1.75rem" }}>
+                    {/* Progress */}
+                    <div style={{ display: "flex", gap: "4px", marginBottom: "1.75rem" }}>
+                      {[1, 2, 3, 4, 5, 6].map(n => <div key={n} style={{ flex: 1, height: "2px", borderRadius: "2px", background: n <= formStep ? "#0077ff" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />)}
+                    </div>
+
+                    {submitted ? (
+                      <div style={{ textAlign: "center", padding: "2rem 0" }}>
+                        <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)", display: "grid", placeItems: "center", margin: "0 auto 1.25rem" }}>
+                          <svg width="20" height="20" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M17 5L8 14.5l-4-4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </div>
+                        <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.4rem", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Anfrage gesendet.</div>
+                        <p style={{ fontWeight: 300, fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", letterSpacing: "-0.005em" }}>Wir melden uns innerhalb von 24h bei Ihnen.</p>
+                        <div style={{ marginTop: "1.5rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(0,119,255,0.6)" }}>— AURA NEURAL ARCHITECTURE</div>
+                      </div>
+                    ) : (
+                      <FormStep step={formStep} setStep={setFormStep} formData={formData} setFormData={setFormData} setSubmitted={setSubmitted} />
+                    )}
+                  </div>
                 </div>
-            </div>
+              </div>
+            </section>
 
-            <!-- Col 2: Sitemap -->
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Menu</h4>
-                <ul class="space-y-2 text-sm text-zinc-400">
-                    <li><a href="#leistungen" class="hover:text-white transition-colors">Leistungen</a></li>
-                    <li><a href="#prozess" class="hover:text-white transition-colors">Prozess</a></li>
-                    <li><a href="#preise" class="hover:text-white transition-colors">Preise</a></li>
-                    <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
-                </ul>
-            </div>
+            {/* FOOTER */}
+            <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "5rem 2.5rem 3rem", background: "rgba(0,0,0,0.6)", position: "relative", zIndex: 10 }}>
+              <div style={{ maxWidth: "1160px", margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "4rem", marginBottom: "3rem" }}>
+                <div>
+                  <div className="brand-aura" style={{ fontSize: "1.4rem", color: "#fff", marginBottom: "0.3rem" }}>AURA</div>
+                  <div className="brand-sub" style={{ fontSize: "0.45rem", marginBottom: "1rem" }}>Neural Architecture</div>
+                  <p style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.7, marginBottom: "1.5rem", letterSpacing: "-0.005em" }}>Premium Web Solutions für ambitionierte Unternehmen.</p>
 
-            <!-- Col 3: Rechtliches -->
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Rechtliches</h4>
-                <ul class="space-y-4 text-zinc-400">
-                    <li><a href="impressum.html" class="hover:text-white transition flex items-center group"><span
-                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>Impressum</a>
-                    </li>
-                    <li><a href="datenschutz.html" class="hover:text-white transition flex items-center group"><span
-                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>Datenschutz</a>
-                    </li>
-                    <li><a href="agb.html" class="hover:text-white transition flex items-center group"><span
-                                class="w-1.5 h-1.5 bg-indigo-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>AGB</a>
-                    </li>
-                </ul>
-            </div>
+                  {/* Minimalistischer Legal Info Block */}
+                  <div
+                    style={{
+                      fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace",
+                      fontSize: "0.75rem",
+                      color: "rgba(255,255,255,0.2)",
+                      lineHeight: 1.8,
+                      letterSpacing: "0.02em",
+                      opacity: 0.6,
+                      transition: "opacity 0.3s ease"
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                    onMouseLeave={e => e.currentTarget.style.opacity = 0.6}
+                  >
+                    <div>Inhaber: David Lamberts</div>
+                    <div>Anschrift: Am Bergle 28, 88284 Schlier</div>
+                    <div>017691336194 | aura.neural.architecture@gmx.de</div>
+                  </div>
 
-            <!-- Col 4: Desired Action -->
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Kontakt</h4>
-                <a href="https://calendly.com/david-ci-aura-systems/30min" target="_blank"
-                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-all text-sm mb-4 group">
-                    <span>Termin buchen</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                <div class="flex gap-4">
-                    <!-- Social Placeholders -->
-                    <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="linkedin"
-                            class="w-5 h-5"></i></a>
-                    <a href="#" class="text-zinc-500 hover:text-white transition-colors"><i data-lucide="instagram"
-                            class="w-5 h-5"></i></a>
                 </div>
-            </div>
-        </div>
+                {[
+                  { title: "Navigation", links: ["Leistungen", "Prozess", "Preise", "FAQ", "Kontakt"] },
+                  { title: "Rechtliches", links: ["Impressum", "Datenschutz", "AGB"] },
+                  { title: "Kontakt", links: ["Termin buchen"] },
+                ].map(col => (
+                  <div key={col.title}>
+                    <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "1.25rem" }}>{col.title}</div>
+                    <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                      {col.links.map(l => <li key={l}><a href="#" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = "#fff"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.35)"}>{l}</a></li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div style={{ maxWidth: "1160px", margin: "0 auto", paddingTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.2)" }}>
+                <span>© 2026 AURA Neural Architecture. All rights reserved.</span>
+                <span>v2.4.0</span>
+              </div>
+            </footer>
+          </div>
+        </>
+      );
+    }
 
+    function BentoCard({ tag, title, desc, stat, statLabel, statColor, accent, purple, children }) {
+      const [hov, setHov] = useState(false);
+      return (
         <div
-            class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-600">
-            <p>&copy; 2024 AURA SYSTEMS. All rights reserved.</p>
-            <div class="font-mono">v1.9.2</div>
+          onMouseEnter={() => setHov(true)}
+          onMouseLeave={() => setHov(false)}
+          style={{
+            position: "relative",
+            background: accent ? "linear-gradient(135deg,rgba(0,119,255,0.1),rgba(0,0,0,0))" : purple ? "linear-gradient(135deg,rgba(168,85,247,0.08),rgba(0,0,0,0))" : "rgba(255,255,255,0.02)",
+            border: `1px solid ${hov ? (accent ? "rgba(0,119,255,0.3)" : "rgba(255,255,255,0.12)") : "rgba(255,255,255,0.07)"}`,
+            borderRadius: "14px", padding: "1.75rem",
+            display: "flex", flexDirection: "column",
+            minHeight: "160px", height: "100%",
+            transition: "all 0.35s ease",
+            transform: hov ? "translateY(-3px)" : "none",
+            boxShadow: hov ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 48px rgba(0,0,0,0.35)" : "none",
+            cursor: "default",
+            overflow: "hidden"
+          }}
+        >
+          {/* Background Children wie Waveform oder Network */}
+          {children}
+
+          <div style={{ position: "relative", zIndex: 2 }}>
+            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.1em", color: purple ? "rgba(168,85,247,0.8)" : "rgba(0,119,255,0.8)", textTransform: "uppercase", marginBottom: "0.75rem" }}>{tag}</div>
+            <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 700, fontSize: "clamp(1.1rem,2.2vw,1.5rem)", letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: "0.6rem" }}>{title}</div>
+            <div style={{ fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, letterSpacing: "-0.005em" }}>{desc}</div>
+          </div>
+
+          {stat && (
+            <div style={{ marginTop: "auto", paddingTop: "1.25rem", position: "relative", zIndex: 2 }}>
+              <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 800, fontSize: "2.2rem", letterSpacing: "-0.04em", lineHeight: 1, color: statColor || "rgba(0,119,255,0.9)" }}>{stat}</div>
+              <div style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", marginTop: "0.2rem", textTransform: "uppercase" }}>{statLabel}</div>
+            </div>
+          )}
         </div>
-    </footer>
-    <script type="module">
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        /* ─── CLASS DEFINITIONS (HOISTED FOR USAGE) ─── */
-
-        // SplitText Animation Class (Must be defined first)
-        class SplitText {
-            constructor(element, options = {}) {
-                this.element = typeof element === 'string' ? document.querySelector(element) : element;
-                if (!this.element) return;
-
-                this.options = {
-                    type: 'chars', // chars, words
-                    trigger: 'self',
-                    delay: 0.05,
-                    duration: 1.25,
-                    ease: 'power3.out',
-                    ...options
-                };
-
-                this.originalText = this.element.textContent;
-                this.chars = [];
-                this.words = [];
-
-                this.init();
-            }
-
-            init() {
-                const text = this.originalText.trim();
-                this.element.innerHTML = '';
-                this.element.style.opacity = '1';
-                this.element.style.visibility = 'visible';
-
-                const words = text.split(/\s+/);
-
-                words.forEach((word, wordIndex) => {
-                    const wordSpan = document.createElement('span');
-                    wordSpan.className = 'split-word';
-                    wordSpan.style.display = 'inline-block';
-                    wordSpan.style.overflow = 'visible'; /* Changed from hidden to visible */
-                    wordSpan.style.verticalAlign = 'top';
-                    wordSpan.style.padding = '0.2em 0.1em'; /* Add breathing room for shadows */
-                    wordSpan.style.margin = '-0.2em -0.1em'; /* Compensate layout */
-
-                    const letters = word.split('');
-                    letters.forEach((letter) => {
-                        const charSpan = document.createElement('span');
-                        charSpan.className = 'split-char';
-                        charSpan.style.display = 'inline-block';
-                        charSpan.style.transform = 'translateY(100%)';
-                        /* REMOVED: charSpan.style.filter = 'blur(20px)'; - Fixed Bug */
-                        charSpan.style.opacity = '0';
-                        charSpan.textContent = letter;
-                        wordSpan.appendChild(charSpan);
-                        this.chars.push(charSpan);
-                    });
-
-                    this.element.appendChild(wordSpan);
-
-                    if (wordIndex < words.length - 1) {
-                        const space = document.createTextNode(' ');
-                        this.element.appendChild(space);
-                    }
-                });
-            }
-        }
-
-        // ─── INTRO & ANIMATIONS ───
-        document.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
-
-            // 0. Cinematic Intro (SplitText Upgrade)
-            document.body.classList.add('intro-active');
-
-            // Apply SplitText to Intro
-            const introText = document.querySelector('.intro-text');
-            if (introText) {
-                // Ensure text is split before animation starts
-                new SplitText(introText, { type: 'chars' });
-            }
-
-            // Animate Intro Chars
-            tl.to(".intro-text .split-char", {
-                y: '0%',
-                opacity: 1,
-                filter: 'blur(0px)', // Animate to clear
-                duration: 1.5,
-                ease: "power3.out", // Snappier ease
-                stagger: 0.05
-            })
-                // Fade Out & Remove Overlay
-                .to(".intro-text", { opacity: 0, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
-                .to("#intro-overlay .intro-line", { scaleX: 1, duration: 1.2, ease: "expo.out" }, "-=1.2")
-                .to("#intro-overlay .intro-sub", { opacity: 1, duration: 0.8 }, "-=0.8")
-                .to("#intro-overlay", {
-                    opacity: 0, duration: 1.0, ease: "power2.inOut", delay: 0.8, onComplete: () => {
-                        document.getElementById('intro-overlay').style.display = 'none';
-                        document.body.classList.remove('intro-active');
-                    }
-                }, "-=0.5")
-
-                // 1. Hero Text Reveal (Chained after Intro)
-                .to("#hero h1", {
-                    opacity: 1, y: 0, duration: 0.4, ease: "power2.out", onStart: () => {
-                        // Trigger Hero SplitText here if needed, or simple fade
-                        const heroH1 = document.querySelector('#hero h1');
-                        if (heroH1) new SplitText(heroH1, { type: 'chars' });
-                        gsap.to("#hero h1 .split-char", { y: '0%', opacity: 1, duration: 1, stagger: 0.02 });
-                    }
-                }, "-=0.4")
-                .to("#hero p", { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
-
-                // 2. Silent Background Fade-In
-                .to("#hero-sequence", { opacity: 1, duration: 2.0, ease: "sine.inOut" }, "-=0.2");
-
-            // 3. Performance: Pause when not visible
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && typeof neuralGrid !== 'undefined') {
-                        neuralGrid.isPaused = false;
-                        neuralGrid.update(performance.now());
-                    } else if (typeof neuralGrid !== 'undefined') {
-                        neuralGrid.isPaused = true;
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            const heroSection = document.getElementById('hero');
-            if (heroSection) observer.observe(heroSection);
-        });
-
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }
-
-        mobileToggle.addEventListener('click', toggleMenu);
-
-        // Close menu when clicking ANY link inside it
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.closest('a')) {
-                toggleMenu();
-            }
-        });
-
-        // LightRays Background (Studio Setup)
-        import { Renderer, Program, Triangle, Mesh, Vec2, Vec3 } from 'https://esm.sh/ogl';
-
-        // (SplitText Class removed from here - moved to top)
-
-        // Initialize Neural Grid & SplitText logic moved to Top
-
-        class NeuralGrid {
-            constructor(containerId, options = {}) {
-                this.container = document.getElementById(containerId);
-                if (!this.container) return;
-                this.isPaused = false;
-
-                this.options = {
-                    gridColor: '#0077ff', // Electric Blue
-                    ...options
-                };
-
-                this.mouse = new Vec2(0.5, 0.5);
-                this.targetMouse = new Vec2(0.5, 0.5);
-
-                this.init();
-            }
-
-            hexToRgb(hex) {
-                const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return m ? [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255] : [1, 1, 1];
-            }
-
-            init() {
-                this.renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio, 2) });
-                this.gl = this.renderer.gl;
-                this.gl.canvas.style.width = '100%';
-                this.gl.canvas.style.height = '100%';
-
-                while (this.container.firstChild) this.container.removeChild(this.container.firstChild);
-                this.container.appendChild(this.gl.canvas);
-
-                const vert = `
-                    attribute vec2 position;
-                    varying vec2 vUv;
-                    void main() {
-                        vUv = position * 0.5 + 0.5;
-                        gl_Position = vec4(position, 0.0, 1.0);
-                    }
-                `;
-
-                const frag = `
-                    precision highp float;
-                    uniform float iTime;
-                    uniform vec2 iResolution;
-                    uniform vec2 mousePos;
-                    uniform vec3 gridColor;
-                    
-                    void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-                        vec2 uv = fragCoord.xy / iResolution.xy;
-                        vec2 aspect = vec2(iResolution.x/iResolution.y, 1.0);
-                        vec2 p = (uv - 0.5) * aspect; // centered UV
-                        // Correct mouse aspect
-                        vec2 m = (mousePos - 0.5) * aspect; 
-                        
-                        // Flip Y for mouse calculation to match GL coords
-                        m.y = -m.y; 
-
-                        // 1. Neural Grid
-                        float gridScale = 20.0;
-                        vec2 gridUV = fract(p * gridScale) - 0.5;
-                        float distToLine = min(abs(gridUV.x), abs(gridUV.y));
-                        float lineThickness = 0.05; 
-                        float gridLine = smoothstep(lineThickness, 0.0, distToLine);
-                        
-                        // Data Flow (Pulses logic)
-                        float pulseSpeed = 1.0;
-                        float vPulse = step(0.95, sin(p.y * 3.0 + iTime * pulseSpeed)) * step(abs(gridUV.x), 0.1); 
-                        float hPulse = step(0.95, sin(p.x * 3.0 - iTime * pulseSpeed * 0.8)) * step(abs(gridUV.y), 0.1);
-                        float dataFlow = vPulse + hPulse;
-
-                        // 2. Reactive Void (Flashlight)
-                        float dMouse = distance(p, m);
-                        float mouseGlow = exp(-dMouse * 2.5);
-                        
-                        // 3. Ambient Photonics (Breathing Background)
-                        float ambient1 = exp(-distance(p, vec2(0.3, 0.2)) * 1.5) * (0.5 + 0.5 * sin(iTime * 0.5));
-                        float ambient2 = exp(-distance(p, vec2(-0.3, -0.2)) * 1.2) * (0.5 + 0.5 * cos(iTime * 0.3));
-                        
-                        // Compositing
-                        vec3 deepBlue = vec3(0.0, 0.05, 0.2); // Deep atmospheric blue
-                        vec3 electric = gridColor;
-                        vec3 bg = vec3(0.01, 0.01, 0.02); // Deep Onyx
-                        
-                        vec3 finalColor = bg;
-                        // Add Ambient
-                        finalColor += deepBlue * (ambient1 + ambient2) * 0.5;
-                        
-                        // Add Grid
-                        float gridAlpha = 0.08; // Base visibility 
-                        gridAlpha += mouseGlow * 0.4; // Mouse reveal
-                        gridAlpha += dataFlow * 0.8; // Pulses are bright
-                        
-                        finalColor += electric * gridLine * gridAlpha;
-                        
-                        // Vignette
-                        float vignette = 1.0 - length(uv - 0.5) * 1.2;
-                        finalColor *= clamp(vignette, 0.0, 1.0);
-                        
-                        fragColor = vec4(finalColor, 1.0);
-                    }
-
-                    void main() { mainImage(gl_FragColor, gl_FragCoord.xy); }
-                `;
-
-                this.program = new Program(this.gl, {
-                    vertex: vert,
-                    fragment: frag,
-                    uniforms: {
-                        iTime: { value: 0 },
-                        iResolution: { value: new Vec2(this.gl.canvas.width, this.gl.canvas.height) },
-                        mousePos: { value: new Vec2(0.5, 0.5) },
-                        gridColor: { value: new Vec3(...this.hexToRgb(this.options.gridColor)) }
-                    },
-                    transparent: true
-                });
-
-                this.mesh = new Mesh(this.gl, { geometry: new Triangle(this.gl), program: this.program });
-
-                this.addListeners();
-                this.resize();
-                requestAnimationFrame(this.update.bind(this));
-            }
-
-            addListeners() {
-                window.addEventListener('resize', this.resize.bind(this));
-                window.addEventListener('mousemove', this.onMouseMove.bind(this));
-            }
-
-            onMouseMove(e) {
-                // Normalize mouse 0..1 (flip Y for GL)
-                const x = e.clientX / window.innerWidth;
-                const y = 1.0 - (e.clientY / window.innerHeight);
-                this.targetMouse.set(x, y);
-            }
-
-            resize() {
-                const width = this.container.clientWidth;
-                const height = this.container.clientHeight;
-                this.renderer.setSize(width, height);
-                this.program.uniforms.iResolution.value.set(width * this.renderer.dpr, height * this.renderer.dpr);
-            }
-
-            update(t) {
-                if (this.isPaused) return;
-
-                // Lerp mouse
-                this.mouse.lerp(this.targetMouse, 0.1);
-                this.program.uniforms.mousePos.value.copy(this.mouse);
-
-                this.program.uniforms.iTime.value = t * 0.001;
-                this.renderer.render({ scene: this.mesh });
-                requestAnimationFrame(this.update.bind(this));
-            }
-        }
-
-        // Initialize Neural Grid
-        const neuralGrid = new NeuralGrid('hero-sequence', { gridColor: '#0077ff' });
-
-        // (Previous intro code removed - moved to top)
-
-        // Form Multi-Step
-        let currentStep = 1;
-        const totalSteps = 6;
-
-        window.updateReview = function () {
-            document.getElementById('summaryService').textContent = document.getElementById('serviceInput').value || '-';
-            document.getElementById('summaryBudget').textContent = document.getElementById('budgetInput').value || '-';
-            document.getElementById('summaryName').textContent = document.getElementById('inputName').value || '-';
-            document.getElementById('summaryEmail').textContent = document.getElementById('inputEmail').value || '-';
-        }
-
-        window.nextStep = function (step) {
-            // Hide all
-            document.querySelectorAll('.form-step').forEach(s => {
-                s.classList.remove('active', 'opacity-100', 'pointer-events-auto');
-                s.classList.add('opacity-0', 'pointer-events-none');
-            });
-
-            // Show next
-            const next = document.getElementById('step' + step);
-            if (next) {
-                // Ensure layout is ready
-                next.classList.add('active'); // Keep valid if needed for logic
-
-                // Force reflow
-                void next.offsetWidth;
-
-                next.classList.remove('opacity-0', 'pointer-events-none');
-                next.classList.add('opacity-100', 'pointer-events-auto');
-
-                const input = next.querySelector('input, textarea');
-                if (input) setTimeout(() => input.focus(), 100);
-            }
-
-            currentStep = step;
-
-            // Update progress
-            for (let i = 1; i <= totalSteps; i++) {
-                const progress = document.getElementById('progress' + i);
-                if (progress) {
-                    progress.style.backgroundColor = i <= step ? '#6366f1' : 'rgba(255,255,255,0.1)';
-                }
-            }
-        }
-
-        window.validateAndNext = function (step, inputId, nextStepNum) {
-            const input = document.getElementById(inputId);
-            if (input && input.checkValidity()) {
-                nextStep(nextStepNum);
-            } else {
-                input.reportValidity();
-                // Shake animation for error
-                input.classList.add('shake');
-                setTimeout(() => input.classList.remove('shake'), 400);
-            }
-        }
-
-        window.handleEnter = function (e, nextStepNum) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                // Find the validate button for this step and click it
-                const btn = e.target.parentElement.querySelector('button');
-                if (btn) btn.click();
-            }
-        }
-
-        window.selectService = function (service) {
-            const input = document.getElementById('serviceInput');
-            if (input) input.value = service;
-        }
-
-        window.selectBudget = function (budget) {
-            const input = document.getElementById('budgetInput');
-            if (input) input.value = budget;
-        }
-
-        // Form Submit
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-
-            fetch(e.target.action, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            });
-
-            e.target.classList.add('hidden');
-            document.getElementById('successMsg').classList.remove('hidden');
-        });
-
-        // Spotlight Effect
-        window.updateSpotlight = function (e) {
-            const card = e.currentTarget;
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            card.style.setProperty('--x', x + 'px');
-            card.style.setProperty('--y', y + 'px');
-        }
-
-        window.resetSpotlight = function (e) {
-            const card = e.currentTarget;
-            // Optional: reset to center or fade out logic if needed
-        }
-
-        // --- GSAP Animations ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.step-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Process Steps Interaction
-        document.querySelectorAll('.process-step').forEach((step) => {
-            step.addEventListener('click', () => {
-                // Remove active class from all
-                document.querySelectorAll('.process-step').forEach(s => s.classList.remove('active'));
-                // Add to clicked
-                step.classList.add('active');
-            });
-        });
-
-        // FAQ Interaction
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.querySelector('.faq-q').addEventListener('click', () => {
-                const wasOpen = item.classList.contains('open');
-                // Close all others
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-                // Toggle clicked
-                if (!wasOpen) item.classList.add('open');
-            });
-        });
-
-        // GSAP Scroll Animations
-        if (window.innerWidth > 768) {
-            gsap.registerPlugin(ScrollTrigger);
-
-            gsap.from('.feature-card', {
-                scrollTrigger: {
-                    trigger: '.feature-card',
-                    start: 'top 80%'
-                },
-                y: 50,
-                opacity: 0,
-                stagger: 0.2,
-                duration: 0.8
-            });
-        }
-    </script>
+      );
+    }
+
+    function FormStep({ step, setStep, formData, setFormData, setSubmitted }) {
+      const [name, setName] = useState("");
+      const [email, setEmail] = useState("");
+      const [inquiry, setInquiry] = useState("");
+
+      const labelStyle = { fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.55rem", letterSpacing: "0.18em", color: "rgba(0,119,255,0.7)", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" };
+      const titleStyle = { fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.25rem", letterSpacing: "-0.02em", marginBottom: "1.25rem" };
+      const choiceStyle = (hov) => ({ width: "100%", background: hov ? "rgba(0,119,255,0.06)" : "rgba(255,255,255,0.02)", border: `1px solid ${hov ? "rgba(0,119,255,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: "10px", padding: "0.9rem 1.1rem", textAlign: "left", cursor: "pointer", transition: "all 0.2s", marginBottom: "0.45rem", color: "#f0f4ff" });
+      const inputStyle = { width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "10px", padding: "0.85rem 1rem", color: "#f0f4ff", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.92rem", letterSpacing: "-0.01em", outline: "none", marginBottom: "0.75rem", display: "block" };
+      const backStyle = { background: "none", border: "none", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.6rem", letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", cursor: "pointer", marginTop: "0.85rem", padding: 0 };
+      const ActionBtn = ({ label, onClick }) => (
+        <button onClick={onClick} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.85rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em", transition: "background 0.2s" }} onMouseEnter={e => e.target.style.background = "#0062d4"} onMouseLeave={e => e.target.style.background = "#0077ff"}>{label}</button>
+      );
+
+      const ChoiceBtn = ({ main, sub, onClick }) => {
+        const [h, setH] = useState(false);
+        return (
+          <button onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} style={choiceStyle(h)}>
+            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.9rem", letterSpacing: "-0.01em" }}>{main}</div>
+            {sub && <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.72rem", color: "rgba(255,255,255,0.4)", marginTop: "0.1rem", letterSpacing: "-0.005em" }}>{sub}</div>}
+          </button>
+        );
+      };
+
+      const anim = { animation: "stepIn 0.35s ease" };
+
+      if (step === 1) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_01</span>
+          <div style={titleStyle}>Was benötigen Sie?</div>
+          {[["Neue Website", "Komplett neue Website von Grund auf"], ["Website Redesign", "Bestehende Website modernisieren"], ["SEO & Sichtbarkeit", "Rankings verbessern"], ["Voice & AI Agents", "Intelligente Telefonie"], ["Workflow Automation", "Prozesse mit n8n automatisieren"]].map(([m, s]) => (
+            <ChoiceBtn key={m} main={m} sub={s} onClick={() => { setFormData(d => ({ ...d, service: m })); setStep(2); }} />
+          ))}
+        </div>
+      );
+
+      if (step === 2) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_02</span>
+          <div style={titleStyle}>Ihr Investitionsrahmen?</div>
+          {["500€ – 1.500€", "1.500€ – 5.000€", "5.000€+"].map(b => (
+            <ChoiceBtn key={b} main={b} onClick={() => { setFormData(d => ({ ...d, budget: b })); setStep(3); }} />
+          ))}
+          <button style={backStyle} onClick={() => setStep(1)}>← Zurück</button>
+        </div>
+      );
+
+      if (step === 3) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_03</span>
+          <div style={titleStyle}>Wie dürfen wir Sie nennen?</div>
+          <input style={inputStyle} placeholder="Ihr Name" value={name} onChange={e => setName(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && name.trim()) { setFormData(d => ({ ...d, name })); setStep(4) } }} autoFocus />
+          <ActionBtn label="Weiter →" onClick={() => { if (name.trim()) { setFormData(d => ({ ...d, name })); setStep(4) } }} />
+          <button style={backStyle} onClick={() => setStep(2)}>← Zurück</button>
+        </div>
+      );
+
+      if (step === 4) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_04</span>
+          <div style={titleStyle}>Wie erreichen wir Sie?</div>
+          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && email.includes("@")) { setFormData(d => ({ ...d, email })); setStep(5) } }} autoFocus />
+          <ActionBtn label="Weiter →" onClick={() => { if (email.includes("@")) { setFormData(d => ({ ...d, email })); setStep(5) } }} />
+          <button style={backStyle} onClick={() => setStep(3)}>← Zurück</button>
+        </div>
+      );
+
+      if (step === 5) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_05</span>
+          <div style={titleStyle}>Technical Inquiry Mode</div>
+
+          {/* Hinweisblock */}
+          <div style={{ background: "rgba(0,119,255,0.06)", border: "1px solid rgba(0,119,255,0.2)", borderRadius: "10px", padding: "1rem", marginBottom: "1.25rem" }}>
+            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 600, fontSize: "0.75rem", color: "rgba(0,119,255,0.9)", marginBottom: "0.2rem" }}>Präzision beginnt beim Dialog.</div>
+            <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.75rem", color: "rgba(0,119,255,0.7)", lineHeight: 1.5 }}>
+              Stellen Sie hier spezifische technische Fragen oder schildern Sie uns detailliert Ihre Prozess-Gedankengänge.
+            </div>
+          </div>
+
+          <textarea
+            style={{ ...inputStyle, minHeight: "120px", resize: "vertical" }}
+            placeholder="System-Architektur, APIs, Projektziele..."
+            value={inquiry}
+            onChange={e => setInquiry(e.target.value)}
+          />
+          <ActionBtn label="Zusammenfassung →" onClick={() => { setFormData(d => ({ ...d, inquiry })); setStep(6) }} />
+          <button style={backStyle} onClick={() => setStep(4)}>← Zurück</button>
+        </div>
+      );
+
+      if (step === 6) return (
+        <div style={anim}>
+          <span style={labelStyle}>QUERY_06</span>
+          <div style={titleStyle}>System Checkout</div>
+          <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "1.1rem", marginBottom: "1.25rem" }}>
+            {[["Service", formData.service], ["Budget", formData.budget], ["Name", formData.name], ["Email", formData.email]].map(([l, v]) => (
+              <div key={l} style={{ display: "grid", gridTemplateColumns: "80px 1fr", marginBottom: "0.5rem" }}>
+                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", paddingTop: "0.1rem" }}>{l}</span>
+                <span style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em", overflowWrap: "break-word" }}>{v || "—"}</span>
+              </div>
+            ))}
+            {formData.inquiry && (
+              <div style={{ display: "grid", gridTemplateColumns: "80px 1fr", marginBottom: "0.5rem" }}>
+                <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", paddingTop: "0.1rem" }}>Inquiry</span>
+                <span style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 400, fontSize: "0.85rem", letterSpacing: "-0.01em", overflowWrap: "break-word" }}>{formData.inquiry}</span>
+              </div>
+            )}
+          </div>
+          <button onClick={() => setSubmitted(true)} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.9rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em", transition: "background 0.2s" }} onMouseEnter={e => e.target.style.background = "#0062d4"} onMouseLeave={e => e.target.style.background = "#0077ff"}>
+            Anfrage absenden →
+          </button>
+          <button style={backStyle} onClick={() => setStep(5)}>← Zurück</button>
+        </div>
+      );
+
+      return null;
+    }
+
+    // Render
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<AuraNeural />);
+  </script>
 </body>
-
 </html>
