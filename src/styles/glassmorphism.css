@@ -1,0 +1,140 @@
+/* ========================================
+   AURA Neural Architecture
+   Glassmorphism Design System
+   ========================================
+
+   Comprehensive frosted glass effect system with depth layers.
+   Uses backdrop-filter for modern blur effects.
+
+   Browser Support: Chrome/Edge 76+, Safari 9+, Firefox 103+
+   Fallback: Solid backgrounds with reduced opacity
+======================================== */
+
+/* ----------------------------------------
+   Depth Layers
+   ----------------------------------------
+   Three depth levels for visual hierarchy:
+   - glass-far: Background elements (maximum blur)
+   - glass-mid: Mid-ground elements (moderate blur)
+   - glass-near: Foreground elements (minimal blur)
+---------------------------------------- */
+
+.glass-far {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(32px) saturate(150%);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-mid {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-near {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px) saturate(190%);
+  -webkit-backdrop-filter: blur(8px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ----------------------------------------
+   Accent Colors
+   ----------------------------------------
+   Glassmorphic effects with brand colors
+---------------------------------------- */
+
+.glass-accent {
+  background: rgba(0, 119, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 119, 255, 0.25);
+}
+
+.glass-purple {
+  background: rgba(168, 85, 247, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.glass-cyan {
+  background: rgba(0, 194, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0, 194, 255, 0.25);
+}
+
+/* ----------------------------------------
+   Hover States
+   ----------------------------------------
+   Enhanced glassmorphism on interaction
+---------------------------------------- */
+
+.glass-hover-enhance:hover {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.glass-accent:hover {
+  background: rgba(0, 119, 255, 0.12);
+  border-color: rgba(0, 119, 255, 0.35);
+}
+
+.glass-purple:hover {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+}
+
+/* ----------------------------------------
+   Browser Fallbacks
+   ----------------------------------------
+   For browsers without backdrop-filter support
+---------------------------------------- */
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-far {
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .glass-mid {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .glass-near {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .glass-accent {
+    background: rgba(0, 119, 255, 0.2);
+  }
+
+  .glass-purple {
+    background: rgba(168, 85, 247, 0.2);
+  }
+
+  .glass-cyan {
+    background: rgba(0, 194, 255, 0.2);
+  }
+}
+
+/* ----------------------------------------
+   Utility Classes
+   ---------------------------------------- */
+
+.glass-border-light {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-border-accent {
+  border: 1px solid rgba(0, 119, 255, 0.3);
+}
+
+/* Performance optimization */
+.glass-will-change {
+  will-change: backdrop-filter, background, border-color;
+}

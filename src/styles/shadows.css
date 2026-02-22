@@ -1,0 +1,315 @@
+/* ========================================
+   AURA Neural Architecture
+   Shadow & Elevation System
+   ========================================
+
+   Comprehensive depth-based shadow system inspired by Material Design.
+   Creates visual hierarchy through layered shadows and elevation levels.
+
+   Usage: Apply elevation classes or use CSS custom properties
+   - .elevation-1 through .elevation-5 for progressive depth
+   - Use shadow variables for specific use cases
+======================================== */
+
+:root {
+  /* ----------------------------------------
+     Elevation Shadows
+     ----------------------------------------
+     Progressive depth levels from subtle to prominent
+  ---------------------------------------- */
+  --shadow-elevation-0: none;
+  --shadow-elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-elevation-2: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-elevation-3: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-elevation-4: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --shadow-elevation-5: 0 16px 48px rgba(0, 0, 0, 0.5);
+
+  /* ----------------------------------------
+     Colored Glows
+     ----------------------------------------
+     Brand-colored glow effects for interactive elements
+  ---------------------------------------- */
+  --shadow-glow-blue: 0 0 24px rgba(0, 119, 255, 0.6);
+  --shadow-glow-blue-strong: 0 0 36px rgba(0, 119, 255, 0.9);
+  --shadow-glow-blue-subtle: 0 0 16px rgba(0, 119, 255, 0.4);
+
+  --shadow-glow-purple: 0 0 24px rgba(168, 85, 247, 0.6);
+  --shadow-glow-purple-strong: 0 0 36px rgba(168, 85, 247, 0.9);
+  --shadow-glow-purple-subtle: 0 0 16px rgba(168, 85, 247, 0.4);
+
+  --shadow-glow-cyan: 0 0 24px rgba(0, 194, 255, 0.6);
+  --shadow-glow-green: 0 0 24px rgba(34, 197, 94, 0.6);
+
+  /* ----------------------------------------
+     Inset Shadows
+     ----------------------------------------
+     For depth perception on containers
+  ---------------------------------------- */
+  --shadow-inset-light: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  --shadow-inset-dark: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-inset-strong: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  /* ----------------------------------------
+     Combined Shadows
+     ----------------------------------------
+     Preset combinations for common use cases
+  ---------------------------------------- */
+
+  /* Card Shadows */
+  --shadow-card: var(--shadow-elevation-2), var(--shadow-inset-light);
+  --shadow-card-hover: var(--shadow-elevation-3), var(--shadow-inset-light);
+  --shadow-card-active: var(--shadow-elevation-1), var(--shadow-inset-light);
+
+  /* Button Shadows */
+  --shadow-button: var(--shadow-elevation-1), 0 0 16px rgba(0, 119, 255, 0.3);
+  --shadow-button-hover: var(--shadow-elevation-2), var(--shadow-glow-blue);
+  --shadow-button-active: var(--shadow-elevation-0), var(--shadow-inset-dark);
+
+  /* Primary Button with Glow */
+  --shadow-primary-button:
+    var(--shadow-elevation-2),
+    0 0 20px rgba(0, 119, 255, 0.4);
+  --shadow-primary-button-hover:
+    var(--shadow-elevation-3),
+    0 0 32px rgba(0, 119, 255, 0.6);
+
+  /* Navigation Shadows */
+  --shadow-nav:
+    var(--shadow-elevation-2),
+    0 0 24px rgba(0, 0, 0, 0.3);
+
+  /* Input Focus Shadows */
+  --shadow-input-focus:
+    0 0 0 3px rgba(0, 119, 255, 0.1),
+    0 0 20px rgba(0, 119, 255, 0.3),
+    var(--shadow-inset-light);
+
+  /* Modal/Overlay Shadows */
+  --shadow-modal:
+    var(--shadow-elevation-5),
+    0 0 64px rgba(0, 0, 0, 0.5);
+
+  /* Text Shadows */
+  --shadow-text-glow: 0 0 12px rgba(0, 119, 255, 0.8);
+  --shadow-text-subtle: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ----------------------------------------
+   Elevation Utility Classes
+   ----------------------------------------
+   Apply directly to elements for quick elevation
+---------------------------------------- */
+
+.elevation-0 {
+  box-shadow: var(--shadow-elevation-0);
+}
+
+.elevation-1 {
+  box-shadow: var(--shadow-elevation-1);
+}
+
+.elevation-2 {
+  box-shadow: var(--shadow-elevation-2);
+}
+
+.elevation-3 {
+  box-shadow: var(--shadow-elevation-3);
+}
+
+.elevation-4 {
+  box-shadow: var(--shadow-elevation-4);
+}
+
+.elevation-5 {
+  box-shadow: var(--shadow-elevation-5);
+}
+
+/* ----------------------------------------
+   Hover Elevation Effects
+   ----------------------------------------
+   Automatic elevation on hover
+---------------------------------------- */
+
+.elevation-hover-1:hover {
+  box-shadow: var(--shadow-elevation-1);
+}
+
+.elevation-hover-2:hover {
+  box-shadow: var(--shadow-elevation-2);
+}
+
+.elevation-hover-3:hover {
+  box-shadow: var(--shadow-elevation-3);
+}
+
+.elevation-hover-4:hover {
+  box-shadow: var(--shadow-elevation-4);
+}
+
+.elevation-hover-5:hover {
+  box-shadow: var(--shadow-elevation-5);
+}
+
+/* ----------------------------------------
+   Glow Utility Classes
+   ----------------------------------------
+---------------------------------------- */
+
+.glow-blue {
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.glow-blue-subtle {
+  box-shadow: var(--shadow-glow-blue-subtle);
+}
+
+.glow-blue-strong {
+  box-shadow: var(--shadow-glow-blue-strong);
+}
+
+.glow-purple {
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.glow-purple-subtle {
+  box-shadow: var(--shadow-glow-purple-subtle);
+}
+
+.glow-purple-strong {
+  box-shadow: var(--shadow-glow-purple-strong);
+}
+
+/* Combine elevation with glow */
+.elevation-glow-blue {
+  box-shadow: var(--shadow-elevation-2), var(--shadow-glow-blue);
+}
+
+.elevation-glow-purple {
+  box-shadow: var(--shadow-elevation-2), var(--shadow-glow-purple);
+}
+
+/* ----------------------------------------
+   Animation-Ready Classes
+   ----------------------------------------
+   For smooth shadow transitions
+---------------------------------------- */
+
+.shadow-transition {
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shadow-transition-fast {
+  transition: box-shadow 0.2s ease;
+}
+
+.shadow-transition-slow {
+  transition: box-shadow 0.5s ease;
+}
+
+/* ----------------------------------------
+   Inset Shadow Utilities
+   ----------------------------------------
+---------------------------------------- */
+
+.shadow-inset-light {
+  box-shadow: var(--shadow-inset-light);
+}
+
+.shadow-inset-dark {
+  box-shadow: var(--shadow-inset-dark);
+}
+
+.shadow-inset-strong {
+  box-shadow: var(--shadow-inset-strong);
+}
+
+/* ----------------------------------------
+   Special Effect Shadows
+   ----------------------------------------
+---------------------------------------- */
+
+/* Neumorphic effect */
+.shadow-neumorphic {
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.4),
+    -8px -8px 16px rgba(255, 255, 255, 0.05);
+}
+
+/* Double border effect */
+.shadow-double-border {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 0 2px rgba(0, 119, 255, 0.3);
+}
+
+/* Floating effect */
+.shadow-floating {
+  box-shadow:
+    var(--shadow-elevation-3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+    box-shadow: var(--shadow-elevation-3);
+  }
+  50% {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-elevation-4);
+  }
+}
+
+/* ----------------------------------------
+   Performance Optimization
+   ----------------------------------------
+---------------------------------------- */
+
+.shadow-will-change {
+  will-change: box-shadow;
+}
+
+/* ----------------------------------------
+   Responsive Shadows
+   ----------------------------------------
+   Reduce shadow intensity on mobile for performance
+---------------------------------------- */
+
+@media (max-width: 768px) {
+  .elevation-3 {
+    box-shadow: var(--shadow-elevation-2);
+  }
+
+  .elevation-4 {
+    box-shadow: var(--shadow-elevation-3);
+  }
+
+  .elevation-5 {
+    box-shadow: var(--shadow-elevation-4);
+  }
+
+  .shadow-modal {
+    box-shadow: var(--shadow-elevation-4);
+  }
+}
+
+/* ----------------------------------------
+   Accessibility
+   ----------------------------------------
+   Reduce shadows for reduced motion preference
+---------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .shadow-transition,
+  .shadow-transition-fast,
+  .shadow-transition-slow {
+    transition: none;
+  }
+
+  .shadow-floating {
+    animation: none;
+    transform: none;
+    box-shadow: var(--shadow-elevation-2);
+  }
+}

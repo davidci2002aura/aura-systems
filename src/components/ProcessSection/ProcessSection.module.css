@@ -155,14 +155,16 @@
 }
 
 .code {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(32px) saturate(150%);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
   padding: 1.1rem;
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   line-height: 1.85;
   margin-bottom: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .comment {

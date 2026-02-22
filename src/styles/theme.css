@@ -52,10 +52,14 @@
   --radius-xl: 14px;
   --radius-full: 100px;
 
-  /* Shadows */
+  /* Shadows (Legacy - see shadows.css for comprehensive elevation system) */
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 16px 48px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.4);
   --shadow-glow-primary: 0 0 24px rgba(0, 119, 255, 0.4);
   --shadow-glow-secondary: 0 0 12px rgba(168, 85, 247, 0.4);
+
+  /* Note: Comprehensive shadow and elevation system available in shadows.css */
+  /* Use --shadow-elevation-1 through --shadow-elevation-5 for modern elevation */
+  /* Use --shadow-glow-blue, --shadow-glow-purple for colored glows */
 }

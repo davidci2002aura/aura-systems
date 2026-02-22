@@ -103,10 +103,10 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
     <div
       className={styles.card}
       style={{
-        background: pkg.bg || 'rgba(255,255,255,0.02)',
-        border: `1px solid ${pkg.border || 'rgba(255,255,255,0.07)'}`,
-        transform: hov ? 'translateY(-4px)' : '',
-        boxShadow: hov ? '0 24px 60px rgba(0,0,0,0.4)' : '',
+        background: pkg.bg || 'rgba(0, 0, 0, 0.3)',
+        border: `1px solid ${pkg.border || 'rgba(255,255,255,0.15)'}`,
+        backdropFilter: hov ? 'blur(16px) saturate(200%)' : 'blur(8px) saturate(190%)',
+        WebkitBackdropFilter: hov ? 'blur(16px) saturate(200%)' : 'blur(8px) saturate(190%)',
       }}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
