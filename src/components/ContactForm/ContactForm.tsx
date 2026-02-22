@@ -10,6 +10,7 @@ interface ContactFormData {
   budget: string;
   name: string;
   email: string;
+  message: string;
 }
 
 const ContactForm: React.FC = () => {
@@ -20,12 +21,13 @@ const ContactForm: React.FC = () => {
 
   const { values, errors, touched, handleChange, handleBlur, validateAll } =
     useFormValidation<ContactFormData>(
-      { service: '', budget: '', name: '', email: '' },
+      { service: '', budget: '', name: '', email: '', message: '' },
       {
         service: (v) => validators.required(v, 'Service'),
         budget: (v) => validators.required(v, 'Budget'),
         name: validators.name,
         email: validators.email,
+        message: (v) => v.trim().length < 10 ? 'Bitte beschreiben Sie Ihr Projekt (mindestens 10 Zeichen)' : null,
       }
     );
 
@@ -44,6 +46,7 @@ const ContactForm: React.FC = () => {
       formData.append('budget', values.budget);
       formData.append('name', values.name);
       formData.append('email', values.email);
+      formData.append('message', values.message);
 
       const response = await fetch(
         import.meta.env.VITE_WEBHOOK_URL ||
@@ -103,7 +106,7 @@ const ContactForm: React.FC = () => {
 
           <div className={styles.formContent}>
             <div className={styles.progress}>
-              {[1, 2, 3, 4, 5].map((n) => (
+              {[1, 2, 3, 4, 5, 6].map((n) => (
                 <div
                   key={n}
                   className={`${styles.progressBar} ${

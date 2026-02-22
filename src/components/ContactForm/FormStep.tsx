@@ -6,6 +6,7 @@ interface ContactFormValues {
   budget: string;
   name: string;
   email: string;
+  message: string;
 }
 
 interface FormStepProps {
@@ -34,9 +35,11 @@ const FormStep: React.FC<FormStepProps> = ({
   onSubmit,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
+    textareaRef.current?.focus();
   }, [step]);
 
   if (step === 1) {
@@ -170,6 +173,40 @@ const FormStep: React.FC<FormStepProps> = ({
     return (
       <StepLayout
         label="QUERY_05"
+        title="Beschreiben Sie Ihr Projekt"
+        onBack={onBack}
+      >
+        <textarea
+          ref={textareaRef}
+          className={styles.textarea}
+          placeholder="z.B.: Wir benötigen eine moderne Website für unser Restaurant mit Online-Reservierungssystem und mehrsprachiger Unterstützung..."
+          value={values.message}
+          onChange={(e) => onChange('message', e.target.value)}
+          onBlur={() => onBlur('message')}
+          rows={6}
+          aria-invalid={touched.message && !!errors.message}
+          aria-describedby={errors.message ? 'message-error' : undefined}
+        />
+        {touched.message && errors.message && (
+          <div id="message-error" className={styles.fieldError} role="alert">
+            {errors.message}
+          </div>
+        )}
+        <button
+          className={styles.primaryButton}
+          onClick={onNext}
+          disabled={!values.message.trim() || !!errors.message}
+        >
+          Weiter →
+        </button>
+      </StepLayout>
+    );
+  }
+
+  if (step === 6) {
+    return (
+      <StepLayout
+        label="QUERY_06"
         title="Alles bereit."
         onBack={onBack}
       >
@@ -179,6 +216,7 @@ const FormStep: React.FC<FormStepProps> = ({
             ['Budget', values.budget],
             ['Name', values.name],
             ['Email', values.email],
+            ['Projektbeschreibung', values.message],
           ].map(([label, value]) => (
             <div key={label} className={styles.summaryRow}>
               <span className={styles.summaryLabel}>{label}</span>
