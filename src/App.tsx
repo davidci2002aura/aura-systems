@@ -1,4 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import SkipLink from './components/SkipLink/SkipLink';
 import Intro from './components/Intro/Intro';
 import BackgroundSystem from './components/BackgroundSystem/BackgroundSystem';
 import Navigation from './components/Navigation/Navigation';
@@ -20,12 +22,13 @@ function App() {
   const [introGone, setIntroGone] = useState(false);
 
   return (
-    <>
+    <ErrorBoundary>
+      <SkipLink />
       {!introGone && <Intro onComplete={() => setIntroGone(true)} />}
       <BackgroundSystem />
       <Navigation />
 
-      <div style={{ position: 'relative', zIndex: 10, background: '#000000', minHeight: '100vh', color: '#f0f4ff' }}>
+      <div id="main-content" style={{ position: 'relative', zIndex: 10, background: '#000000', minHeight: '100vh', color: '#f0f4ff' }}>
         <Hero introGone={introGone} />
 
         <Suspense fallback={<SectionLoader />}>
@@ -38,7 +41,7 @@ function App() {
           <Footer />
         </Suspense>
       </div>
-    </>
+    </ErrorBoundary>
   );
 }
 
