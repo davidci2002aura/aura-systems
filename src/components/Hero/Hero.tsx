@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useCanvasAnimation } from '@hooks/useCanvasAnimation';
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver';
+import RippleButton from '../RippleButton/RippleButton';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -52,12 +53,12 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
           opacity: introGone ? 1 : 0,
         }}
       >
-        <a href="#kontakt" className={styles.primaryButton}>
+        <RippleButton href="#kontakt" className={styles.primaryButton}>
           Kostenloses Erstgespräch →
-        </a>
-        <a href="#leistungen" className={styles.secondaryButton}>
+        </RippleButton>
+        <RippleButton href="#leistungen" className={styles.secondaryButton}>
           Mehr erfahren
-        </a>
+        </RippleButton>
       </div>
 
       <div

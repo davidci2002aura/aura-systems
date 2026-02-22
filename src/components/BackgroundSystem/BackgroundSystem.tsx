@@ -1,7 +1,14 @@
 import { memo } from 'react';
+import { motion } from 'framer-motion';
+import { useParallax } from '../../hooks/useParallax';
 import styles from './BackgroundSystem.module.css';
 
 const BackgroundSystem: React.FC = () => {
+  // Parallax offsets for each orb (different distances for depth)
+  const y1 = useParallax(50);
+  const y2 = useParallax(-30);
+  const y3 = useParallax(80);
+
   const orbs = [
     {
       width: 600,
@@ -10,6 +17,7 @@ const BackgroundSystem: React.FC = () => {
       top: '-8%',
       left: '-12%',
       animation: 'orbFloat1 25s ease-in-out infinite',
+      parallaxY: y1,
     },
     {
       width: 400,
@@ -18,6 +26,7 @@ const BackgroundSystem: React.FC = () => {
       top: '35%',
       right: '-8%',
       animation: 'orbFloat2 30s ease-in-out infinite',
+      parallaxY: y2,
     },
     {
       width: 500,
@@ -26,6 +35,7 @@ const BackgroundSystem: React.FC = () => {
       bottom: '5%',
       left: '15%',
       animation: 'orbFloat3 20s ease-in-out infinite',
+      parallaxY: y3,
     },
   ];
 
@@ -37,9 +47,9 @@ const BackgroundSystem: React.FC = () => {
       {/* Grain texture */}
       <div className={styles.grain} />
 
-      {/* Floating orbs */}
+      {/* Floating orbs with parallax */}
       {orbs.map((orb, i) => (
-        <div
+        <motion.div
           key={i}
           className={styles.orb}
           style={{
@@ -51,6 +61,7 @@ const BackgroundSystem: React.FC = () => {
             right: orb.right,
             bottom: orb.bottom,
             animation: orb.animation,
+            y: orb.parallaxY,
           }}
         />
       ))}

@@ -1,4 +1,7 @@
 import { useState, useCallback, memo, ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { use3DTilt } from '../../hooks/use3DTilt';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import styles from './BentoGrid.module.css';
 
 interface BentoCardProps {
@@ -16,19 +19,44 @@ interface BentoCardProps {
 const BentoCard: React.FC<BentoCardProps> = memo(
   ({ tag, title, desc, stat, statLabel, statColor, accent, purple, children }) => {
     const [hov, setHov] = useState(false);
+    const { tiltProps } = use3DTilt(10);
+    const { ref, isInView } = useScrollReveal();
 
+    // Combine handlers to avoid conflicts
     const handleMouseEnter = useCallback(() => setHov(true), []);
-    const handleMouseLeave = useCallback(() => setHov(false), []);
+    const handleMouseLeave = useCallback(() => {
+      setHov(false);
+      // Call tilt's onMouseLeave handler
+      if (tiltProps.onMouseLeave) {
+        tiltProps.onMouseLeave();
+      }
+    }, [tiltProps]);
+
+    const handleMouseMove = useCallback(
+      (e: React.MouseEvent<HTMLElement>) => {
+        // Call tilt's onMouseMove handler
+        if (tiltProps.onMouseMove) {
+          tiltProps.onMouseMove(e);
+        }
+      },
+      [tiltProps]
+    );
 
     const cardClassName = `${styles.bentoCard} ${accent ? styles.accent : ''} ${
       purple ? styles.purple : ''
     } ${hov ? styles.hover : ''}`;
 
     return (
-      <div
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className={cardClassName}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        style={tiltProps.style}
       >
         <div className={`${styles.tag} ${purple ? styles.tagPurple : ''}`}>
           {tag}
@@ -44,7 +72,7 @@ const BentoCard: React.FC<BentoCardProps> = memo(
             <div className={styles.statLabel}>{statLabel}</div>
           </div>
         )}
-      </div>
+      </motion.div>
     );
   }
 );

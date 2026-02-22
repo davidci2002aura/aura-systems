@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import BentoCard from './BentoCard';
 import styles from './BentoGrid.module.css';
 
@@ -14,7 +15,20 @@ const BentoGrid: React.FC = () => {
           <span className={styles.light}>Messbar.</span>
         </h2>
 
-        <div className={styles.grid}>
+        <motion.div
+          className={styles.grid}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {/* Big card - Neural Operations */}
           <div className={styles.bigCard}>
             <BentoCard
@@ -121,7 +135,7 @@ const BentoGrid: React.FC = () => {
               </div>
             </BentoCard>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

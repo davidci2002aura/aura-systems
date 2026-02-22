@@ -72,6 +72,7 @@
   transition: all 0.35s ease;
   cursor: default;
   will-change: transform, opacity, box-shadow, backdrop-filter;
+  transform-style: preserve-3d;
 }
 
 .bentoCard.accent {
