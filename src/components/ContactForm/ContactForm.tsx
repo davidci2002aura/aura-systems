@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFormValidation } from '@hooks/useFormValidation';
 import { validators } from '@utils/validation';
+import { analytics } from '@utils/analytics';
 import FormStep from './FormStep';
 import styles from './ContactForm.module.css';
 
@@ -56,6 +57,9 @@ const ContactForm: React.FC = () => {
       if (!response.ok) {
         throw new Error('Netzwerkfehler');
       }
+
+      // Track successful form submission
+      analytics.trackFormSubmit('contact-form');
 
       setSubmitted(true);
     } catch (error) {
