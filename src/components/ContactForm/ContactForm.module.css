@@ -1,0 +1,341 @@
+.section {
+  padding: 7rem 2.5rem;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sectionTag {
+  font-family: var(--font-system);
+  font-weight: 500;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 119, 255, 0.8);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tagLine {
+  width: 18px;
+  height: 1px;
+  background: rgba(0, 119, 255, 0.8);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.light {
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.description {
+  font-weight: 300;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+.formWrapper {
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.terminalHeader {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.filename {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.08em;
+}
+
+.status {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  letter-spacing: 0.08em;
+}
+
+.statusDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: blink 2s ease infinite;
+  display: inline-block;
+}
+
+.formContent {
+  padding: 1.75rem;
+}
+
+.progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.75rem;
+}
+
+.progressBar {
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.4s;
+}
+
+.progressBar.active {
+  background: var(--color-primary);
+}
+
+.step {
+  animation: stepIn 0.35s ease;
+}
+
+.stepLabel {
+  font-family: var(--font-system);
+  font-weight: 500;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: rgba(0, 119, 255, 0.7);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.choiceButton {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: 0.45rem;
+  color: var(--color-text-primary);
+}
+
+.choiceButton.hover {
+  background: rgba(0, 119, 255, 0.06);
+  border-color: rgba(0, 119, 255, 0.3);
+}
+
+.choiceMain {
+  font-family: var(--font-system);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+
+.choiceSub {
+  font-family: var(--font-system);
+  font-weight: 300;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.1rem;
+  letter-spacing: -0.005em;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-system);
+  font-weight: 300;
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
+  outline: none;
+  margin-bottom: 0.75rem;
+  display: block;
+  transition: border-color var(--transition-fast);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.input[aria-invalid="true"] {
+  border-color: #ef4444;
+}
+
+.fieldError {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-system);
+}
+
+.primaryButton {
+  width: 100%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0.85rem;
+  cursor: pointer;
+  font-family: var(--font-system);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+  transition: all var(--transition-fast);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.primaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  margin-top: 0.85rem;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.backButton:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.summary {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  margin-bottom: 0.5rem;
+}
+
+.summaryRow:last-child {
+  margin-bottom: 0;
+}
+
+.summaryLabel {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  padding-top: 0.1rem;
+}
+
+.summaryValue {
+  font-family: var(--font-system);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.checkmarkCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1.25rem;
+}
+
+.successTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.successText {
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: -0.005em;
+}
+
+.successFooter {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: rgba(0, 119, 255, 0.6);
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-family: var(--font-system);
+}
