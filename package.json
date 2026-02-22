@@ -3,5 +3,8 @@
     "version": "1.0.0",
     "scripts": {
         "build": "echo 'No build step required' && exit 0"
+    },
+    "dependencies": {
+        "puppeteer": "^24.37.5"
     }
 }

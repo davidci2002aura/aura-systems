@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AURA | Neural Architecture</title>
-  <meta name="description" content="Premium Web Solutions für ambitionierte Unternehmen. Atmosphärisch. Präzise. Skalierbar.">
+  <meta name="description"
+    content="Premium Web Solutions für ambitionierte Unternehmen. Atmosphärisch. Präzise. Skalierbar.">
 
   <!-- React & ReactDOM -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -14,9 +16,13 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
-    body { margin: 0; overflow-x: hidden; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
   </style>
 </head>
+
 <body>
   <div id="root"></div>
 
@@ -136,6 +142,7 @@
         @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
         @keyframes stepIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         @keyframes scrollLine { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
         .shimmer-text {
           background: linear-gradient(90deg, #fff 0%, #fff 25%, rgba(0,194,255,0.95) 45%, #fff 65%, #fff 100%);
           background-size: 250% auto;
@@ -221,9 +228,9 @@
             }} />
             {/* Orbs */}
             {[
-              { w:600,h:600,c:"rgba(0,119,255,0.06)",t:"-8%",l:"-12%",a:"orbFloat1 25s ease-in-out infinite" },
-              { w:400,h:400,c:"rgba(168,85,247,0.05)",t:"35%",r:"-8%",a:"orbFloat2 30s ease-in-out infinite" },
-              { w:500,h:500,c:"rgba(0,194,255,0.04)",b:"5%",l:"15%",a:"orbFloat3 20s ease-in-out infinite" },
+              { w: 600, h: 600, c: "rgba(0,119,255,0.06)", t: "-8%", l: "-12%", a: "orbFloat1 25s ease-in-out infinite" },
+              { w: 400, h: 400, c: "rgba(168,85,247,0.05)", t: "35%", r: "-8%", a: "orbFloat2 30s ease-in-out infinite" },
+              { w: 500, h: 500, c: "rgba(0,194,255,0.04)", b: "5%", l: "15%", a: "orbFloat3 20s ease-in-out infinite" },
             ].map((o, i) => (
               <div key={i} style={{
                 position: "absolute", borderRadius: "50%",
@@ -377,7 +384,7 @@
                   <div style={{ gridColumn: "span 2", gridRow: "span 2", minHeight: "320px" }}>
                     <BentoCard tag="01 — Neural Operations" title="n8n Automation Workflows" desc="Verbinden Sie Ihre Tools zu einem autonomen Organismus. CRM, E-Mail, Marketing — alles fließt nahtlos." accent>
                       <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                        {[["blue","Email Inbound · AI Classify"],["purple","GPT-4o Analysis · Route"],["green","CRM Update · Slack Notify"],["orange","Report Generate · Send"]].map(([c,t]) => (
+                        {[["blue", "Email Inbound · AI Classify"], ["purple", "GPT-4o Analysis · Route"], ["green", "CRM Update · Slack Notify"], ["orange", "Report Generate · Send"]].map(([c, t]) => (
                           <div key={t} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "0.5rem 0.85rem", display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.65rem", letterSpacing: "0.04em", color: "rgba(255,255,255,0.5)" }}>
                             <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: c === "blue" ? "#0077ff" : c === "purple" ? "#a855f7" : c === "green" ? "#22c55e" : "#f59e0b", flexShrink: 0 }} />{t}
                           </div>
@@ -392,6 +399,31 @@
                   <BentoCard tag="04 — Voice Agent" title="24/7 Vocal Identity" desc="Mehrsprachige KI-Telefonie. Vollständig in Ihre Systeme integriert." purple />
                   <BentoCard tag="05 — Conversion" title="Design, das verkauft." desc="Jedes Element auf Conversion optimiert. A/B getestet." stat="+38%" statLabel="Conversion Rate" />
                   <BentoCard tag="06 — KI Support" title="AI Ecosystem." desc="Chatbots, die echte Probleme lösen. In jeder Sprache." stat="24/7" statLabel="System Online" />
+
+                  {/* Neural Core I */}
+                  <BentoCard tag="07 — Neural Core I" title="Agent Swarm." desc="Autonome KI-Agenten erledigen komplexe Aufgaben parallel." accent>
+                    <div style={{ marginTop: "1.25rem", position: "relative", height: "60px", background: "rgba(0,0,0,0.5)", borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(0,119,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ position: "absolute", width: "100%", height: "2px", background: "rgba(0,119,255,0.8)", animation: "scanline 2s linear infinite", opacity: 0.5, boxShadow: "0 0 10px rgba(0,119,255,0.8)" }} />
+                      <div style={{ display: "flex", gap: "12px", zIndex: 2 }}>
+                        {[...Array(3)].map((_, i) => (
+                          <div key={i} style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#0077ff", animation: `blink 1.5s ease infinite ${i * 0.3}s`, boxShadow: "0 0 12px rgba(0,119,255,1)" }} />
+                        ))}
+                      </div>
+                    </div>
+                  </BentoCard>
+
+                  {/* Neural Core II */}
+                  <div style={{ gridColumn: "span 2" }}>
+                    <BentoCard tag="08 — Neural Core II" title="Data Synapse Processing." desc="Live-Verarbeitung unstrukturierter Unternehmensdaten mit präziser LLM-Technologie." purple>
+                      <div style={{ marginTop: "1.25rem", height: "80px", background: "rgba(0,0,0,0.5)", borderRadius: "8px", border: "1px solid rgba(168,85,247,0.2)", overflow: "hidden", position: "relative", display: "flex", alignItems: "flex-end", padding: "10px", gap: "6px" }}>
+                        <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(168,85,247,0.08) 2px, rgba(168,85,247,0.08) 4px)", backgroundSize: "100% 4px" }} />
+                        {[40, 85, 45, 100, 60, 90, 50, 75, 40, 65, 30, 80].map((h, i) => (
+                          <div key={i} style={{ flex: 1, height: `${h}%`, background: "linear-gradient(to top, rgba(168,85,247,0.8), rgba(168,85,247,0.2))", borderRadius: "2px 2px 0 0", transition: "height 0.2s", animation: `blink 2s ease infinite ${i * 0.15}s`, position: "relative", zIndex: 2 }} />
+                        ))}
+                        <div style={{ position: "absolute", top: "10px", right: "12px", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", color: "#a855f7", letterSpacing: "0.15em", zIndex: 2 }}>LIVE STREAM</div>
+                      </div>
+                    </BentoCard>
+                  </div>
                 </div>
               </div>
             </section>
@@ -429,7 +461,7 @@
                   {/* Visual */}
                   <div style={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "14px", overflow: "hidden" }}>
                     <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                      {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
                       <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", marginLeft: "0.5rem", letterSpacing: "0.06em" }}>project.config.ts</span>
                     </div>
                     <div style={{ padding: "1.5rem" }}>
@@ -468,10 +500,10 @@
                 </h2>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "10px" }}>
                   {[
-                    { name: "STARTER", color: "rgba(0,119,255,0.7)", bg: null, features: ["Onepager / Landingpage","Responsive Design","On-Page SEO","Kontaktformular"], off: ["A/B Testing","KI-Integration"] },
-                    { name: "ENTERPRISE", color: "rgba(0,119,255,0.9)", bg: "rgba(0,119,255,0.06)", border: "rgba(0,119,255,0.25)", featured: true, features: ["Bis zu 5 Unterseiten","Premium Custom Design","Technisches SEO","Conversion Optimierung","KI-Integration","3 Monate Support"], off: [] },
-                    { name: "WORKFLOWS", color: "rgba(34,197,94,0.8)", bg: null, border: "rgba(34,197,94,0.15)", features: ["Custom n8n Logic","API Integrationen","Fehler-Monitoring","Laufende Wartung","Monatlich kündbar"], off: [] },
-                    { name: "VOICE AGENT", color: "rgba(168,85,247,0.8)", bg: null, border: "rgba(168,85,247,0.15)", features: ["24/7 Anrufannahme","Mehrsprachig DE/EN/ES","Stimmen wählbar","System-Integration","Monatlich kündbar"], off: [] },
+                    { name: "STARTER", color: "rgba(0,119,255,0.7)", bg: null, features: ["Onepager / Landingpage", "Responsive Design", "On-Page SEO", "Kontaktformular"], off: ["A/B Testing", "KI-Integration"] },
+                    { name: "ENTERPRISE", color: "rgba(0,119,255,0.9)", bg: "rgba(0,119,255,0.06)", border: "rgba(0,119,255,0.25)", featured: true, features: ["Bis zu 5 Unterseiten", "Premium Custom Design", "Technisches SEO", "Conversion Optimierung", "KI-Integration", "3 Monate Support"], off: [] },
+                    { name: "WORKFLOWS", color: "rgba(34,197,94,0.8)", bg: null, border: "rgba(34,197,94,0.15)", features: ["Custom n8n Logic", "API Integrationen", "Fehler-Monitoring", "Laufende Wartung", "Monatlich kündbar"], off: [] },
+                    { name: "VOICE AGENT", color: "rgba(168,85,247,0.8)", bg: null, border: "rgba(168,85,247,0.15)", features: ["24/7 Anrufannahme", "Mehrsprachig DE/EN/ES", "Stimmen wählbar", "System-Integration", "Monatlich kündbar"], off: [] },
                   ].map((p, i) => (
                     <div key={i} style={{
                       background: p.bg || "rgba(255,255,255,0.02)",
@@ -562,7 +594,7 @@
                   {/* Terminal header */}
                   <div style={{ padding: "0.85rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,0,0,0.7)" }}>
                     <div style={{ display: "flex", gap: "0.4rem" }}>
-                      {["#ff5f57","#febc2e","#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
+                      {["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: "9px", height: "9px", borderRadius: "50%", background: c }} />)}
                     </div>
                     <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>neural-inquiry.ts</span>
                     <span style={{ fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", color: "#22c55e", display: "flex", alignItems: "center", gap: "0.35rem", letterSpacing: "0.08em" }}>
@@ -573,20 +605,36 @@
                   <div style={{ padding: "1.75rem" }}>
                     {/* Progress */}
                     <div style={{ display: "flex", gap: "4px", marginBottom: "1.75rem" }}>
-                      {[1,2,3,4,5,6].map(n => <div key={n} style={{ flex: 1, height: "2px", borderRadius: "2px", background: n <= formStep ? "#0077ff" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />)}
+                      {[1, 2, 3, 4, 5, 6].map(n => <div key={n} style={{ flex: 1, height: "2px", borderRadius: "2px", background: n <= formStep ? "#0077ff" : "rgba(255,255,255,0.08)", transition: "background 0.4s" }} />)}
                     </div>
 
                     {submitted ? (
                       <div style={{ textAlign: "center", padding: "2rem 0" }}>
                         <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)", display: "grid", placeItems: "center", margin: "0 auto 1.25rem" }}>
-                          <svg width="20" height="20" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M17 5L8 14.5l-4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          <svg width="20" height="20" fill="none" stroke="#22c55e" strokeWidth="2.5"><path d="M17 5L8 14.5l-4-4" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         </div>
                         <div style={{ fontFamily: "-apple-system,'SF Pro Display','Inter',sans-serif", fontWeight: 600, fontSize: "1.4rem", letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Anfrage gesendet.</div>
                         <p style={{ fontWeight: 300, fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", letterSpacing: "-0.005em" }}>Wir melden uns innerhalb von 24h bei Ihnen.</p>
                         <div style={{ marginTop: "1.5rem", fontFamily: "-apple-system-monospaced,'SF Mono','Menlo',monospace", fontSize: "0.55rem", letterSpacing: "0.12em", color: "rgba(0,119,255,0.6)" }}>— AURA NEURAL ARCHITECTURE</div>
                       </div>
                     ) : (
-                      <FormStep step={formStep} setStep={setFormStep} formData={formData} setFormData={setFormData} setSubmitted={setSubmitted} />
+                      <FormStep step={formStep} setStep={setFormStep} formData={formData} setFormData={setFormData} setSubmitted={(val) => {
+                        if (val) {
+                          try {
+                            const f = new FormData();
+                            f.append("service", formData.service);
+                            f.append("budget", formData.budget);
+                            f.append("name", formData.name);
+                            f.append("email", formData.email);
+                            fetch("https://hook.eu2.make.com/39hck8mox71b69h5sw7e7f7b3r4fntw9", {
+                              method: 'POST',
+                              body: f,
+                              mode: 'no-cors'
+                            }).catch(e => console.error("Webhook Error", e));
+                          } catch (err) { console.error(err); }
+                        }
+                        setSubmitted(val);
+                      }} />
                     )}
                   </div>
                 </div>
@@ -609,14 +657,14 @@
                   </div>
                 </div>
                 {[
-                  { title: "Navigation", links: ["Leistungen","Prozess","Preise","FAQ","Kontakt"] },
-                  { title: "Rechtliches", links: ["Impressum","Datenschutz","AGB"] },
+                  { title: "Navigation", links: ["Leistungen", "Prozess", "Preise", "FAQ", "Kontakt"] },
+                  { title: "Rechtliches", links: ["Impressum", "Datenschutz", "AGB"] },
                   { title: "Kontakt", links: ["Termin buchen"] },
                 ].map(col => (
                   <div key={col.title}>
                     <div style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.58rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "1.25rem" }}>{col.title}</div>
                     <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                      {col.links.map(l => <li key={l}><a href="#" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color 0.2s" }} onMouseEnter={e=>e.target.style.color="#fff"} onMouseLeave={e=>e.target.style.color="rgba(255,255,255,0.35)"}>{l}</a></li>)}
+                      {col.links.map(l => <li key={l}><a href="#" style={{ fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 300, fontSize: "0.82rem", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = "#fff"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.35)"}>{l}</a></li>)}
                     </ul>
                   </div>
                 ))}
@@ -689,8 +737,8 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_01</span>
           <div style={titleStyle}>Was benötigen Sie?</div>
-          {[["Neue Website","Komplett neue Website von Grund auf"],["Website Redesign","Bestehende Website modernisieren"],["SEO & Sichtbarkeit","Rankings verbessern · gefunden werden"],["Voice & AI Agents","Intelligente Telefonie & Chatbots"],["Workflow Automation","Prozesse mit n8n automatisieren"]].map(([m,s]) => (
-            <ChoiceBtn key={m} main={m} sub={s} onClick={() => { setFormData(d=>({...d,service:m})); setStep(2); }} />
+          {[["Neue Website", "Komplett neue Website von Grund auf"], ["Website Redesign", "Bestehende Website modernisieren"], ["SEO & Sichtbarkeit", "Rankings verbessern · gefunden werden"], ["Voice & AI Agents", "Intelligente Telefonie & Chatbots"], ["Workflow Automation", "Prozesse mit n8n automatisieren"]].map(([m, s]) => (
+            <ChoiceBtn key={m} main={m} sub={s} onClick={(e) => { e.preventDefault(); setFormData(d => ({ ...d, service: m })); setStep(2); }} />
           ))}
         </div>
       );
@@ -699,10 +747,10 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_02</span>
           <div style={titleStyle}>Ihr Investitionsrahmen?</div>
-          {["500€ – 1.500€","1.500€ – 5.000€","5.000€+"].map(b => (
-            <ChoiceBtn key={b} main={b} onClick={() => { setFormData(d=>({...d,budget:b})); setStep(3); }} />
+          {["500€ – 1.500€", "1.500€ – 5.000€", "5.000€+"].map(b => (
+            <ChoiceBtn key={b} main={b} onClick={(e) => { e.preventDefault(); setFormData(d => ({ ...d, budget: b })); setStep(3); }} />
           ))}
-          <button style={backStyle} onClick={() => setStep(1)}>← Zurück</button>
+          <button style={backStyle} onClick={(e) => { e.preventDefault(); setStep(1); }}>← Zurück</button>
         </div>
       );
 
@@ -710,9 +758,9 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_03</span>
           <div style={titleStyle}>Wie dürfen wir Sie nennen?</div>
-          <input style={inputStyle} placeholder="Ihr Name" value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&name.trim()){setFormData(d=>({...d,name}));setStep(4)}}} autoFocus />
-          <button onClick={()=>{if(name.trim()){setFormData(d=>({...d,name}));setStep(4)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Weiter →</button>
-          <button style={backStyle} onClick={() => setStep(2)}>← Zurück</button>
+          <input style={inputStyle} placeholder="Ihr Name" value={name} onChange={e => setName(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && name.trim()) { e.preventDefault(); setFormData(d => ({ ...d, name })); setStep(4) } }} autoFocus />
+          <button onClick={(e) => { e.preventDefault(); if (name.trim()) { setFormData(d => ({ ...d, name })); setStep(4) } }} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.85rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>Weiter →</button>
+          <button style={backStyle} onClick={(e) => { e.preventDefault(); setStep(2); }}>← Zurück</button>
         </div>
       );
 
@@ -720,9 +768,9 @@
         <div style={anim}>
           <span style={labelStyle}>QUERY_04</span>
           <div style={titleStyle}>Wie erreichen wir Sie?</div>
-          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&email.includes("@")){setFormData(d=>({...d,email}));setStep(5)}}} autoFocus />
-          <button onClick={()=>{if(email.includes("@")){setFormData(d=>({...d,email}));setStep(5)}}} style={{ width:"100%", background:"#0077ff", color:"#fff", border:"none", borderRadius:"10px", padding:"0.85rem", cursor:"pointer", fontFamily:"-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight:500, fontSize:"0.85rem", letterSpacing:"-0.01em" }}>Weiter →</button>
-          <button style={backStyle} onClick={() => setStep(3)}>← Zurück</button>
+          <input style={inputStyle} type="email" placeholder="name@unternehmen.de" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && email.includes("@")) { e.preventDefault(); setFormData(d => ({ ...d, email })); setStep(5) } }} autoFocus />
+          <button onClick={(e) => { e.preventDefault(); if (email.includes("@")) { setFormData(d => ({ ...d, email })); setStep(5) } }} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.85rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>Weiter →</button>
+          <button style={backStyle} onClick={(e) => { e.preventDefault(); setStep(3); }}>← Zurück</button>
         </div>
       );
 
@@ -738,10 +786,10 @@
               </div>
             ))}
           </div>
-          <button onClick={() => setSubmitted(true)} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.9rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>
+          <button onClick={(e) => { e.preventDefault(); setSubmitted(true); }} style={{ width: "100%", background: "#0077ff", color: "#fff", border: "none", borderRadius: "10px", padding: "0.9rem", cursor: "pointer", fontFamily: "-apple-system,'SF Pro Text','Inter',sans-serif", fontWeight: 500, fontSize: "0.85rem", letterSpacing: "-0.01em" }}>
             Anfrage absenden →
           </button>
-          <button style={backStyle} onClick={() => setStep(4)}>← Zurück</button>
+          <button style={backStyle} onClick={(e) => { e.preventDefault(); setStep(4); }}>← Zurück</button>
         </div>
       );
 
@@ -753,4 +801,5 @@
     root.render(<AuraNeural />);
   </script>
 </body>
+
 </html>
