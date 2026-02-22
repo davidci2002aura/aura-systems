@@ -214,3 +214,51 @@
   place-items: center;
   flex-shrink: 0;
 }
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 5rem 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .visual {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .stepItem {
+    padding: 1.25rem 0;
+    grid-template-columns: 32px 1fr;
+    gap: 1rem;
+  }
+
+  .stepNum {
+    font-size: 0.55rem;
+  }
+
+  .stepTitle {
+    font-size: 1rem;
+  }
+
+  .stepDesc {
+    font-size: 0.78rem;
+  }
+
+  .stepTime {
+    font-size: 0.5rem;
+  }
+}

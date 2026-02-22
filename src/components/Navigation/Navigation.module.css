@@ -94,7 +94,7 @@
   }
 
   .menuLink {
-    font-size: 0.75rem;
+    display: none;
   }
 
   .ctaButton {
@@ -106,6 +106,9 @@
 @media (max-width: 640px) {
   .nav {
     padding: 0.85rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
   .logoText {
@@ -119,19 +122,14 @@
 
   .menu {
     gap: 1rem;
-  }
-
-  .menuLink {
-    font-size: 0.7rem;
-    display: none;
-  }
-
-  .menuLink:last-of-type {
-    display: block;
+    justify-content: center;
+    width: 100%;
   }
 
   .ctaButton {
     font-size: 0.7rem;
     padding: 0.5rem 0.9rem;
+    width: 100%;
+    text-align: center;
   }
 }
