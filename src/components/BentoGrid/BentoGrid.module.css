@@ -287,3 +287,118 @@
   letter-spacing: 0.15em;
   z-index: 2;
 }
+
+/* Mobile Optimizations */
+@media (max-width: 1024px) {
+  .section {
+    padding: 5rem 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .bigCard {
+    grid-column: span 2;
+    grid-row: span 1;
+    min-height: 240px;
+  }
+
+  .wideCard {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .bigCard,
+  .wideCard {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 200px;
+  }
+
+  .bentoCard {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+  }
+
+  .desc {
+    font-size: 0.78rem;
+  }
+
+  .statValue {
+    font-size: 1.8rem;
+  }
+
+  .statLabel {
+    font-size: 0.5rem;
+  }
+
+  .agentSwarm,
+  .dataStream {
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .sectionTag {
+    font-size: 0.55rem;
+  }
+
+  .sectionTitle {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+    margin-bottom: 2rem;
+  }
+
+  .bentoCard {
+    padding: 1.25rem;
+    min-height: 180px;
+  }
+
+  .tag {
+    font-size: 0.52rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .desc {
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .workflowItem {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.6rem;
+  }
+
+  .agentSwarm,
+  .dataStream {
+    height: 50px;
+    margin-top: 1rem;
+  }
+}

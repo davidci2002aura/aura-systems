@@ -143,3 +143,71 @@
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.3);
 }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .hero {
+    padding: 7rem 1.5rem 4rem;
+    min-height: 90vh;
+  }
+
+  .badge {
+    font-size: 0.55rem;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    max-width: 90%;
+    margin-bottom: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 0.6rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .scrollIndicator {
+    bottom: 2rem;
+  }
+
+  .scrollLine {
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .badge {
+    font-size: 0.5rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 14vw, 3.5rem);
+  }
+
+  .description {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+}

@@ -74,3 +74,64 @@
   background: var(--color-primary-dark);
   box-shadow: var(--shadow-glow-primary);
 }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0.9rem 1.5rem;
+  }
+
+  .logoText {
+    font-size: 0.9rem;
+  }
+
+  .logoSubtext {
+    font-size: 0.42rem;
+  }
+
+  .menu {
+    gap: 1.5rem;
+  }
+
+  .menuLink {
+    font-size: 0.75rem;
+  }
+
+  .ctaButton {
+    font-size: 0.72rem;
+    padding: 0.55rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 0.85rem 1rem;
+  }
+
+  .logoText {
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+  }
+
+  .logoSubtext {
+    font-size: 0.38rem;
+  }
+
+  .menu {
+    gap: 1rem;
+  }
+
+  .menuLink {
+    font-size: 0.7rem;
+    display: none;
+  }
+
+  .menuLink:last-of-type {
+    display: block;
+  }
+
+  .ctaButton {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.9rem;
+  }
+}
