@@ -41,23 +41,21 @@ const ContactForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbyPE8-UjBFG9fYLbAD-46rSuO-uRCVCS4jpCG7LMlqP2OzYruf_8VmFaKr8b8Bi8bji/exec';
+      const formData = new FormData();
+      formData.append('service', values.service);
+      formData.append('budget', values.budget);
+      formData.append('name', values.name);
+      formData.append('email', values.email);
+      formData.append('message', values.message);
 
-      const urlEncodedData = new URLSearchParams();
-      urlEncodedData.append('service', values.service);
-      urlEncodedData.append('budget', values.budget);
-      urlEncodedData.append('name', values.name);
-      urlEncodedData.append('email', values.email);
-      urlEncodedData.append('message', values.message);
-
-      await fetch(webhookUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: urlEncodedData.toString(),
-      });
+      await fetch(
+        import.meta.env.VITE_WEBHOOK_URL ||
+        'https://hook.eu2.make.com/39hck8mox71b69h5sw7e7f7b3r4fntw9',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
 
       // Track successful form submission
       analytics.trackFormSubmit('contact-form');
