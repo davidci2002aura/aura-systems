@@ -41,35 +41,55 @@ const ContactForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // Use FormData for Make.com webhook
-      const formData = new FormData();
-      formData.append('service', values.service);
-      formData.append('budget', values.budget);
-      formData.append('name', values.name);
-      formData.append('email', values.email);
-      formData.append('message', values.message);
-
-      const response = await fetch(
+      // Use hidden iframe technique to avoid CORS issues with Google Apps Script
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action =
         import.meta.env.VITE_WEBHOOK_URL ||
-          'https://hook.eu2.make.com/39hck8mox71b69h5sw7e7f7b3r4fntw9',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+        'https://script.google.com/macros/s/AKfycbx7CQamuBDHf-Hj9pvMtQJeHY9owgjjwEGU7FVKBd8MZ7TKxxxRP32W69lbvk2RauTM/exec';
+      form.target = 'hidden-iframe';
+      form.style.display = 'none';
 
-      if (!response.ok) {
-        throw new Error('Netzwerkfehler');
+      // Add form fields
+      const fields = {
+        service: values.service,
+        budget: values.budget,
+        name: values.name,
+        email: values.email,
+        message: values.message,
+      };
+
+      Object.entries(fields).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      });
+
+      // Create hidden iframe if it doesn't exist
+      let iframe = document.querySelector('iframe[name="hidden-iframe"]') as HTMLIFrameElement;
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.name = 'hidden-iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
       }
 
-      // Track successful form submission
-      analytics.trackFormSubmit('contact-form');
+      // Submit form
+      document.body.appendChild(form);
+      form.submit();
 
-      setSubmitted(true);
+      // Wait a moment for submission, then show success
+      setTimeout(() => {
+        document.body.removeChild(form);
+        analytics.trackFormSubmit('contact-form');
+        setSubmitted(true);
+        setIsSubmitting(false);
+      }, 1000);
     } catch (error) {
       console.error('Submission error:', error);
-      setSubmitError('error'); // Signal for error state
-    } finally {
+      setSubmitError('error');
       setIsSubmitting(false);
     }
   };
