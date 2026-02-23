@@ -46,7 +46,7 @@ const ContactForm: React.FC = () => {
       form.method = 'POST';
       form.action =
         import.meta.env.VITE_WEBHOOK_URL ||
-        'https://script.google.com/macros/s/AKfycbx7CQamuBDHf-Hj9pvMtQJeHY9owgjjwEGU7FVKBd8MZ7TKxxxRP32W69lbvk2RauTM/exec';
+        'https://script.google.com/macros/s/AKfycbyPE8-UjBFG9fYLbAD-46rSuO-uRCVCS4jpCG7LMlqP2OzYruf_8VmFaKr8b8Bi8bji/exec';
       form.target = 'hidden-iframe';
       form.style.display = 'none';
 
@@ -128,9 +128,8 @@ const ContactForm: React.FC = () => {
               {[1, 2, 3, 4, 5, 6].map((n) => (
                 <div
                   key={n}
-                  className={`${styles.progressBar} ${
-                    n <= formStep ? styles.active : ''
-                  }`}
+                  className={`${styles.progressBar} ${n <= formStep ? styles.active : ''
+                    }`}
                 />
               ))}
             </div>
