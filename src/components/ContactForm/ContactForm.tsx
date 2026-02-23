@@ -41,55 +41,32 @@ const ContactForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // Use hidden iframe technique to avoid CORS issues with Google Apps Script
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action =
-        import.meta.env.VITE_WEBHOOK_URL ||
-        'https://script.google.com/macros/s/AKfycbyPE8-UjBFG9fYLbAD-46rSuO-uRCVCS4jpCG7LMlqP2OzYruf_8VmFaKr8b8Bi8bji/exec';
-      form.target = 'hidden-iframe';
-      form.style.display = 'none';
+      const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://script.google.com/macros/s/AKfycbyPE8-UjBFG9fYLbAD-46rSuO-uRCVCS4jpCG7LMlqP2OzYruf_8VmFaKr8b8Bi8bji/exec';
 
-      // Add form fields
-      const fields = {
-        service: values.service,
-        budget: values.budget,
-        name: values.name,
-        email: values.email,
-        message: values.message,
-      };
+      const urlEncodedData = new URLSearchParams();
+      urlEncodedData.append('service', values.service);
+      urlEncodedData.append('budget', values.budget);
+      urlEncodedData.append('name', values.name);
+      urlEncodedData.append('email', values.email);
+      urlEncodedData.append('message', values.message);
 
-      Object.entries(fields).forEach(([key, value]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = value;
-        form.appendChild(input);
+      await fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: urlEncodedData.toString(),
       });
 
-      // Create hidden iframe if it doesn't exist
-      let iframe = document.querySelector('iframe[name="hidden-iframe"]') as HTMLIFrameElement;
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.name = 'hidden-iframe';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-      }
+      // Track successful form submission
+      analytics.trackFormSubmit('contact-form');
+      setSubmitted(true);
+      setIsSubmitting(false);
 
-      // Submit form
-      document.body.appendChild(form);
-      form.submit();
-
-      // Wait a moment for submission, then show success
-      setTimeout(() => {
-        document.body.removeChild(form);
-        analytics.trackFormSubmit('contact-form');
-        setSubmitted(true);
-        setIsSubmitting(false);
-      }, 1000);
     } catch (error) {
       console.error('Submission error:', error);
-      setSubmitError('error');
+      setSubmitError('Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.');
       setIsSubmitting(false);
     }
   };
