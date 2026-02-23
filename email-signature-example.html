@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AURA Email Signatur</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+    }
+    .signature-container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .signature {
+      font-family: Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+    .signature table {
+      border-collapse: collapse;
+    }
+    .signature td {
+      padding: 4px 0;
+      vertical-align: top;
+    }
+    .signature img {
+      display: block;
+    }
+    .signature .name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 4px;
+    }
+    .signature .title {
+      font-size: 13px;
+      color: #0077ff;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .signature .company {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .signature .info {
+      font-size: 12px;
+      color: #666;
+    }
+    .signature a {
+      color: #0077ff;
+      text-decoration: none;
+    }
+    .signature a:hover {
+      text-decoration: underline;
+    }
+    .divider {
+      border-bottom: 2px solid #0077ff;
+      margin: 12px 0;
+      width: 100%;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .instructions {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .instructions h3 {
+      color: #0077ff;
+      margin-top: 0;
+    }
+    .instructions code {
+      background: #e9ecef;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+    .instructions ol {
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center;">AURA Email Signatur Vorlagen</h2>
+
+  <!-- Signatur Variante 1: Mit Logo links -->
+  <div class="signature-container">
+    <h3>Variante 1: Logo links</h3>
+    <div class="signature">
+      <table cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="padding-right: 20px;">
+            <img src="public/email-icon-compact.svg" alt="AURA Logo" width="80" height="80">
+          </td>
+          <td>
+            <div class="name">David Lamberts</div>
+            <div class="title">Inhaber & Neural Architect</div>
+            <div class="divider"></div>
+            <div class="company">AURA NEURAL ARCHITECTURE</div>
+            <div class="info">
+              Am Bergle 28 | 88284 Schlier<br>
+              Tel: <a href="tel:+4917691336194">+49 176 9133 6194</a><br>
+              E-Mail: <a href="mailto:david.lamberts@aurasystems.ltd">david.lamberts@aurasystems.ltd</a><br>
+              Web: <a href="https://aura-systems.de" target="_blank">aura-systems.de</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Signatur Variante 2: Logo oben -->
+  <div class="signature-container">
+    <h3>Variante 2: Logo oben (kompakt)</h3>
+    <div class="signature">
+      <table cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <img src="public/email-icon-compact.svg" alt="AURA Logo" width="60" height="60" style="margin-bottom: 12px;">
+            <div class="name">David Lamberts</div>
+            <div class="title">Inhaber & Neural Architect</div>
+            <div class="divider"></div>
+            <div class="company">AURA NEURAL ARCHITECTURE</div>
+            <div class="info">
+              Am Bergle 28 | 88284 Schlier<br>
+              Tel: <a href="tel:+4917691336194">+49 176 9133 6194</a><br>
+              E-Mail: <a href="mailto:david.lamberts@aurasystems.ltd">david.lamberts@aurasystems.ltd</a><br>
+              Web: <a href="https://aura-systems.de" target="_blank">aura-systems.de</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Signatur Variante 3: Minimalistisch -->
+  <div class="signature-container">
+    <h3>Variante 3: Minimalistisch (nur Text mit kleinem Icon)</h3>
+    <div class="signature">
+      <table cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="padding-right: 15px;">
+            <img src="public/email-icon-compact.svg" alt="AURA Logo" width="50" height="50">
+          </td>
+          <td>
+            <div class="name">David Lamberts</div>
+            <div class="company" style="margin-bottom: 4px; font-size: 12px;">AURA NEURAL ARCHITECTURE</div>
+            <div class="info" style="font-size: 11px;">
+              <a href="tel:+4917691336194">+49 176 9133 6194</a> |
+              <a href="mailto:david.lamberts@aurasystems.ltd">david.lamberts@aurasystems.ltd</a> |
+              <a href="https://aura-systems.de" target="_blank">aura-systems.de</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Anleitung -->
+  <div class="instructions">
+    <h3>📧 Anleitung zur Verwendung</h3>
+
+    <h4>1. SVG in PNG konvertieren (für bessere Email-Kompatibilität)</h4>
+    <ol>
+      <li>Öffne <a href="https://cloudconvert.com/svg-to-png" target="_blank">CloudConvert</a> oder ein ähnliches Tool</li>
+      <li>Lade <code>email-icon-compact.svg</code> hoch</li>
+      <li>Stelle die Größe ein:
+        <ul>
+          <li>Für Gmail/Outlook: 120x120px oder 240x240px (Retina)</li>
+          <li>Für Apple Mail: 160x160px oder 320x320px (Retina)</li>
+        </ul>
+      </li>
+      <li>Exportiere als PNG mit transparentem Hintergrund</li>
+    </ol>
+
+    <h4>2. In Gmail einrichten</h4>
+    <ol>
+      <li>Gmail öffnen → Einstellungen (Zahnrad) → "Alle Einstellungen aufrufen"</li>
+      <li>Unter "Signatur" → "Neue Signatur erstellen"</li>
+      <li>HTML-Code aus einer der Varianten oben kopieren</li>
+      <li>Logo-Bild hochladen oder verlinken</li>
+      <li>Speichern</li>
+    </ol>
+
+    <h4>3. In Outlook einrichten</h4>
+    <ol>
+      <li>Outlook öffnen → Datei → Optionen → E-Mail → Signaturen</li>
+      <li>"Neu" klicken für neue Signatur</li>
+      <li>HTML einfügen oder manuell erstellen</li>
+      <li>Bild einfügen (PNG-Version des Logos)</li>
+      <li>Speichern</li>
+    </ol>
+
+    <h4>4. In Apple Mail einrichten</h4>
+    <ol>
+      <li>Mail → Einstellungen → Signaturen</li>
+      <li>"+" klicken für neue Signatur</li>
+      <li>HTML-Code einfügen oder manuell gestalten</li>
+      <li>Bild per Drag & Drop hinzufügen</li>
+    </ol>
+
+    <h4>5. Best Practices</h4>
+    <ul>
+      <li>✅ Verwende PNG statt SVG für maximale Kompatibilität</li>
+      <li>✅ Optimale Bildgröße: 80-120px Breite (240px für Retina)</li>
+      <li>✅ Halte die Signatur unter 5-6 Zeilen</li>
+      <li>✅ Teste die Signatur in verschiedenen Email-Clients</li>
+      <li>✅ Vermeide zu große Dateien (max. 50KB für Logo)</li>
+    </ul>
+  </div>
+
+  <div class="instructions" style="margin-top: 20px; background: #e7f3ff;">
+    <h3>💡 Tipp: Logo als Daten-URL einbetten</h3>
+    <p>Für maximale Kompatibilität kannst du das Logo direkt als Base64 in den HTML-Code einbetten. Dadurch wird kein externer Link benötigt.</p>
+    <p>Tool: <a href="https://www.base64-image.de/" target="_blank">base64-image.de</a></p>
+    <p>Dann ersetzt du <code>&lt;img src="..."&gt;</code> mit <code>&lt;img src="data:image/png;base64,..."&gt;</code></p>
+  </div>
+</body>
+</html>

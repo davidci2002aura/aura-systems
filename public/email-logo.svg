@@ -1,0 +1,68 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0077ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00b4ff;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#bgGradient)"/>
+
+  <!-- Neural network nodes (subtle background pattern) -->
+  <circle cx="60" cy="60" r="3" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="140" cy="60" r="3" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="60" cy="140" r="3" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="140" cy="140" r="3" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="100" cy="100" r="3" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Connection lines -->
+  <line x1="60" y1="60" x2="100" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <line x1="140" y1="60" x2="100" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <line x1="60" y1="140" x2="100" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <line x1="140" y1="140" x2="100" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- AURA Text -->
+  <text
+    x="100"
+    y="95"
+    font-family="Arial, sans-serif"
+    font-size="48"
+    font-weight="700"
+    text-anchor="middle"
+    fill="url(#textGradient)"
+    letter-spacing="6"
+    filter="url(#glow)"
+  >AURA</text>
+
+  <!-- Subtext -->
+  <text
+    x="100"
+    y="115"
+    font-family="Arial, sans-serif"
+    font-size="12"
+    font-weight="400"
+    text-anchor="middle"
+    fill="rgba(255,255,255,0.85)"
+    letter-spacing="3"
+  >NEURAL ARCHITECTURE</text>
+
+  <!-- Border ring -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+</svg>
