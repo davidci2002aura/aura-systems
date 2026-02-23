@@ -1,26 +1,49 @@
 import { useState, useEffect } from 'react';
 
-export const useDarkMode = () => {
-  const [isDark, setIsDark] = useState<boolean>(() => {
+const getInitialMode = (): boolean => {
+  try {
     // Check localStorage first
     const stored = localStorage.getItem('darkMode');
     if (stored !== null) {
       return stored === 'true';
     }
-    // Fall back to system preference
+  } catch (error) {
+    console.error('localStorage access error:', error);
+  }
+
+  // Fall back to system preference
+  try {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  } catch (error) {
+    console.error('matchMedia error:', error);
+    return true; // Default to dark mode
+  }
+};
+
+export const useDarkMode = () => {
+  const [isDark, setIsDark] = useState<boolean>(getInitialMode);
 
   useEffect(() => {
-    // Apply theme to document
+    // Apply theme to document immediately
+    const root = document.documentElement;
+
     if (isDark) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      root.classList.remove('light');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.add('light');
+      root.classList.remove('dark');
     }
 
     // Persist to localStorage
-    localStorage.setItem('darkMode', String(isDark));
+    try {
+      localStorage.setItem('darkMode', String(isDark));
+    } catch (error) {
+      console.error('localStorage save error:', error);
+    }
+
+    // Force repaint to ensure CSS variables are applied
+    void root.offsetHeight;
   }, [isDark]);
 
   const toggle = () => setIsDark(prev => !prev);
