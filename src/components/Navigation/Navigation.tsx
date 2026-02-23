@@ -1,4 +1,3 @@
-import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 import styles from './Navigation.module.css';
 
 const Navigation: React.FC = () => {
@@ -23,9 +22,6 @@ const Navigation: React.FC = () => {
             </a>
           </li>
         ))}
-        <li role="none" className={styles.toggleItem}>
-          <DarkModeToggle />
-        </li>
         <li role="none">
           <a
             href="#kontakt"
