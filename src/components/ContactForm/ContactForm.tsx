@@ -41,24 +41,43 @@ const ContactForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      const formData = new FormData();
-      formData.append('service', values.service);
-      formData.append('budget', values.budget);
-      formData.append('name', values.name);
-      formData.append('email', values.email);
-      formData.append('message', values.message);
-
+      // Send as JSON for better compatibility with Google Apps Script
       const response = await fetch(
         import.meta.env.VITE_WEBHOOK_URL ||
           'https://hook.eu2.make.com/39hck8mox71b69h5sw7e7f7b3r4fntw9',
         {
           method: 'POST',
-          body: formData,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            service: values.service,
+            budget: values.budget,
+            name: values.name,
+            email: values.email,
+            message: values.message,
+          }),
+          redirect: 'follow',
         }
       );
 
-      if (!response.ok) {
-        throw new Error('Netzwerkfehler');
+      // Check for successful response
+      const responseText = await response.text();
+      let result;
+
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        // If not JSON, check if response was successful
+        if (!response.ok) {
+          throw new Error('Netzwerkfehler');
+        }
+        // Assume success if response is ok but not JSON
+        result = { success: true };
+      }
+
+      if (result.success === false) {
+        throw new Error(result.error || 'Unbekannter Fehler');
       }
 
       // Track successful form submission
