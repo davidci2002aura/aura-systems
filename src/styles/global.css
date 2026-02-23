@@ -83,3 +83,24 @@ html {
 #root {
   min-height: 100vh;
 }
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Disable particle trails and canvas animations */
+  canvas {
+    opacity: 0.3 !important;
+  }
+}

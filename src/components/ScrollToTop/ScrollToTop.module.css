@@ -18,6 +18,7 @@
   visibility: hidden;
   transform: translateY(100px);
   z-index: 9999;
+  will-change: transform, opacity;
 }
 
 .scrollToTop.visible {

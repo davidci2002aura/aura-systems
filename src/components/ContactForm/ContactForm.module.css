@@ -199,11 +199,25 @@
   outline: none;
   margin-bottom: 0.75rem;
   display: block;
-  transition: border-color var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .input:focus {
-  border-color: var(--color-primary);
+  border-color: rgba(0, 119, 255, 0.6);
+  background: rgba(0, 119, 255, 0.03);
+  box-shadow:
+    0 0 0 3px rgba(0, 119, 255, 0.1),
+    0 0 20px rgba(0, 119, 255, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.input::placeholder {
+  transition: all 0.3s ease;
+}
+
+.input:focus::placeholder {
+  opacity: 0.4;
+  transform: translateX(5px);
 }
 
 .input[aria-invalid="true"] {
@@ -225,13 +239,27 @@
   outline: none;
   margin-bottom: 0.75rem;
   display: block;
-  transition: border-color var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   resize: vertical;
   min-height: 120px;
 }
 
 .textarea:focus {
-  border-color: var(--color-primary);
+  border-color: rgba(0, 119, 255, 0.6);
+  background: rgba(0, 119, 255, 0.03);
+  box-shadow:
+    0 0 0 3px rgba(0, 119, 255, 0.1),
+    0 0 20px rgba(0, 119, 255, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.textarea::placeholder {
+  transition: all 0.3s ease;
+}
+
+.textarea:focus::placeholder {
+  opacity: 0.4;
+  transform: translateX(5px);
 }
 
 .textarea[aria-invalid="true"] {

@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useThrottle } from '@hooks/useThrottle';
 import styles from './ScrollToTop.module.css';
 
 const ScrollToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 500) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
+  const toggleVisibility = useThrottle(() => {
+    if (window.scrollY > 500) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, 100);
 
+  useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
-  }, []);
+  }, [toggleVisibility]);
 
   const scrollToTop = () => {
     window.scrollTo({

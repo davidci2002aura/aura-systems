@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './FAQSection.module.css';
 
 const FAQSection: React.FC = () => {
@@ -30,7 +31,13 @@ const FAQSection: React.FC = () => {
       aria-labelledby="faq-heading"
     >
       <div className={styles.container}>
-        <div className={styles.left}>
+        <motion.div
+          className={styles.left}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        >
           <div className={styles.sectionTag}>
             <span className={styles.tagLine} /> FAQ
           </div>
@@ -45,9 +52,15 @@ const FAQSection: React.FC = () => {
           <a href="#kontakt" className={styles.ctaButton}>
             Frage stellen →
           </a>
-        </div>
+        </motion.div>
 
-        <dl className={styles.faqList}>
+        <motion.dl
+          className={styles.faqList}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
+        >
           {faqs.map((faq, index) => (
             <div key={index} className={styles.faqItem}>
               <dt>
@@ -86,7 +99,7 @@ const FAQSection: React.FC = () => {
               </dd>
             </div>
           ))}
-        </dl>
+        </motion.dl>
       </div>
     </section>
   );

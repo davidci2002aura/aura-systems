@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {
@@ -18,7 +19,13 @@ const Footer: React.FC = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
+      <motion.div
+        className={styles.container}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      >
         <div className={styles.brand}>
           <div className={styles.logoText}>AURA</div>
           <div className={styles.logoSubtext}>Neural Architecture</div>
@@ -49,7 +56,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       <div className={styles.bottom}>
         <span>© 2025 AURA Neural Architecture. All rights reserved.</span>

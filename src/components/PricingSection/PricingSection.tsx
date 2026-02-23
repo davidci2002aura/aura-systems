@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import styles from './PricingSection.module.css';
 
 const PricingSection: React.FC = () => {
@@ -74,11 +75,24 @@ const PricingSection: React.FC = () => {
           <span className={styles.light}>Preise.</span>
         </h2>
 
-        <div className={styles.grid}>
+        <motion.div
+          className={styles.grid}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {packages.map((pkg, i) => (
             <PricingCard key={i} pkg={pkg} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -100,7 +114,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
   const [hov, setHov] = useState(false);
 
   return (
-    <div
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
       className={styles.card}
       style={{
         background: pkg.bg || 'rgba(0, 0, 0, 0.3)',
@@ -151,7 +170,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
       >
         Anfragen →
       </a>
-    </div>
+    </motion.div>
   );
 };
 

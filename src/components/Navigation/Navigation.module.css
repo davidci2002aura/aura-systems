@@ -11,6 +11,7 @@
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(24px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  will-change: backdrop-filter;
 }
 
 .logo {
@@ -68,6 +69,7 @@
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--transition-fast);
+  will-change: background, box-shadow;
 }
 
 .ctaButton:hover {
