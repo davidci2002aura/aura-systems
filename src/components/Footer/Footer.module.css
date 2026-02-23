@@ -52,6 +52,17 @@
   letter-spacing: 0.02em;
 }
 
+.contactLink {
+  color: rgba(0, 119, 255, 0.6);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.contactLink:hover {
+  color: rgba(0, 119, 255, 1);
+  text-decoration: underline;
+}
+
 .column {
   display: flex;
   flex-direction: column;

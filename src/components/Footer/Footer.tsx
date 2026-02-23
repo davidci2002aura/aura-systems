@@ -36,9 +36,30 @@ const Footer: React.FC = () => {
           <div className={styles.contactInfo}>
             <div>Inhaber: David Lamberts</div>
             <div>Am Bergle 28, 88284 Schlier</div>
-            <div>Tel: 017691336194</div>
-            <div>david.lamberts@aurasystems.ltd</div>
-            <div style={{ marginTop: '0.4rem' }}>aura-systems.de</div>
+            <div>
+              Tel:{' '}
+              <a href="tel:+4917691336194" className={styles.contactLink}>
+                017691336194
+              </a>
+            </div>
+            <div>
+              <a
+                href="mailto:david.lamberts@aurasystems.ltd"
+                className={styles.contactLink}
+              >
+                david.lamberts@aurasystems.ltd
+              </a>
+            </div>
+            <div style={{ marginTop: '0.4rem' }}>
+              <a
+                href="https://aura-systems.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                aura-systems.de
+              </a>
+            </div>
           </div>
         </div>
 

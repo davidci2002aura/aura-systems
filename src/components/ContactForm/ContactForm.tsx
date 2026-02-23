@@ -67,9 +67,7 @@ const ContactForm: React.FC = () => {
       setSubmitted(true);
     } catch (error) {
       console.error('Submission error:', error);
-      setSubmitError(
-        'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.'
-      );
+      setSubmitError('error'); // Signal for error state
     } finally {
       setIsSubmitting(false);
     }
@@ -158,7 +156,23 @@ const ContactForm: React.FC = () => {
 
                 {submitError && (
                   <div className={styles.error} role="alert">
-                    {submitError}
+                    {submitError === 'error' ? (
+                      <>
+                        Leider ist ein Fehler aufgetreten. Bitte kontaktieren Sie uns direkt:{' '}
+                        <a
+                          href="mailto:david.lamberts@aurasystems.ltd"
+                          style={{
+                            color: '#0077ff',
+                            textDecoration: 'underline',
+                            fontWeight: 500,
+                          }}
+                        >
+                          david.lamberts@aurasystems.ltd
+                        </a>
+                      </>
+                    ) : (
+                      submitError
+                    )}
                   </div>
                 )}
               </>
