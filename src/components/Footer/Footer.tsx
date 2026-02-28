@@ -60,6 +60,16 @@ const Footer: React.FC = () => {
                 aura-systems.de
               </a>
             </div>
+            <div style={{ marginTop: '0.4rem' }}>
+              <a
+                href="https://www.instagram.com/aura_sytems/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                @aura_sytems
+              </a>
+            </div>
           </div>
         </div>
 
