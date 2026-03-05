@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useCanvasAnimation } from '@hooks/useCanvasAnimation';
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver';
 import RippleButton from '../RippleButton/RippleButton';
+import SplineScene from '../SplineScene/SplineScene';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -16,6 +17,10 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
   return (
     <section ref={heroRef} className={styles.hero}>
       <canvas ref={canvasRef} className={styles.canvas} />
+
+      {introGone && (
+        <SplineScene className={styles.splineWrapper} />
+      )}
 
       <div
         className={styles.badge}

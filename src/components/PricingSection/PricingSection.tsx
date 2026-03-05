@@ -70,9 +70,7 @@ const PricingSection: React.FC = () => {
           <span className={styles.tagLine} /> Investition
         </div>
         <h2 className={styles.sectionTitle}>
-          Transparente
-          <br />
-          <span className={styles.light}>Preise.</span>
+          Pakete
         </h2>
 
         <motion.div
