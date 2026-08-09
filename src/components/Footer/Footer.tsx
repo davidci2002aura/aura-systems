@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
 
       <div className={styles.bottom}>
         <span>© 2026 AURA SYSTEMS. Alle Rechte vorbehalten.</span>
-        <span>Entwurfsstand 2.10</span>
+        <span>Version 3.0</span>
       </div>
     </footer>
   );
