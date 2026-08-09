@@ -2,12 +2,12 @@ import Footer from '../components/Footer/Footer';
 import styles from './Pages.module.css';
 
 const offers = [
-  ['01', 'Website-QuickFix', 'Bestehende Seiten reparieren, ohne gleich alles neu zu bauen.', 'ab 149 €'],
-  ['02', 'Landingpage', 'Eine fokussierte Seite für Angebot, Kampagne oder neue Leistung.', 'ab 490 €'],
-  ['03', 'Onepager', 'Der vollständige kleine Auftritt – klar, schnell und mobil gedacht.', 'ab 790 €'],
-  ['04', 'Unternehmenswebsite', 'Mehrere Seiten für Leistungen, Team, Karriere und Vertrauen.', 'ab 1.490 €'],
-  ['05', 'Website Plus', 'Buchung, Mehrsprachigkeit, geschützte Inhalte oder Schnittstellen.', 'nach Umfang'],
-  ['06', 'Webanwendung', 'Individuelle Portale, Dashboards und interne Werkzeuge.', 'nach Konzept'],
+  { num:'01', name:'Website-QuickFix', description:'Bestehende Seiten reparieren, ohne gleich alles neu zu bauen.', price:'ab 149 €', includes:['Mobilansicht','Kontaktweg','Funktionscheck'] },
+  { num:'02', name:'Landingpage', description:'Eine fokussierte Seite für Angebot, Kampagne oder neue Leistung.', price:'ab 490 €', includes:['Klare Botschaft','Eine Zielhandlung','Mobile Umsetzung'] },
+  { num:'03', name:'Onepager', description:'Der vollständige kleine Auftritt – klar, schnell und mobil gedacht.', price:'ab 790 €', includes:['Seitenstruktur','Leistungen','Kontakt'] },
+  { num:'04', name:'Unternehmenswebsite', description:'Mehrere Seiten für Leistungen, Team, Karriere und Vertrauen.', price:'ab 1.490 €', includes:['Mehrere Seiten','Navigationssystem','Erweiterbare Basis'] },
+  { num:'05', name:'Website Plus', description:'Buchung, Mehrsprachigkeit, geschützte Inhalte oder Schnittstellen.', price:'nach Umfang', includes:['Buchung','Schnittstellen','Sonderfunktionen'] },
+  { num:'06', name:'Webanwendung', description:'Individuelle Portale, Dashboards und interne Werkzeuge.', price:'nach Konzept', includes:['Nutzerabläufe','Datenansicht','Individuelle Logik'] },
 ];
 
 const WebsitesPage: React.FC = () => (
@@ -39,9 +39,9 @@ const WebsitesPage: React.FC = () => (
       <section id="website-stufen" className={styles.offerSection}>
         <div className={styles.sectionLead}><span>Passender Umfang</span><h2>Nicht größer als nötig.<br />Nicht kleiner als sinnvoll.</h2><p>Der Umfang folgt dem echten Ziel – nicht einem starren Paket.</p></div>
         <div className={styles.offerGrid}>
-          {offers.map(([num, name, description, price]) => (
+          {offers.map(({num, name, description, price, includes}) => (
             <article key={name} className={styles.offerCard}>
-              <span>{num}</span><h3>{name}</h3><p>{description}</p><div><strong>{price}</strong><a href="/kontakt">Anfragen →</a></div>
+              <span>{num}</span><h3>{name}</h3><p>{description}</p><ul>{includes.map(item=><li key={item}>{item}</li>)}</ul><div><strong>{price}</strong><a href="/kontakt">Anfragen →</a></div>
             </article>
           ))}
         </div>

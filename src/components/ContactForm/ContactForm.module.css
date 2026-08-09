@@ -3,9 +3,15 @@
 }
 
 .container {
-  max-width: 640px;
+  max-width: 1160px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+  gap: 6rem;
+  align-items: start;
 }
+
+.contactLead { position:sticky; top:8rem; }
 
 .sectionTag {
   font-family: var(--font-system);
@@ -48,6 +54,13 @@
   margin-bottom: 2.5rem;
   letter-spacing: -0.01em;
 }
+
+.trustList { margin-top:2.3rem; border-top:1px solid rgba(18,19,16,.12); }
+.trustList > div { display:grid; grid-template-columns:2rem 1fr; gap:.8rem; padding:1rem 0; border-bottom:1px solid rgba(18,19,16,.1); }
+.trustList > div > span { color:#6d607f; font-size:.52rem; padding-top:.18rem; }
+.trustList p { margin:0; display:flex; flex-direction:column; gap:.28rem; }
+.trustList strong { font-size:.72rem; }
+.trustList small { color:rgba(18,19,16,.48); font-size:.64rem; line-height:1.55; }
 
 .formWrapper {
   background: rgba(0, 119, 255, 0.08);
@@ -156,13 +169,18 @@
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-lg);
-  padding: 0.9rem 1.1rem;
+  min-height:4.6rem;
+  padding: 1rem 3rem 1rem 1.1rem;
   text-align: left;
   cursor: pointer;
   transition: all var(--transition-fast);
   margin-bottom: 0.45rem;
   color: var(--color-text-primary);
+  position:relative;
 }
+
+.choiceButton::after { content:'→'; position:absolute; top:50%; right:1.15rem; transform:translateY(-50%); color:#6d607f; font-size:.9rem; transition:transform .25s ease; }
+.choiceButton:hover::after { transform:translate(.25rem,-50%); }
 
 .choiceButton.hover {
   background: rgba(0, 119, 255, 0.06);
@@ -418,6 +436,10 @@
   font-family: var(--font-system);
 }
 
+:global([data-theme="dark"]) .trustList,
+:global([data-theme="dark"]) .trustList > div { border-color:rgba(255,255,255,.11); }
+:global([data-theme="dark"]) .trustList small { color:rgba(255,255,255,.5); }
+
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   .section {
@@ -426,7 +448,11 @@
 
   .container {
     max-width: 100%;
+    grid-template-columns:1fr;
+    gap:2.5rem;
   }
+
+  .contactLead { position:static; }
 
   .sectionTitle {
     font-size: clamp(2rem, 8vw, 3rem);

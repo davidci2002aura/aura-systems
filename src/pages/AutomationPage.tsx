@@ -2,10 +2,10 @@ import Footer from '../components/Footer/Footer';
 import styles from './Pages.module.css';
 
 const useCases = [
-  ['Anfragen', 'Formular, E-Mail oder Telefonanfrage landet mit den nötigen Angaben an einem Ort.'],
-  ['Rückrufe', 'Name, Nummer und gewünschte Rückrufzeit werden strukturiert weitergegeben.'],
-  ['Dokumente', 'Wiederkehrende Daten werden geprüft, sortiert und für den nächsten Schritt vorbereitet.'],
-  ['Übergaben', 'Nach Freigabe werden Informationen an Kalender, Tabelle oder zuständige Person übergeben.'],
+  { title:'Anfragen', text:'Formular, E-Mail oder Telefonanfrage landet mit den nötigen Angaben an einem Ort.', input:'Formular · E-Mail', output:'Geordnete Anfrage' },
+  { title:'Rückrufe', text:'Name, Nummer und gewünschte Rückrufzeit werden strukturiert weitergegeben.', input:'Telefon · Website', output:'Rückrufübersicht' },
+  { title:'Dokumente', text:'Wiederkehrende Daten werden geprüft, sortiert und für den nächsten Schritt vorbereitet.', input:'PDF · Angaben', output:'Prüfbarer Datensatz' },
+  { title:'Übergaben', text:'Nach Freigabe werden Informationen an Kalender, Tabelle oder zuständige Person übergeben.', input:'Freigabe', output:'Saubere Übergabe' },
 ];
 
 const AutomationPage: React.FC = () => (
@@ -33,7 +33,7 @@ const AutomationPage: React.FC = () => (
 
       <section id="ablaeufe" className={styles.offerSection}>
         <div className={styles.sectionLead}><span>Typische Einsatzfälle</span><h2>Kleine Systeme mit<br />spürbarem Nutzen.</h2><p>Wir beginnen mit einem überprüfbaren Pilot, nicht mit einem unüberschaubaren Großprojekt.</p></div>
-        <div className={styles.useCaseGrid}>{useCases.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p><i>Prüfbarer Ausgang →</i></article>)}</div>
+        <div className={styles.useCaseGrid}>{useCases.map(({title,text,input,output}, index) => <article key={title}><div className={styles.caseTop}><span>0{index + 1}</span><i>LIVE FLOW</i></div><h3>{title}</h3><p>{text}</p><div className={styles.miniFlow}><span>{input}</span><b>→</b><strong>{output}</strong></div><a href="/kontakt">Ablauf prüfen <b>↗</b></a></article>)}</div>
       </section>
 
       <section className={styles.phoneSection}>

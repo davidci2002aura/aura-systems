@@ -76,15 +76,22 @@ const ContactForm: React.FC = () => {
   return (
     <section id="kontakt" className={styles.section}>
       <div className={styles.container}>
-        <div className={styles.sectionTag}><span className={styles.tagLine} /> Projektanfrage</div>
-        <h2 className={styles.sectionTitle}>
-          Was bremst
-          <br />
-          <span className={styles.light}>gerade?</span>
-        </h2>
-        <p className={styles.description}>
-          Ein Link und zwei Sätze reichen. Sie erhalten eine ehrliche Einschätzung, ob ein kleiner Fix genügt.
-        </p>
+        <div className={styles.contactLead}>
+          <div className={styles.sectionTag}><span className={styles.tagLine} /> Projektanfrage</div>
+          <h2 className={styles.sectionTitle}>
+            Was bremst
+            <br />
+            <span className={styles.light}>gerade?</span>
+          </h2>
+          <p className={styles.description}>
+            Fünf kurze Angaben genügen für eine erste, ehrliche Einschätzung.
+          </p>
+          <div className={styles.trustList}>
+            <div><span>01</span><p><strong>Passender Einstieg</strong><small>QuickFix, Website oder Automatisierung werden getrennt betrachtet.</small></p></div>
+            <div><span>02</span><p><strong>Klare Grenzen</strong><small>Leistung, Fremdkosten und offene Punkte stehen vor dem Start fest.</small></p></div>
+            <div><span>03</span><p><strong>Ihre Entscheidung</strong><small>Die Anfrage ist unverbindlich und löst keinen Auftrag aus.</small></p></div>
+          </div>
+        </div>
 
         <div className={styles.formWrapper}>
           <div className={styles.terminalHeader}>
