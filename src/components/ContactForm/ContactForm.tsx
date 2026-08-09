@@ -48,7 +48,7 @@ const ContactForm: React.FC = () => {
       formData.append('email', values.email);
       formData.append('message', values.message);
 
-      await fetch(
+      const response = await fetch(
         import.meta.env.VITE_WEBHOOK_URL ||
         'https://hook.eu2.make.com/39hck8mox71b69h5sw7e7f7b3r4fntw9',
         {
@@ -56,6 +56,10 @@ const ContactForm: React.FC = () => {
           body: formData,
         }
       );
+
+      if (!response.ok) {
+        throw new Error(`Formularserver antwortet mit Status ${response.status}`);
+      }
 
       // Track successful form submission
       analytics.trackFormSubmit('contact-form');
@@ -72,16 +76,14 @@ const ContactForm: React.FC = () => {
   return (
     <section id="kontakt" className={styles.section}>
       <div className={styles.container}>
-        <div className={styles.sectionTag}>
-          <span className={styles.tagLine} /> Neural Inquiry
-        </div>
+        <div className={styles.sectionTag}><span className={styles.tagLine} /> Projektanfrage</div>
         <h2 className={styles.sectionTitle}>
-          Bereit für
+          Was bremst
           <br />
-          <span className={styles.light}>Level 2.</span>
+          <span className={styles.light}>gerade?</span>
         </h2>
         <p className={styles.description}>
-          Präzision beginnt beim Dialog. Unsere Architekten antworten im Detail.
+          Ein Link und zwei Sätze reichen. Sie erhalten eine ehrliche Einschätzung, ob ein kleiner Fix genügt.
         </p>
 
         <div className={styles.formWrapper}>
@@ -128,10 +130,10 @@ const ContactForm: React.FC = () => {
                 </div>
                 <div className={styles.successTitle}>Anfrage gesendet.</div>
                 <p className={styles.successText}>
-                  Wir melden uns innerhalb von 24h bei Ihnen.
+                  Wir melden uns so bald wie möglich bei Ihnen.
                 </p>
                 <div className={styles.successFooter}>
-                  — AURA NEURAL ARCHITECTURE
+                  — AURA SYSTEMS
                 </div>
               </div>
             ) : (

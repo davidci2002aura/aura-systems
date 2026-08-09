@@ -10,9 +10,9 @@ const BentoGrid: React.FC = () => {
           <span className={styles.tagLine} /> Was wir bauen
         </div>
         <h2 className={styles.sectionTitle}>
-          Ihre Vorteile.
+          Konkrete Lösungen.
           <br />
-          <span className={styles.light}>Messbar.</span>
+          <span className={styles.light}>Klein startbar.</span>
         </h2>
 
         <motion.div
@@ -32,17 +32,17 @@ const BentoGrid: React.FC = () => {
           {/* Big card - Neural Operations */}
           <div className={styles.bigCard}>
             <BentoCard
-              tag="01 — Neural Operations"
-              title="n8n Automation Workflows"
-              desc="Verbinden Sie Ihre Tools zu einem autonomen Organismus. CRM, E-Mail, Marketing — alles fließt nahtlos."
+              tag="01 — Geführter Ablauf"
+              title="Anfragen sauber vorsortieren"
+              desc="Formular-, E-Mail- oder Telefonanfragen landen mit den nötigen Angaben in einem nachvollziehbaren Ablauf."
               accent
             >
               <div className={styles.workflowList}>
                 {[
-                  ['blue', 'Email Inbound · AI Classify'],
-                  ['purple', 'GPT-4o Analysis · Route'],
-                  ['green', 'CRM Update · Slack Notify'],
-                  ['orange', 'Report Generate · Send'],
+                  ['blue', 'Anfrage kommt an'],
+                  ['purple', 'Angaben werden strukturiert'],
+                  ['green', 'Zusammenfassung wird erstellt'],
+                  ['orange', 'Mensch entscheidet den nächsten Schritt'],
                 ].map(([color, text]) => (
                   <div key={text} className={styles.workflowItem}>
                     <span className={`${styles.workflowDot} ${styles[color]}`} />
@@ -54,47 +54,47 @@ const BentoGrid: React.FC = () => {
           </div>
 
           <BentoCard
-            tag="02 — Performance"
-            title="Blitzschnell."
-            desc="Ladezeiten unter 1 Sekunde."
-            stat="0.8s"
-            statLabel="avg. load time"
+            tag="02 — Website QuickFix"
+            title="Probleme gezielt lösen."
+            desc="Bis zu drei klar abgegrenzte Fehler an einer bestehenden Website."
+            stat="149 €"
+            statLabel="fester Einstiegspreis"
           />
           <BentoCard
-            tag="03 — SEO"
-            title="Lighthouse 100."
-            desc="Technisch perfekt. Semantisch präzise."
-            stat="100"
-            statLabel="Lighthouse Score"
+            tag="03 — Onepager"
+            title="In Sekunden verstanden."
+            desc="Leistungen, Vertrauen und Kontakt in einer klaren mobilen Seite."
+            stat="590 €"
+            statLabel="fester Einstiegspreis"
             statColor="#22c55e"
           />
 
           <BentoCard
-            tag="04 — Voice Agent"
-            title="24/7 Vocal Identity"
-            desc="Mehrsprachige KI-Telefonie. Vollständig in Ihre Systeme integriert."
+            tag="04 — KI-Telefonservice"
+            title="Rückruf statt verpasster Anfrage."
+            desc="Ein begrenzter Pilot nimmt Name, Nummer, Anliegen und Rückrufzeit auf, wenn niemand abnimmt."
             purple
           />
           <BentoCard
-            tag="05 — Conversion"
-            title="Design, das verkauft."
-            desc="Jedes Element auf Conversion optimiert. A/B getestet."
-            stat="+38%"
-            statLabel="Conversion Rate"
+            tag="05 — Übergabe"
+            title="Ihre Konten bleiben Ihre."
+            desc="Domain, Hosting und externe Dienste werden nachvollziehbar eingerichtet."
+            stat="100%"
+            statLabel="Zugriff beim Betrieb"
           />
           <BentoCard
-            tag="06 — KI Support"
-            title="AI Ecosystem."
-            desc="Chatbots, die echte Probleme lösen. In jeder Sprache."
-            stat="24/7"
-            statLabel="System Online"
+            tag="06 — Betreuung"
+            title="Kleine Änderungen inklusive."
+            desc="Laufende Betreuung für den Onepager, monatlich kündbar."
+            stat="59 €"
+            statLabel="pro Monat"
           />
 
           {/* Neural Core I */}
           <BentoCard
-            tag="07 — Neural Core I"
-            title="Agent Swarm."
-            desc="Autonome KI-Agenten erledigen komplexe Aufgaben parallel."
+            tag="07 — Kontrollpunkt"
+            title="Der Mensch entscheidet."
+            desc="Automatisierungen starten mit klaren Grenzen und einem überprüfbaren Ergebnis."
             accent
           >
             <div className={styles.agentSwarm}>
@@ -114,9 +114,9 @@ const BentoGrid: React.FC = () => {
           {/* Neural Core II */}
           <div className={styles.wideCard}>
             <BentoCard
-              tag="08 — Neural Core II"
-              title="Data Synapse Processing."
-              desc="Live-Verarbeitung unstrukturierter Unternehmensdaten mit präziser LLM-Technologie."
+              tag="08 — Transparenz"
+              title="Keine erfundenen Erfolgszahlen."
+              desc="Arbeitsproben sind als Konzepte gekennzeichnet. Umfang, Fremdkosten und Risiken werden vor dem Start getrennt benannt."
               purple
             >
               <div className={styles.dataStream}>
@@ -131,7 +131,7 @@ const BentoGrid: React.FC = () => {
                     }}
                   />
                 ))}
-                <div className={styles.streamLabel}>LIVE STREAM</div>
+                <div className={styles.streamLabel}>CLEAR SCOPE</div>
               </div>
             </BentoCard>
           </div>

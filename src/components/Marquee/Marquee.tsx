@@ -2,14 +2,14 @@ import styles from './Marquee.module.css';
 
 const Marquee: React.FC = () => {
   const items = [
-    'Web Development',
-    'KI-Integration',
-    'Voice Agents',
-    'n8n Automation',
-    'SEO Performance',
-    'Neural Operations',
-    'Conversion Design',
-    'API Integration',
+    'Website-QuickFix',
+    'Moderner Onepager',
+    'Mobile Optimierung',
+    'KI-Telefonservice',
+    'Anfragen strukturieren',
+    'Lokale Betriebe',
+    'Feste Einstiegspreise',
+    'Direkte Übergabe',
   ];
 
   return (

@@ -9,26 +9,26 @@ const ProcessSection: React.FC = () => {
     {
       num: '01',
       title: 'Anfrage & Briefing',
-      desc: 'Senden Sie uns Ihre Anforderungen digital. Wir analysieren Ihr Potenzial und erstellen ein erstes Konzept.',
+      desc: 'Ein Link und eine kurze Beschreibung reichen. Wir prüfen das sichtbare Problem und sagen ehrlich, ob ein kleiner Fix genügt.',
       time: 'Dauer: 30 Min',
     },
     {
       num: '02',
       title: 'Strategie & Konzept',
-      desc: 'Maßgeschneidertes Konzept mit Seitenstruktur, Designrichtung und technischer Architektur.',
+      desc: 'Sie erhalten einen verständlichen Umfang, einen festen Preis und einen realistischen Termin vor dem Start.',
       time: 'Dauer: 2–3 Tage',
     },
     {
       num: '03',
       title: 'Design & Prototyping',
-      desc: 'Interaktive Prototypen. Wir iterieren gemeinsam, bis das Design exakt Ihrer Vorstellung entspricht.',
+      desc: 'Bei Websites entsteht eine prüfbare Vorschau. Automatisierungen laufen zuerst mit Testdaten und klaren Grenzen.',
       time: 'Dauer: 3–5 Tage',
     },
     {
       num: '04',
       title: 'Entwicklung & Launch',
-      desc: 'Sauberer Code, tägliche Updates und ein stressfreier Launch inkl. Analytics.',
-      time: 'Dauer: 1–3 Wochen',
+      desc: 'Nach Ihrer Freigabe wird die Lösung übergeben oder veröffentlicht. Konten und Zugänge bleiben nachvollziehbar.',
+      time: 'Termin: laut Angebot',
     },
   ];
 
@@ -92,22 +92,20 @@ const ProcessSection: React.FC = () => {
 
             <div className={styles.codeBlock}>
               <div className={styles.code}>
-                <span className={styles.comment}>
-                  // Neural Architecture Config
-                </span>
+                <span className={styles.comment}>// Klarer Projektumfang</span>
                 <br />
                 <span className={styles.keyword}>const</span> project = {'{'}
                 <br />
                 &nbsp;&nbsp;client:{' '}
                 <span className={styles.string}>"Ihr Unternehmen"</span>,
                 <br />
-                &nbsp;&nbsp;lighthouse:{' '}
-                <span className={styles.number}>100</span>,
+                &nbsp;&nbsp;scope:{' '}
+                <span className={styles.string}>"vorab bestätigt"</span>,
                 <br />
-                &nbsp;&nbsp;loadTime:{' '}
-                <span className={styles.string}>"0.8s"</span>,
+                &nbsp;&nbsp;price:{' '}
+                <span className={styles.string}>"fest vereinbart"</span>,
                 <br />
-                &nbsp;&nbsp;aiEnabled:{' '}
+                &nbsp;&nbsp;accountsOwnedByClient:{' '}
                 <span className={styles.boolean}>true</span>,
                 <br />
                 &nbsp;&nbsp;status:{' '}

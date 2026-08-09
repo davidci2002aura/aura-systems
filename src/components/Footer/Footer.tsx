@@ -5,15 +5,25 @@ const Footer: React.FC = () => {
   const columns = [
     {
       title: 'Navigation',
-      links: ['Leistungen', 'Prozess', 'Preise', 'FAQ', 'Kontakt'],
+      links: [
+        ['Leistungen', '#leistungen'],
+        ['Prozess', '#prozess'],
+        ['Preise', '#preise'],
+        ['FAQ', '#faq'],
+        ['Kontakt', '#kontakt'],
+      ],
     },
     {
       title: 'Rechtliches',
-      links: ['Impressum', 'Datenschutz', 'AGB'],
+      links: [
+        ['Impressum', '/impressum.html'],
+        ['Datenschutz', '/datenschutz.html'],
+        ['AGB', '/agb.html'],
+      ],
     },
     {
       title: 'Kontakt',
-      links: ['Termin buchen'],
+      links: [['Projekt anfragen', '#kontakt']],
     },
   ];
 
@@ -28,10 +38,10 @@ const Footer: React.FC = () => {
       >
         <div className={styles.brand}>
           <div className={styles.logoText}>AURA</div>
-          <div className={styles.logoSubtext}>Neural Architecture</div>
+          <div className={styles.logoSubtext}>Digital Systems</div>
           <p className={styles.brandDescription}>
-            Premium Web Solutions für ambitionierte Unternehmen. Schnell.
-            Skalierbar. Sichtbar.
+            Klare Websites, gezielte Reparaturen und kleine Automatisierungen
+            für lokale Betriebe.
           </p>
           <div className={styles.contactInfo}>
             <div>Inhaber: David Lamberts</div>
@@ -77,10 +87,10 @@ const Footer: React.FC = () => {
           <div key={col.title} className={styles.column}>
             <div className={styles.columnTitle}>{col.title}</div>
             <ul className={styles.linkList}>
-              {col.links.map((link) => (
-                <li key={link}>
-                  <a href="#" className={styles.link}>
-                    {link}
+              {col.links.map(([label, href]) => (
+                <li key={href}>
+                  <a href={href} className={styles.link}>
+                    {label}
                   </a>
                 </li>
               ))}
@@ -90,8 +100,8 @@ const Footer: React.FC = () => {
       </motion.div>
 
       <div className={styles.bottom}>
-        <span>© 2025 AURA Neural Architecture. All rights reserved.</span>
-        <span>v2.0.0</span>
+        <span>© 2026 AURA SYSTEMS. Alle Rechte vorbehalten.</span>
+        <span>Entwurfsstand 2.10</span>
       </div>
     </footer>
   );

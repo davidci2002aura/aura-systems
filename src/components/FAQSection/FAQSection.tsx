@@ -8,19 +8,27 @@ const FAQSection: React.FC = () => {
   const faqs = [
     {
       q: 'Wie lange dauert eine Website?',
-      a: 'Ein Starter-Paket ist oft in 7–10 Tagen fertig, während komplexe Websites 3–6 Wochen benötigen.',
+      a: 'Ein klar abgegrenzter QuickFix dauert meist 1–2 Werktage. Für einen Onepager werden nach vollständiger Inhaltsfreigabe ungefähr 5 Werktage eingeplant. Der verbindliche Termin steht im Angebot.',
     },
     {
       q: 'Muss ich Inhalte selbst pflegen?',
-      a: 'Nein. Wir übernehmen das komplett. Senden Sie uns Änderungswünsche – wir setzen diese professionell um.',
+      a: 'Sie können Änderungen selbst übernehmen oder die monatliche Betreuung wählen. Zugänge und Konten bleiben grundsätzlich bei Ihnen.',
     },
     {
       q: 'Was passiert nach dem Launch?',
-      a: 'Im Enterprise Paket sind 3 Monate Support inklusive. Danach bieten wir Wartungspakete an.',
+      a: 'Nach der Abnahme erhalten Sie die vereinbarte Übergabe. Beim Betreuungspaket sind kleine Änderungen und Funktionschecks enthalten; größere Erweiterungen werden vorher separat angeboten.',
     },
     {
       q: 'Bieten Sie Hosting an?',
       a: 'Wir richten Ihr Hosting komplett ein. Sie bleiben Vertragspartner – volle Kontrolle, keine Abhängigkeit.',
+    },
+    {
+      q: 'Welche laufenden Kosten entstehen bei Automatisierungen?',
+      a: 'Telefonie-, KI- oder andere Anbietergebühren kommen zur Einrichtung hinzu. Diese Fremdkosten werden vor einer Aktivierung getrennt ausgewiesen und laufen möglichst über Ihre eigenen Konten.',
+    },
+    {
+      q: 'Sind die gezeigten Projekte echte Kundenreferenzen?',
+      a: 'Nein, sofern sie ausdrücklich als Konzept gekennzeichnet sind. Die Arbeitsproben zeigen Gestaltung und Umsetzung, ohne eine Beauftragung oder erzielte Ergebnisse zu behaupten.',
     },
   ];
 

@@ -28,7 +28,7 @@ function App() {
       <BackgroundSystem />
       <Navigation />
 
-      <div id="main-content" style={{ position: 'relative', zIndex: 10, background: '#000000', minHeight: '100vh', color: '#f0f4ff' }}>
+      <div id="main-content" style={{ position: 'relative', zIndex: 10, minHeight: '100vh' }}>
         <Hero introGone={introGone} />
 
         <Suspense fallback={<SkeletonLoader />}>

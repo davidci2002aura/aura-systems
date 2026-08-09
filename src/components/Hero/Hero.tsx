@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useCanvasAnimation } from '@hooks/useCanvasAnimation';
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver';
 import RippleButton from '../RippleButton/RippleButton';
-import SplineScene from '../SplineScene/SplineScene';
 import styles from './Hero.module.css';
 
 interface HeroProps {
@@ -18,17 +17,13 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
     <section ref={heroRef} className={styles.hero}>
       <canvas ref={canvasRef} className={styles.canvas} />
 
-      {introGone && (
-        <SplineScene className={styles.splineWrapper} />
-      )}
-
       <div
         className={styles.badge}
         style={{
           opacity: introGone ? 1 : 0,
         }}
       >
-        Premium Web Solutions · KI-gestützt · 2025
+        Websites · Reparaturen · Automatisierung · 2026
       </div>
 
       <h1
@@ -38,7 +33,7 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
         }}
       >
         <span className="shimmer-text">AURA</span>
-        <span className={styles.subtitle}>Neural Architecture</span>
+        <span className={styles.subtitle}>Digital Systems</span>
       </h1>
 
       <p
@@ -47,9 +42,9 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
           opacity: introGone ? 1 : 0,
         }}
       >
-        Wir bauen digitale Erlebnisse, die konvertieren.
+        Klare Websites und kleine Automatisierungen für lokale Betriebe.
         <br />
-        Atmosphärisch. Präzise. Skalierbar.
+        Verständlich geplant. Hochwertig umgesetzt. Kontrollierbar übergeben.
       </p>
 
       <div
@@ -59,22 +54,34 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
         }}
       >
         <RippleButton href="#kontakt" className={styles.primaryButton}>
-          Kostenloses Erstgespräch →
+          Kostenlose Kurzprüfung →
         </RippleButton>
-        <RippleButton href="#leistungen" className={styles.secondaryButton}>
-          Mehr erfahren
+        <RippleButton href="#preise" className={styles.secondaryButton}>
+          Pakete ansehen
         </RippleButton>
       </div>
 
-      <div
-        className={styles.scrollIndicator}
-        style={{
-          opacity: introGone ? 0.5 : 0,
-        }}
-      >
-        <div className={styles.scrollLine} />
-        <span className={styles.scrollText}>SCROLL</span>
+      <div className={styles.productStage} style={{ opacity: introGone ? 1 : 0 }} aria-label="Aura Systems Leistungsübersicht">
+        <div className={`${styles.productCard} ${styles.productCardWebsite}`}>
+          <div className={styles.windowBar}><i /><i /><i /><span>ihre-website.de</span></div>
+          <div className={styles.websitePreview}>
+            <small>KLARER EINSTIEG</small>
+            <strong>In Sekunden<br />verstanden.</strong>
+            <div><span>Leistung</span><span>Vertrauen</span><span>Kontakt</span></div>
+          </div>
+        </div>
+        <div className={`${styles.productCard} ${styles.productCardCall}`}>
+          <small>ANRUF · NICHT ERREICHBAR</small>
+          <div className={styles.callOrb}>AI</div>
+          <strong>Anliegen<br />aufgenommen</strong>
+          <span>Zusammenfassung bereit ↗</span>
+        </div>
+        <div className={`${styles.productCard} ${styles.productCardFlow}`}>
+          <small>ANFRAGE-FLOW</small>
+          {['Eingang', 'Struktur', 'Entscheidung'].map((item, index) => <div key={item}><i>{index + 1}</i><span>{item}</span><b>{index === 2 ? '✓' : '→'}</b></div>)}
+        </div>
       </div>
+
     </section>
   );
 };

@@ -50,11 +50,11 @@ const FormStep: React.FC<FormStepProps> = ({
         onBack={null}
       >
         {[
-          ['Neue Website', 'Komplett neue Website von Grund auf'],
-          ['Website Redesign', 'Bestehende Website modernisieren'],
-          ['SEO & Sichtbarkeit', 'Rankings verbessern · gefunden werden'],
-          ['Voice & AI Agents', 'Intelligente Telefonie & Chatbots'],
-          ['Workflow Automation', 'Prozesse mit n8n automatisieren'],
+          ['Website-QuickFix', 'Bis zu drei konkrete Fehler beheben'],
+          ['Moderner Onepager', 'Eine klare kleine Website von Grund auf'],
+          ['Onepager + Betreuung', 'Website mit laufenden kleinen Änderungen'],
+          ['KI-Telefonservice', 'Rückrufanliegen aufnehmen und zusammenfassen'],
+          ['Ablauf automatisieren', 'Wiederkehrende Handarbeit zuerst prüfen'],
         ].map(([main, sub]) => (
           <ChoiceButton
             key={main}
@@ -77,7 +77,7 @@ const FormStep: React.FC<FormStepProps> = ({
         title="Ihr Investitionsrahmen?"
         onBack={onBack}
       >
-        {['500€ – 1.500€', '1.500€ – 5.000€', '5.000€+'].map((budget) => (
+        {['Bis 200 €', '200 € – 700 €', '700 € – 1.500 €', 'Noch offen'].map((budget) => (
           <ChoiceButton
             key={budget}
             main={budget}

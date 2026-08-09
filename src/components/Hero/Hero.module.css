@@ -1,11 +1,11 @@
 .hero {
-  min-height: 100vh;
+  min-height: 112vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 9rem 2rem 5rem;
+  padding: 9rem 2rem 31rem;
   position: relative;
 }
 
@@ -19,35 +19,17 @@
   z-index: 0;
 }
 
-.splineWrapper {
-  z-index: 1;
-  opacity: 0.7;
-  mix-blend-mode: screen;
-  animation: splineFadeIn 2s ease forwards;
-}
-
-@keyframes splineFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-}
-
 .badge {
   font-family: var(--font-system);
   font-weight: 500;
   font-size: 0.62rem;
   letter-spacing: 0.08em;
-  color: rgba(0, 119, 255, 0.9);
+  color: #6d607f;
   text-transform: uppercase;
-  border: 1px solid rgba(0, 119, 255, 0.25);
+  border: 1px solid rgba(109, 96, 127, 0.25);
   padding: 0.38rem 0.9rem;
   border-radius: var(--radius-full);
-  background: rgba(0, 119, 255, 0.08);
+  background: rgba(109, 96, 127, 0.08);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   margin-bottom: 2rem;
@@ -112,12 +94,7 @@
   font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: -0.01em;
-  background: linear-gradient(
-    135deg,
-    #0077ff 0%,
-    #0095ff 50%,
-    #00b4ff 100%
-  );
+  background: #111;
   color: #fff;
   padding: 0.85rem 1.75rem;
   border-radius: var(--radius-lg);
@@ -125,7 +102,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 0 20px rgba(0, 119, 255, 0.4);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, box-shadow, background;
   position: relative;
@@ -133,13 +110,8 @@
 }
 
 .primaryButton:hover {
-  background: linear-gradient(
-    135deg,
-    #0095ff 0%,
-    #00b4ff 50%,
-    #0077ff 100%
-  );
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 32px rgba(0, 119, 255, 0.6);
+  background: #292929;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
   transform: translateY(-2px);
 }
 
@@ -168,6 +140,63 @@
   color: #fff;
   border-color: rgba(255, 255, 255, 0.3);
 }
+
+.productStage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 30rem;
+  overflow: hidden;
+  transition: opacity 1s ease 1.05s;
+}
+
+.productStage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -20rem;
+  width: min(92vw, 72rem);
+  height: 42rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(153,132,171,.2), rgba(208,190,175,.1) 46%, transparent 72%);
+  filter: blur(10px);
+}
+
+.productCard {
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid rgba(18,19,16,.13);
+  border-radius: 1.6rem;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 2.4rem 7rem rgba(30,60,100,.18);
+  backdrop-filter: blur(20px);
+}
+
+.productCardWebsite { left: 50%; bottom: -4rem; width: min(54rem, 72vw); min-height: 25rem; transform: translateX(-50%); }
+.windowBar { display: flex; height: 2.7rem; align-items: center; gap: .38rem; border-bottom: 1px solid rgba(18,19,16,.1); padding: 0 1rem; }
+.windowBar i { width: .48rem; height: .48rem; border-radius: 50%; background: #ff675f; }
+.windowBar i:nth-child(2) { background: #f5bd4f; }
+.windowBar i:nth-child(3) { background: #62c554; }
+.windowBar span { margin-left: auto; color: rgba(18,19,16,.35); font-size: .58rem; }
+.websitePreview { position: relative; min-height: 22rem; padding: 3.2rem; background: linear-gradient(145deg, #fff 0 48%, #edf5ff 48%); text-align: left; }
+.websitePreview small, .productCard > small { font-size: .56rem; letter-spacing: .1em; }
+.websitePreview strong { display: block; margin-top: 2.4rem; font-size: clamp(2.6rem, 5vw, 5.4rem); letter-spacing: -.07em; line-height: .86; }
+.websitePreview > div { position: absolute; right: 2rem; bottom: 1.5rem; left: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+.websitePreview > div span { border-top: 1px solid rgba(18,19,16,.35); padding-top: .6rem; font-size: .6rem; }
+
+.productCardCall { right: 4vw; bottom: 3rem; z-index: 4; width: 15rem; min-height: 18rem; padding: 1.3rem; transform: rotate(4deg); background: #101114; color: #fff; text-align: left; }
+.callOrb { display: grid; width: 6rem; height: 6rem; place-items: center; margin: 2rem auto 1.6rem; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #dfd5e8, #7b6a8d 55%, #3b3345); box-shadow: 0 0 2.5rem rgba(109,96,127,.42); font-size: 1rem; font-weight: 700; }
+.productCardCall strong { display: block; font-size: 1.45rem; letter-spacing: -.04em; line-height: 1; }
+.productCardCall > span { position: absolute; right: 1.3rem; bottom: 1.3rem; left: 1.3rem; color: rgba(255,255,255,.5); font-size: .56rem; }
+
+.productCardFlow { left: 4vw; bottom: 4.5rem; z-index: 4; width: 15rem; padding: 1.3rem; transform: rotate(-4deg); }
+.productCardFlow > small { display: block; margin-bottom: 1.3rem; color: #6d607f; }
+.productCardFlow > div { display: grid; grid-template-columns: 1.5rem 1fr 1rem; gap: .6rem; align-items: center; border-top: 1px solid rgba(18,19,16,.12); padding: .8rem 0; text-align: left; }
+.productCardFlow i { display: grid; width: 1.25rem; height: 1.25rem; place-items: center; border-radius: 50%; background: #efebf4; color: #6d607f; font-size: .5rem; font-style: normal; }
+.productCardFlow span, .productCardFlow b { font-size: .65rem; }
 
 .scrollIndicator {
   position: absolute;
@@ -202,8 +231,9 @@
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   .hero {
-    padding: 7rem 1.5rem 4rem;
-    min-height: 90vh;
+    min-height: 58rem;
+    justify-content: flex-start;
+    padding: 9rem 1.5rem 23rem;
   }
 
   .badge {
@@ -245,11 +275,18 @@
   .scrollLine {
     height: 38px;
   }
+
+  .productStage { height: 19rem; }
+  .productCardWebsite { bottom: -7rem; width: 92vw; min-height: 19rem; }
+  .websitePreview { min-height: 18rem; padding: 2rem 1.4rem; }
+  .websitePreview strong { font-size: 2.8rem; }
+  .productCardCall,
+  .productCardFlow { display: none; }
 }
 
 @media (max-width: 480px) {
   .hero {
-    padding: 6rem 1rem 3rem;
+    padding: 8rem 1rem 22rem;
   }
 
   .badge {

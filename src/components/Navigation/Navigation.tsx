@@ -7,7 +7,7 @@ const Navigation: React.FC = () => {
     <nav className={styles.nav} role="navigation" aria-label="Hauptnavigation">
       <div className={styles.logo}>
         <div className={styles.logoText}>AURA</div>
-        <div className={styles.logoSubtext}>Neural Architecture</div>
+        <div className={styles.logoSubtext}>Digital Systems</div>
       </div>
 
       <ul className={styles.menu} role="menubar">

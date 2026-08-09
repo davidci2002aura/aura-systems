@@ -4,6 +4,7 @@ import App from './App';
 import './styles/global.css';
 import './styles/glassmorphism.css';
 import './styles/shadows.css';
+import './styles/aura-light.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

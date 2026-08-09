@@ -5,59 +5,67 @@ import styles from './PricingSection.module.css';
 const PricingSection: React.FC = () => {
   const packages = [
     {
-      name: 'STARTER',
-      color: 'rgba(0,119,255,0.7)',
+      name: 'WEBSITE-QUICKFIX',
+      price: '149 €',
+      priceNote: 'einmalig',
+      color: '#6d607f',
       bg: null,
       border: null,
       features: [
-        'Onepager / Landingpage',
-        'Responsive Design',
-        'On-Page SEO',
-        'Kontaktformular',
+        'Bis zu 3 klar definierte Reparaturen',
+        'Mobilansicht, Kontakt oder Inhalte',
+        'Funktionsprüfung nach der Änderung',
+        'Kurze Übergabe',
       ],
-      off: ['A/B Testing', 'KI-Integration'],
+      off: ['Kompletter Neuaufbau', 'Bezahlte Fremddienste'],
     },
     {
-      name: 'ENTERPRISE',
-      color: 'rgba(0,119,255,0.9)',
-      bg: 'rgba(0,119,255,0.06)',
-      border: 'rgba(0,119,255,0.25)',
+      name: 'MODERNER ONEPAGER',
+      price: '590 €',
+      priceNote: 'einmalig',
+      color: '#111111',
+      bg: 'rgba(109,96,127,0.06)',
+      border: 'rgba(109,96,127,0.25)',
       featured: true,
       features: [
-        'Bis zu 5 Unterseiten',
-        'Premium Custom Design',
-        'Technisches SEO',
-        'Conversion Optimierung',
-        'KI-Integration',
-        '3 Monate Support',
+        'Individuelle, klare Seitenstruktur',
+        'Mobil optimierte Umsetzung',
+        'Leistungen, Vertrauen und Kontakt',
+        'Technische Basis für Suchmaschinen',
+        'Eine Korrekturrunde',
+        'Übergabe auf vorhandene Domain',
       ],
       off: [],
     },
     {
-      name: 'WORKFLOWS',
-      color: 'rgba(34,197,94,0.8)',
+      name: 'ONEPAGER + BETREUUNG',
+      price: '590 € + 59 €/Monat',
+      priceNote: 'monatlich kündbar',
+      color: '#7c6b5e',
       bg: null,
-      border: 'rgba(34,197,94,0.15)',
+      border: 'rgba(124,107,94,0.18)',
       features: [
-        'Custom n8n Logic',
-        'API Integrationen',
-        'Fehler-Monitoring',
-        'Laufende Wartung',
+        'Alle Leistungen des Onepagers',
+        'Kleine laufende Textänderungen',
+        'Regelmäßiger Funktionscheck',
+        'Direkter Ansprechpartner',
         'Monatlich kündbar',
       ],
       off: [],
     },
     {
-      name: 'VOICE AGENT',
-      color: 'rgba(168,85,247,0.8)',
+      name: 'KI-TELEFON-PILOT',
+      price: 'ab 290 €',
+      priceNote: 'zzgl. Anbietergebühren',
+      color: '#6d607f',
       bg: null,
-      border: 'rgba(168,85,247,0.15)',
+      border: 'rgba(109,96,127,0.18)',
       features: [
-        '24/7 Anrufannahme',
-        'Mehrsprachig DE/EN/ES',
-        'Stimmen wählbar',
-        'System-Integration',
-        'Monatlich kündbar',
+        'Annahme nur im vereinbarten Fall',
+        'Transparente KI-Begrüßung',
+        'Rückrufdaten und Anliegen aufnehmen',
+        'Eigener Test vor Aktivierung',
+        'Fremdkosten vorab ausweisen',
       ],
       off: [],
     },
@@ -103,6 +111,8 @@ interface PricingCardProps {
     bg: string | null;
     border: string | null;
     featured?: boolean;
+    price: string;
+    priceNote: string;
     features: string[];
     off: string[];
   };
@@ -134,8 +144,8 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
         <div className={styles.packageName} style={{ color: pkg.color }}>
           {pkg.name}
         </div>
-        <div className={styles.price}>Auf Anfrage</div>
-        <div className={styles.priceNote}>Projektbasis</div>
+        <div className={styles.price}>{pkg.price}</div>
+        <div className={styles.priceNote}>{pkg.priceNote}</div>
       </div>
 
       <div className={styles.divider} />
