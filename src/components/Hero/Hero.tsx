@@ -1,6 +1,3 @@
-import { useRef } from 'react';
-import { useCanvasAnimation } from '@hooks/useCanvasAnimation';
-import { useIntersectionObserver } from '@hooks/useIntersectionObserver';
 import RippleButton from '../RippleButton/RippleButton';
 import styles from './Hero.module.css';
 
@@ -9,13 +6,8 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ introGone }) => {
-  const heroRef = useRef<HTMLElement>(null);
-  const isVisible = useIntersectionObserver(heroRef, { threshold: 0.1 });
-  const canvasRef = useCanvasAnimation(isVisible && introGone);
-
   return (
-    <section ref={heroRef} className={styles.hero}>
-      <canvas ref={canvasRef} className={styles.canvas} />
+    <section className={styles.hero}>
 
       <div
         className={styles.badge}
@@ -32,7 +24,7 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
           opacity: introGone ? 1 : 0,
         }}
       >
-        <span className="shimmer-text">AURA</span>
+        <span>AURA</span>
         <span className={styles.subtitle}>Digital Systems</span>
       </h1>
 
@@ -63,18 +55,18 @@ const Hero: React.FC<HeroProps> = ({ introGone }) => {
 
       <div className={styles.productStage} style={{ opacity: introGone ? 1 : 0 }} aria-label="Aura Systems Leistungsübersicht">
         <div className={`${styles.productCard} ${styles.productCardWebsite}`}>
-          <div className={styles.windowBar}><i /><i /><i /><span>ihre-website.de</span></div>
+          <div className={styles.windowBar}><i /><i /><i /><span>Aura Projektvorschau</span></div>
           <div className={styles.websitePreview}>
-            <small>KLARER EINSTIEG</small>
-            <strong>In Sekunden<br />verstanden.</strong>
-            <div><span>Leistung</span><span>Vertrauen</span><span>Kontakt</span></div>
+            <small>WEBSITE · KLAR STRUKTURIERT</small>
+            <strong>Ein Auftritt,<br />der ruhig überzeugt.</strong>
+            <div><span>01&nbsp; Leistungen</span><span>02&nbsp; Vertrauen</span><span>03&nbsp; Kontakt</span></div>
           </div>
         </div>
         <div className={`${styles.productCard} ${styles.productCardCall}`}>
-          <small>ANRUF · NICHT ERREICHBAR</small>
-          <div className={styles.callOrb}>AI</div>
-          <strong>Anliegen<br />aufgenommen</strong>
-          <span>Zusammenfassung bereit ↗</span>
+          <small>ANFRAGE · ERFASST</small>
+          <div className={styles.callOrb}><span>✓</span></div>
+          <strong>Alles Wichtige<br />auf einen Blick</strong>
+          <span>Name · Anliegen · Rückrufzeit</span>
         </div>
         <div className={`${styles.productCard} ${styles.productCardFlow}`}>
           <small>ANFRAGE-FLOW</small>

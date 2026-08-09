@@ -296,6 +296,44 @@
   z-index: 2;
 }
 
+/* Ruhige, produktnahe Mini-Oberflächen statt Tech-Demo-Effekten */
+.controlPanel,
+.scopePanel {
+  margin-top: 1.4rem;
+  overflow: hidden;
+  border: 1px solid rgba(18,19,16,.12);
+  border-radius: 1rem;
+  background: rgba(255,255,255,.58);
+}
+
+.controlRow {
+  display: grid;
+  grid-template-columns: 1.65rem 1fr auto;
+  align-items: center;
+  gap: .65rem;
+  padding: .78rem .9rem;
+  border-bottom: 1px solid rgba(18,19,16,.09);
+}
+
+.controlRow:last-child { border-bottom: 0; }
+.controlRow span { display:grid; width:1.45rem; height:1.45rem; place-items:center; border-radius:50%; background:#ece8f0; color:#685c77; font-size:.55rem; }
+.controlRow b { font-size:.7rem; font-weight:500; }
+.controlRow i { color:rgba(18,19,16,.42); font-size:.58rem; font-style:normal; }
+
+.scopePanel { display: grid; grid-template-columns: repeat(3, 1fr); }
+.scopePanel > div { padding: 1rem; border-right: 1px solid rgba(18,19,16,.09); }
+.scopePanel > div:last-child { border-right: 0; }
+.scopePanel span { display:block; margin-bottom:.45rem; color:rgba(18,19,16,.44); font-size:.55rem; text-transform:uppercase; letter-spacing:.08em; }
+.scopePanel strong { display:block; font-size:.72rem; line-height:1.35; }
+
+:global([data-theme="dark"]) .controlPanel,
+:global([data-theme="dark"]) .scopePanel { background:rgba(255,255,255,.035); border-color:rgba(255,255,255,.12); }
+:global([data-theme="dark"]) .controlRow,
+:global([data-theme="dark"]) .scopePanel > div { border-color:rgba(255,255,255,.09); }
+:global([data-theme="dark"]) .controlRow span { background:#302a37; color:#d8cbe5; }
+:global([data-theme="dark"]) .controlRow i,
+:global([data-theme="dark"]) .scopePanel span { color:rgba(255,255,255,.45); }
+
 /* Mobile Optimizations */
 @media (max-width: 1024px) {
   .section {
@@ -364,6 +402,10 @@
   .dataStream {
     height: 60px;
   }
+
+  .scopePanel { grid-template-columns: 1fr; }
+  .scopePanel > div { border-right: 0; border-bottom: 1px solid rgba(18,19,16,.09); }
+  .scopePanel > div:last-child { border-bottom: 0; }
 }
 
 @media (max-width: 480px) {

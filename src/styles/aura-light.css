@@ -14,6 +14,22 @@
   --color-primary-dark: #2b2b2b;
 }
 
+[data-theme="dark"] {
+  --aura-ink: #f5f5f7;
+  --aura-paper: #0d0d0f;
+  --aura-white: #18181b;
+  --aura-blue: #29252e;
+  --aura-blue-strong: #c6b8d2;
+  --aura-acid: #f5f5f7;
+  --aura-coral: #282420;
+  --aura-line: rgba(255,255,255,.14);
+  --color-bg-primary: var(--aura-paper);
+  --color-text-primary: var(--aura-ink);
+  --color-primary: #f5f5f7;
+  --color-primary-dark: #dedee2;
+  color-scheme: dark;
+}
+
 body,
 #root,
 #main-content {
@@ -73,6 +89,7 @@ nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { border-radius: 999px 
 
 #leistungen { background: var(--aura-paper); }
 #leistungen [class*="_sectionTag_"], #prozess [class*="_sectionTag_"], #preise [class*="_sectionTag_"], #faq [class*="_sectionTag_"], #kontakt [class*="_sectionTag_"] { color: #6d607f !important; }
+#leistungen [class*="_tag_"], #leistungen [class*="_statValue_"], #prozess [class*="_stepTime_"] { color: #6d607f !important; }
 #leistungen [class*="_tagLine_"], #prozess [class*="_tagLine_"], #preise [class*="_tagLine_"], #faq [class*="_tagLine_"], #kontakt [class*="_tagLine_"] { background: #6d607f !important; }
 #leistungen [class*="_sectionTitle_"] { color: var(--aura-ink); }
 #leistungen [class*="_light_"] { color: rgba(18,19,16,.35) !important; }
@@ -124,7 +141,50 @@ nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { border-radius: 999px 
 #kontakt [class*="_choiceButton_"] { background: rgba(169,199,255,.14) !important; border-color: rgba(18,19,16,.12) !important; color: var(--aura-ink) !important; }
 #kontakt input, #kontakt textarea { background: rgba(255,255,255,.75) !important; border-color: rgba(18,19,16,.17) !important; color: var(--aura-ink) !important; }
 
-footer { background: var(--aura-ink) !important; color: #fffdf7 !important; }
+footer { background: #ececef !important; color: #121310 !important; }
+
+[data-theme="dark"] body,
+[data-theme="dark"] #root,
+[data-theme="dark"] #main-content { background:#0d0d0f !important; color:#f5f5f7 !important; }
+[data-theme="dark"] #root > [class*="_background_"] { background:#0d0d0f !important; }
+[data-theme="dark"] #root > [class*="_background_"] [class*="_grid_"] { opacity:.16; }
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] { background:rgba(13,13,15,.82) !important; border-color:rgba(255,255,255,.12) !important; }
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_logoText_"] { color:#f5f5f7 !important; }
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_menuLink_"] { color:rgba(255,255,255,.56) !important; }
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { background:#f5f5f7 !important; color:#121310 !important; }
+[data-theme="dark"] #main-content > section:first-child { background:radial-gradient(circle at 78% 24%, rgba(91,74,105,.28), transparent 28rem),linear-gradient(180deg,#111114,#0d0d0f) !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_title_"] { color:#f5f5f7 !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_subtitle_"] { color:rgba(255,255,255,.42) !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_description_"] { color:rgba(255,255,255,.65) !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_primaryButton_"] { background:#f5f5f7 !important; color:#121310 !important; box-shadow:0 1rem 2.5rem rgba(0,0,0,.26) !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_secondaryButton_"] { color:#f5f5f7 !important; border-color:rgba(255,255,255,.2) !important; background:rgba(255,255,255,.04) !important; }
+[data-theme="dark"] #main-content > [class*="_marquee_"] { background:#141416 !important; border-color:rgba(255,255,255,.11) !important; }
+[data-theme="dark"] #leistungen,
+[data-theme="dark"] #preise,
+[data-theme="dark"] #kontakt { background:#0d0d0f !important; color:#f5f5f7 !important; }
+[data-theme="dark"] #leistungen [class*="_bentoCard_"],
+[data-theme="dark"] #preise [class*="_card_"],
+[data-theme="dark"] #kontakt [class*="_formWrapper_"] { background:#18181b !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.13) !important; }
+[data-theme="dark"] #leistungen [class*="_bentoCard_"][class*="_accent_"] { background:#201d24 !important; }
+[data-theme="dark"] #leistungen [class*="_bentoCard_"][class*="_purple_"] { background:#211e1c !important; }
+[data-theme="dark"] #leistungen [class*="_desc_"],
+[data-theme="dark"] #leistungen [class*="_statLabel_"],
+[data-theme="dark"] #leistungen [class*="_workflowItem_"] { color:rgba(255,255,255,.58) !important; }
+[data-theme="dark"] #leistungen [class*="_light_"],
+[data-theme="dark"] #prozess [class*="_light_"],
+[data-theme="dark"] #preise [class*="_light_"],
+[data-theme="dark"] #faq [class*="_light_"],
+[data-theme="dark"] #kontakt [class*="_light_"] { color:rgba(255,255,255,.35) !important; }
+[data-theme="dark"] #prozess { background:linear-gradient(180deg,#19171c,#111114) !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.12) !important; }
+[data-theme="dark"] #prozess [class*="_stepDesc_"],
+[data-theme="dark"] #prozess [class*="_stepNum_"] { color:rgba(255,255,255,.53) !important; }
+[data-theme="dark"] #prozess [class*="_stepItem_"][class*="_active_"] { background:rgba(255,255,255,.05) !important; }
+[data-theme="dark"] #faq { background:#141416 !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.12) !important; }
+[data-theme="dark"] #faq [class*="_question_"] { color:#f5f5f7 !important; }
+[data-theme="dark"] #faq [class*="_answer_"] { color:rgba(255,255,255,.58) !important; }
+[data-theme="dark"] #kontakt input,
+[data-theme="dark"] #kontakt textarea { background:#111114 !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.14) !important; }
+[data-theme="dark"] footer { background:#151517 !important; color:#f5f5f7 !important; }
 
 @media (max-width: 640px) {
   nav[aria-label="Hauptnavigation"] { justify-content: space-between !important; }

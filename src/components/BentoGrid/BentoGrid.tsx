@@ -90,28 +90,21 @@ const BentoGrid: React.FC = () => {
             statLabel="pro Monat"
           />
 
-          {/* Neural Core I */}
           <BentoCard
             tag="07 — Kontrollpunkt"
             title="Der Mensch entscheidet."
             desc="Automatisierungen starten mit klaren Grenzen und einem überprüfbaren Ergebnis."
             accent
           >
-            <div className={styles.agentSwarm}>
-              <div className={styles.scanline} />
-              <div className={styles.agentDots}>
-                {[...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={styles.agentDot}
-                    style={{ animationDelay: `${i * 0.3}s` }}
-                  />
-                ))}
-              </div>
+            <div className={styles.controlPanel}>
+              {['Entwurf geprüft', 'Freigabe erteilt', 'Veröffentlichung'].map((item, index) => (
+                <div key={item} className={styles.controlRow}>
+                  <span>{index + 1}</span><b>{item}</b><i>{index < 2 ? 'Erledigt' : 'Bereit'}</i>
+                </div>
+              ))}
             </div>
           </BentoCard>
 
-          {/* Neural Core II */}
           <div className={styles.wideCard}>
             <BentoCard
               tag="08 — Transparenz"
@@ -119,19 +112,10 @@ const BentoGrid: React.FC = () => {
               desc="Arbeitsproben sind als Konzepte gekennzeichnet. Umfang, Fremdkosten und Risiken werden vor dem Start getrennt benannt."
               purple
             >
-              <div className={styles.dataStream}>
-                <div className={styles.streamGrid} />
-                {[40, 85, 45, 100, 60, 90, 50, 75, 40, 65, 30, 80].map((h, i) => (
-                  <div
-                    key={i}
-                    className={styles.streamBar}
-                    style={{
-                      height: `${h}%`,
-                      animationDelay: `${i * 0.15}s`,
-                    }}
-                  />
-                ))}
-                <div className={styles.streamLabel}>CLEAR SCOPE</div>
+              <div className={styles.scopePanel}>
+                <div><span>Im Angebot</span><strong>Leistung &amp; Zeitplan</strong></div>
+                <div><span>Separat</span><strong>Hosting &amp; Fremdkosten</strong></div>
+                <div><span>Vor Livegang</span><strong>Ihre Freigabe</strong></div>
               </div>
             </BentoCard>
           </div>

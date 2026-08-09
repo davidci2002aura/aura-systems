@@ -32,13 +32,6 @@ const ProcessSection: React.FC = () => {
     },
   ];
 
-  const milestones = [
-    'Zieldefinition & Briefing',
-    'Design-Prototyp freigegeben',
-    'Entwicklung abgeschlossen',
-    'Live gegangen · 🎉',
-  ];
-
   return (
     <section
       id="prozess"
@@ -81,50 +74,31 @@ const ProcessSection: React.FC = () => {
           </div>
 
           <div className={styles.visual}>
-            <div className={styles.terminalHeader}>
-              <div className={styles.dots}>
-                {['#ff5f57', '#febc2e', '#28c840'].map((c) => (
-                  <div key={c} className={styles.dot} style={{ background: c }} />
+            <div className={styles.projectHeader}>
+              <div>
+                <small>PROJEKTÜBERSICHT</small>
+                <strong>Ihr digitaler Auftritt</strong>
+              </div>
+              <span>In Umsetzung</span>
+            </div>
+            <div className={styles.projectBody}>
+              <div className={styles.progressMeta}><span>Fortschritt</span><b>3 von 4 Schritten</b></div>
+              <div className={styles.progressTrack}><i /></div>
+              <div className={styles.deliverables}>
+                {steps.map((step, index) => (
+                  <button
+                    type="button"
+                    key={step.num}
+                    className={index === activeStep ? styles.selectedDeliverable : ''}
+                    onClick={() => setActiveStep(index)}
+                  >
+                    <span>{index < 3 ? '✓' : '04'}</span>
+                    <div><small>SCHRITT {step.num}</small><strong>{step.title}</strong></div>
+                    <b>→</b>
+                  </button>
                 ))}
               </div>
-              <span className={styles.filename}>project.config.ts</span>
-            </div>
-
-            <div className={styles.codeBlock}>
-              <div className={styles.code}>
-                <span className={styles.comment}>// Klarer Projektumfang</span>
-                <br />
-                <span className={styles.keyword}>const</span> project = {'{'}
-                <br />
-                &nbsp;&nbsp;client:{' '}
-                <span className={styles.string}>"Ihr Unternehmen"</span>,
-                <br />
-                &nbsp;&nbsp;scope:{' '}
-                <span className={styles.string}>"vorab bestätigt"</span>,
-                <br />
-                &nbsp;&nbsp;price:{' '}
-                <span className={styles.string}>"fest vereinbart"</span>,
-                <br />
-                &nbsp;&nbsp;accountsOwnedByClient:{' '}
-                <span className={styles.boolean}>true</span>,
-                <br />
-                &nbsp;&nbsp;status:{' '}
-                <span className={styles.function}>fn</span>.
-                <span className={styles.method}>live</span>()
-                <br />
-                {'}'}
-              </div>
-
-              {milestones.map((milestone, i) => (
-                <div key={i} className={styles.milestone}>
-                  <div className={styles.checkmark}>
-                    <svg width="7" height="7" fill="none" stroke="#22c55e" strokeWidth="2.5">
-                      <path d="M1 4l2 2 4-4" />
-                    </svg>
-                  </div>
-                  {milestone}
-                </div>
-              ))}
+              <div className={styles.ownershipNote}><span>✓</span><div><small>ÜBERGABE</small><strong>Domain und Zugänge bleiben bei Ihnen.</strong></div></div>
             </div>
           </div>
         </motion.div>

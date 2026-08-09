@@ -1,22 +1,12 @@
 .hero {
-  min-height: 112vh;
+  min-height: 68rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 9rem 2rem 31rem;
+  padding: 10rem 2rem 32rem;
   position: relative;
-}
-
-.canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.45;
-  z-index: 0;
 }
 
 .badge {
@@ -30,8 +20,8 @@
   padding: 0.38rem 0.9rem;
   border-radius: var(--radius-full);
   background: rgba(109, 96, 127, 0.08);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   margin-bottom: 2rem;
   display: inline-block;
   transition: opacity 0.8s ease 0.2s;
@@ -44,17 +34,7 @@
   line-height: 1;
   letter-spacing: -0.04em;
   margin-bottom: 1.5rem;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #0077ff 50%,
-    #ffffff 100%
-  );
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 8s ease infinite;
+  color: var(--aura-ink);
   transition: opacity 1s ease 0.4s;
   will-change: background-position;
 }
@@ -161,18 +141,17 @@
   height: 42rem;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(153,132,171,.2), rgba(208,190,175,.1) 46%, transparent 72%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgba(153,132,171,.15), rgba(208,190,175,.08) 46%, transparent 72%);
 }
 
 .productCard {
   position: absolute;
   overflow: hidden;
   border: 1px solid rgba(18,19,16,.13);
-  border-radius: 1.6rem;
-  background: rgba(255,255,255,.86);
-  box-shadow: 0 2.4rem 7rem rgba(30,60,100,.18);
-  backdrop-filter: blur(20px);
+  border-radius: 1.35rem;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 2rem 5rem rgba(27,25,23,.12);
+  backdrop-filter: blur(14px);
 }
 
 .productCardWebsite { left: 50%; bottom: -4rem; width: min(54rem, 72vw); min-height: 25rem; transform: translateX(-50%); }
@@ -181,18 +160,19 @@
 .windowBar i:nth-child(2) { background: #f5bd4f; }
 .windowBar i:nth-child(3) { background: #62c554; }
 .windowBar span { margin-left: auto; color: rgba(18,19,16,.35); font-size: .58rem; }
-.websitePreview { position: relative; min-height: 22rem; padding: 3.2rem; background: linear-gradient(145deg, #fff 0 48%, #edf5ff 48%); text-align: left; }
+.websitePreview { position: relative; min-height: 22rem; padding: 3.2rem; background: linear-gradient(145deg, #fff 0 52%, #f0ece6 52%); text-align: left; }
 .websitePreview small, .productCard > small { font-size: .56rem; letter-spacing: .1em; }
 .websitePreview strong { display: block; margin-top: 2.4rem; font-size: clamp(2.6rem, 5vw, 5.4rem); letter-spacing: -.07em; line-height: .86; }
 .websitePreview > div { position: absolute; right: 2rem; bottom: 1.5rem; left: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
 .websitePreview > div span { border-top: 1px solid rgba(18,19,16,.35); padding-top: .6rem; font-size: .6rem; }
 
-.productCardCall { right: 4vw; bottom: 3rem; z-index: 4; width: 15rem; min-height: 18rem; padding: 1.3rem; transform: rotate(4deg); background: #101114; color: #fff; text-align: left; }
-.callOrb { display: grid; width: 6rem; height: 6rem; place-items: center; margin: 2rem auto 1.6rem; border-radius: 50%; background: radial-gradient(circle at 34% 30%, #dfd5e8, #7b6a8d 55%, #3b3345); box-shadow: 0 0 2.5rem rgba(109,96,127,.42); font-size: 1rem; font-weight: 700; }
+.productCardCall { right: 4vw; bottom: 3rem; z-index: 4; width: 15rem; min-height: 18rem; padding: 1.3rem; background: #ebe6df; color: #121310; text-align: left; }
+.callOrb { display: grid; width: 5.4rem; height: 5.4rem; place-items: center; margin: 2rem auto 1.8rem; border: 1px solid rgba(18,19,16,.12); border-radius: 50%; background: #fff; font-size: 1.15rem; font-weight: 700; }
+.callOrb span { display:grid; width:2rem; height:2rem; place-items:center; border-radius:50%; background:#121310; color:#fff; }
 .productCardCall strong { display: block; font-size: 1.45rem; letter-spacing: -.04em; line-height: 1; }
 .productCardCall > span { position: absolute; right: 1.3rem; bottom: 1.3rem; left: 1.3rem; color: rgba(255,255,255,.5); font-size: .56rem; }
 
-.productCardFlow { left: 4vw; bottom: 4.5rem; z-index: 4; width: 15rem; padding: 1.3rem; transform: rotate(-4deg); }
+.productCardFlow { left: 4vw; bottom: 4.5rem; z-index: 4; width: 15rem; padding: 1.3rem; }
 .productCardFlow > small { display: block; margin-bottom: 1.3rem; color: #6d607f; }
 .productCardFlow > div { display: grid; grid-template-columns: 1.5rem 1fr 1rem; gap: .6rem; align-items: center; border-top: 1px solid rgba(18,19,16,.12); padding: .8rem 0; text-align: left; }
 .productCardFlow i { display: grid; width: 1.25rem; height: 1.25rem; place-items: center; border-radius: 50%; background: #efebf4; color: #6d607f; font-size: .5rem; font-style: normal; }
@@ -303,3 +283,20 @@
     line-height: 1.6;
   }
 }
+
+:global([data-theme="dark"]) .productCard {
+  border-color: rgba(255,255,255,.13);
+  background: rgba(28,28,31,.96);
+  color: #f5f5f7;
+  box-shadow: 0 2rem 5rem rgba(0,0,0,.28);
+}
+
+:global([data-theme="dark"]) .websitePreview {
+  background: linear-gradient(145deg, #1b1b1e 0 52%, #262328 52%);
+}
+
+:global([data-theme="dark"]) .productCardCall { background: #242126; color: #f5f5f7; }
+:global([data-theme="dark"]) .callOrb { background: #151517; border-color: rgba(255,255,255,.14); }
+:global([data-theme="dark"]) .callOrb span { background: #f5f5f7; color: #121310; }
+:global([data-theme="dark"]) .windowBar,
+:global([data-theme="dark"]) .productCardFlow > div { border-color: rgba(255,255,255,.12); }
