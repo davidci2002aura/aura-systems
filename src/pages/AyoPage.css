@@ -147,3 +147,5 @@
   .ayo-gallery img { transition: none; }
 }
 
+/* Keep the reservation label readable beside Aura's global link styles. */
+.ayo-site .ayo-reserve { color: #171712; }
