@@ -5,7 +5,12 @@ const Navigation: React.FC = () => {
   const [dark, setDark] = useState(
     () => document.documentElement.dataset.theme === 'dark'
   );
-  const menuItems = ['Leistungen', 'Prozess', 'Preise', 'FAQ'];
+  const menuItems = [
+    ['Websites', '/websites'],
+    ['Automatisierung', '/automatisierung'],
+    ['Vorgehen', '/vorgehensweise'],
+    ['Preise', '/#preise'],
+  ];
 
   useEffect(() => {
     document.documentElement.dataset.theme = dark ? 'dark' : 'light';
@@ -17,20 +22,20 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className={styles.nav} role="navigation" aria-label="Hauptnavigation">
-      <div className={styles.logo}>
+      <a href="/" className={styles.logo} aria-label="Aura Systems Startseite">
         <div className={styles.logoText}>AURA</div>
         <div className={styles.logoSubtext}>Digital Systems</div>
-      </div>
+      </a>
 
       <ul className={styles.menu} role="menubar">
-        {menuItems.map((item) => (
-          <li key={item} role="none">
+        {menuItems.map(([label, href]) => (
+          <li key={href} role="none">
             <a
-              href={`#${item.toLowerCase()}`}
+              href={href}
               className={styles.menuLink}
               role="menuitem"
             >
-              {item}
+              {label}
             </a>
           </li>
         ))}
@@ -47,7 +52,7 @@ const Navigation: React.FC = () => {
         </li>
         <li role="none">
           <a
-            href="#kontakt"
+            href="/kontakt"
             className={styles.ctaButton}
             role="menuitem"
             aria-label="Projekt starten - Kontaktformular öffnen"

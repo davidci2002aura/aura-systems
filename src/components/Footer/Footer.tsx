@@ -6,11 +6,11 @@ const Footer: React.FC = () => {
     {
       title: 'Navigation',
       links: [
-        ['Leistungen', '#leistungen'],
-        ['Prozess', '#prozess'],
-        ['Preise', '#preise'],
-        ['FAQ', '#faq'],
-        ['Kontakt', '#kontakt'],
+        ['Leistungen', '/#leistungen'],
+        ['Prozess', '/vorgehensweise'],
+        ['Preise', '/#preise'],
+        ['FAQ', '/#faq'],
+        ['Kontakt', '/kontakt'],
       ],
     },
     {
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
     },
     {
       title: 'Kontakt',
-      links: [['Projekt anfragen', '#kontakt']],
+      links: [['Projekt anfragen', '/kontakt']],
     },
   ];
 
