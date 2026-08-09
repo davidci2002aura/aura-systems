@@ -1,11 +1,11 @@
 {
-  "name": "AURA Neural Architecture",
+  "name": "Aura Systems",
   "short_name": "AURA",
-  "description": "Premium Web Solutions für ambitionierte Unternehmen. Atmosphärisch. Präzise. Skalierbar.",
+  "description": "Websites und kleine Automatisierungen für lokale Unternehmen.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#f5f5f7",
+  "theme_color": "#f5f5f7",
   "orientation": "portrait-primary",
   "icons": [
     {

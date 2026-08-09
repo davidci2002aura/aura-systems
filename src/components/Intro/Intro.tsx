@@ -9,10 +9,10 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
   const [introPhase, setIntroPhase] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setIntroPhase(1), 200);
-    const t2 = setTimeout(() => setIntroPhase(2), 1800);
-    const t3 = setTimeout(() => setIntroPhase(3), 2800);
-    const t4 = setTimeout(() => onComplete(), 3600);
+    const t1 = setTimeout(() => setIntroPhase(1), 100);
+    const t2 = setTimeout(() => setIntroPhase(2), 850);
+    const t3 = setTimeout(() => setIntroPhase(3), 1350);
+    const t4 = setTimeout(() => onComplete(), 1900);
 
     return () => {
       clearTimeout(t1);
@@ -36,7 +36,7 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
         className={styles.systemText}
         style={{ opacity: introPhase >= 1 ? 1 : 0 }}
       >
-        System v2.4 — Initializing
+        Klar. Modern. Persönlich.
       </div>
 
       <div className={styles.lettersContainer}>
@@ -67,7 +67,7 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
         className={styles.loadedText}
         style={{ opacity: introPhase >= 2 ? 1 : 0 }}
       >
-        Neural Architecture · Loaded
+        Digital Systems · Ravensburg
       </div>
     </div>
   );
