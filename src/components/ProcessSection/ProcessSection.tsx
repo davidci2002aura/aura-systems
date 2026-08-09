@@ -56,12 +56,14 @@ const ProcessSection: React.FC = () => {
         >
           <div className={styles.stepsList}>
             {steps.map((step, i) => (
-              <div
+              <button
+                type="button"
                 key={i}
                 onClick={() => setActiveStep(i)}
                 className={`${styles.stepItem} ${
                   activeStep === i ? styles.active : ''
                 }`}
+                aria-pressed={activeStep === i}
               >
                 <div className={styles.stepNum}>{step.num}</div>
                 <div>
@@ -69,7 +71,7 @@ const ProcessSection: React.FC = () => {
                   <p className={styles.stepDesc}>{step.desc}</p>
                   <div className={styles.stepTime}>{step.time}</div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
 
@@ -79,11 +81,17 @@ const ProcessSection: React.FC = () => {
                 <small>PROJEKTÜBERSICHT</small>
                 <strong>Ihr digitaler Auftritt</strong>
               </div>
-              <span>In Umsetzung</span>
+              <span>Schritt {activeStep + 1} von {steps.length}</span>
             </div>
             <div className={styles.projectBody}>
-              <div className={styles.progressMeta}><span>Fortschritt</span><b>3 von 4 Schritten</b></div>
-              <div className={styles.progressTrack}><i /></div>
+              <div className={styles.progressMeta}><span>Fortschritt</span><b>{activeStep + 1} von {steps.length} Schritten</b></div>
+              <div className={styles.progressTrack}><i style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }} /></div>
+              <div className={styles.activeStepSummary} aria-live="polite">
+                <small>AKTIVER SCHRITT · {steps[activeStep].num}</small>
+                <strong>{steps[activeStep].title}</strong>
+                <p>{steps[activeStep].desc}</p>
+                <span>{steps[activeStep].time}</span>
+              </div>
               <div className={styles.deliverables}>
                 {steps.map((step, index) => (
                   <button
@@ -92,7 +100,7 @@ const ProcessSection: React.FC = () => {
                     className={index === activeStep ? styles.selectedDeliverable : ''}
                     onClick={() => setActiveStep(index)}
                   >
-                    <span>{index < 3 ? '✓' : '04'}</span>
+                    <span>{index <= activeStep ? '✓' : step.num}</span>
                     <div><small>SCHRITT {step.num}</small><strong>{step.title}</strong></div>
                     <b>→</b>
                   </button>

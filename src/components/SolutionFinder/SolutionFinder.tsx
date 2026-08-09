@@ -84,7 +84,7 @@ const SolutionFinder: React.FC = () => {
             </ul>
             <div className={styles.resultBottom}>
               <div><strong>{solution.price}</strong><small>{solution.note}</small></div>
-              <a href="#kontakt">Unverbindlich besprechen <span>→</span></a>
+              <a href="/kontakt">Unverbindlich besprechen <span>→</span></a>
             </div>
           </div>
         </div>

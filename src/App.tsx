@@ -1,10 +1,9 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import SkipLink from './components/SkipLink/SkipLink';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SkeletonLoader from './components/SkeletonLoader/SkeletonLoader';
-import Intro from './components/Intro/Intro';
 import BackgroundSystem from './components/BackgroundSystem/BackgroundSystem';
 import Navigation from './components/Navigation/Navigation';
 import Hero from './components/Hero/Hero';
@@ -24,7 +23,6 @@ const ContactForm = lazy(() => import('./components/ContactForm/ContactForm'));
 const Footer = lazy(() => import('./components/Footer/Footer'));
 
 function App() {
-  const [introGone, setIntroGone] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -43,7 +41,7 @@ function App() {
 
   const home = (
     <>
-      <Hero introGone={introGone} />
+      <Hero />
       <Suspense fallback={<SkeletonLoader />}>
         <Marquee />
         <SolutionFinder />
@@ -61,7 +59,6 @@ function App() {
     <ErrorBoundary>
       <SkipLink />
       <ScrollToTop />
-      {!introGone && <Intro onComplete={() => setIntroGone(true)} />}
       <BackgroundSystem />
       <Navigation />
 

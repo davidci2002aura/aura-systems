@@ -56,6 +56,9 @@
 }
 
 .stepItem {
+  width: 100%;
+  border-top: 0;
+  border-right: 0;
   padding: 1.75rem 0;
   display: grid;
   grid-template-columns: 44px 1fr;
@@ -66,6 +69,10 @@
   border-left: 2px solid transparent;
   margin-left: 0;
   transition: all 0.3s ease;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
 }
 
 .stepItem:last-child {
@@ -77,6 +84,9 @@
   border-left-color: rgba(0, 119, 255, 0.8);
   margin-left: -1.1rem;
 }
+
+.stepItem:focus:not(:focus-visible) { outline: none; }
+.stepItem:focus-visible { outline: 2px solid #6d607f; outline-offset: 4px; border-radius: .75rem; }
 
 .stepNum {
   font-family: var(--font-mono);
@@ -141,7 +151,12 @@
 .progressMeta { display:flex; justify-content:space-between; color:rgba(18,19,16,.5); font-size:.68rem; }
 .progressMeta b { color:#121310; font-weight:500; }
 .progressTrack { height:5px; margin:.65rem 0 1.5rem; overflow:hidden; border-radius:999px; background:rgba(18,19,16,.08); }
-.progressTrack i { display:block; width:75%; height:100%; border-radius:inherit; background:#6d607f; }
+.progressTrack i { display:block; height:100%; border-radius:inherit; background:#6d607f; transition:width .45s cubic-bezier(.2,.8,.2,1); }
+.activeStepSummary { margin-bottom:1rem; padding:1.2rem; border:1px solid rgba(109,96,127,.16); border-radius:1rem; background:linear-gradient(135deg,rgba(109,96,127,.09),rgba(255,255,255,.7)); }
+.activeStepSummary small { display:block; margin-bottom:.55rem; color:#6d607f; font-size:.52rem; letter-spacing:.11em; }
+.activeStepSummary strong { display:block; margin-bottom:.35rem; font-size:1rem; letter-spacing:-.02em; }
+.activeStepSummary p { margin:0 0 .7rem; color:rgba(18,19,16,.56); font-size:.72rem; line-height:1.55; }
+.activeStepSummary span { font-size:.55rem; letter-spacing:.08em; color:#6d607f; text-transform:uppercase; }
 .deliverables { overflow:hidden; border:1px solid rgba(18,19,16,.1); border-radius:1rem; }
 .deliverables button { width:100%; display:grid; grid-template-columns:1.8rem 1fr auto; align-items:center; gap:.8rem; padding:.85rem; border:0; border-bottom:1px solid rgba(18,19,16,.08); background:transparent; color:inherit; text-align:left; cursor:pointer; }
 .deliverables button:last-child { border-bottom:0; }
@@ -171,6 +186,8 @@
 :global([data-theme="dark"]) .deliverables button:hover,
 :global([data-theme="dark"]) .deliverables .selectedDeliverable { background:rgba(255,255,255,.045); }
 :global([data-theme="dark"]) .ownershipNote > span { background:#f5f5f7; color:#121310; }
+:global([data-theme="dark"]) .activeStepSummary { border-color:rgba(255,255,255,.1); background:linear-gradient(135deg,rgba(109,96,127,.22),rgba(255,255,255,.035)); }
+:global([data-theme="dark"]) .activeStepSummary p { color:rgba(255,255,255,.52); }
 
 .terminalHeader {
   padding: 0.85rem 1.25rem;

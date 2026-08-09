@@ -57,7 +57,7 @@ const FAQSection: React.FC = () => {
           <p className={styles.description}>
             Ehrlich. Auf den Punkt. Ohne Marketingsprache.
           </p>
-          <a href="#kontakt" className={styles.ctaButton}>
+          <a href="/kontakt" className={styles.ctaButton}>
             Frage stellen →
           </a>
         </motion.div>

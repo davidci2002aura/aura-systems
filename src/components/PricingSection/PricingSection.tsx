@@ -169,7 +169,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
       </ul>
 
       <a
-        href="#kontakt"
+        href="/kontakt"
         className={`${styles.ctaButton} ${pkg.featured ? styles.featuredCta : ''}`}
       >
         Anfragen →

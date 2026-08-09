@@ -30,9 +30,9 @@
 .title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(3.5rem, 10vw, 8.5rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(3.5rem, 8vw, 7.4rem);
+  line-height: .9;
+  letter-spacing: -0.065em;
   margin-bottom: 1.5rem;
   color: var(--aura-ink);
   transition: opacity 1s ease 0.4s;
@@ -41,12 +41,11 @@
 
 .subtitle {
   display: block;
-  font-weight: 200;
-  font-size: 0.38em;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.3);
-  margin-top: 0.4em;
-  font-family: var(--font-system);
+  font-weight: 300;
+  font-size: .72em;
+  letter-spacing: -.055em;
+  color: var(--aura-muted);
+  margin-top: .12em;
 }
 
 .description {
@@ -152,7 +151,15 @@
   background: rgba(255,255,255,.94);
   box-shadow: 0 2rem 5rem rgba(27,25,23,.12);
   backdrop-filter: blur(14px);
+  color: inherit;
+  text-decoration: none;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease, border-color .45s ease;
 }
+
+.productCard:hover { border-color: rgba(109,96,127,.38); box-shadow: 0 2.8rem 6rem rgba(27,25,23,.17); }
+.productCardWebsite:hover { transform: translateX(-50%) translateY(-.55rem); }
+.productCardCall:hover,
+.productCardFlow:hover { transform: translateY(-.55rem); }
 
 .productCardWebsite { left: 50%; bottom: -4rem; width: min(54rem, 72vw); min-height: 25rem; transform: translateX(-50%); }
 .windowBar { display: flex; height: 2.7rem; align-items: center; gap: .38rem; border-bottom: 1px solid rgba(18,19,16,.1); padding: 0 1rem; }
@@ -170,7 +177,7 @@
 .callOrb { display: grid; width: 5.4rem; height: 5.4rem; place-items: center; margin: 2rem auto 1.8rem; border: 1px solid rgba(18,19,16,.12); border-radius: 50%; background: #fff; font-size: 1.15rem; font-weight: 700; }
 .callOrb span { display:grid; width:2rem; height:2rem; place-items:center; border-radius:50%; background:#121310; color:#fff; }
 .productCardCall strong { display: block; font-size: 1.45rem; letter-spacing: -.04em; line-height: 1; }
-.productCardCall > span { position: absolute; right: 1.3rem; bottom: 1.3rem; left: 1.3rem; color: rgba(255,255,255,.5); font-size: .56rem; }
+.productCardCall > span { position: absolute; right: 1.3rem; bottom: 1.3rem; left: 1.3rem; color: rgba(18,19,16,.48); font-size: .56rem; }
 
 .productCardFlow { left: 4vw; bottom: 4.5rem; z-index: 4; width: 15rem; padding: 1.3rem; }
 .productCardFlow > small { display: block; margin-bottom: 1.3rem; color: #6d607f; }
@@ -223,7 +230,7 @@
   }
 
   .title {
-    font-size: clamp(2.5rem, 12vw, 5rem);
+    font-size: clamp(2.8rem, 13vw, 5rem);
     margin-bottom: 1.25rem;
   }
 
@@ -287,7 +294,7 @@
     max-width:21rem;
   }
 
-  .subtitle { font-size:.34em; letter-spacing:.035em; }
+  .subtitle { font-size:.7em; letter-spacing:-.05em; }
   .windowBar span { max-width:11rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 }
 
@@ -303,6 +310,7 @@
 }
 
 :global([data-theme="dark"]) .productCardCall { background: #242126; color: #f5f5f7; }
+:global([data-theme="dark"]) .productCardCall > span { color:rgba(255,255,255,.5); }
 :global([data-theme="dark"]) .callOrb { background: #151517; border-color: rgba(255,255,255,.14); }
 :global([data-theme="dark"]) .callOrb span { background: #f5f5f7; color: #121310; }
 :global([data-theme="dark"]) .windowBar,
