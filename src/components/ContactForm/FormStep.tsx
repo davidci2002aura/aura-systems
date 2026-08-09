@@ -45,7 +45,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 1) {
     return (
       <StepLayout
-        label="QUERY_01"
+        label="SCHRITT 01"
         title="Was benötigen Sie?"
         onBack={null}
       >
@@ -73,7 +73,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 2) {
     return (
       <StepLayout
-        label="QUERY_02"
+        label="SCHRITT 02"
         title="Ihr Investitionsrahmen?"
         onBack={onBack}
       >
@@ -94,7 +94,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 3) {
     return (
       <StepLayout
-        label="QUERY_03"
+        label="SCHRITT 03"
         title="Wie dürfen wir Sie nennen?"
         onBack={onBack}
       >
@@ -133,7 +133,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 4) {
     return (
       <StepLayout
-        label="QUERY_04"
+        label="SCHRITT 04"
         title="Wie erreichen wir Sie?"
         onBack={onBack}
       >
@@ -172,7 +172,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 5) {
     return (
       <StepLayout
-        label="QUERY_05"
+        label="SCHRITT 05"
         title="Beschreiben Sie Ihr Projekt"
         onBack={onBack}
       >
@@ -206,7 +206,7 @@ const FormStep: React.FC<FormStepProps> = ({
   if (step === 6) {
     return (
       <StepLayout
-        label="QUERY_06"
+        label="SCHRITT 06"
         title="Alles bereit."
         onBack={onBack}
       >

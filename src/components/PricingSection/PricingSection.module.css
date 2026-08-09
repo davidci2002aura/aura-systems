@@ -76,7 +76,7 @@
   font-family: var(--font-mono);
   font-size: 0.48rem;
   letter-spacing: 0.15em;
-  background: #0077ff;
+  background: #6d607f;
   color: #fff;
   padding: 0.22rem 0.6rem;
   border-radius: 0 0 4px 4px;
@@ -156,7 +156,12 @@
   border-radius: var(--radius-md);
   text-decoration: none;
   transition: all var(--transition-fast);
+  color: var(--aura-ink);
+  border: 1px solid var(--aura-line);
 }
+
+.featuredCta { background:#121310; color:#fff; border-color:#121310; }
+:global([data-theme="dark"]) .featuredCta { background:#f5f5f7; color:#121310; border-color:#f5f5f7; }
 
 .ctaButton:hover {
   opacity: 0.9;

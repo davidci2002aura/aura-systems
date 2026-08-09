@@ -10,6 +10,7 @@ import Hero from './components/Hero/Hero';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
+const SolutionFinder = lazy(() => import('./components/SolutionFinder/SolutionFinder'));
 const BentoGrid = lazy(() => import('./components/BentoGrid/BentoGrid'));
 const ProcessSection = lazy(() => import('./components/ProcessSection/ProcessSection'));
 const PricingSection = lazy(() => import('./components/PricingSection/PricingSection'));
@@ -33,6 +34,7 @@ function App() {
 
         <Suspense fallback={<SkeletonLoader />}>
           <Marquee />
+          <SolutionFinder />
           <BentoGrid />
           <ProcessSection />
           <PricingSection />

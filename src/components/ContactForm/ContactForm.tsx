@@ -93,10 +93,10 @@ const ContactForm: React.FC = () => {
                 <div key={c} className={styles.dot} style={{ background: c }} />
               ))}
             </div>
-            <span className={styles.filename}>neural-inquiry.ts</span>
+            <span className={styles.filename}>Ihre Projektanfrage</span>
             <span className={styles.status}>
               <span className={styles.statusDot} />
-              SYSTEM READY
+              BEREIT
             </span>
           </div>
 

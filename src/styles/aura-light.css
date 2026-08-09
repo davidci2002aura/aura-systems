@@ -191,3 +191,12 @@ footer { background: #ececef !important; color: #121310 !important; }
   nav[aria-label="Hauptnavigation"] [role="menubar"] { width: auto !important; }
   nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { width: auto !important; }
 }
+
+@media (max-width: 768px) {
+  #root > [class*="_background_"] [class*="_orb_"] { display:none !important; }
+  #leistungen,
+  #prozess,
+  #preise,
+  #faq,
+  #kontakt { scroll-margin-top:4.5rem; }
+}

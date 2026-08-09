@@ -129,10 +129,10 @@
 
 @media (max-width: 640px) {
   .nav {
-    padding: 0.85rem 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
+    padding: 0.8rem 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0.7rem;
   }
 
   .logoText {
@@ -145,8 +145,8 @@
   }
 
   .menu {
-    gap: .6rem;
-    justify-content: center;
+    gap: .5rem;
+    justify-content: flex-end;
   }
 
   .ctaButton {
@@ -155,4 +155,11 @@
     width: 100%;
     text-align: center;
   }
+}
+
+@media (max-width: 430px) {
+  .logoSubtext { display:none; }
+  .themeToggle { width:2rem; height:2rem; }
+  .ctaButton { width:auto; font-size:0; padding:.62rem .85rem; border-radius:999px; }
+  .ctaButton::before { content:"Starten"; font-size:.7rem; }
 }

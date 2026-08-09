@@ -211,9 +211,9 @@
 /* Mobile Optimizations */
 @media (max-width: 768px) {
   .hero {
-    min-height: 58rem;
+    min-height: 55rem;
     justify-content: flex-start;
-    padding: 9rem 1.5rem 23rem;
+    padding: 8.5rem 1.5rem 21rem;
   }
 
   .badge {
@@ -256,17 +256,20 @@
     height: 38px;
   }
 
-  .productStage { height: 19rem; }
-  .productCardWebsite { bottom: -7rem; width: 92vw; min-height: 19rem; }
+  .productStage { height: 20rem; }
+  .productCardWebsite { bottom: -5rem; width: calc(100vw - 2rem); min-height: 19rem; border-radius:1.15rem; }
   .websitePreview { min-height: 18rem; padding: 2rem 1.4rem; }
-  .websitePreview strong { font-size: 2.8rem; }
+  .websitePreview strong { margin-top:1.5rem; font-size:clamp(2.1rem,11vw,3rem); }
+  .websitePreview > div { right:1.25rem; bottom:1.25rem; left:1.25rem; gap:.45rem; }
+  .websitePreview > div span { font-size:.52rem; }
   .productCardCall,
   .productCardFlow { display: none; }
 }
 
 @media (max-width: 480px) {
   .hero {
-    padding: 8rem 1rem 22rem;
+    min-height: 53rem;
+    padding: 7.7rem 1rem 20rem;
   }
 
   .badge {
@@ -275,13 +278,17 @@
   }
 
   .title {
-    font-size: clamp(2rem, 14vw, 3.5rem);
+    font-size: clamp(3rem, 16vw, 4.2rem);
   }
 
   .description {
     font-size: 0.88rem;
     line-height: 1.6;
+    max-width:21rem;
   }
+
+  .subtitle { font-size:.34em; letter-spacing:.035em; }
+  .windowBar span { max-width:11rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 }
 
 :global([data-theme="dark"]) .productCard {

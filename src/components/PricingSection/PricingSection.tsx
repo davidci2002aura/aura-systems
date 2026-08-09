@@ -21,7 +21,7 @@ const PricingSection: React.FC = () => {
     },
     {
       name: 'MODERNER ONEPAGER',
-      price: '590 €',
+      price: '790 €',
       priceNote: 'einmalig',
       color: '#111111',
       bg: 'rgba(109,96,127,0.06)',
@@ -39,7 +39,7 @@ const PricingSection: React.FC = () => {
     },
     {
       name: 'ONEPAGER + BETREUUNG',
-      price: '590 € + 59 €/Monat',
+      price: '790 € + 79 €/Monat',
       priceNote: 'monatlich kündbar',
       color: '#7c6b5e',
       bg: null,
@@ -55,7 +55,7 @@ const PricingSection: React.FC = () => {
     },
     {
       name: 'KI-TELEFON-PILOT',
-      price: 'ab 290 €',
+      price: 'ab 690 €',
       priceNote: 'zzgl. Anbietergebühren',
       color: '#6d607f',
       bg: null,
@@ -66,6 +66,7 @@ const PricingSection: React.FC = () => {
         'Rückrufdaten und Anliegen aufnehmen',
         'Eigener Test vor Aktivierung',
         'Fremdkosten vorab ausweisen',
+        '30 Tage technische Nachprüfung',
       ],
       off: [],
     },
@@ -138,7 +139,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
     >
-      {pkg.featured && <div className={styles.badge}>POPULAR</div>}
+      {pkg.featured && <div className={styles.badge}>EMPFOHLEN</div>}
 
       <div>
         <div className={styles.packageName} style={{ color: pkg.color }}>
@@ -169,12 +170,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ pkg }) => {
 
       <a
         href="#kontakt"
-        className={styles.ctaButton}
-        style={{
-          background: pkg.featured ? '#0077ff' : 'transparent',
-          color: pkg.featured ? '#fff' : 'rgba(255,255,255,0.5)',
-          border: pkg.featured ? 'none' : '1px solid rgba(255,255,255,0.1)',
-        }}
+        className={`${styles.ctaButton} ${pkg.featured ? styles.featuredCta : ''}`}
       >
         Anfragen →
       </a>

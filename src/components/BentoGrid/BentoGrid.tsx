@@ -64,7 +64,7 @@ const BentoGrid: React.FC = () => {
             tag="03 — Onepager"
             title="In Sekunden verstanden."
             desc="Leistungen, Vertrauen und Kontakt in einer klaren mobilen Seite."
-            stat="590 €"
+            stat="790 €"
             statLabel="fester Einstiegspreis"
             statColor="#22c55e"
           />
@@ -86,7 +86,7 @@ const BentoGrid: React.FC = () => {
             tag="06 — Betreuung"
             title="Kleine Änderungen inklusive."
             desc="Laufende Betreuung für den Onepager, monatlich kündbar."
-            stat="59 €"
+            stat="79 €"
             statLabel="pro Monat"
           />
 
