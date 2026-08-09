@@ -4,10 +4,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/websites", "destination": "/index.html" },
-    { "source": "/automatisierung", "destination": "/index.html" },
-    { "source": "/vorgehensweise", "destination": "/index.html" },
-    { "source": "/kontakt", "destination": "/index.html" }
+    { "source": "/websites", "destination": "/" },
+    { "source": "/automatisierung", "destination": "/" },
+    { "source": "/vorgehensweise", "destination": "/" },
+    { "source": "/kontakt", "destination": "/" }
   ],
   "headers": [
     {
