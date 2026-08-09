@@ -11,6 +11,7 @@ import WebsitesPage from './pages/WebsitesPage';
 import AutomationPage from './pages/AutomationPage';
 import ProcessPage from './pages/ProcessPage';
 import ContactPage from './pages/ContactPage';
+import AyoPage from './pages/AyoPage';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
@@ -34,6 +35,7 @@ function App() {
       '/automatisierung': 'Geschäftsautomatisierung | Aura Systems',
       '/vorgehensweise': 'Vorgehen & Preise | Aura Systems',
       '/kontakt': 'Projekt anfragen | Aura Systems',
+      '/ayo': 'Café AYO Ravensburg · Konzeptdemo',
     };
 
     document.title = pageTitles[location.pathname] ?? pageTitles['/'];
@@ -54,6 +56,14 @@ function App() {
       </Suspense>
     </>
   );
+
+  if (location.pathname === '/ayo') {
+    return (
+      <ErrorBoundary>
+        <AyoPage />
+      </ErrorBoundary>
+    );
+  }
 
   return (
     <ErrorBoundary>
