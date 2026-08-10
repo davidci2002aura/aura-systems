@@ -36,6 +36,7 @@ function App() {
       '/vorgehensweise': 'Vorgehen & Preise | Aura Systems',
       '/kontakt': 'Projekt anfragen | Aura Systems',
       '/ayo': 'Café AYO Ravensburg · Konzeptdemo',
+      '/projekte/ayo': 'Café AYO Ravensburg · Konzeptdemo',
     };
 
     document.title = pageTitles[location.pathname] ?? pageTitles['/'];
@@ -57,7 +58,7 @@ function App() {
     </>
   );
 
-  if (location.pathname === '/ayo') {
+  if (location.pathname === '/ayo' || location.pathname === '/projekte/ayo') {
     return (
       <ErrorBoundary>
         <AyoPage />
