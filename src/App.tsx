@@ -12,6 +12,7 @@ import AutomationPage from './pages/AutomationPage';
 import ProcessPage from './pages/ProcessPage';
 import ContactPage from './pages/ContactPage';
 import AyoPage from './pages/AyoPage';
+import LegalPage from './pages/LegalPage';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
@@ -35,6 +36,8 @@ function App() {
       '/automatisierung': 'Geschäftsautomatisierung | Aura Systems',
       '/vorgehensweise': 'Vorgehen & Preise | Aura Systems',
       '/kontakt': 'Projekt anfragen | Aura Systems',
+      '/impressum': 'Impressum | Aura Systems',
+      '/datenschutz': 'Datenschutz | Aura Systems',
       '/ayo': 'Café AYO Ravensburg · Konzeptdemo',
       '/projekte/ayo': 'Café AYO Ravensburg · Konzeptdemo',
     };
@@ -80,6 +83,8 @@ function App() {
           <Route path="/automatisierung" element={<AutomationPage />} />
           <Route path="/vorgehensweise" element={<ProcessPage />} />
           <Route path="/kontakt" element={<ContactPage />} />
+          <Route path="/impressum" element={<LegalPage type="impressum" />} />
+          <Route path="/datenschutz" element={<LegalPage type="datenschutz" />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

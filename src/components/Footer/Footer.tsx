@@ -16,9 +16,8 @@ const Footer: React.FC = () => {
     {
       title: 'Rechtliches',
       links: [
-        ['Impressum', '/impressum.html'],
-        ['Datenschutz', '/datenschutz.html'],
-        ['AGB', '/agb.html'],
+        ['Impressum', '/impressum'],
+        ['Datenschutz', '/datenschutz'],
       ],
     },
     {
@@ -62,12 +61,12 @@ const Footer: React.FC = () => {
             </div>
             <div style={{ marginTop: '0.4rem' }}>
               <a
-                href="https://aura-systems.de"
+                href="https://aura-systems-175p.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.contactLink}
               >
-                aura-systems.de
+                aura-systems-175p.vercel.app
               </a>
             </div>
             <div style={{ marginTop: '0.4rem' }}>
