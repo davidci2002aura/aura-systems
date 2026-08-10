@@ -39,8 +39,8 @@ const Footer: React.FC = () => {
           <div className={styles.logoText}>AURA</div>
           <div className={styles.logoSubtext}>Digital Systems</div>
           <p className={styles.brandDescription}>
-            Klare Websites, gezielte Reparaturen und kleine Automatisierungen
-            für lokale Betriebe.
+            Websites, KI-Assistenten und kontrollierte Automatisierungen für
+            lokale Betriebe auf dem Weg zum AI-native Unternehmen.
           </p>
           <div className={styles.contactInfo}>
             <div>Inhaber: David Lamberts</div>

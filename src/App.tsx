@@ -31,9 +31,9 @@ function App() {
     if (!location.hash) window.scrollTo({ top: 0, behavior: 'auto' });
 
     const pageTitles: Record<string, string> = {
-      '/': 'Aura Systems | Websites & Automatisierung aus Ravensburg',
+      '/': 'Aura Systems | Websites, KI & Automatisierung aus Ravensburg',
       '/websites': 'Websites & Webanwendungen | Aura Systems',
-      '/automatisierung': 'Geschäftsautomatisierung | Aura Systems',
+      '/automatisierung': 'AI-native Automatisierung | Aura Systems',
       '/vorgehensweise': 'Vorgehen & Preise | Aura Systems',
       '/kontakt': 'Projekt anfragen | Aura Systems',
       '/impressum': 'Impressum | Aura Systems',

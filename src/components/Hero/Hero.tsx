@@ -5,16 +5,16 @@ const Hero: React.FC = () => {
     <section className={styles.hero}>
 
       <div className={styles.badge}>
-        Websites · Automatisierung · Ravensburg
+        AI-native Systeme · Websites · Ravensburg
       </div>
 
       <h1 className={styles.title}>
         <span>Digitale Systeme,</span>
-        <span className={styles.subtitle}>die ruhig überzeugen.</span>
+        <span className={styles.subtitle}>die mitdenken und entlasten.</span>
       </h1>
 
       <p className={styles.description}>
-        Hochwertige Websites und klare Automatisierungen für lokale Betriebe.
+        Hochwertige Websites, KI-Assistenten und klare Automatisierungen für lokale Betriebe.
         <br />
         Durchdacht geplant. Präzise umgesetzt. Sauber übergeben.
       </p>
@@ -44,8 +44,8 @@ const Hero: React.FC = () => {
           <span>Name · Anliegen · Rückrufzeit</span>
         </a>
         <a className={`${styles.productCard} ${styles.productCardFlow}`} href="/automatisierung" aria-label="Automatisierungsabläufe entdecken">
-          <small>ANFRAGE-FLOW</small>
-          {['Eingang', 'Struktur', 'Entscheidung'].map((item, index) => <div key={item}><i>{index + 1}</i><span>{item}</span><b>{index === 2 ? '✓' : '→'}</b></div>)}
+          <small>AI-NATIVE WORKFLOW</small>
+          {['Eingang', 'KI-Verarbeitung', 'Freigabe'].map((item, index) => <div key={item}><i>{index + 1}</i><span>{item}</span><b>{index === 2 ? '✓' : '→'}</b></div>)}
         </a>
       </div>
 

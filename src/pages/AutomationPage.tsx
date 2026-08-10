@@ -2,10 +2,12 @@ import Footer from '../components/Footer/Footer';
 import styles from './Pages.module.css';
 
 const useCases = [
-  { title:'Anfragen', text:'Formular, E-Mail oder Telefonanfrage landet mit den nötigen Angaben an einem Ort.', input:'Formular · E-Mail', output:'Geordnete Anfrage' },
-  { title:'Rückrufe', text:'Name, Nummer und gewünschte Rückrufzeit werden strukturiert weitergegeben.', input:'Telefon · Website', output:'Rückrufübersicht' },
-  { title:'Dokumente', text:'Wiederkehrende Daten werden geprüft, sortiert und für den nächsten Schritt vorbereitet.', input:'PDF · Angaben', output:'Prüfbarer Datensatz' },
-  { title:'Übergaben', text:'Nach Freigabe werden Informationen an Kalender, Tabelle oder zuständige Person übergeben.', input:'Freigabe', output:'Saubere Übergabe' },
+  { title:'Anfrage-Workflows', text:'Formular, E-Mail oder Telefonanfrage landet mit den nötigen Angaben an einem Ort.', input:'Formular · E-Mail', output:'Geordnete Anfrage' },
+  { title:'KI-Telefonservice', text:'Anliegen, Kontaktdaten und Rückrufzeit werden transparent aufgenommen und zusammengefasst.', input:'Anruf', output:'Rückrufübersicht' },
+  { title:'E-Mail-Assistent', text:'Wiederkehrende Nachrichten werden klassifiziert, zusammengefasst und als Antwortentwurf vorbereitet.', input:'Postfach', output:'Geprüfter Entwurf' },
+  { title:'Dokumenten-Flows', text:'Freigegebene Dokumente werden ausgelesen, geprüft und für den nächsten Schritt strukturiert.', input:'PDF · Angaben', output:'Prüfbarer Datensatz' },
+  { title:'Wissensassistent', text:'Ein interner Assistent beantwortet Fragen ausschließlich aus freigegebenen Unternehmensunterlagen.', input:'Wissen · Frage', output:'Belegte Antwort' },
+  { title:'Systemübergaben', text:'Nach menschlicher Freigabe gehen Daten an Kalender, CRM, Tabelle oder zuständige Person.', input:'Freigabe', output:'Saubere Übergabe' },
 ];
 
 const AutomationPage: React.FC = () => (
@@ -13,9 +15,9 @@ const AutomationPage: React.FC = () => (
     <main className={styles.page}>
       <section className={`${styles.pageHero} ${styles.automationHero}`}>
         <div className={styles.heroCopy}>
-          <span className={styles.eyebrow}>Automatisierungen</span>
-          <h1>Weniger Nacharbeit. Die Kontrolle bleibt.</h1>
-          <p>Wir automatisieren klar begrenzte, wiederkehrende Abläufe. Entscheidungen mit Folgen bleiben beim Menschen.</p>
+          <span className={styles.eyebrow}>AI-native Automatisierung</span>
+          <h1>KI dort einsetzen, wo sie wirklich Arbeit abnimmt.</h1>
+          <p>Wir verbinden bestehende Abläufe mit passenden KI- und Automatisierungsbausteinen. Kritische Entscheidungen und Veröffentlichungen bleiben kontrollierbar.</p>
           <div className={styles.heroActions}><a className={styles.primaryAction} href="/kontakt">Ablauf prüfen lassen <span>→</span></a><a className={styles.textAction} href="#ablaeufe">Beispiele ansehen ↓</a></div>
         </div>
         <div className={styles.flowBoard}>
@@ -32,7 +34,7 @@ const AutomationPage: React.FC = () => (
       </section>
 
       <section id="ablaeufe" className={styles.offerSection}>
-        <div className={styles.sectionLead}><span>Typische Einsatzfälle</span><h2>Kleine Systeme mit<br />spürbarem Nutzen.</h2><p>Wir beginnen mit einem überprüfbaren Pilot, nicht mit einem unüberschaubaren Großprojekt.</p></div>
+        <div className={styles.sectionLead}><span>Typische Einsatzfälle</span><h2>Vom Einzelproblem zum<br />AI-native Betrieb.</h2><p>Wir beginnen mit einem überprüfbaren Pilot. Erst wenn Nutzen, Datenschutz und Fehlerwege stimmen, wird der Ablauf erweitert.</p></div>
         <div className={styles.useCaseGrid}>{useCases.map(({title,text,input,output}, index) => <article key={title}><div className={styles.caseTop}><span>0{index + 1}</span><i>LIVE FLOW</i></div><h3>{title}</h3><p>{text}</p><div className={styles.miniFlow}><span>{input}</span><b>→</b><strong>{output}</strong></div><a href="/kontakt">Ablauf prüfen <b>↗</b></a></article>)}</div>
       </section>
 
@@ -47,7 +49,7 @@ const AutomationPage: React.FC = () => (
         <div className={styles.phoneCopy}><span>KI-Telefon-Pilot</span><h2>Erst testen. Dann bewusst aktivieren.</h2><p>Der Pilot nimmt nur die vereinbarten Angaben auf, kennzeichnet sich transparent und wird vor einer Weiterleitung mit Beispieldaten geprüft.</p><ul><li>Keine erfundene menschliche Identität</li><li>Fremdkosten separat und sichtbar</li><li>Konten möglichst direkt beim Kunden</li><li>Datensparsame Gesprächsführung</li></ul><div><strong>ab 690 €</strong><small>plus Nutzung und optionale Betreuung</small></div></div>
       </section>
 
-      <section className={styles.largeCta}><span>Ein konkreter Ablauf genügt</span><h2>Zeigen Sie uns die wiederkehrende Handarbeit.</h2><a href="/kontakt">Automatisierung prüfen <b>→</b></a></section>
+      <section className={styles.largeCta}><span>Ein konkreter Ablauf genügt</span><h2>Wir finden den sinnvollsten ersten KI-Einsatz.</h2><a href="/kontakt">AI-native Potenzial prüfen <b>→</b></a></section>
     </main>
     <Footer />
   </>

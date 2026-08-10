@@ -54,7 +54,9 @@ const FormStep: React.FC<FormStepProps> = ({
           ['Moderner Onepager', 'Eine klare kleine Website von Grund auf'],
           ['Onepager + Betreuung', 'Website mit laufenden kleinen Änderungen'],
           ['KI-Telefonservice', 'Rückrufanliegen aufnehmen und zusammenfassen'],
+          ['E-Mail- oder Wissensassistent', 'Informationen aus freigegebenen Quellen vorbereiten'],
           ['Ablauf automatisieren', 'Wiederkehrende Handarbeit zuerst prüfen'],
+          ['AI-native Prozess-Sprint', 'Mehrere Schritte als kontrolliertes System verbinden'],
         ].map(([main, sub]) => (
           <ChoiceButton
             key={main}
@@ -77,7 +79,7 @@ const FormStep: React.FC<FormStepProps> = ({
         title="Ihr Investitionsrahmen?"
         onBack={onBack}
       >
-        {['Bis 200 €', '200 € – 700 €', '700 € – 1.500 €', 'Noch offen'].map((budget) => (
+        {['Bis 200 €', '200 € – 700 €', '700 € – 1.500 €', '1.500 € – 3.000 €', 'Über 3.000 €', 'Noch offen'].map((budget) => (
           <ChoiceButton
             key={budget}
             main={budget}

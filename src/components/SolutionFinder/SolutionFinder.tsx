@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './SolutionFinder.module.css';
 
-type Goal = 'repair' | 'website' | 'automation';
+type Goal = 'repair' | 'website' | 'automation' | 'ai';
 
 const solutions: Record<Goal, {
   label: string;
@@ -38,6 +38,15 @@ const solutions: Record<Goal, {
     price: 'ab 390 €',
     note: 'einmalig · Fremdkosten werden separat ausgewiesen',
     items: ['Ablauf und Grenzen festlegen', 'Test mit Beispieldaten', 'Kontrollierte Freigabe'],
+  },
+  ai: {
+    label: 'KI im Betrieb einsetzen',
+    eyebrow: 'AI-native Prozess-Sprint',
+    title: 'Ein sinnvoller KI-Einsatz statt vieler Einzeltools.',
+    description: 'Für Betriebe, die E-Mail, Wissen, Dokumente oder Übergaben als zusammenhängenden Prozess verbessern möchten.',
+    price: 'ab 1.490 €',
+    note: 'individuell · nach Prozess-Audit und klarer Abgrenzung',
+    items: ['Geeigneten Prozess auswählen', 'KI mit freigegebenen Daten testen', 'Kontrollen und Übergabe dokumentieren'],
   },
 };
 

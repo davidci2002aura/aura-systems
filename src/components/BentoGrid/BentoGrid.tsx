@@ -10,9 +10,9 @@ const BentoGrid: React.FC = () => {
           <span className={styles.tagLine} /> Was wir bauen
         </div>
         <h2 className={styles.sectionTitle}>
-          Konkrete Lösungen.
+          Websites. Automatisierung. KI.
           <br />
-          <span className={styles.light}>Klein startbar.</span>
+          <span className={styles.light}>Als System gedacht.</span>
         </h2>
 
         <motion.div
@@ -32,9 +32,9 @@ const BentoGrid: React.FC = () => {
           {/* Big card - Neural Operations */}
           <div className={styles.bigCard}>
             <BentoCard
-              tag="01 — Geführter Ablauf"
-              title="Anfragen sauber vorsortieren"
-              desc="Formular-, E-Mail- oder Telefonanfragen landen mit den nötigen Angaben in einem nachvollziehbaren Ablauf."
+              tag="01 — AI-native Operations"
+              title="Anfragen verstehen und kontrolliert weiterführen"
+              desc="Formular-, E-Mail- oder Telefonanfragen werden geordnet, zusammengefasst und nach Freigabe an den richtigen nächsten Schritt übergeben."
               accent
             >
               <div className={styles.workflowList}>
@@ -70,9 +70,9 @@ const BentoGrid: React.FC = () => {
           />
 
           <BentoCard
-            tag="04 — KI-Telefonservice"
-            title="Rückruf statt verpasster Anfrage."
-            desc="Ein begrenzter Pilot nimmt Name, Nummer, Anliegen und Rückrufzeit auf, wenn niemand abnimmt."
+            tag="04 — KI-Assistenten"
+            title="Telefon, E-Mail und Wissen sinnvoll verbinden."
+            desc="Begrenzte Assistenten bereiten Informationen vor, ohne sich als Mensch auszugeben oder ungeprüft zu entscheiden."
             purple
           />
           <BentoCard
@@ -91,9 +91,9 @@ const BentoGrid: React.FC = () => {
           />
 
           <BentoCard
-            tag="07 — Kontrollpunkt"
-            title="Der Mensch entscheidet."
-            desc="Automatisierungen starten mit klaren Grenzen und einem überprüfbaren Ergebnis."
+            tag="07 — AI-native Prinzip"
+            title="KI ist Teil des Prozesses, nicht nur ein Chatfenster."
+            desc="Datenquelle, Verarbeitung, Freigabe, Übergabe und Fehlerweg werden als zusammenhängendes System geplant."
             accent
           >
             <div className={styles.controlPanel}>
@@ -107,9 +107,9 @@ const BentoGrid: React.FC = () => {
 
           <div className={styles.wideCard}>
             <BentoCard
-              tag="08 — Transparenz"
-              title="Keine erfundenen Erfolgszahlen."
-              desc="Arbeitsproben sind als Konzepte gekennzeichnet. Umfang, Fremdkosten und Risiken werden vor dem Start getrennt benannt."
+              tag="08 — Betrieb & Optimierung"
+              title="Nach dem Pilot messbar weiterentwickeln."
+              desc="Nutzung, Fehler und Zeitersparnis werden geprüft. Erst danach folgen weitere Automatisierungen oder laufende AI-Operations-Betreuung."
               purple
             >
               <div className={styles.scopePanel}>

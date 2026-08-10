@@ -54,6 +54,21 @@ const PricingSection: React.FC = () => {
       off: [],
     },
     {
+      name: 'PROZESS-AUDIT',
+      price: '290 €',
+      priceNote: 'einmalig',
+      color: '#7c6b5e',
+      bg: null,
+      border: 'rgba(124,107,94,0.18)',
+      features: [
+        'Einen wiederkehrenden Ablauf aufnehmen',
+        'Engpass und Datenwege sichtbar machen',
+        'Passenden Pilot abgrenzen',
+        'Risiken und Fremdkosten benennen',
+      ],
+      off: ['Technische Umsetzung des Piloten'],
+    },
+    {
       name: 'KI-TELEFON-PILOT',
       price: 'ab 690 €',
       priceNote: 'zzgl. Anbietergebühren',
@@ -69,6 +84,22 @@ const PricingSection: React.FC = () => {
         '30 Tage technische Nachprüfung',
       ],
       off: [],
+    },
+    {
+      name: 'AI-NATIVE PROZESS-SPRINT',
+      price: 'ab 2.490 €',
+      priceNote: 'nach klarer Prozessabgrenzung',
+      color: '#6d607f',
+      bg: 'rgba(109,96,127,0.06)',
+      border: 'rgba(109,96,127,0.25)',
+      features: [
+        'Mehrstufiger KI- oder Automatisierungs-Pilot',
+        'E-Mail, Wissen, Dokumente oder Übergaben',
+        'Testdaten und menschliche Freigaben',
+        'Dokumentierter Fehler- und Abbruchweg',
+        'Übergabe und 30 Tage Nachprüfung',
+      ],
+      off: ['Laufende Anbietergebühren', 'Unbegrenzte Individualentwicklung'],
     },
   ];
 

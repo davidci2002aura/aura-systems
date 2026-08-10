@@ -1,7 +1,7 @@
 {
   "name": "Aura Systems",
   "short_name": "AURA",
-  "description": "Websites und kleine Automatisierungen für lokale Unternehmen.",
+  "description": "Websites, KI-Assistenten und kontrollierte Automatisierungen für lokale Unternehmen.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f5f5f7",
@@ -9,16 +9,10 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "categories": ["business", "productivity"],
