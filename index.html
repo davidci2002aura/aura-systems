@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" style="background:#f5f5f7">
+<html lang="de" style="background:#0d0d0f">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -9,7 +9,7 @@
     <script>
       (() => {
         const saved = localStorage.getItem('aura-theme');
-        const dark = saved === 'dark';
+        const dark = saved !== 'light';
         document.documentElement.dataset.theme = dark ? 'dark' : 'light';
         document.documentElement.style.background = dark ? '#0d0d0f' : '#f5f5f7';
       })();
@@ -41,8 +41,8 @@
     <meta property="twitter:description" content="Kontrollierte digitale Systeme für lokale Unternehmen – von der Website bis zum AI-native Prozess." />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#f5f5f7" />
-    <meta name="msapplication-TileColor" content="#f5f5f7" />
+    <meta name="theme-color" content="#0d0d0f" />
+    <meta name="msapplication-TileColor" content="#0d0d0f" />
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
@@ -70,7 +70,7 @@
     }
     </script>
   </head>
-  <body style="background:#f5f5f7">
+  <body style="background:#0d0d0f">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
