@@ -28,39 +28,25 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      <div className={styles.productStage}>
-        <figure
-          className={styles.systemFilm}
-          aria-label="Website, KI und Automatisierung greifen als ein digitales System ineinander"
-        >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/aura-systems-flow-poster.png"
-            aria-hidden="true"
-          >
-            <source src="/aura-systems-flow.mp4" type="video/mp4" />
-          </video>
-          <img
-            className={styles.systemPoster}
-            src="/aura-systems-flow-poster.png"
-            alt="Helle Glasmodule für Website, KI und Automatisierung, die präzise ineinandergreifen"
-          />
-          <div className={styles.systemSteps} aria-hidden="true">
-            <span><i>01</i> Website</span>
-            <b>→</b>
-            <span><i>02</i> KI</span>
-            <b>→</b>
-            <span><i>03</i> Automation</span>
+      <div className={styles.productStage} aria-label="Aura Systems Leistungsübersicht">
+        <a className={`${styles.productCard} ${styles.productCardWebsite}`} href="/websites" aria-label="Websites und Webanwendungen entdecken">
+          <div className={styles.windowBar}><i /><i /><i /><span>Websites entdecken&nbsp; ↗</span></div>
+          <div className={styles.websitePreview}>
+            <small>WEBSITE · KLAR STRUKTURIERT</small>
+            <strong>Ein Auftritt,<br />der ruhig überzeugt.</strong>
+            <div><span>01&nbsp; Leistungen</span><span>02&nbsp; Vertrauen</span><span>03&nbsp; Kontakt</span></div>
           </div>
-          <figcaption>
-            <strong>Ein System statt einzelner Insellösungen.</strong>
-            <a href="/automatisierung">Zusammenspiel entdecken&nbsp; ↗</a>
-          </figcaption>
-        </figure>
+        </a>
+        <a className={`${styles.productCard} ${styles.productCardCall}`} href="/automatisierung" aria-label="KI-Telefonservice entdecken">
+          <small>ANFRAGE · ERFASST</small>
+          <div className={styles.callOrb}><span>✓</span></div>
+          <strong>Alles Wichtige<br />auf einen Blick</strong>
+          <span>Name · Anliegen · Rückrufzeit</span>
+        </a>
+        <a className={`${styles.productCard} ${styles.productCardFlow}`} href="/automatisierung" aria-label="Automatisierungsabläufe entdecken">
+          <small>AI-NATIVE WORKFLOW</small>
+          {['Eingang', 'KI-Verarbeitung', 'Freigabe'].map((item, index) => <div key={item}><i>{index + 1}</i><span>{item}</span><b>{index === 2 ? '✓' : '→'}</b></div>)}
+        </a>
       </div>
 
     </section>
