@@ -14,7 +14,7 @@ const Navigation: React.FC = () => {
 
   useEffect(() => {
     document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-    localStorage.setItem('aura-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('aura-theme-mode', dark ? 'dark' : 'light');
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', dark ? '#0d0d0f' : '#f5f5f7');
