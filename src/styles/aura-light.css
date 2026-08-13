@@ -27,6 +27,11 @@
   --color-text-primary: var(--aura-ink);
   --color-primary: #f5f5f7;
   --color-primary-dark: #dedee2;
+  --aura-cta-fill: linear-gradient(135deg, #ddd1e7 0%, #b9a8c8 100%);
+  --aura-cta-fill-hover: linear-gradient(135deg, #e8deef 0%, #c6b6d3 100%);
+  --aura-cta-ink: #171419;
+  --aura-cta-border: rgba(255, 255, 255, .26);
+  --aura-cta-shadow: 0 .8rem 2rem rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .45);
   color-scheme: dark;
 }
 
@@ -151,12 +156,12 @@ footer { background: #ececef !important; color: #121310 !important; }
 [data-theme="dark"] nav[aria-label="Hauptnavigation"] { background:rgba(13,13,15,.82) !important; border-color:rgba(255,255,255,.12) !important; }
 [data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_logoText_"] { color:#f5f5f7 !important; }
 [data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_menuLink_"] { color:rgba(255,255,255,.56) !important; }
-[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { background:#f5f5f7 !important; color:#121310 !important; }
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { background:var(--aura-cta-fill) !important; color:var(--aura-cta-ink) !important; border:1px solid var(--aura-cta-border) !important; box-shadow:var(--aura-cta-shadow); }
 [data-theme="dark"] #main-content > section:first-child { background:radial-gradient(circle at 78% 24%, rgba(91,74,105,.28), transparent 28rem),linear-gradient(180deg,#111114,#0d0d0f) !important; }
 [data-theme="dark"] #main-content > section:first-child [class*="_title_"] { color:#f5f5f7 !important; }
 [data-theme="dark"] #main-content > section:first-child [class*="_subtitle_"] { color:rgba(255,255,255,.42) !important; }
 [data-theme="dark"] #main-content > section:first-child [class*="_description_"] { color:rgba(255,255,255,.65) !important; }
-[data-theme="dark"] #main-content > section:first-child [class*="_primaryButton_"] { background:#f5f5f7 !important; color:#121310 !important; box-shadow:0 1rem 2.5rem rgba(0,0,0,.26) !important; }
+[data-theme="dark"] #main-content > section:first-child [class*="_primaryButton_"] { background:var(--aura-cta-fill) !important; color:var(--aura-cta-ink) !important; border:1px solid var(--aura-cta-border) !important; box-shadow:var(--aura-cta-shadow) !important; }
 [data-theme="dark"] #main-content > section:first-child [class*="_secondaryButton_"] { color:#f5f5f7 !important; border-color:rgba(255,255,255,.2) !important; background:rgba(255,255,255,.04) !important; }
 [data-theme="dark"] #main-content > [class*="_marquee_"] { background:#141416 !important; border-color:rgba(255,255,255,.11) !important; }
 [data-theme="dark"] #leistungen,
@@ -182,6 +187,24 @@ footer { background: #ececef !important; color: #121310 !important; }
 [data-theme="dark"] #faq { background:#141416 !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.12) !important; }
 [data-theme="dark"] #faq [class*="_question_"] { color:#f5f5f7 !important; }
 [data-theme="dark"] #faq [class*="_answer_"] { color:rgba(255,255,255,.58) !important; }
+[data-theme="dark"] #finder [class*="_resultBottom_"] a,
+[data-theme="dark"] #preise [class*="_featuredCta_"],
+[data-theme="dark"] #faq [class*="_ctaButton_"],
+[data-theme="dark"] #kontakt [class*="_primaryButton_"] {
+  background:var(--aura-cta-fill) !important;
+  color:var(--aura-cta-ink) !important;
+  border:1px solid var(--aura-cta-border) !important;
+  box-shadow:var(--aura-cta-shadow) !important;
+}
+[data-theme="dark"] nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"]:hover,
+[data-theme="dark"] #main-content > section:first-child [class*="_primaryButton_"]:hover,
+[data-theme="dark"] #finder [class*="_resultBottom_"] a:hover,
+[data-theme="dark"] #preise [class*="_featuredCta_"]:hover,
+[data-theme="dark"] #faq [class*="_ctaButton_"]:hover,
+[data-theme="dark"] #kontakt [class*="_primaryButton_"]:hover:not(:disabled) {
+  background:var(--aura-cta-fill-hover) !important;
+  box-shadow:0 1rem 2.5rem rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
 [data-theme="dark"] #kontakt input,
 [data-theme="dark"] #kontakt textarea { background:#111114 !important; color:#f5f5f7 !important; border-color:rgba(255,255,255,.14) !important; }
 [data-theme="dark"] footer { background:#151517 !important; color:#f5f5f7 !important; }
