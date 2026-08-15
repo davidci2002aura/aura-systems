@@ -69,7 +69,8 @@ nav[aria-label="Hauptnavigation"] {
 nav[aria-label="Hauptnavigation"] [class*="_logoText_"] { color: var(--aura-ink) !important; }
 nav[aria-label="Hauptnavigation"] [class*="_menuLink_"] { color: rgba(18,19,16,.58) !important; }
 nav[aria-label="Hauptnavigation"] [class*="_menuLink_"]:hover { color: var(--aura-ink) !important; }
-nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { border-radius: 999px !important; background: var(--aura-ink) !important; }
+nav[aria-label="Hauptnavigation"] [class*="_ctaButton_"] { border-radius: 999px !important; background: var(--aura-ink) !important; color:#fff !important; }
+nav[aria-label="Hauptnavigation"] [class*="_themeToggle_"] { background:rgba(255,255,255,.55) !important; color:#121310 !important; border-color:rgba(18,19,16,.18) !important; }
 
 #main-content > section:first-child {
   min-height: 100svh;
