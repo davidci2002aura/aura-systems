@@ -11,7 +11,6 @@ import WebsitesPage from './pages/WebsitesPage';
 import AutomationPage from './pages/AutomationPage';
 import ProcessPage from './pages/ProcessPage';
 import ContactPage from './pages/ContactPage';
-import AyoPage from './pages/AyoPage';
 import LegalPage from './pages/LegalPage';
 import AtlasPage from './pages/AtlasPage';
 import AtlasDemoPage from './pages/AtlasDemoPage';
@@ -41,8 +40,6 @@ function App() {
       '/kontakt': 'Projekt anfragen | Aura Systems',
       '/impressum': 'Impressum | Aura Systems',
       '/datenschutz': 'Datenschutz | Aura Systems',
-      '/ayo': 'Café AYO Ravensburg · Konzeptdemo',
-      '/projekte/ayo': 'Café AYO Ravensburg · Konzeptdemo',
       '/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
       '/projekte/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
       '/atlas/demo': 'ATLAS Inbox · Interaktive Produktdemo | Aura Systems',
@@ -76,14 +73,6 @@ function App() {
       <a className="aura-mobile-cta" href="/kontakt">Projekt besprechen <span>→</span></a>
     </>
   );
-
-  if (location.pathname === '/ayo' || location.pathname === '/projekte/ayo') {
-    return (
-      <ErrorBoundary>
-        <AyoPage />
-      </ErrorBoundary>
-    );
-  }
 
   if (location.pathname === '/atlas/demo') {
     return (

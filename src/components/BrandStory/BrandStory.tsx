@@ -2,17 +2,12 @@ import styles from './BrandStory.module.css';
 
 const BrandStory: React.FC = () => <>
   <section id="projekte" className={styles.projects}>
-    <div className={styles.heading}><span>Ausgewählte Projekte</span><h2>Nicht behauptet.<br /><em>Sondern gebaut.</em></h2><p>Eigene Produktarbeit und klar gekennzeichnete Konzeptstudien zeigen, wie Aura denkt und umsetzt.</p></div>
+    <div className={styles.heading}><span>Eigenes Produktprojekt</span><h2>Nicht behauptet.<br /><em>Sondern gebaut.</em></h2><p>ATLAS zeigt als eigener, funktionsfähiger Prototyp, wie Aura digitale Systeme denkt und umsetzt.</p></div>
     <div className={styles.projectGrid}>
       <a href="/atlas" className={`${styles.project} ${styles.atlas}`}>
         <header><span>01 · EIGENER PRODUKTPROTOTYP</span><b>ATLAS ↗</b></header>
         <div className={styles.atlasScreen}><header><b>A</b><span>ATLAS INBOX</span><i>SHADOW MODE</i></header><aside><span>Inbox</span><span>Automation Fit</span><span>Ledger</span></aside><main><small>APPROVAL INBOX</small><strong>Entscheidungen<br />mit Kontext.</strong><div><i>MM</i><span>400 × Artikel 7814</span><b>96</b></div><div><i>KL</i><span>Liefertermin Auftrag 10482</span><b>93</b></div></main></div>
         <footer><div><h3>KI bereitet vor.<br />Menschen entscheiden.</h3><p>Interaktive Approval Inbox mit Faktenprüfung und Decision Ledger.</p></div><span>Case Study & Demo ansehen →</span></footer>
-      </a>
-      <a href="/ayo" className={`${styles.project} ${styles.ayo}`}>
-        <header><span>02 · UNVERBINDLICHE KONZEPTSTUDIE</span><b>AYO ↗</b></header>
-        <div className={styles.ayoVisual}><span>RAVENSBURGER ALTSTADT</span><h3>Freude,<br /><em>die man schmeckt.</em></h3><div><b>ayo</b><i/></div></div>
-        <footer><div><h3>Marke, Produkt und Atmosphäre als digitale Erfahrung.</h3><p>Mobile Café-Website mit filmischem Einstieg und klarer Besucherführung.</p></div><span>Konzept ansehen →</span></footer>
       </a>
     </div>
   </section>
