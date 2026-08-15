@@ -7,7 +7,7 @@
 .actions { display:flex; align-items:center; gap:1.3rem; margin-top:2.2rem; }
 .actions a { display:flex; gap:2.4rem; padding:.9rem 1.1rem; border-radius:999px; background:#d5ef8b; color:#101412; font-size:.72rem; font-weight:650; text-decoration:none; }
 .actions small { max-width:12rem; color:rgba(255,255,255,.32); font-size:.52rem; line-height:1.5; }
-.product { display:grid; min-height:31rem; grid-template-columns:5.8rem 1fr; grid-template-rows:3.2rem 1fr; overflow:hidden; border:1px solid #293438; border-radius:1.1rem; background:#0d1316; box-shadow:0 2rem 6rem rgba(0,0,0,.5); transform:perspective(1100px) rotateY(-3deg); }
+.product { display:grid; min-height:31rem; grid-template-columns:5.8rem 1fr; grid-template-rows:3.2rem 1fr; overflow:hidden; border:1px solid #293438; border-radius:1.1rem; background:#0d1316; box-shadow:0 2rem 6rem rgba(0,0,0,.5); color:#eef3f0; transform:perspective(1100px) rotateY(-3deg); }
 .product header { grid-column:1/-1; display:flex; align-items:center; gap:.6rem; padding:0 .9rem; border-bottom:1px solid #293438; color:#7b898f; font-size:.5rem; letter-spacing:.08em; }
 .product header b { display:grid; width:1.7rem; height:1.7rem; place-items:center; border-radius:.45rem; background:#d5ef8b; color:#111613; }
 .product header strong { color:#eff4f1; font-size:.65rem; }
@@ -34,5 +34,10 @@
 .case article strong { margin-top:1rem; color:#d5ef8b; font-size:.75rem; }
 .case article p { margin:.45rem 0 auto; color:#75827f; font-size:.47rem; line-height:1.55; }
 .case article button { border:0; border-radius:.4rem; padding:.55rem; background:#d5ef8b; color:#111613; font-size:.45rem; }
+:global([data-theme="light"]) .shell{box-shadow:0 2.5rem 6rem rgba(25,31,33,.2)}
+:global([data-theme="light"]) .copy>p{color:rgba(240,244,255,.72)}
+:global([data-theme="light"]) .actions small{color:rgba(255,255,255,.5)}
+:global([data-theme="light"]) .productHead strong,:global([data-theme="light"]) .case>div strong{color:#eef3f0}
+:global([data-theme="light"]) .case>div span,:global([data-theme="light"]) .case article p{color:#9aa7a4}
 @media(max-width:1000px){.shell{grid-template-columns:1fr}.product{width:100%;max-width:720px;transform:none}}
 @media(max-width:700px){.section{padding:5rem 1rem}.shell{padding:3rem 1rem;border-radius:1.35rem}.copy h2{font-size:3.35rem}.actions{align-items:flex-start;flex-direction:column}.product{min-height:29rem;grid-template-columns:3.2rem 1fr}.product aside{padding:.5rem .25rem}.product aside span,.product aside b{overflow:hidden;color:transparent}.case{grid-template-columns:1fr}.case>div{display:none}}
