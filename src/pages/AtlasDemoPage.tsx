@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './AtlasDemoPage.module.css';
 
 type View = 'inbox' | 'automation' | 'ledger';
@@ -19,6 +19,7 @@ type Case = {
 };
 
 type Decision = { id: string; caseId: number; subject: string; company: string; action: Action; time: string };
+type ContextRule = { id: string; type: string; note: string; createdAt: string };
 
 const cases: Case[] = [
   { id:1, initials:'MM', company:'Müller Maschinenbau', subject:'400 × Artikel 7814, Ausführung B', type:'Angebotsanfrage', time:'09:42', score:96, urgent:true, message:'Für unsere Montagelinie benötigen wir 400 Stück des Artikels 7814, Ausführung B. Bitte senden Sie uns bis morgen um 14:00 Uhr ein Angebot inklusive Liefertermin und Staffelpreis.', reply:'Guten Tag Frau Neumann,\n\nvielen Dank für Ihre Anfrage. Gern bieten wir Ihnen 400 Stück Artikel 7814, Ausführung B, zum Staffelpreis von 18,40 € pro Stück an. Die Lieferung ist innerhalb von 12 Werktagen möglich. Das Angebot ist 30 Tage gültig.\n\nFreundliche Grüße', facts:[['Artikel','7814 · Ausführung B','Aus Anfrage erkannt'],['Menge','400 Stück','Aus Anfrage erkannt'],['Marge','24,6 %','Innerhalb der Freigabegrenze'],['Lieferzeit','12 Werktage','Demodaten · ERP-Abgleich']] },
@@ -38,12 +39,42 @@ export default function AtlasDemoPage() {
   const [reply,setReply] = useState(cases[0].reply);
   const [editing,setEditing] = useState(false);
   const [decisions,setDecisions] = useState(initialDecisions);
+  const [rules,setRules] = useState<ContextRule[]>(()=>{
+    try { return JSON.parse(window.localStorage.getItem('atlas-context-rules')||'[]') as ContextRule[]; }
+    catch { return []; }
+  });
+  const [comment,setComment] = useState('');
+  const [contextApplied,setContextApplied] = useState(false);
   const [toast,setToast] = useState('');
   const selected = cases.find(item=>item.id===selectedId) ?? cases[0];
   const visibleCases = useMemo(()=>cases.filter(item=>filter==='all'||item.urgent),[filter]);
+  const activeRules = useMemo(()=>rules.filter(rule=>rule.type===selected.type),[rules,selected.type]);
+
+  useEffect(()=>{ window.localStorage.setItem('atlas-context-rules',JSON.stringify(rules)); },[rules]);
 
   const flash = (message:string) => { setToast(message); window.setTimeout(()=>setToast(''),2400); };
-  const choose = (item:Case) => { setSelectedId(item.id); setReply(item.reply); setEditing(false); };
+  const choose = (item:Case) => { setSelectedId(item.id); setReply(item.reply); setEditing(false); setComment(''); setContextApplied(false); };
+  const applyContext = () => {
+    if(!activeRules.length){ flash('Für diesen Vorgangstyp ist noch keine Kontextregel hinterlegt.'); return; }
+    const additions:Record<string,string> = {
+      'Angebotsanfrage':'Zusätzliche Rabatte oder abweichende Zahlungsbedingungen werden vor dem Versand separat geprüft.',
+      'Lieferabweichung':'Abweichungen von mehr als zwei Werktagen werden zusätzlich an die zuständige Person eskaliert.',
+      'Rechnungsprüfung':'Nicht bestellte Zuschläge bleiben bis zur dokumentierten Klärung gesperrt.',
+    };
+    const addition=additions[selected.type];
+    if(addition&&!reply.includes(addition)) setReply(current=>current.replace('\n\nFreundliche Grüße',`\n\n${addition}\n\nFreundliche Grüße`));
+    setContextApplied(true);
+    flash(`${activeRules.length} Kontextregel${activeRules.length===1?'':'n'} in der Demo berücksichtigt.`);
+  };
+  const saveRule = () => {
+    const note=comment.trim();
+    if(!note){ flash('Bitte zuerst einen kurzen Hinweis eingeben.'); return; }
+    setRules(current=>[{id:String(Date.now()),type:selected.type,note,createdAt:'Gerade eben'},...current]);
+    setComment('');
+    setContextApplied(false);
+    flash(`Hinweis für künftige Vorgänge vom Typ „${selected.type}“ gespeichert.`);
+  };
+  const removeRule = (id:string) => { setRules(current=>current.filter(rule=>rule.id!==id)); setContextApplied(false); flash('Kontextregel entfernt.'); };
   const decide = (action:Action) => {
     setDecisions(current=>[{ id:`D-${1083+current.length}`, caseId:selected.id, subject:selected.subject, company:selected.company, action, time:'Gerade eben' },...current]);
     setEditing(false);
@@ -60,7 +91,7 @@ export default function AtlasDemoPage() {
           <div className={styles.metrics}><article><span>HEUTE GEPRÜFT</span><strong>27</strong><small>12 mehr als gestern</small></article><article><span>ZEIT ZURÜCK</span><strong>6,4 h</strong><small>Demowert dieser Woche</small></article><article><span>HUMAN-IN-THE-LOOP</span><strong>100%</strong><small>Freigabe erforderlich</small></article></div>
           <div className={styles.review}>
             <section className={styles.inbox}><header><div><h2>Vorgänge</h2><span>{visibleCases.length} angezeigt</span></div><div><button className={filter==='all'?styles.selectedFilter:''} onClick={()=>setFilter('all')}>Alle</button><button className={filter==='urgent'?styles.selectedFilter:''} onClick={()=>setFilter('urgent')}>Dringend</button></div></header>{visibleCases.map(item=><button key={item.id} onClick={()=>choose(item)} className={`${styles.caseRow} ${selected.id===item.id?styles.selectedCase:''}`}><b>{item.initials}</b><span><strong>{item.company}</strong><small>{item.subject}</small><em>{item.type} · {item.time}</em></span><i>{item.score}</i></button>)}</section>
-            <section className={styles.decision}><header><b>{selected.initials}</b><div><span>{selected.type}</span><h2>{selected.subject}</h2><small>{selected.company} · {selected.time}</small></div><i>{selected.score}% sicher</i></header><div className={styles.decisionGrid}><article><p>{selected.message}</p><h3>Erkannte Informationen</h3>{selected.facts.map(([label,value,source])=><div className={styles.fact} key={label}><span>{label}</span><strong>{value}</strong><small>{source}</small></div>)}</article><aside><span>ATLAS EMPFIEHLT</span><h3>Antwort prüfen und freigeben</h3><p>Die erkannten Werte liegen im Beispiel innerhalb der hinterlegten Regeln.</p><label htmlFor="atlas-reply">Antwortentwurf</label><textarea id="atlas-reply" value={reply} onChange={event=>setReply(event.target.value)} readOnly={!editing}/><small>{reply.length} Zeichen · wird nicht versendet</small><div><button onClick={()=>decide(editing?'Bearbeitet':'Freigegeben')}>Freigeben</button><button onClick={()=>setEditing(value=>!value)}>{editing?'Bearbeitung beenden':'Bearbeiten'}</button><button onClick={()=>decide('Abgelehnt')}>Ablehnen</button></div></aside></div></section>
+            <section className={styles.decision}><header><b>{selected.initials}</b><div><span>{selected.type}</span><h2>{selected.subject}</h2><small>{selected.company} · {selected.time}</small></div><i>{selected.score}% sicher</i></header><div className={styles.decisionGrid}><article><p>{selected.message}</p><h3>Erkannte Informationen</h3>{selected.facts.map(([label,value,source])=><div className={styles.fact} key={label}><span>{label}</span><strong>{value}</strong><small>{source}</small></div>)}</article><aside><span>ATLAS EMPFIEHLT</span><h3>Antwort prüfen und freigeben</h3><p>Die erkannten Werte liegen im Beispiel innerhalb der hinterlegten Regeln.</p><section className={styles.contextPanel}><header><div><span>WIEDERVERWENDBARER KONTEXT</span><strong>{activeRules.length} aktive {activeRules.length===1?'Regel':'Regeln'}</strong></div><button onClick={applyContext} disabled={!activeRules.length}>Entwurf neu prüfen</button></header>{activeRules.length>0?<div className={styles.ruleList}>{activeRules.map(rule=><article key={rule.id}><p>{rule.note}</p><small>{rule.type} · {rule.createdAt}</small><button aria-label="Kontextregel entfernen" onClick={()=>removeRule(rule.id)}>×</button></article>)}</div>:<p className={styles.emptyRules}>Noch kein zusätzlicher Kontext für diesen Vorgangstyp.</p>}<label htmlFor="atlas-comment">Was soll ATLAS beim nächsten ähnlichen Vorgang beachten?</label><textarea id="atlas-comment" className={styles.commentInput} value={comment} onChange={event=>setComment(event.target.value)} placeholder={selected.type==='Angebotsanfrage'?'Beispiel: Rabatte über 5 % immer separat prüfen.':selected.type==='Lieferabweichung'?'Beispiel: Ab drei Tagen Verzug immer eskalieren.':'Beispiel: Expresszuschläge ohne Bestellbezug sperren.'}/><button className={styles.saveRule} onClick={saveRule}>Als Kontextregel speichern</button></section><label htmlFor="atlas-reply">Antwortentwurf {contextApplied&&<em className={styles.applied}>Kontext berücksichtigt</em>}</label><textarea id="atlas-reply" value={reply} onChange={event=>setReply(event.target.value)} readOnly={!editing}/><small>{reply.length} Zeichen · wird nicht versendet</small><div><button onClick={()=>decide(editing?'Bearbeitet':'Freigegeben')}>Freigeben</button><button onClick={()=>setEditing(value=>!value)}>{editing?'Bearbeitung beenden':'Bearbeiten'}</button><button onClick={()=>decide('Abgelehnt')}>Ablehnen</button></div></aside></div></section>
           </div>
         </>}
         {view==='automation'&&<><header className={styles.pageHead}><div><span>AUTOMATION FIT</span><h1>Wo lohnt sich ein Pilot?</h1><p>Ein transparenter Demo-Score priorisiert wiederkehrende Arbeit.</p></div></header><div className={styles.fitList}>{[['Anfrage zu Angebot','143 Vorgänge','31 Std./Monat',88],['Rechnungsabweichungen','96 Vorgänge','18 Std./Monat',82],['Lieferabweichungen','58 Vorgänge','12 Std./Monat',74]].map(([title,volume,value,fit])=><article key={String(title)}><div><span>WORKFLOW</span><h2>{title}</h2><p>Volumen, Regelklarheit und menschliche Prüfpunkte wurden als Demodaten bewertet.</p><small>{volume} · {value}</small></div><strong>{fit}<i>/100</i></strong><button onClick={()=>flash(`Pilot für „${title}“ wurde als Demo vorbereitet.`)}>Pilot vorbereiten</button></article>)}</div></>}
