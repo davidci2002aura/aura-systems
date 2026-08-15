@@ -13,6 +13,7 @@ import ProcessPage from './pages/ProcessPage';
 import ContactPage from './pages/ContactPage';
 import AyoPage from './pages/AyoPage';
 import LegalPage from './pages/LegalPage';
+import AtlasPage from './pages/AtlasPage';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
@@ -23,6 +24,7 @@ const PricingSection = lazy(() => import('./components/PricingSection/PricingSec
 const FAQSection = lazy(() => import('./components/FAQSection/FAQSection'));
 const ContactForm = lazy(() => import('./components/ContactForm/ContactForm'));
 const Footer = lazy(() => import('./components/Footer/Footer'));
+const AtlasShowcase = lazy(() => import('./components/AtlasShowcase/AtlasShowcase'));
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
       '/datenschutz': 'Datenschutz | Aura Systems',
       '/ayo': 'Café AYO Ravensburg · Konzeptdemo',
       '/projekte/ayo': 'Café AYO Ravensburg · Konzeptdemo',
+      '/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
+      '/projekte/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
     };
 
     document.title = pageTitles[location.pathname] ?? pageTitles['/'];
@@ -52,6 +56,7 @@ function App() {
         <Marquee />
         <SolutionFinder />
         <BentoGrid />
+        <AtlasShowcase />
         <ProcessSection />
         <PricingSection />
         <FAQSection />
@@ -83,6 +88,8 @@ function App() {
           <Route path="/automatisierung" element={<AutomationPage />} />
           <Route path="/vorgehensweise" element={<ProcessPage />} />
           <Route path="/kontakt" element={<ContactPage />} />
+          <Route path="/atlas" element={<AtlasPage />} />
+          <Route path="/projekte/atlas" element={<AtlasPage />} />
           <Route path="/impressum" element={<LegalPage type="impressum" />} />
           <Route path="/datenschutz" element={<LegalPage type="datenschutz" />} />
           <Route path="*" element={<Navigate to="/" replace />} />

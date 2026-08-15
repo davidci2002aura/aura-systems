@@ -8,6 +8,7 @@ const Navigation: React.FC = () => {
   const menuItems = [
     ['Websites', '/websites'],
     ['Automatisierung', '/automatisierung'],
+    ['Atlas', '/atlas'],
     ['Vorgehen', '/vorgehensweise'],
     ['Preise', '/#preise'],
   ];

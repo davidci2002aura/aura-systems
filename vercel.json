@@ -11,7 +11,9 @@
     { "source": "/impressum", "destination": "/" },
     { "source": "/datenschutz", "destination": "/" },
     { "source": "/ayo", "destination": "/" },
-    { "source": "/projekte/ayo", "destination": "/" }
+    { "source": "/projekte/ayo", "destination": "/" },
+    { "source": "/atlas", "destination": "/" },
+    { "source": "/projekte/atlas", "destination": "/" }
   ],
   "headers": [
     {

@@ -7,6 +7,7 @@ const Footer: React.FC = () => {
       title: 'Navigation',
       links: [
         ['Leistungen', '/#leistungen'],
+        ['Atlas', '/atlas'],
         ['Prozess', '/vorgehensweise'],
         ['Preise', '/#preise'],
         ['FAQ', '/#faq'],

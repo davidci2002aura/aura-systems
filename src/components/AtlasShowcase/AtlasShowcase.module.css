@@ -1,0 +1,38 @@
+.section { padding:7rem 2.5rem; }
+.shell { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(3rem,7vw,7rem); align-items:center; padding:clamp(2rem,5vw,5rem); overflow:hidden; border:1px solid rgba(255,255,255,.1); border-radius:2rem; background:radial-gradient(circle at 75% 20%,rgba(123,211,191,.1),transparent 26rem),#080c0e; box-shadow:0 3rem 8rem rgba(0,0,0,.34); }
+.eyebrow { color:#78d5c7; font-size:.58rem; font-weight:650; letter-spacing:.13em; text-transform:uppercase; }
+.copy h2 { margin:1.7rem 0; color:#f3f5f2; font-size:clamp(3rem,5.5vw,5.5rem); line-height:.9; letter-spacing:-.07em; }
+.copy h2 em { color:#d5ef8b; font-weight:400; font-style:normal; }
+.copy > p { max-width:33rem; color:rgba(240,244,255,.55); font-size:.92rem; line-height:1.75; }
+.actions { display:flex; align-items:center; gap:1.3rem; margin-top:2.2rem; }
+.actions a { display:flex; gap:2.4rem; padding:.9rem 1.1rem; border-radius:999px; background:#d5ef8b; color:#101412; font-size:.72rem; font-weight:650; text-decoration:none; }
+.actions small { max-width:12rem; color:rgba(255,255,255,.32); font-size:.52rem; line-height:1.5; }
+.product { display:grid; min-height:31rem; grid-template-columns:5.8rem 1fr; grid-template-rows:3.2rem 1fr; overflow:hidden; border:1px solid #293438; border-radius:1.1rem; background:#0d1316; box-shadow:0 2rem 6rem rgba(0,0,0,.5); transform:perspective(1100px) rotateY(-3deg); }
+.product header { grid-column:1/-1; display:flex; align-items:center; gap:.6rem; padding:0 .9rem; border-bottom:1px solid #293438; color:#7b898f; font-size:.5rem; letter-spacing:.08em; }
+.product header b { display:grid; width:1.7rem; height:1.7rem; place-items:center; border-radius:.45rem; background:#d5ef8b; color:#111613; }
+.product header strong { color:#eff4f1; font-size:.65rem; }
+.product header span { margin-left:auto; color:#78d5c7; }
+.product header i { width:.35rem; height:.35rem; border-radius:50%; background:#d5ef8b; box-shadow:0 0 1rem #d5ef8b; }
+.product aside { display:flex; flex-direction:column; gap:.3rem; padding:.8rem .55rem; border-right:1px solid #293438; color:#667279; font-size:.43rem; }
+.product aside span,.product aside b { padding:.65rem .4rem; }
+.product aside b { border:1px solid #36544c; border-radius:.4rem; color:#78d5c7; }
+.product main { padding:1.35rem; }
+.productHead { display:flex; flex-direction:column; gap:.45rem; }
+.productHead small { color:#78d5c7; font-size:.43rem; letter-spacing:.1em; }
+.productHead strong { font-size:1.5rem; letter-spacing:-.05em; }
+.metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:.5rem; margin:1.2rem 0; }
+.metrics article { display:flex; flex-direction:column; gap:.45rem; padding:.85rem; border:1px solid #263035; border-radius:.55rem; background:#11191c; }
+.metrics span { color:#617077; font-size:.4rem; }
+.metrics b { color:#edf3ef; font-size:1.35rem; }
+.case { display:grid; grid-template-columns:1fr .9fr; gap:.55rem; }
+.case > div,.case article { min-height:11.5rem; display:flex; flex-direction:column; padding:1rem; border:1px solid #263035; border-radius:.55rem; background:#10171a; }
+.case small,.case article > span { color:#66757b; font-size:.4rem; }
+.case > div strong { margin-top:2.3rem; font-size:.8rem; }
+.case > div span { margin-top:.4rem; color:#758187; font-size:.45rem; }
+.case article { border-color:#395147; background:#121b1a; }
+.case article > span { color:#78d5c7; }
+.case article strong { margin-top:1rem; color:#d5ef8b; font-size:.75rem; }
+.case article p { margin:.45rem 0 auto; color:#75827f; font-size:.47rem; line-height:1.55; }
+.case article button { border:0; border-radius:.4rem; padding:.55rem; background:#d5ef8b; color:#111613; font-size:.45rem; }
+@media(max-width:1000px){.shell{grid-template-columns:1fr}.product{width:100%;max-width:720px;transform:none}}
+@media(max-width:700px){.section{padding:5rem 1rem}.shell{padding:3rem 1rem;border-radius:1.35rem}.copy h2{font-size:3.35rem}.actions{align-items:flex-start;flex-direction:column}.product{min-height:29rem;grid-template-columns:3.2rem 1fr}.product aside{padding:.5rem .25rem}.product aside span,.product aside b{overflow:hidden;color:transparent}.case{grid-template-columns:1fr}.case>div{display:none}}
