@@ -14,6 +14,7 @@ import ContactPage from './pages/ContactPage';
 import AyoPage from './pages/AyoPage';
 import LegalPage from './pages/LegalPage';
 import AtlasPage from './pages/AtlasPage';
+import AtlasDemoPage from './pages/AtlasDemoPage';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
@@ -44,9 +45,18 @@ function App() {
       '/projekte/ayo': 'Café AYO Ravensburg · Konzeptdemo',
       '/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
       '/projekte/atlas': 'ATLAS Inbox · AI-native Produktprojekt | Aura Systems',
+      '/atlas/demo': 'ATLAS Inbox · Interaktive Produktdemo | Aura Systems',
     };
 
     document.title = pageTitles[location.pathname] ?? pageTitles['/'];
+
+    const descriptions: Record<string, string> = {
+      '/atlas': 'ATLAS bereitet operative Anfragen vor, macht Entscheidungsgrundlagen sichtbar und dokumentiert menschliche Freigaben.',
+      '/projekte/atlas': 'ATLAS bereitet operative Anfragen vor, macht Entscheidungsgrundlagen sichtbar und dokumentiert menschliche Freigaben.',
+      '/atlas/demo': 'Öffentliche interaktive Demo der ATLAS Approval Inbox von Aura Systems.',
+    };
+    const description = document.querySelector('meta[name="description"]');
+    if (description) description.setAttribute('content', descriptions[location.pathname] ?? 'Websites, KI-Assistenten und kontrollierte Geschäftsautomatisierungen für lokale Unternehmen in Ravensburg und Umgebung.');
   }, [location.pathname, location.hash]);
 
   const home = (
@@ -70,6 +80,14 @@ function App() {
     return (
       <ErrorBoundary>
         <AyoPage />
+      </ErrorBoundary>
+    );
+  }
+
+  if (location.pathname === '/atlas/demo') {
+    return (
+      <ErrorBoundary>
+        <AtlasDemoPage />
       </ErrorBoundary>
     );
   }

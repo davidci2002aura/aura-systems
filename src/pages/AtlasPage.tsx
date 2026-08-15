@@ -1,6 +1,6 @@
 import styles from './AtlasPage.module.css';
 
-const atlasDemo = 'https://atlas-inbox-ops.david2221221.chatgpt.site';
+const atlasDemo = '/atlas/demo';
 
 const AtlasPage: React.FC = () => (
   <main className={styles.page}>
@@ -9,7 +9,7 @@ const AtlasPage: React.FC = () => (
         <span>ATLAS / Operational Intelligence</span>
         <h1>Aus Anfragen werden <em>klare Entscheidungen.</em></h1>
         <p>Ein eigener Aura-Systems-Produktprototyp für Unternehmen, die wiederkehrende Anfragen prüfen, Antworten vorbereiten und Entscheidungen nachvollziehbar dokumentieren möchten.</p>
-        <div><a href="#system">System ansehen ↓</a><a href={atlasDemo} target="_blank" rel="noreferrer">Private Demo ↗</a></div>
+        <div><a href="#system">System ansehen ↓</a><a href={atlasDemo}>Interaktive Demo →</a></div>
       </div>
       <div className={styles.screen} aria-label="ATLAS Inbox Produktoberfläche">
         <header><b>A</b><strong>ATLAS</strong><span>SHADOW MODE</span><i /></header>
@@ -26,7 +26,7 @@ const AtlasPage: React.FC = () => (
 
     <section className={styles.boundaries}><div><span>03 / Ehrlicher Stand</span><h2>Was die Demo zeigt – und <em>was noch nicht.</em></h2></div><div><article><b>✓</b><h3>Interaktiver Frontend-Prototyp</h3><p>Inbox, Filter, Antwortbearbeitung, Entscheidungen und lokale Verlaufsdaten sind demonstrierbar.</p></article><article><b>✓</b><h3>Realistische Systemlogik</h3><p>Der Ablauf zeigt eine plausible Human-in-the-loop-Lösung für operative Entscheidungen.</p></article><article><b>–</b><h3>Noch keine produktive Integration</h3><p>Unternehmen, Vorgänge und Kennzahlen sind Demodaten. E-Mail, ERP und CRM sind nicht live angebunden.</p></article><article><b>–</b><h3>Kein autonomer Versand</h3><p>Der Prototyp sendet keine Nachrichten und trifft keine rechtsverbindlichen Entscheidungen.</p></article></div></section>
 
-    <section className={styles.cta}><span>ATLAS / Private Produktdemo</span><h2>Den Ablauf selbst <em>durchspielen.</em></h2><p>Vorgang öffnen, Fakten prüfen, Antwort bearbeiten und eine kontrollierte Entscheidung dokumentieren.</p><div><a href={atlasDemo} target="_blank" rel="noreferrer">Demo öffnen ↗</a><a href="/kontakt">Ähnliches System besprechen</a></div><small>Eigener Produktprototyp · keine Kundenreferenz · Demodaten · kein autonomer Versand</small></section>
+    <section className={styles.cta}><span>ATLAS / Öffentliche Produktdemo</span><h2>Den Ablauf selbst <em>durchspielen.</em></h2><p>Vorgang öffnen, Fakten prüfen, Antwort bearbeiten und eine kontrollierte Entscheidung dokumentieren.</p><div><a href={atlasDemo}>Demo öffnen →</a><a href="/kontakt">Ähnliches System besprechen</a></div><small>Eigener Produktprototyp · keine Kundenreferenz · Demodaten · kein autonomer Versand</small></section>
   </main>
 );
 

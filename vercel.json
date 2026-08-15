@@ -13,7 +13,8 @@
     { "source": "/ayo", "destination": "/" },
     { "source": "/projekte/ayo", "destination": "/" },
     { "source": "/atlas", "destination": "/" },
-    { "source": "/projekte/atlas", "destination": "/" }
+    { "source": "/projekte/atlas", "destination": "/" },
+    { "source": "/atlas/demo", "destination": "/" }
   ],
   "headers": [
     {
@@ -24,6 +25,12 @@
     },
     {
       "source": "/projekte/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/atlas/demo",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
