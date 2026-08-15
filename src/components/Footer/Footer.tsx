@@ -40,8 +40,8 @@ const Footer: React.FC = () => {
           <div className={styles.logoText}>AURA</div>
           <div className={styles.logoSubtext}>Digital Systems</div>
           <p className={styles.brandDescription}>
-            Websites, KI-Assistenten und kontrollierte Automatisierungen für
-            lokale Betriebe auf dem Weg zum AI-native Unternehmen.
+            Hochwertige Websites, kontrollierte Automatisierungen und AI-native
+            Systeme für Betriebe in Ravensburg und Umgebung.
           </p>
           <div className={styles.contactInfo}>
             <div>Inhaber: David Lamberts</div>
@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
 
       <div className={styles.bottom}>
         <span>© 2026 AURA SYSTEMS. Alle Rechte vorbehalten.</span>
-        <span>Version 3.0</span>
+        <span>Version 4.0 · Klar gebaut</span>
       </div>
     </footer>
   );

@@ -79,12 +79,12 @@ const ContactForm: React.FC = () => {
         <div className={styles.contactLead}>
           <div className={styles.sectionTag}><span className={styles.tagLine} /> Projektanfrage</div>
           <h2 className={styles.sectionTitle}>
-            Was bremst
+            Womit können wir
             <br />
-            <span className={styles.light}>gerade?</span>
+            <span className={styles.light}>beginnen?</span>
           </h2>
           <p className={styles.description}>
-            Fünf kurze Angaben genügen für eine erste, ehrliche Einschätzung.
+            Eine kurze Anfrage genügt. Sie erhalten eine ehrliche Einschätzung, welcher nächste Schritt sinnvoll ist.
           </p>
           <div className={styles.trustList}>
             <div><span>01</span><p><strong>Passender Einstieg</strong><small>QuickFix, Website oder Automatisierung werden getrennt betrachtet.</small></p></div>
@@ -95,12 +95,7 @@ const ContactForm: React.FC = () => {
 
         <div className={styles.formWrapper}>
           <div className={styles.terminalHeader}>
-            <div className={styles.dots}>
-              {['#ff5f57', '#febc2e', '#28c840'].map((c) => (
-                <div key={c} className={styles.dot} style={{ background: c }} />
-              ))}
-            </div>
-            <span className={styles.filename}>Ihre Projektanfrage</span>
+            <span className={styles.filename}>AURA · ERSTE EINSCHÄTZUNG</span>
             <span className={styles.status}>
               <span className={styles.statusDot} />
               BEREIT
@@ -109,7 +104,7 @@ const ContactForm: React.FC = () => {
 
           <div className={styles.formContent}>
             <div className={styles.progress}>
-              {[1, 2, 3, 4, 5, 6].map((n) => (
+              {[1, 2, 3, 4, 5].map((n) => (
                 <div
                   key={n}
                   className={`${styles.progressBar} ${n <= formStep ? styles.active : ''

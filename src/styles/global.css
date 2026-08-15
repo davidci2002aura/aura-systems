@@ -84,6 +84,10 @@ html {
   min-height: 100vh;
 }
 
+.aura-mobile-cta {
+  display: none;
+}
+
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -102,5 +106,28 @@ html {
   /* Disable particle trails and canvas animations */
   canvas {
     opacity: 0.3 !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .aura-mobile-cta {
+    position: fixed;
+    right: .75rem;
+    bottom: .75rem;
+    left: .75rem;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3.25rem;
+    padding: 0 1.1rem;
+    border: 1px solid rgba(255,255,255,.32);
+    border-radius: 999px;
+    background: linear-gradient(135deg,#ddd1e7,#b9a8c8);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.5);
+    color: #171419;
+    font-size: .72rem;
+    font-weight: 650;
+    text-decoration: none;
   }
 }

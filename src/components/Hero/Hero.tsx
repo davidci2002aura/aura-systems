@@ -3,52 +3,29 @@ import styles from './Hero.module.css';
 const Hero: React.FC = () => {
   return (
     <section className={styles.hero}>
-
-      <div className={styles.badge}>
-        AI-native Systeme · Websites · Ravensburg
+      <div className={styles.heroCopy}>
+        <div className={styles.badge}><i /> Ravensburg · Websites · AI-native Systeme</div>
+        <h1 className={styles.title}>Digitale Systeme,<br /><span>die Arbeit abnehmen.</span></h1>
+        <p className={styles.description}>Aura Systems verbindet hochwertige Websites, klare Automatisierung und kontrollierte KI zu Lösungen, die im Alltag wirklich funktionieren.</p>
+        <div className={styles.ctaButtons}>
+          <a href="/kontakt" className={styles.primaryButton}>Projekt besprechen <span>→</span></a>
+          <a href="/atlas" className={styles.secondaryButton}>Atlas erleben</a>
+        </div>
+        <div className={styles.proofLine}><span>Eigene Prototypen</span><span>Klare Freigaben</span><span>Konten bleiben bei Ihnen</span></div>
       </div>
 
-      <h1 className={styles.title}>
-        <span>Digitale Systeme,</span>
-        <span className={styles.subtitle}>die mitdenken und entlasten.</span>
-      </h1>
-
-      <p className={styles.description}>
-        Hochwertige Websites, KI-Assistenten und klare Automatisierungen für lokale Betriebe.
-        <br />
-        Durchdacht geplant. Präzise umgesetzt. Sauber übergeben.
-      </p>
-
-      <div className={styles.ctaButtons}>
-        <a href="/kontakt" className={styles.primaryButton}>
-          Projekt besprechen <span>→</span>
-        </a>
-        <a href="/websites" className={styles.secondaryButton}>
-          Lösungen entdecken
-        </a>
+      <div className={styles.systemStage} aria-label="Aura Systems verbindet Website, Anfragen, KI und menschliche Freigabe">
+        <div className={styles.stageTop}><span>LIVE SYSTEM MAP</span><b><i /> CONTROLLED</b></div>
+        <div className={styles.systemMap}>
+          <div className={`${styles.node} ${styles.nodeWebsite}`}><span>01</span><small>WEBSITE</small><strong>Klare digitale<br />Anlaufstelle</strong><i>ONLINE</i></div>
+          <div className={`${styles.node} ${styles.nodeInbox}`}><span>02</span><small>ANFRAGEN</small><strong>Informationen<br />strukturiert</strong><i>ERFASST</i></div>
+          <div className={styles.core}><div><b>A</b><span>AURA</span><small>ORCHESTRATION</small></div></div>
+          <div className={`${styles.node} ${styles.nodeAi}`}><span>03</span><small>KI-VERARBEITUNG</small><strong>Entwurf und<br />Prüfung</strong><i>VORBEREITET</i></div>
+          <div className={`${styles.node} ${styles.nodeHuman}`}><span>04</span><small>FREIGABE</small><strong>Der Mensch<br />entscheidet</strong><i>BEREIT</i></div>
+          <svg className={styles.connections} viewBox="0 0 800 520" aria-hidden="true"><path d="M168 138 C290 138 300 230 400 260"/><path d="M632 138 C510 138 500 230 400 260"/><path d="M168 390 C290 390 300 295 400 260"/><path d="M632 390 C510 390 500 295 400 260"/></svg>
+        </div>
+        <div className={styles.stageFoot}><span>Website</span><b>→</b><span>Daten</span><b>→</b><span>KI</span><b>→</b><span>Freigabe</span><b>→</b><span>Wirkung</span></div>
       </div>
-
-      <div className={styles.productStage} aria-label="Aura Systems Leistungsübersicht">
-        <a className={`${styles.productCard} ${styles.productCardWebsite}`} href="/websites" aria-label="Websites und Webanwendungen entdecken">
-          <div className={styles.windowBar}><i /><i /><i /><span>Websites entdecken&nbsp; ↗</span></div>
-          <div className={styles.websitePreview}>
-            <small>WEBSITE · KLAR STRUKTURIERT</small>
-            <strong>Ein Auftritt,<br />der ruhig überzeugt.</strong>
-            <div><span>01&nbsp; Leistungen</span><span>02&nbsp; Vertrauen</span><span>03&nbsp; Kontakt</span></div>
-          </div>
-        </a>
-        <a className={`${styles.productCard} ${styles.productCardCall}`} href="/automatisierung" aria-label="KI-Telefonservice entdecken">
-          <small>ANFRAGE · ERFASST</small>
-          <div className={styles.callOrb}><span>✓</span></div>
-          <strong>Alles Wichtige<br />auf einen Blick</strong>
-          <span>Name · Anliegen · Rückrufzeit</span>
-        </a>
-        <a className={`${styles.productCard} ${styles.productCardFlow}`} href="/automatisierung" aria-label="Automatisierungsabläufe entdecken">
-          <small>AI-NATIVE WORKFLOW</small>
-          {['Eingang', 'KI-Verarbeitung', 'Freigabe'].map((item, index) => <div key={item}><i>{index + 1}</i><span>{item}</span><b>{index === 2 ? '✓' : '→'}</b></div>)}
-        </a>
-      </div>
-
     </section>
   );
 };

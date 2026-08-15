@@ -18,7 +18,6 @@ import AtlasDemoPage from './pages/AtlasDemoPage';
 
 // Lazy load below-fold components
 const Marquee = lazy(() => import('./components/Marquee/Marquee'));
-const SolutionFinder = lazy(() => import('./components/SolutionFinder/SolutionFinder'));
 const BentoGrid = lazy(() => import('./components/BentoGrid/BentoGrid'));
 const ProcessSection = lazy(() => import('./components/ProcessSection/ProcessSection'));
 const PricingSection = lazy(() => import('./components/PricingSection/PricingSection'));
@@ -26,6 +25,7 @@ const FAQSection = lazy(() => import('./components/FAQSection/FAQSection'));
 const ContactForm = lazy(() => import('./components/ContactForm/ContactForm'));
 const Footer = lazy(() => import('./components/Footer/Footer'));
 const AtlasShowcase = lazy(() => import('./components/AtlasShowcase/AtlasShowcase'));
+const BrandStory = lazy(() => import('./components/BrandStory/BrandStory'));
 
 function App() {
   const location = useLocation();
@@ -64,15 +64,16 @@ function App() {
       <Hero />
       <Suspense fallback={<SkeletonLoader />}>
         <Marquee />
-        <SolutionFinder />
-        <BentoGrid />
         <AtlasShowcase />
+        <BentoGrid />
+        <BrandStory />
         <ProcessSection />
         <PricingSection />
         <FAQSection />
         <ContactForm />
         <Footer />
       </Suspense>
+      <a className="aura-mobile-cta" href="/kontakt">Projekt besprechen <span>→</span></a>
     </>
   );
 

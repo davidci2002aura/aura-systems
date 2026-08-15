@@ -6,10 +6,9 @@ const Navigation: React.FC = () => {
     () => document.documentElement.dataset.theme === 'dark'
   );
   const menuItems = [
-    ['Websites', '/websites'],
-    ['Automatisierung', '/automatisierung'],
-    ['Atlas', '/atlas'],
-    ['Vorgehen', '/vorgehensweise'],
+    ['Leistungen', '/#leistungen'],
+    ['Projekte', '/#projekte'],
+    ['Vorgehen', '/#prozess'],
     ['Preise', '/#preise'],
   ];
 

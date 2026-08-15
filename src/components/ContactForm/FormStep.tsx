@@ -35,6 +35,7 @@ const FormStep: React.FC<FormStepProps> = ({
   onSubmit,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -50,13 +51,11 @@ const FormStep: React.FC<FormStepProps> = ({
         onBack={null}
       >
         {[
-          ['Website-QuickFix', 'Bis zu drei konkrete Fehler beheben'],
-          ['Moderner Onepager', 'Eine klare kleine Website von Grund auf'],
-          ['Onepager + Betreuung', 'Website mit laufenden kleinen Änderungen'],
-          ['KI-Telefonservice', 'Rückrufanliegen aufnehmen und zusammenfassen'],
-          ['E-Mail- oder Wissensassistent', 'Informationen aus freigegebenen Quellen vorbereiten'],
-          ['Ablauf automatisieren', 'Wiederkehrende Handarbeit zuerst prüfen'],
-          ['AI-native Prozess-Sprint', 'Mehrere Schritte als kontrolliertes System verbinden'],
+          ['Website verbessern', 'Bestehende Seite prüfen, reparieren oder neu strukturieren'],
+          ['Neue Website oder Webanwendung', 'Ein individueller digitaler Auftritt von Grund auf'],
+          ['Prozess automatisieren', 'Wiederkehrende Handarbeit kontrolliert reduzieren'],
+          ['KI-Assistent oder Telefonservice', 'Anfragen erfassen und Informationen vorbereiten'],
+          ['Idee gemeinsam einordnen', 'Noch offen – zuerst den sinnvollsten Einstieg finden'],
         ].map(([main, sub]) => (
           <ChoiceButton
             key={main}
@@ -79,7 +78,7 @@ const FormStep: React.FC<FormStepProps> = ({
         title="Ihr Investitionsrahmen?"
         onBack={onBack}
       >
-        {['Bis 200 €', '200 € – 700 €', '700 € – 1.500 €', '1.500 € – 3.000 €', 'Über 3.000 €', 'Noch offen'].map((budget) => (
+        {['Unter 500 €', '500 € – 1.500 €', '1.500 € – 3.000 €', 'Über 3.000 €', 'Noch offen'].map((budget) => (
           <ChoiceButton
             key={budget}
             main={budget}
@@ -97,7 +96,7 @@ const FormStep: React.FC<FormStepProps> = ({
     return (
       <StepLayout
         label="SCHRITT 03"
-        title="Wie dürfen wir Sie nennen?"
+        title="Wie dürfen wir Sie erreichen?"
         onBack={onBack}
       >
         <input
@@ -121,10 +120,25 @@ const FormStep: React.FC<FormStepProps> = ({
             {errors.name}
           </div>
         )}
+        <input
+          ref={emailRef}
+          type="email"
+          className={styles.input}
+          placeholder="name@unternehmen.de"
+          value={values.email}
+          onChange={(e) => onChange('email', e.target.value)}
+          onBlur={() => onBlur('email')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && values.name.trim() && values.email && !errors.name && !errors.email) onNext();
+          }}
+          aria-invalid={touched.email && !!errors.email}
+          aria-describedby={errors.email ? 'email-error' : undefined}
+        />
+        {touched.email && errors.email && <div id="email-error" className={styles.fieldError} role="alert">{errors.email}</div>}
         <button
           className={styles.primaryButton}
           onClick={onNext}
-          disabled={!values.name.trim() || !!errors.name}
+          disabled={!values.name.trim() || !values.email || !!errors.name || !!errors.email}
         >
           Weiter →
         </button>
@@ -136,52 +150,13 @@ const FormStep: React.FC<FormStepProps> = ({
     return (
       <StepLayout
         label="SCHRITT 04"
-        title="Wie erreichen wir Sie?"
-        onBack={onBack}
-      >
-        <input
-          ref={inputRef}
-          type="email"
-          className={styles.input}
-          placeholder="name@unternehmen.de"
-          value={values.email}
-          onChange={(e) => onChange('email', e.target.value)}
-          onBlur={() => onBlur('email')}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && values.email && !errors.email) {
-              onNext();
-            }
-          }}
-          aria-invalid={touched.email && !!errors.email}
-          aria-describedby={errors.email ? 'email-error' : undefined}
-        />
-        {touched.email && errors.email && (
-          <div id="email-error" className={styles.fieldError} role="alert">
-            {errors.email}
-          </div>
-        )}
-        <button
-          className={styles.primaryButton}
-          onClick={onNext}
-          disabled={!values.email || !!errors.email}
-        >
-          Weiter →
-        </button>
-      </StepLayout>
-    );
-  }
-
-  if (step === 5) {
-    return (
-      <StepLayout
-        label="SCHRITT 05"
-        title="Beschreiben Sie Ihr Projekt"
+        title="Was soll besser werden?"
         onBack={onBack}
       >
         <textarea
           ref={textareaRef}
           className={styles.textarea}
-          placeholder="z.B.: Wir benötigen eine moderne Website für unser Restaurant mit Online-Reservierungssystem und mehrsprachiger Unterstützung..."
+          placeholder="Beschreiben Sie kurz den aktuellen Stand, das Problem und was Sie sich wünschen. Ein Link zur bestehenden Website hilft ebenfalls."
           value={values.message}
           onChange={(e) => onChange('message', e.target.value)}
           onBlur={() => onBlur('message')}
@@ -205,10 +180,10 @@ const FormStep: React.FC<FormStepProps> = ({
     );
   }
 
-  if (step === 6) {
+  if (step === 5) {
     return (
       <StepLayout
-        label="SCHRITT 06"
+        label="SCHRITT 05"
         title="Alles bereit."
         onBack={onBack}
       >

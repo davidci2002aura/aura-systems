@@ -2,17 +2,14 @@ import styles from './Marquee.module.css';
 
 const Marquee: React.FC = () => {
   const items = [
-    'Website-QuickFix',
-    'Moderner Onepager',
-    'Mobile Optimierung',
-    'KI-Telefonservice',
-    'E-Mail-Assistenten',
-    'Wissenssysteme',
-    'AI-native Operations',
-    'Anfragen strukturieren',
-    'Lokale Betriebe',
-    'Feste Einstiegspreise',
-    'Direkte Übergabe',
+    'Websites',
+    'Webanwendungen',
+    'Automatisierung',
+    'KI-Assistenten',
+    'AI-native Systeme',
+    'Human-in-the-loop',
+    'Ravensburg',
+    'Klare Übergabe',
   ];
 
   return (

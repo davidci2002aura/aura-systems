@@ -1,128 +1,24 @@
-import { motion } from 'framer-motion';
-import BentoCard from './BentoCard';
 import styles from './BentoGrid.module.css';
 
-const BentoGrid: React.FC = () => {
-  return (
-    <section id="leistungen" className={styles.section}>
-      <div className={styles.container}>
-        <div className={styles.sectionTag}>
-          <span className={styles.tagLine} /> Was wir bauen
-        </div>
-        <h2 className={styles.sectionTitle}>
-          Websites. Automatisierung. KI.
-          <br />
-          <span className={styles.light}>Als System gedacht.</span>
-        </h2>
+const services = [
+  { number:'01', tag:'Websites & Webanwendungen', title:'Ein digitaler Auftritt, der ruhig überzeugt.', text:'Von der gezielten Reparatur bis zur individuellen Website: schnell, mobil und so strukturiert, dass Besucher verstehen, vertrauen und Kontakt aufnehmen.', href:'/websites', cta:'Websites ansehen', points:['Strategie & Struktur','Design & Entwicklung','Mobil & technische Basis'], visual:'website' },
+  { number:'02', tag:'Automatisierung & Assistenten', title:'Weniger Handarbeit. Mehr Klarheit im Ablauf.', text:'Anfragen, Rückrufe, Dokumente und wiederkehrende Aufgaben werden kontrolliert vorbereitet – mit festen Grenzen und menschlicher Freigabe.', href:'/automatisierung', cta:'Automatisierung ansehen', points:['Prozessaufnahme','Pilot mit Testdaten','Kontrollierte Übergabe'], visual:'flow' },
+  { number:'03', tag:'AI-native Systeme', title:'KI als Teil des Prozesses – nicht als Spielerei.', text:'Individuelle Oberflächen verbinden Daten, KI-Verarbeitung, Entscheidung und Nachweis zu einem verständlichen operativen System.', href:'/atlas', cta:'Atlas als Beispiel', points:['Human-in-the-loop','Nachvollziehbare Entscheidungen','Messbare Wirkung'], visual:'atlas' },
+];
 
-        <motion.div
-          className={styles.grid}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.08,
-              },
-            },
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {/* Big card - Neural Operations */}
-          <div className={styles.bigCard}>
-            <BentoCard
-              tag="01 — AI-native Operations"
-              title="Anfragen verstehen und kontrolliert weiterführen"
-              desc="Formular-, E-Mail- oder Telefonanfragen werden geordnet, zusammengefasst und nach Freigabe an den richtigen nächsten Schritt übergeben."
-              accent
-            >
-              <div className={styles.workflowList}>
-                {[
-                  ['blue', 'Anfrage kommt an'],
-                  ['purple', 'Angaben werden strukturiert'],
-                  ['green', 'Zusammenfassung wird erstellt'],
-                  ['orange', 'Mensch entscheidet den nächsten Schritt'],
-                ].map(([color, text]) => (
-                  <div key={text} className={styles.workflowItem}>
-                    <span className={`${styles.workflowDot} ${styles[color]}`} />
-                    {text}
-                  </div>
-                ))}
-              </div>
-            </BentoCard>
-          </div>
-
-          <BentoCard
-            tag="02 — Website QuickFix"
-            title="Probleme gezielt lösen."
-            desc="Bis zu drei klar abgegrenzte Fehler an einer bestehenden Website."
-            stat="149 €"
-            statLabel="fester Einstiegspreis"
-          />
-          <BentoCard
-            tag="03 — Onepager"
-            title="In Sekunden verstanden."
-            desc="Leistungen, Vertrauen und Kontakt in einer klaren mobilen Seite."
-            stat="790 €"
-            statLabel="fester Einstiegspreis"
-            statColor="#22c55e"
-          />
-
-          <BentoCard
-            tag="04 — KI-Assistenten"
-            title="Telefon, E-Mail und Wissen sinnvoll verbinden."
-            desc="Begrenzte Assistenten bereiten Informationen vor, ohne sich als Mensch auszugeben oder ungeprüft zu entscheiden."
-            purple
-          />
-          <BentoCard
-            tag="05 — Übergabe"
-            title="Ihre Konten bleiben Ihre."
-            desc="Domain, Hosting und externe Dienste werden nachvollziehbar eingerichtet."
-            stat="100%"
-            statLabel="Zugriff beim Betrieb"
-          />
-          <BentoCard
-            tag="06 — Betreuung"
-            title="Kleine Änderungen inklusive."
-            desc="Laufende Betreuung für den Onepager, monatlich kündbar."
-            stat="79 €"
-            statLabel="pro Monat"
-          />
-
-          <BentoCard
-            tag="07 — AI-native Prinzip"
-            title="KI ist Teil des Prozesses, nicht nur ein Chatfenster."
-            desc="Datenquelle, Verarbeitung, Freigabe, Übergabe und Fehlerweg werden als zusammenhängendes System geplant."
-            accent
-          >
-            <div className={styles.controlPanel}>
-              {['Entwurf geprüft', 'Freigabe erteilt', 'Veröffentlichung'].map((item, index) => (
-                <div key={item} className={styles.controlRow}>
-                  <span>{index + 1}</span><b>{item}</b><i>{index < 2 ? 'Erledigt' : 'Bereit'}</i>
-                </div>
-              ))}
-            </div>
-          </BentoCard>
-
-          <div className={styles.wideCard}>
-            <BentoCard
-              tag="08 — Betrieb & Optimierung"
-              title="Nach dem Pilot messbar weiterentwickeln."
-              desc="Nutzung, Fehler und Zeitersparnis werden geprüft. Erst danach folgen weitere Automatisierungen oder laufende AI-Operations-Betreuung."
-              purple
-            >
-              <div className={styles.scopePanel}>
-                <div><span>Im Angebot</span><strong>Leistung &amp; Zeitplan</strong></div>
-                <div><span>Separat</span><strong>Hosting &amp; Fremdkosten</strong></div>
-                <div><span>Vor Livegang</span><strong>Ihre Freigabe</strong></div>
-              </div>
-            </BentoCard>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+const BentoGrid: React.FC = () => <section id="leistungen" className={styles.section}>
+  <div className={styles.heading}><span>Leistungen</span><h2>Drei Wege zu einem<br /><em>besseren digitalen System.</em></h2><p>Der Einstieg richtet sich nach dem tatsächlichen Problem – nicht nach einem möglichst großen Paket.</p></div>
+  <div className={styles.grid}>{services.map(service=><article className={styles.card} key={service.number}>
+    <header><span>{service.number}</span><b>{service.tag}</b></header>
+    <div className={styles.visual} data-visual={service.visual}>
+      {service.visual==='website'&&<div className={styles.siteVisual}><span>aurasystems.ltd</span><strong>Ein klarer Auftritt.</strong><div><i/><i/><i/></div></div>}
+      {service.visual==='flow'&&<div className={styles.flowVisual}>{['Anfrage','Struktur','Freigabe'].map((item,index)=><div key={item}><i>{index+1}</i><span>{item}</span><b>{index===2?'✓':'→'}</b></div>)}</div>}
+      {service.visual==='atlas'&&<div className={styles.atlasVisual}><header><b>A</b><span>ATLAS</span><i/></header><div><span>APPROVAL INBOX</span><strong>4 Entscheidungen</strong><small>Human review required</small></div></div>}
+    </div>
+    <h3>{service.title}</h3><p>{service.text}</p>
+    <ul>{service.points.map(point=><li key={point}>✓ {point}</li>)}</ul>
+    <a href={service.href}>{service.cta}<span>↗</span></a>
+  </article>)}</div>
+</section>;
 
 export default BentoGrid;

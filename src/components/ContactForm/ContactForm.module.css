@@ -531,6 +531,39 @@
   }
 }
 
+/* Aura 2026 — ruhige Projektanfrage */
+.section { padding: clamp(6rem, 9vw, 10rem) 2rem; border-top:1px solid rgba(255,255,255,.1); }
+.container { max-width:1280px; grid-template-columns:.78fr 1.22fr; gap:clamp(4rem,9vw,11rem); }
+.sectionTag { color:#b9a8c8; font-size:.56rem; letter-spacing:.13em; }
+.tagLine { background:#b9a8c8; }
+.sectionTitle { font-size:clamp(3.4rem,6.2vw,6.8rem); font-weight:600; line-height:.86; letter-spacing:-.08em; }
+.light { color:rgba(255,255,255,.34); font-weight:350; }
+.description { max-width:30rem; color:rgba(255,255,255,.5); font-size:.82rem; }
+.trustList { border-color:rgba(255,255,255,.1); }
+.trustList > div { border-color:rgba(255,255,255,.09); }
+.trustList > div > span { color:#b9a8c8; }
+.trustList strong { color:#eeeaef; }
+.trustList small { color:rgba(255,255,255,.4); }
+.formWrapper { border:1px solid rgba(255,255,255,.13); border-radius:1.25rem; background:linear-gradient(145deg,#1a1a1e,#121215); box-shadow:0 2.5rem 7rem rgba(0,0,0,.28); }
+.terminalHeader { min-height:3.6rem; border-color:rgba(255,255,255,.09); background:rgba(255,255,255,.015); }
+.filename { color:rgba(255,255,255,.42); }
+.formContent { padding:clamp(1.2rem,3vw,2.2rem); }
+.progressBar { height:3px; background:rgba(255,255,255,.07); }
+.progressBar.active { background:#b9a8c8; }
+.stepLabel { color:#b9a8c8; }
+.stepTitle { margin-bottom:1.5rem; font-size:1.45rem; }
+.choiceButton { min-height:4.8rem; border-color:rgba(255,255,255,.09); border-radius:.8rem; background:rgba(255,255,255,.025); }
+.choiceButton::after { color:#b9a8c8; }
+.choiceButton.hover { border-color:rgba(207,193,220,.28); background:rgba(109,96,127,.12); }
+.choiceSub { color:rgba(255,255,255,.4); }
+.input,.textarea { border-color:rgba(255,255,255,.1); border-radius:.8rem; background:#0f0f12; }
+.input:focus,.textarea:focus { border-color:#b9a8c8; background:#111114; box-shadow:0 0 0 3px rgba(185,168,200,.1); }
+.primaryButton { border:1px solid rgba(255,255,255,.28); border-radius:999px; background:linear-gradient(135deg,#ddd1e7,#b9a8c8); color:#171419; box-shadow:0 .8rem 2rem rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.45); }
+.primaryButton:hover:not(:disabled) { background:linear-gradient(135deg,#e8deef,#c6b6d3); box-shadow:0 1rem 2.5rem rgba(0,0,0,.32); }
+.summary { border-color:rgba(255,255,255,.1); background:#101013; }
+@media(max-width:900px){.container{grid-template-columns:1fr}.contactLead{position:static}.sectionTitle{max-width:11ch}}
+@media(max-width:700px){.section{padding:7rem 1rem}.sectionTitle{font-size:clamp(3.2rem,15vw,4.8rem)}.formContent{padding:1rem}.trustList{margin-bottom:1rem}}
+
 /* Small Mobile (< 480px) */
 @media (max-width: 480px) {
   .section {
@@ -589,4 +622,10 @@
   .summary {
     padding: 0.9rem;
   }
+}
+
+@media (max-width: 480px) {
+  .section { padding:7rem 1rem; }
+  .sectionTitle { font-size:clamp(3.2rem,15vw,4.5rem); }
+  .stepTitle { font-size:1.15rem; }
 }
