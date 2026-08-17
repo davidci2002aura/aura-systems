@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './Hero.module.css';
 
 const Hero: React.FC = () => {
@@ -8,8 +9,8 @@ const Hero: React.FC = () => {
         <h1 className={styles.title}>Digitale Systeme,<br /><span>die Arbeit abnehmen.</span></h1>
         <p className={styles.description}>Aura Systems verbindet hochwertige Websites, klare Automatisierung und kontrollierte KI zu Lösungen, die im Alltag wirklich funktionieren.</p>
         <div className={styles.ctaButtons}>
-          <a href="/kontakt" className={styles.primaryButton}>Projekt besprechen <span>→</span></a>
-          <a href="/atlas" className={styles.secondaryButton}>Atlas erleben</a>
+          <Link to="/kontakt" className={styles.primaryButton}>Projekt besprechen <span>→</span></Link>
+          <Link to="/atlas" className={styles.secondaryButton}>Atlas erleben</Link>
         </div>
         <div className={styles.proofLine}><span>Eigene Prototypen</span><span>Klare Freigaben</span><span>Konten bleiben bei Ihnen</span></div>
       </div>

@@ -4,10 +4,14 @@
 .copy h2 { margin:1.7rem 0; color:#f3f5f2; font-size:clamp(3rem,5.5vw,5.5rem); line-height:.9; letter-spacing:-.07em; }
 .copy h2 em { color:#d5ef8b; font-weight:400; font-style:normal; }
 .copy > p { max-width:33rem; color:rgba(240,244,255,.55); font-size:.92rem; line-height:1.75; }
-.actions { display:flex; align-items:center; gap:1.3rem; margin-top:2.2rem; }
+.actions { display:flex; align-items:center; flex-wrap:wrap; gap:.75rem; margin-top:2.2rem; }
 .actions a { display:flex; gap:2.4rem; padding:.9rem 1.1rem; border-radius:999px; background:#d5ef8b; color:#101412; font-size:.72rem; font-weight:650; text-decoration:none; }
+.actions .demoLink { gap:1.2rem; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); color:#eef3f0; }
 .actions small { max-width:12rem; color:rgba(255,255,255,.32); font-size:.52rem; line-height:1.5; }
-.product { display:grid; min-height:31rem; grid-template-columns:5.8rem 1fr; grid-template-rows:3.2rem 1fr; overflow:hidden; border:1px solid #293438; border-radius:1.1rem; background:#0d1316; box-shadow:0 2rem 6rem rgba(0,0,0,.5); color:#eef3f0; transform:perspective(1100px) rotateY(-3deg); }
+.product { position:relative; display:grid; min-height:31rem; grid-template-columns:5.8rem 1fr; grid-template-rows:3.2rem 1fr; overflow:hidden; border:1px solid #293438; border-radius:1.1rem; background:#0d1316; box-shadow:0 2rem 6rem rgba(0,0,0,.5); color:#eef3f0; text-decoration:none; transform:perspective(1100px) rotateY(-3deg); transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease; }
+.product:hover,.product:focus-visible { border-color:#78d5c7; box-shadow:0 2.5rem 7rem rgba(0,0,0,.58),0 0 0 1px rgba(120,213,199,.2); transform:perspective(1100px) rotateY(-1deg) translateY(-3px); }
+.product:focus-visible { outline:2px solid #d5ef8b; outline-offset:4px; }
+.openHint { position:absolute; z-index:3; top:4rem; right:1rem; padding:.5rem .7rem; border:1px solid rgba(120,213,199,.35); border-radius:999px; background:rgba(8,12,14,.88); color:#9fe6da; font-size:.44rem; letter-spacing:.06em; text-transform:uppercase; }
 .product header { grid-column:1/-1; display:flex; align-items:center; gap:.6rem; padding:0 .9rem; border-bottom:1px solid #293438; color:#7b898f; font-size:.5rem; letter-spacing:.08em; }
 .product header b { display:grid; width:1.7rem; height:1.7rem; place-items:center; border-radius:.45rem; background:#d5ef8b; color:#111613; }
 .product header strong { color:#eff4f1; font-size:.65rem; }
@@ -33,11 +37,11 @@
 .case article > span { color:#78d5c7; }
 .case article strong { margin-top:1rem; color:#d5ef8b; font-size:.75rem; }
 .case article p { margin:.45rem 0 auto; color:#75827f; font-size:.47rem; line-height:1.55; }
-.case article button { border:0; border-radius:.4rem; padding:.55rem; background:#d5ef8b; color:#111613; font-size:.45rem; }
+.previewButton { display:block; border:0; border-radius:.4rem; padding:.55rem; background:#d5ef8b; color:#111613; font-size:.45rem; text-align:center; }
 :global([data-theme="light"]) .shell{box-shadow:0 2.5rem 6rem rgba(25,31,33,.2)}
 :global([data-theme="light"]) .copy>p{color:rgba(240,244,255,.72)}
 :global([data-theme="light"]) .actions small{color:rgba(255,255,255,.5)}
 :global([data-theme="light"]) .productHead strong,:global([data-theme="light"]) .case>div strong{color:#eef3f0}
 :global([data-theme="light"]) .case>div span,:global([data-theme="light"]) .case article p{color:#9aa7a4}
 @media(max-width:1000px){.shell{grid-template-columns:1fr}.product{width:100%;max-width:720px;transform:none}}
-@media(max-width:700px){.section{padding:5rem 1rem}.shell{padding:3rem 1rem;border-radius:1.35rem}.copy h2{font-size:3.35rem}.actions{align-items:flex-start;flex-direction:column}.product{min-height:29rem;grid-template-columns:3.2rem 1fr}.product aside{padding:.5rem .25rem}.product aside span,.product aside b{overflow:hidden;color:transparent}.case{grid-template-columns:1fr}.case>div{display:none}}
+@media(max-width:700px){.section{padding:5rem 1rem}.shell{padding:3rem 1rem;border-radius:1.35rem}.copy h2{font-size:3.35rem}.actions{align-items:stretch;flex-direction:column}.actions a{justify-content:space-between}.actions small{max-width:none}.product{min-height:29rem;grid-template-columns:3.2rem 1fr}.openHint{top:3.7rem;right:.7rem}.product aside{padding:.5rem .25rem}.product aside span,.product aside b{overflow:hidden;color:transparent}.case{grid-template-columns:1fr}.case>div{display:none}}
